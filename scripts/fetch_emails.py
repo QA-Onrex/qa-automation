@@ -7,7 +7,7 @@ zoho_pass = os.getenv("ZOHO_APP_PASSWORD")
 
 print(f"Connecting to Zoho IMAP as {zoho_user}...")
 
-mail = imaplib.IMAP4_SSL("imap.zoho.com")
+mail = imaplib.IMAP4_SSL("imap.zoho.eu")
 mail.login(zoho_user, zoho_pass)
 mail.select("INBOX")
 
