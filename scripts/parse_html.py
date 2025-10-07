@@ -34,8 +34,9 @@ def parse_html_file(html_path):
         data_json = json.loads(match.group(1))
         entity = data_json.get("entity", {})
 
-        # Extract all fields in one place
-        project_name = entity["project"]["name"]  # always present
+        # Project is outside entity
+        project_name = data_json.get("project", {}).get("name")
+
         test_suite_id = entity.get("entityId")
         profile = entity.get("context", {}).get("profile")
 
@@ -50,6 +51,7 @@ def parse_html_file(html_path):
         start = entity.get("startTime")
         end = entity.get("endTime")
         retry_count = entity.get("retryCount")
+
 
         # Compute duration in seconds if start and end are available
         duration = None
