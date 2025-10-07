@@ -2,7 +2,6 @@ import os
 import json
 import shutil
 import re
-import traceback
 from datetime import datetime
 
 HTML_FOLDER = "data/html"
@@ -20,56 +19,58 @@ if os.path.exists(RESULTS_FILE):
         print("::warning::results.json is empty or invalid, starting fresh.")
         results = []
 
-def parse_fields_from_html(html_path):
-    """Extract test data fields from embedded JSON inside the HTML."""
+def parse_html_file(html_path):
+    """Parse embedded JSON from HTML and extract test data."""
+    with open(html_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    # Extract JSON object inside loadExecutionData('main', {...})
+    match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
+    if not match:
+        print(f"::warning::No embedded JSON found in {html_path}")
+        return None
+
     try:
-        with open(html_path, "r", encoding="utf-8") as f:
-            text = f.read()
+        data_json = json.loads(match.group(1))
 
-        # Extract project info
-        project_match = re.search(r'"project":\{"name":"(.*?)"\}', text)
-        project = project_match.group(1) if project_match else None
+        entity = data_json.get("entity", {})
+        project_name = entity.get("project", {}).get("name")  # still keep for backward safety
+        test_suite_id = entity.get("entityId")
+        profile = entity.get("context", {}).get("profile")
+        stats = entity.get("statistics", {})
 
-        # Extract test suite ID
-        suite_match = re.search(r'"Test Suite ID":"(.*?)"', text)
-        test_suite_id = suite_match.group(1) if suite_match else None
+        start = entity.get("startTime")
+        end = entity.get("endTime")
 
-        # Extract profile
-        profile_match = re.search(r'"profile":"(.*?)"', text)
-        profile = profile_match.group(1) if profile_match else None
-
-        # Extract test case counts
-        test_cases_match = re.search(r'"test cases":(\d+)', text)
-        passed_match = re.search(r'"passed":(\d+)', text)
-        failed_match = re.search(r'"failed":(\d+)', text)
-        error_match = re.search(r'"error":(\d+)', text)
-        incomplete_match = re.search(r'"incomplete":(\d+)', text)
-        skipped_match = re.search(r'"skipped":(\d+)', text)
-
-        # Extract timestamps and duration
-        start_match = re.search(r'"start":"(.*?)"', text)
-        end_match = re.search(r'"end":"(.*?)"', text)
-        duration_match = re.search(r'"duration":([\d\.]+)', text)
+        # Compute duration in seconds if start and end are available
+        duration = None
+        try:
+            if start and end:
+                fmt = "%Y-%m-%dT%H:%M:%S.%f%z"
+                start_dt = datetime.strptime(start, fmt)
+                end_dt = datetime.strptime(end, fmt)
+                duration = (end_dt - start_dt).total_seconds()
+        except Exception:
+            duration = None
 
         return {
             "html_file": os.path.join("data/html/processed", os.path.basename(html_path)),
-            "project": project,
+            "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
-            "test_cases": int(test_cases.group(1)) if test_cases_match else None,
-            "passed": int(passed_match.group(1)) if passed_match else None,
-            "failed": int(failed_match.group(1)) if failed_match else None,
-            "error": int(error_match.group(1)) if error_match else None,
-            "incomplete": int(incomplete_match.group(1)) if incomplete_match else None,
-            "skipped": int(skipped_match.group(1)) if skipped_match else None,
-            "start": start_match.group(1) if start_match else None,
-            "end": end_match.group(1) if end_match else None,
-            "duration": float(duration_match.group(1)) if duration_match else None
+            "test_cases": stats.get("total"),
+            "passed": stats.get("passed"),
+            "failed": stats.get("failed"),
+            "error": stats.get("errored"),
+            "incomplete": stats.get("incomplete"),
+            "skipped": stats.get("skipped"),
+            "start": start,
+            "end": end,
+            "duration": duration,
+            "retry_count": entity.get("retryCount")
         }
-
-    except Exception as e:
-        print(f"::error::Failed to parse HTML {html_path}: {e}")
-        traceback.print_exc()
+    except json.JSONDecodeError as e:
+        print(f"::error::Failed to parse JSON in {html_path}: {e}")
         return None
 
 def main():
@@ -81,17 +82,15 @@ def main():
     processed_count = 0
     for html_file in html_files:
         html_path = os.path.join(HTML_FOLDER, html_file)
-        data = parse_fields_from_html(html_path)
+        data = parse_html_file(html_path)
         if data:
             results.append(data)
             processed_count += 1
-            # Move to processed folder
             shutil.move(html_path, os.path.join(PROCESSED_FOLDER, html_file))
             print(f"::notice::Processed {html_file} and moved to processed folder.")
         else:
             print(f"::warning::Skipping {html_file} due to parsing error.")
 
-    # Save results.json
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
