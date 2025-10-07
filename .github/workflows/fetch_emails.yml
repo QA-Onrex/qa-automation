@@ -23,14 +23,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install imapclient beautifulsoup4
+          python -m pip install --upgrade pip
+          pip install beautifulsoup4
 
-      - name: Run email fetch script
+      - name: Fetch Emails
         env:
           ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
-        run: |
-          python scripts/fetch_emails.py
+        run: python scripts/fetch_emails.py
+
+      - name: Process Attachments
+        run: python scripts/process_attachments.py
 
       - name: Commit updated data
         run: |
