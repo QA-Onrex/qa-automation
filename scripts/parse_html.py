@@ -20,57 +20,67 @@ if os.path.exists(RESULTS_FILE):
         results = []
 
 def parse_html_file(html_path):
-    """Parse embedded JSON from HTML and extract test data."""
-    with open(html_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    # Extract JSON object inside loadExecutionData('main', {...})
-    match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
-    if not match:
-        print(f"::warning::No embedded JSON found in {html_path}")
-        return None
-
+    """Parse embedded JSON from HTML and extract all test data fields."""
     try:
-        data_json = json.loads(match.group(1))
+        with open(html_path, "r", encoding="utf-8") as f:
+            content = f.read()
 
+        # Extract JSON inside loadExecutionData('main', {...})
+        match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
+        if not match:
+            print(f"::warning::No embedded JSON found in {html_path}")
+            return None
+
+        data_json = json.loads(match.group(1))
         entity = data_json.get("entity", {})
-        project_name = entity.get("project", {}).get("name")  # still keep for backward safety
+
+        # Extract all fields in one place
+        project_name = entity["project"]["name"]  # always present
         test_suite_id = entity.get("entityId")
         profile = entity.get("context", {}).get("profile")
+
         stats = entity.get("statistics", {})
+        test_cases = stats.get("total")
+        passed = stats.get("passed")
+        failed = stats.get("failed")
+        error = stats.get("errored")
+        incomplete = stats.get("incomplete")
+        skipped = stats.get("skipped")
 
         start = entity.get("startTime")
         end = entity.get("endTime")
+        retry_count = entity.get("retryCount")
 
         # Compute duration in seconds if start and end are available
         duration = None
-        try:
-            if start and end:
-                fmt = "%Y-%m-%dT%H:%M:%S.%f%z"
-                start_dt = datetime.strptime(start, fmt)
-                end_dt = datetime.strptime(end, fmt)
+        if start and end:
+            try:
+                fmt = "%Y-%m-%dT%H:%M:%S.%f%z" if '+' in start or '-' in start else "%Y-%m-%dT%H:%M:%S.%fZ"
+                start_dt = datetime.strptime(start.replace('Z', '+0000'), fmt)
+                end_dt = datetime.strptime(end.replace('Z', '+0000'), fmt)
                 duration = (end_dt - start_dt).total_seconds()
-        except Exception:
-            duration = None
+            except Exception:
+                duration = None
 
         return {
             "html_file": os.path.join("data/html/processed", os.path.basename(html_path)),
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
-            "test_cases": stats.get("total"),
-            "passed": stats.get("passed"),
-            "failed": stats.get("failed"),
-            "error": stats.get("errored"),
-            "incomplete": stats.get("incomplete"),
-            "skipped": stats.get("skipped"),
+            "test_cases": test_cases,
+            "passed": passed,
+            "failed": failed,
+            "error": error,
+            "incomplete": incomplete,
+            "skipped": skipped,
             "start": start,
             "end": end,
             "duration": duration,
-            "retry_count": entity.get("retryCount")
+            "retry_count": retry_count
         }
-    except json.JSONDecodeError as e:
-        print(f"::error::Failed to parse JSON in {html_path}: {e}")
+
+    except Exception as e:
+        print(f"::error::Failed to parse {html_path}: {e}")
         return None
 
 def main():
