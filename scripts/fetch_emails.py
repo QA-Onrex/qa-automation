@@ -7,7 +7,7 @@ import traceback
 zoho_user = os.getenv("ZOHO_EMAIL")
 zoho_pass = os.getenv("ZOHO_APP_PASSWORD")
 
-IMAP_SERVER = "imap.zoho.com"
+IMAP_SERVER = "imap.zoho.eu"
 SOURCE_FOLDER = "Automation"
 PROCESSED_FOLDER = "Automation/Processed"
 
