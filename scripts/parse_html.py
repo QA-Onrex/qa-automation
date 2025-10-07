@@ -31,7 +31,7 @@ def parse_fields_from_html(html_path):
         project = project_match.group(1) if project_match else None
 
         # Extract test suite ID
-        suite_match = re.search(r'"testSuiteId":"(.*?)"', text)
+        suite_match = re.search(r'"Test Suite ID":"(.*?)"', text)
         test_suite_id = suite_match.group(1) if suite_match else None
 
         # Extract profile
@@ -39,6 +39,7 @@ def parse_fields_from_html(html_path):
         profile = profile_match.group(1) if profile_match else None
 
         # Extract test case counts
+        test_cases_match = re.search(r'"test cases":(\d+)', text)
         passed_match = re.search(r'"passed":(\d+)', text)
         failed_match = re.search(r'"failed":(\d+)', text)
         error_match = re.search(r'"error":(\d+)', text)
@@ -55,6 +56,7 @@ def parse_fields_from_html(html_path):
             "project": project,
             "test_suite_id": test_suite_id,
             "profile": profile,
+            "test_cases": int(test_cases.group(1)) if test_cases_match else None,
             "passed": int(passed_match.group(1)) if passed_match else None,
             "failed": int(failed_match.group(1)) if failed_match else None,
             "error": int(error_match.group(1)) if error_match else None,
