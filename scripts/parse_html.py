@@ -20,7 +20,7 @@ if os.path.exists(RESULTS_FILE):
         results = []
 
 def parse_html_file(html_path):
-    """Parse embedded JSON from HTML and extract all test data fields."""
+    """Parse embedded JSON from HTML and extract all test data fields with color coding."""
     try:
         with open(html_path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -52,17 +52,29 @@ def parse_html_file(html_path):
         end = entity.get("endTime")
         retry_count = entity.get("retryCount")
 
-
-        # Compute duration in seconds if start and end are available
+        # Compute duration in minutes
         duration = None
         if start and end:
             try:
                 fmt = "%Y-%m-%dT%H:%M:%S.%f%z" if '+' in start or '-' in start else "%Y-%m-%dT%H:%M:%S.%fZ"
                 start_dt = datetime.strptime(start.replace('Z', '+0000'), fmt)
                 end_dt = datetime.strptime(end.replace('Z', '+0000'), fmt)
-                duration = (end_dt - start_dt).total_seconds()
+                duration = (end_dt - start_dt).total_seconds() / 60  # minutes
             except Exception:
                 duration = None
+
+        # Sum check
+        sum_check = True
+        if test_cases is not None:
+            total_sum = sum(filter(None, [passed, failed, error, incomplete, skipped]))
+            sum_check = (total_sum == test_cases)
+
+        # Color logic
+        color = "Red"  # default
+        if test_cases is not None and passed == test_cases and sum_check:
+            color = "Green"
+            if retry_count and retry_count != 0:
+                color = "Yellow"
 
         return {
             "html_file": os.path.join("data/html/processed", os.path.basename(html_path)),
@@ -78,7 +90,9 @@ def parse_html_file(html_path):
             "start": start,
             "end": end,
             "duration": duration,
-            "retry_count": retry_count
+            "retry_count": retry_count,
+            "sum_check": sum_check,
+            "color": color
         }
 
     except Exception as e:
