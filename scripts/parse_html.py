@@ -21,14 +21,20 @@ if os.path.exists(RESULTS_FILE):
         results = []
 
 def parse_project_field(html_path):
-    """Parse the Project field from HTML using BeautifulSoup."""
+    """Parse the Project field from HTML using text search."""
     try:
         with open(html_path, "r", encoding="utf-8") as f:
             soup = BeautifulSoup(f, "html.parser")
-        # Use the span class from your example
-        project_span = soup.find("span", class_="styled-pu1pnnpa css-ur07o6me")
-        if project_span:
-            return project_span.text.strip()
+
+        # Find the span containing "Project:"
+        label_span = soup.find(lambda tag: tag.name=="span" and "Project:" in tag.text)
+        if label_span and label_span.next_sibling:
+            value_span = label_span.next_sibling
+            # In case it's nested
+            if hasattr(value_span, "text"):
+                return value_span.text.strip()
+            else:
+                return str(value_span).strip()
         else:
             print(f"::warning::Project field not found in {html_path}")
             return None
