@@ -2,14 +2,14 @@ import os
 import json
 import shutil
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 HTML_FOLDER = "data/html"
 PROCESSED_FOLDER = os.path.join(HTML_FOLDER, "processed")
 RESULTS_FILE = "data/results.json"
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 
-# Load existing results.json
+# Load existing results.json into memory
 results = []
 if os.path.exists(RESULTS_FILE):
     try:
@@ -18,6 +18,34 @@ if os.path.exists(RESULTS_FILE):
     except json.JSONDecodeError:
         print("::warning::results.json is empty or invalid, starting fresh.")
         results = []
+
+def compute_retry_count(test_suite_id, start_time, results, hours=10):
+    """Compute retry count using chronological results, stop when older than 10 hours."""
+    retry_count = 0
+    if not test_suite_id or not start_time:
+        return 0
+    try:
+        start_dt = datetime.strptime(start_time.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
+        time_threshold = start_dt - timedelta(hours=hours)
+
+        # Iterate results in reverse chronological order
+        for rec in reversed(results):
+            rec_start = rec.get("start")
+            if not rec_start:
+                continue
+            rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
+            
+            # Stop as soon as the record is older than 10 hours
+            if rec_dt < time_threshold:
+                break
+            
+            if rec.get("test_suite_id") == test_suite_id:
+                retry_count += 1
+
+    except Exception:
+        pass
+
+    return retry_count
 
 def parse_html_file(html_path):
     """Parse embedded JSON from HTML and extract all test data fields with color coding."""
@@ -50,7 +78,6 @@ def parse_html_file(html_path):
 
         start = entity.get("startTime")
         end = entity.get("endTime")
-        retry_count = entity.get("retryCount")
 
         # Compute duration in minutes
         duration = None
@@ -62,6 +89,9 @@ def parse_html_file(html_path):
                 duration = (end_dt - start_dt).total_seconds() / 60  # minutes
             except Exception:
                 duration = None
+
+        # Compute retry count dynamically
+        retry_count = compute_retry_count(test_suite_id, start, results)
 
         # Sum check
         sum_check = True
