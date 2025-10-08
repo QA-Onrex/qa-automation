@@ -94,7 +94,7 @@ def build_dashboard():
 
     # Flatten all projects and suites into single table
     for project in sorted(data.keys()):
-        html.append(f"<tr><td class='project-header' colspan='{len(all_dates)+1}'>{project}</td></tr>")
+        html.append(f"<tr><td class='project-header'>{project}</td>" + "<td class='empty'></td>" * len(all_dates) + "</tr>")
         for suite in sorted(data[project].keys()):
             display_name = suite.replace("Test Suites/", "")
             html.append(f"<tr><td class='suite-name'>{display_name}</td>")
