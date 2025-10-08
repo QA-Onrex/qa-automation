@@ -1,330 +1,200 @@
-import json
 import os
+import json
 from datetime import datetime
-from collections import defaultdict
 
 RESULTS_FILE = "data/results.json"
 OUTPUT_FILE = "docs/index.html"
-REPORTS_DIR = "docs/reports"
+HTML_FOLDER = "data/html/processed"
 
-# Layout tuning
-CHAR_PX = 8         # approx px per character for left column calc
-MAX_CHARS = 200     # cap characters for left column width as requested
-MIN_LEFT_PX = 220
-MAX_LEFT_PX = 1200
-DATE_COL_PX = 96    # width for each date column (~10-12 chars)
-HEADER_HEIGHT_PX = 48
-MAX_DAYS = 365
+# Load results
+with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+    results = json.load(f)
 
-def load_results():
-    if not os.path.exists(RESULTS_FILE):
-        print(f"Warning: {RESULTS_FILE} not found.")
-        return []
-    try:
-        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"Error reading {RESULTS_FILE}: {e}")
-        return []
+# Organize by project and test_suite_id
+projects = {}
+for r in results:
+    project = r["project"]
+    suite = r["test_suite_id"] or "N/A"
+    if project not in projects:
+        projects[project] = {}
+    if suite not in projects[project]:
+        projects[project][suite] = []
+    projects[project][suite].append(r)
 
-def get_color(record):
-    total = record.get("test_cases", 0) or 0
-    passed = record.get("passed", 0) or 0
-    errored = record.get("error", 0) or 0
-    incomplete = record.get("incomplete", 0) or 0
-    skipped = record.get("skipped", 0) or 0
-    retry = record.get("retry_count", 0) or 0
+# For each suite, keep only latest entry per day
+for project in projects:
+    for suite in projects[project]:
+        # Sort by end time descending
+        projects[project][suite].sort(key=lambda x: x.get("end") or "", reverse=True)
+        daily = {}
+        filtered = []
+        for entry in projects[project][suite]:
+            if entry.get("end"):
+                day = entry["end"][:10]  # YYYY-MM-DD
+            else:
+                day = "N/A"
+            if day not in daily:
+                daily[day] = entry
+                filtered.append(entry)
+        projects[project][suite] = filtered
 
-    failed = record.get("failed")
-    if failed is None:
-        failed = total - passed if total else 0
+# Generate list of all dates for columns, descending
+all_dates = set()
+for project in projects.values():
+    for suite_entries in project.values():
+        for entry in suite_entries:
+            if entry.get("end"):
+                all_dates.add(entry["end"][:10])
+dates_sorted = sorted(all_dates, reverse=True)
 
-    total_calc = passed + failed + errored + incomplete + skipped
-    if total and total_calc != total:
-        return "red"
+# Start building HTML
+html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QA Automation Dashboard</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* remove page scroll */
+}
+.table-container {
+    width: 100%;
+    height: 95vh;
+    overflow: auto;
+    position: relative;
+}
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: max-content;
+    min-width: 100%;
+}
+th, td {
+    border: 1px solid #333;
+    padding: 5px;
+    text-align: center;
+    white-space: nowrap;
+}
+th {
+    position: sticky;
+    top: 0;
+    background: #1e1e1e;
+    z-index: 3;
+}
+.left-sticky {
+    position: sticky;
+    left: 0;
+    background: #1e1e1e;
+    font-weight: bold;
+    z-index: 2;
+    border-right: 1px solid #333; /* border between first column and data */
+}
+.corner-cell {
+    z-index: 4;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: max-content;
+    background-color: #222;
+    color: #fff;
+    text-align: left;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 10;
+    white-space: pre-line;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.passed { background-color: #4caf50; color: #fff; }
+.failed { background-color: #f44336; color: #fff; }
+.yellow { background-color: #ffeb3b; color: #000; }
+</style>
+</head>
+<body>
+<div class="table-container">
+<table>
+<tr>
+<th class="corner-cell left-sticky">Test Suite</th>
+"""
 
-    if total and passed == total:
-        return "yellow" if retry and retry != 0 else "green"
+# Header row with dates
+for d in dates_sorted:
+    html += f"<th>{d}</th>"
+html += "</tr>"
 
-    return "red"
+# Generate table rows
+for project_name in sorted(projects.keys()):
+    html += f'<tr><td class="left-sticky" colspan="{len(dates_sorted)+1}" style="text-align:left;font-weight:bold;">{project_name}</td></tr>'
+    for suite_name in sorted(projects[project_name].keys()):
+        display_suite = suite_name.replace("Test Suites/", "")
+        html += f'<tr><td class="left-sticky" style="text-align:left;">{display_suite}</td>'
+        suite_entries = projects[project_name][suite_name]
+        entries_by_date = {e.get("end", "N/A")[:10]: e for e in suite_entries if e.get("end")}
+        for d in dates_sorted:
+            entry = entries_by_date.get(d)
+            if entry:
+                passed = entry.get("passed") or 0
+                failed = entry.get("failed") or 0
+                error = entry.get("error") or 0
+                incomplete = entry.get("incomplete") or 0
+                skipped = entry.get("skipped") or 0
+                test_cases = entry.get("test_cases") or 0
+                retry = entry.get("retry_count") or 0
+                start = entry.get("start") or ""
+                end = entry.get("end") or ""
+                duration = entry.get("duration") or ""
 
-def escape_html(s):
-    if s is None:
-        return ""
-    return (str(s)
-            .replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace('"', "&quot;")
-            .replace("'", "&#39;"))
-
-def escape_attr(s):
-    return escape_html(s).replace("\n", " ").replace("\r", " ")
-
-def build_dashboard():
-    results = load_results()
-    if not results:
-        print("No results to build dashboard from.")
-        return
-
-    # Group results by project -> suite -> date (keep latest per day)
-    grouped = defaultdict(lambda: defaultdict(dict))
-    for r in results:
-        project = r.get("project", "Unknown Project")
-        suite = r.get("test_suite_id", "Unknown Suite")
-        start = r.get("start") or r.get("end")
-        if not start:
-            continue
-        try:
-            dt = datetime.fromisoformat(start.replace("Z", "+00:00"))
-            date_key = dt.strftime("%Y.%m.%d")
-        except Exception:
-            date_key = start[:10]
-        existing = grouped[project][suite].get(date_key)
-        compare_end = r.get("end") or r.get("start") or ""
-        if not existing or compare_end > (existing.get("end") or existing.get("start") or ""):
-            r["color"] = get_color(r)
-            grouped[project][suite][date_key] = r
-
-    # Collect all dates (latest first) limited to MAX_DAYS
-    all_dates = sorted(
-        {d for proj in grouped.values() for suite in proj.values() for d in suite.keys()},
-        reverse=True
-    )[:MAX_DAYS]
-
-    if not all_dates:
-        print("No dates found in results — nothing to render.")
-        return
-
-    # Determine longest display name (strip prefix) and cap by MAX_CHARS
-    max_len = 0
-    for project in grouped:
-        for suite in grouped[project]:
-            display_name = suite.replace("Test Suites/", "")
-            if len(display_name) > max_len:
-                max_len = len(display_name)
-    if max_len > MAX_CHARS:
-        max_len = MAX_CHARS
-    left_col_width = max(MIN_LEFT_PX, min(MAX_LEFT_PX, max_len * CHAR_PX + 24))
-
-    # Build HTML parts
-    parts = []
-    parts.append("<!doctype html>")
-    parts.append("<html lang='en'><head><meta charset='utf-8'><title>QA Automation Report</title>")
-    parts.append("<meta name='viewport' content='width=device-width, initial-scale=1'>")
-    parts.append("<style>")
-    # CSS: careful to avoid gaps and ensure sticky layering
-    parts.append(f"""
-html, body {{
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background: #121212;
-  color: #e0e0e0;
-  font-family: Inter, Roboto, Arial, sans-serif;
-}}
-
-/* keep some outer space using container margin (avoids interfering with sticky calculations) */
-.table-container {{
-  overflow: auto;
-  width: 100%;
-  max-height: 85vh;
-  margin: 16px;                /* page margin preserved here */
-  border: 1px solid #2b2b2b;
-  box-sizing: border-box;
-  scrollbar-gutter: stable both-edges; /* prevents 1-2px jump when scrollbar appears */
-  background: #0f0f0f;
-}}
-
-/* fixed-layout table with explicit colgroup */
-table.dashboard {{
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: max-content;
-  min-width: 100%;
-  table-layout: fixed;
-  margin: 0;
-}}
-col.left-col {{ width: {left_col_width}px; }}
-col.date-col {{ width: {DATE_COL_PX}px; }}
-
-th, td {{
-  border: 1px solid #2b2b2b;
-  padding: 6px 10px;
-  text-align: center;
-  white-space: nowrap;
-  box-sizing: border-box;
-}}
-
-/* Header row (dates) sticky at top of the scrolling container */
-thead th {{
-  position: sticky;
-  top: 0;
-  height: {HEADER_HEIGHT_PX}px;
-  line-height: {HEADER_HEIGHT_PX}px;
-  background: #202020;
-  z-index: 16;
-  margin: 0;
-}}
-
-/* top-left corner: sticky both top and left, highest z-index */
-th.corner {{
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 20;
-  background: #202020;
-  text-align: left;
-  padding-left: 12px;
-  border-left: none; /* remove left border so it aligns with container edge */
-  box-shadow: -1px 0 0 #2b2b2b; /* cover the container border seam */
-}}
-
-/* left sticky cells (suite name and the project-left cell) - they sit below the header */
-.left-sticky {{
-  position: sticky;
-  left: 0;
-  top: {HEADER_HEIGHT_PX}px; /* place below header row */
-  z-index: 17;
-  background: #111111;
-  text-align: left;
-  padding-left: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-left: none; /* remove border to avoid 1px seam */
-  box-shadow: -1px 0 0 #2b2b2b; /* draw a 1px line to visually match container border */
-}}
-.left-sticky a {{ display:block; color:inherit; text-decoration:none; }}
-
-/* project header right cell */
-.project-row-right {{
-  background: #181818;
-  color: #fff;
-  font-weight: 700;
-  text-align: left;
-  padding-left: 12px;
-}}
-
-/* cell colors */
-td.green {{ background: #2e7d32; color: #fff; }}
-td.yellow {{ background: #f9a825; color: #000; }}
-td.red {{ background: #c62828; color: #fff; }}
-td.empty {{ background: #0f0f0f; color: #666; }}
-
-/* fill cell link */
-.cell-link {{ display:block; width:100%; height:100%; color:inherit; text-decoration:none; }}
-
-/* tooltip */
-.tooltip {{ position: relative; display: inline-block; }}
-.tooltip .tooltiptext {{
-  visibility: hidden; opacity: 0; transition: opacity .18s;
-  position: absolute; left: 50%; transform: translateX(-50%); bottom: 125%;
-  background: #222; color: #fff; padding: 8px 10px; border-radius: 6px; white-space: normal;
-  text-align: left; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-  width: 320px; font-size: 13px;
-}}
-.tooltip:hover .tooltiptext {{ visibility: visible; opacity: 1; }}
-.tooltip .tooltiptext b {{ display:inline-block; width: 95px; }}
-
-/* small screens */
-@media (max-width: 800px) {{
-  .left-sticky {{ min-width: 160px; max-width: 320px; }}
-}}
-""")
-    parts.append("</style></head><body>")
-    parts.append("<div>")
-    parts.append("<h1 style='margin:16px;'>QA Automation Report</h1>")
-    parts.append("<div class='table-container'>")
-
-    # table start + colgroup (first col + date cols)
-    parts.append("<table class='dashboard'>")
-    parts.append("<colgroup>")
-    parts.append("<col class='left-col'/>")
-    for _ in all_dates:
-        parts.append("<col class='date-col'/>")
-    parts.append("</colgroup>")
-
-    # header
-    parts.append("<thead><tr>")
-    parts.append("<th class='corner'>Test Suite</th>")
-    for d in all_dates:
-        parts.append(f"<th>{escape_html(d[5:])}</th>")
-    parts.append("</tr></thead>")
-
-    # body
-    parts.append("<tbody>")
-    for project in sorted(grouped.keys()):
-        colspan = len(all_dates)
-        # project row: left sticky project name, right spans data columns as header background
-        parts.append("<tr>")
-        parts.append(f"<td class='left-sticky'><strong>{escape_html(project)}</strong></td>")
-        parts.append(f"<td class='project-row-right' colspan='{colspan}'></td>")
-        parts.append("</tr>")
-
-        for suite in sorted(grouped[project].keys()):
-            display_name = suite.replace("Test Suites/", "")
-            parts.append("<tr>")
-            parts.append(f"<td class='left-sticky'>{escape_html(display_name)}</td>")
-
-            for d in all_dates:
-                entry = grouped[project][suite].get(d)
-                if not entry:
-                    parts.append("<td class='empty'>–</td>")
-                    continue
-
-                total = entry.get("test_cases", 0) or 0
-                passed = entry.get("passed", 0) or 0
-                failed_display = entry.get("failed")
-                if failed_display is None:
-                    failed_display = total - passed if total else 0
-                color = entry.get("color", "red")
-
-                tooltip_lines = [
-                    ("Test Cases", str(total)),
-                    ("Passed", str(passed)),
-                    ("Failed", str(failed_display)),
-                    ("Error", str(entry.get("error", 0) or 0)),
-                    ("Incomplete", str(entry.get("incomplete", 0) or 0)),
-                    ("Skipped", str(entry.get("skipped", 0) or 0)),
-                    ("Retries", str(entry.get("retry_count", 0) or 0)),
-                    ("Start", entry.get("start", "–")),
-                    ("End", entry.get("end", "–")),
-                    ("Duration", f"{entry.get('duration', '–')} min")
-                ]
-                tooltip_html = "<br>".join(f"<b>{escape_html(k)}:</b> {escape_html(v)}" for k, v in tooltip_lines)
-
-                html_file = entry.get("html_file", "")
-                filename = os.path.basename(html_file) if html_file else ""
-                link_href = None
-                if filename:
-                    candidate = os.path.join(REPORTS_DIR, filename)
-                    if os.path.exists(candidate):
-                        link_href = f"reports/{escape_attr(filename)}"
-
-                display_text = f"{passed}/{failed_display}"
-
-                if link_href:
-                    cell_inner = (
-                        f"<div class='tooltip'>"
-                        f"<a class='cell-link' href='{escape_attr(link_href)}' target='_blank'>{escape_html(display_text)}</a>"
-                        f"<div class='tooltiptext'>{tooltip_html}</div></div>"
-                    )
+                # Compute color
+                sum_check = passed + failed + error + incomplete + skipped
+                if sum_check != test_cases or passed != test_cases:
+                    color_class = "failed"
+                elif retry > 0:
+                    color_class = "yellow"
                 else:
-                    cell_inner = (
-                        f"<div class='tooltip'><span class='cell-link'>{escape_html(display_text)}</span>"
-                        f"<div class='tooltiptext'>{tooltip_html}</div></div>"
-                    )
+                    color_class = "passed"
 
-                parts.append(f"<td class='{color}'>{cell_inner}</td>")
+                tooltip = (f"Test Cases: {test_cases}\n"
+                           f"Passed: {passed}\n"
+                           f"Failed: {failed}\n"
+                           f"Error: {error}\n"
+                           f"Incomplete: {incomplete}\n"
+                           f"Skipped: {skipped}\n"
+                           f"Retry: {retry}\n"
+                           f"Start: {start}\n"
+                           f"End: {end}\n"
+                           f"Duration: {duration}")
 
-            parts.append("</tr>")
-    parts.append("</tbody></table></div></div></body></html>")
+                html += (f'<td class="{color_class} tooltip">'
+                         f'{passed}/{test_cases}'
+                         f'<span class="tooltiptext">{tooltip}</span>'
+                         f'<a href="../{entry["html_file"]}" target="_blank"></a>'
+                         f'</td>')
+            else:
+                html += "<td></td>"
+        html += "</tr>"
 
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("\n".join(parts))
+html += """
+</table>
+</div>
+</body>
+</html>
+"""
 
-    print(f"✅ Dashboard updated: {OUTPUT_FILE}")
+# Write HTML
+os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    f.write(html)
 
-if __name__ == "__main__":
-    build_dashboard()
+print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
