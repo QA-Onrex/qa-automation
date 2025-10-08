@@ -39,7 +39,6 @@ def build_dashboard():
 
     # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
-
     for r in results:
         project = r.get("project", "Unknown")
         suite = r.get("test_suite_id", "Unknown")
@@ -47,28 +46,14 @@ def build_dashboard():
         if not start:
             continue
         date = datetime.fromisoformat(start.replace("Z", "+00:00")).strftime("%Y.%m.%d")
-
-        # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
             r["color"] = get_color(r)
             data[project][suite][date] = r
 
-    # Calculate maximum suite name length for adaptive column width
-    max_length = 0
-    for project in data:
-        for suite in data[project]:
-            name = suite.replace("Test Suites/", "")
-            if len(name) > max_length:
-                max_length = len(name)
+    max_length = max(len(suite.replace("Test Suites/", "")) for project in data for suite in data[project])
     left_col_width = max_length * 9 + 16  # approximate pixel width
+    all_dates = sorted({d for proj in data.values() for suite in proj.values() for d in suite.keys()}, reverse=True)[:365]
 
-    # Collect all dates (latest first)
-    all_dates = sorted(
-        {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
-        reverse=True
-    )[:365]
-
-    # Build HTML
     html = [
         "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
         "<style>",
@@ -76,12 +61,12 @@ def build_dashboard():
         "h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }",
         "table { border-collapse: collapse; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
-        "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }",
+        "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 3; }",
         "td.green { background-color: #2e7d32; color: #fff; }",
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
-        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; }}",
+        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index:2; }}",
         ".table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }",
         "</style></head><body>",
         "<h1>QA Automation Report</h1>",
@@ -90,7 +75,7 @@ def build_dashboard():
         "<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>"
     ]
 
-    # Flatten all projects and suites into single table
+    # Single table for all projects
     for project in sorted(data.keys()):
         html.append(f"<tr><td class='suite-name' colspan='{len(all_dates)+1}'><b>{project}</b></td></tr>")
         for suite in sorted(data[project].keys()):
@@ -109,7 +94,7 @@ def build_dashboard():
             html.append("</tr>")
 
     html.append("</table>")
-    html.append("</div>")  # close table-container
+    html.append("</div>")
     html.append("</body></html>")
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
