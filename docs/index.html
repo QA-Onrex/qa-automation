@@ -3,43 +3,91 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <style>
 
-body {
+/* Page reset */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   background: #121212;
   color: #e0e0e0;
   font-family: Inter, Roboto, Arial, sans-serif;
-  margin: 16px;
 }
-h1 {
-  color: #fff;
-  margin: 8px 0 16px 0;
+
+/* Page padding so content isn't glued to viewport */
+.page-wrapper {
+  padding: 16px;
+  box-sizing: border-box;
 }
+
+/* Container that handles both scrollbars.
+   scrollbar-gutter: stable ensures vertical scrollbar space is always reserved (avoids 1-2px jump). */
 .table-container {
-  overflow-x: auto;
-  overflow-y: auto;
+  overflow: auto;
   width: 100%;
-  max-height: 85vh;
+  max-height: 85vh;          /* vertical scroll inside container */
   border: 1px solid #2b2b2b;
   box-sizing: border-box;
   scrollbar-gutter: stable both-edges;
+  background: #0f0f0f;
 }
+
+/* Table layout fixed so col widths are exact and stable */
 table.dashboard {
   border-collapse: collapse;
+  border-spacing: 0;
   width: max-content;
   min-width: 100%;
   table-layout: fixed;
+  margin: 0;
 }
+
+/* Columns and cells */
+col.left-col { width: 536px; }
+col.date-col { width: 96px; }
 th, td {
   border: 1px solid #2b2b2b;
   padding: 6px 10px;
   text-align: center;
   white-space: nowrap;
+  box-sizing: border-box;
 }
-th {
-  background: #202020;
+/* Header (dates) sticky at top of the scrolling container */
+thead th {
   position: sticky;
   top: 0;
-  z-index: 10;
+  height: 48px;
+  line-height: 48px;
+  background: #202020;
+  z-index: 14;
+  margin: 0;
 }
+
+/* Top-left corner: sticky both top and left */
+th.corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 18;
+  background: #202020;
+  text-align: left;
+  padding-left: 12px;
+}
+
+/* Left sticky cells (suite names, project-left cell) — they sit below header,
+   so they use top offset = HEADER_HEIGHT_PX to avoid overlap. */
+.left-sticky {
+  position: sticky;
+  left: 0;
+  top: 48px;
+  z-index: 13;
+  background: #111111;
+  text-align: left;
+  padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Project header right cell uses background and spans dates; keep it behind header */
 .project-row-right {
   background: #181818;
   color: #fff;
@@ -47,97 +95,64 @@ th {
   text-align: left;
   padding-left: 12px;
 }
-.left-sticky {
-  position: sticky;
-  left: 0;
-  z-index: 12;
-  background: #111111;
-  text-align: left;
-  padding-left: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.left-sticky a {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-}
-td.green { background:#2e7d32; color:#fff; }
-td.yellow { background:#f9a825; color:#000; }
-td.red { background:#c62828; color:#fff; }
-td.empty { background:#1b1b1b; color:#666; }
-.cell-link {
-  display:block;
-  width:100%;
-  height:100%;
-  color:inherit;
-  text-decoration:none;
-}
-.tooltip {
-  position:relative;
-  display:inline-block;
-}
+
+/* Colors for result cells */
+td.green { background: #2e7d32; color: #fff; }
+td.yellow { background: #f9a825; color: #000; }
+td.red { background: #c62828; color: #fff; }
+td.empty { background: #0f0f0f; color: #666; }
+
+/* Make link fill the cell */
+.cell-link { display:block; width:100%; height:100%; color:inherit; text-decoration:none; }
+
+/* Tooltip */
+.tooltip { position: relative; display: inline-block; }
 .tooltip .tooltiptext {
-  visibility:hidden;
-  opacity:0;
-  transition:opacity .18s;
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:125%;
-  background:#222;
-  color:#fff;
-  padding:8px 10px;
-  border-radius:6px;
-  white-space:normal;
-  text-align:left;
-  z-index:50;
-  box-shadow:0 4px 10px rgba(0,0,0,0.6);
-  width:280px;
-  font-size:13px;
+  visibility: hidden; opacity: 0; transition: opacity .18s;
+  position: absolute; left: 50%; transform: translateX(-50%); bottom: 125%;
+  background: #222; color: #fff; padding: 8px 10px; border-radius: 6px;
+  white-space: normal; text-align: left; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  width: 320px; font-size: 13px;
 }
-.tooltip:hover .tooltiptext {
-  visibility:visible;
-  opacity:1;
+.tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+.tooltip .tooltiptext b { display: inline-block; width: 95px; }
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+  .left-sticky { min-width: 160px; max-width: 320px; }
 }
-.tooltip .tooltiptext b {
-  display:inline-block;
-  width:90px;
-}
-@media (max-width:800px){
-  .left-sticky { min-width:160px; max-width:320px; }
-}
-    
+
 </style></head><body>
+<div class='page-wrapper'>
 <h1>QA Automation Report</h1>
 <div class='table-container'>
 <table class='dashboard'>
 <colgroup>
-<col style='width: 536px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
-<col style='width: 96px;'/>
+<col class='left-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
+<col class='date-col'/>
 </colgroup>
 <thead><tr>
-<th class='left-sticky'>Test Suite</th>
+<th class='corner'>Test Suite</th>
 <th>10.08</th>
 <th>10.07</th>
 <th>10.06</th>
@@ -166,36 +181,12 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='project-row-right' colspan='21'></td>
 </tr>
 <tr>
-<td class='left-sticky'><div>3_vehicle page/3a_vehicle identification VIN</div></td>
+<td class='left-sticky'>3_vehicle page/3a_vehicle identification VIN</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251002_015347_1759365219225.html' target='_blank'>10/0</a><div class='tooltiptext'><b>Test Cases:</b> 10<br><b>Passed:</b> 10<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-02T02:27:47.721+02:00<br><b>End:</b> 2025-10-02T02:33:38.967+02:00<br><b>Duration:</b> 5.8541 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251006_015420_1759712546599.html' target='_blank'>2/6</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 2<br><b>Failed:</b> 6<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-06T03:00:09.698+02:00<br><b>End:</b> 2025-10-06T03:02:22.484+02:00<br><b>Duration:</b> 2.2131 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251002_015347_1759365219225.html' target='_blank'>10/0</a><div class='tooltiptext'><b>Test Cases:</b> 10<br><b>Passed:</b> 10<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-02T02:27:47.721+02:00<br><b>End:</b> 2025-10-02T02:33:38.967+02:00<br><b>Duration:</b> 5.8541 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -214,226 +205,10 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>3_vehicle page/3e_vehicle states tab</div></td>
+<td class='left-sticky'>3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250926_030203_1758862272362.html' target='_blank'>12/1</a><div class='tooltiptext'><b>Test Cases:</b> 13<br><b>Passed:</b> 12<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-26T06:46:34.790+02:00<br><b>End:</b> 2025-09-26T06:51:11.677+02:00<br><b>Duration:</b> 4.6147833333333335 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>3_vehicle page/3g_vehicle tires tab</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250926_015435_1758848996434.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-26T03:07:10.366+02:00<br><b>End:</b> 2025-09-26T03:09:55.880+02:00<br><b>Duration:</b> 2.758566666666667 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>6_valuation/6c_valuation ExpertPlusPartner</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251001_015458_1759284132817.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-01T03:56:29.321+02:00<br><b>End:</b> 2025-10-01T04:02:12.168+02:00<br><b>Duration:</b> 5.7141166666666665 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250925_015459_1758765502618.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-25T03:52:41.509+02:00<br><b>End:</b> 2025-09-25T03:58:22.029+02:00<br><b>Duration:</b> 5.675333333333333 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>8_media page</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250929_042014_1759121987410.html' target='_blank'>8/1</a><div class='tooltiptext'><b>Test Cases:</b> 9<br><b>Passed:</b> 8<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-29T06:53:02.648+02:00<br><b>End:</b> 2025-09-29T06:59:46.429+02:00<br><b>Duration:</b> 6.729683333333333 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>Accounting</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_044142_1759468651639.html' target='_blank'>2/2</a><div class='tooltiptext'><b>Test Cases:</b> 4<br><b>Passed:</b> 2<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-03T07:14:43.656+02:00<br><b>End:</b> 2025-10-03T07:17:30.537+02:00<br><b>Duration:</b> 2.78135 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>billing/DoD Regression/DYNAREX on Demand</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250829_015544_1756439266731.html' target='_blank'>5/1</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 5<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-29T05:40:14.350+02:00<br><b>End:</b> 2025-08-29T05:47:45.910+02:00<br><b>Duration:</b> 7.526 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250826_055155_1756185204785.html' target='_blank'>5/1</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 5<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-26T07:06:33.507+02:00<br><b>End:</b> 2025-08-26T07:13:23.691+02:00<br><b>Duration:</b> 6.8364 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_015544_1755661244839.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 3<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 2<br><b>Start:</b> 2025-08-20T05:39:29.350+02:00<br><b>End:</b> 2025-08-20T05:40:44.406+02:00<br><b>Duration:</b> 1.2509333333333332 min</div></div></td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250819_065103_1755581244131.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 3<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 3<br><b>Start:</b> 2025-08-19T07:26:09.232+02:00<br><b>End:</b> 2025-08-19T07:27:23.971+02:00<br><b>Duration:</b> 1.2456500000000001 min</div></div></td>
-</tr>
-<tr>
-<td class='left-sticky'><div>billing/DoD Regression/DYNAREX on Demand - without old case</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_063014_1755666395988.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 2<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-20T07:05:27.085+02:00<br><b>End:</b> 2025-08-20T07:06:35.663+02:00<br><b>Duration:</b> 1.1429666666666667 min</div></div></td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>billing/DoD Regression/member - get final DoD check</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250827_015557_1756267296556.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-27T06:00:40.057+02:00<br><b>End:</b> 2025-08-27T06:01:35.710+02:00<br><b>Duration:</b> 0.92755 min</div></div></td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250826_015555_1756180763472.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-26T05:58:26.857+02:00<br><b>End:</b> 2025-08-26T05:59:22.578+02:00<br><b>Duration:</b> 0.9286833333333333 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='yellow'><div class='tooltip'><a class='cell-link' href='reports/20250820_015556_1755661425951.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 1<br><b>Start:</b> 2025-08-20T05:42:49.004+02:00<br><b>End:</b> 2025-08-20T05:43:44.972+02:00<br><b>Duration:</b> 0.9328000000000001 min</div></div></td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>billing/DoD Regression/member - get initial billing counts</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250820_015548_1755661289552.html' target='_blank'>1/0</a><div class='tooltiptext'><b>Test Cases:</b> 1<br><b>Passed:</b> 1<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-20T05:40:51.638+02:00<br><b>End:</b> 2025-08-20T05:41:28.652+02:00<br><b>Duration:</b> 0.6169 min</div></div></td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>billing/State assessment/Billing state assessment for new client</div></td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251008_160113_1759932471792.html' target='_blank'>22/0</a><div class='tooltiptext'><b>Test Cases:</b> 22<br><b>Passed:</b> 22<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-08T16:01:21.624+02:00<br><b>End:</b> 2025-10-08T16:07:51.456+02:00<br><b>Duration:</b> 6.4972 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251006_015420_1759712546599.html' target='_blank'>2/6</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 2<br><b>Failed:</b> 6<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-06T03:00:09.698+02:00<br><b>End:</b> 2025-10-06T03:02:22.484+02:00<br><b>Duration:</b> 2.2131 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -454,9 +229,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>billing/State assessment/billing state assessment</div></td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251007_132739_1759837285849.html' target='_blank'>25/2</a><div class='tooltiptext'><b>Test Cases:</b> 27<br><b>Passed:</b> 25<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-07T13:27:47.410+02:00<br><b>End:</b> 2025-10-07T13:41:24.870+02:00<br><b>Duration:</b> 13.624333333333334 min</div></div></td>
+<td class='left-sticky'>3_vehicle page/3e_vehicle states tab</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -465,55 +238,9 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250926_030203_1758862272362.html' target='_blank'>12/1</a><div class='tooltiptext'><b>Test Cases:</b> 13<br><b>Passed:</b> 12<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-26T06:46:34.790+02:00<br><b>End:</b> 2025-09-26T06:51:11.677+02:00<br><b>Duration:</b> 4.6147833333333335 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250828_015559_1756354072674.html' target='_blank'>21/0</a><div class='tooltiptext'><b>Test Cases:</b> 21<br><b>Passed:</b> 21<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-28T05:58:20.142+02:00<br><b>End:</b> 2025-08-28T06:07:51.109+02:00<br><b>Duration:</b> 9.516116666666667 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>invoice</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250929_015535_1759114077660.html' target='_blank'>13/1</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 13<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-29T04:39:08.086+02:00<br><b>End:</b> 2025-09-29T04:47:56.457+02:00<br><b>Duration:</b> 8.806183333333333 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250829_043531_1756440855221.html' target='_blank'>14/0</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 14<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-29T06:06:39.046+02:00<br><b>End:</b> 2025-08-29T06:14:14.516+02:00<br><b>Duration:</b> 7.591166666666667 min</div></div></td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250828_015527_1756348628275.html' target='_blank'>14/0</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 14<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-28T04:29:18.254+02:00<br><b>End:</b> 2025-08-28T04:37:07.988+02:00<br><b>Duration:</b> 7.8289 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250821_043508_1755749767963.html' target='_blank'>14/0</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 14<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-21T06:09:03.361+02:00<br><b>End:</b> 2025-08-21T06:16:07.571+02:00<br><b>Duration:</b> 7.070166666666666 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>settings/Test invoice number structure settings</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_052617_1759470122325.html' target='_blank'>3/5</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 3<br><b>Failed:</b> 5<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-03T07:26:24.138+02:00<br><b>End:</b> 2025-10-03T07:42:00.092+02:00<br><b>Duration:</b> 15.599233333333332 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250925_051636_1758778610878.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-25T07:05:27.178+02:00<br><b>End:</b> 2025-09-25T07:36:49.953+02:00<br><b>Duration:</b> 31.379583333333336 min</div></div></td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250924_045809_1758693630335.html' target='_blank'>5/3</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 5<br><b>Failed:</b> 3<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-24T07:32:49.970+02:00<br><b>End:</b> 2025-09-24T08:00:28.885+02:00<br><b>Duration:</b> 27.64858333333333 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -526,17 +253,17 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>settings/invoice settings</div></td>
+<td class='left-sticky'>3_vehicle page/3g_vehicle tires tab</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250930_015537_1759200757957.html' target='_blank'>9/0</a><div class='tooltiptext'><b>Test Cases:</b> 9<br><b>Passed:</b> 9<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-30T04:43:28.671+02:00<br><b>End:</b> 2025-09-30T04:52:37.146+02:00<br><b>Duration:</b> 9.141250000000001 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250925_044220_1758776234424.html' target='_blank'>9/0</a><div class='tooltiptext'><b>Test Cases:</b> 9<br><b>Passed:</b> 9<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-25T06:48:26.248+02:00<br><b>End:</b> 2025-09-25T06:57:14.045+02:00<br><b>Duration:</b> 8.796616666666667 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250926_015435_1758848996434.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-26T03:07:10.366+02:00<br><b>End:</b> 2025-09-26T03:09:55.880+02:00<br><b>Duration:</b> 2.758566666666667 min</div></div></td>
+<td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -550,22 +277,22 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>settings/workflow/invoice wf - allowed actions</div></td>
+<td class='left-sticky'>6_valuation/6c_valuation ExpertPlusPartner</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251001_015458_1759284132817.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-01T03:56:29.321+02:00<br><b>End:</b> 2025-10-01T04:02:12.168+02:00<br><b>Duration:</b> 5.7141166666666665 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250925_015459_1758765502618.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-25T03:52:41.509+02:00<br><b>End:</b> 2025-09-25T03:58:22.029+02:00<br><b>Duration:</b> 5.675333333333333 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250827_015540_1756266606376.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-27T05:44:05.299+02:00<br><b>End:</b> 2025-08-27T05:50:06.115+02:00<br><b>Duration:</b> 6.013599999999999 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -574,14 +301,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>settings/workflow/workflow settings</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_055826_1759472008626.html' target='_blank'>29/30</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 29<br><b>Failed:</b> 30<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-03T07:42:06.587+02:00<br><b>End:</b> 2025-10-03T08:13:14.297+02:00<br><b>Duration:</b> 31.1285 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250930_124259_1759242690445.html' target='_blank'>57/2</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 57<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-30T15:55:31.968+02:00<br><b>End:</b> 2025-09-30T16:31:29.063+02:00<br><b>Duration:</b> 35.95158333333333 min</div></div></td>
+<td class='left-sticky'>8_media page</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -589,12 +309,307 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250929_042014_1759121987410.html' target='_blank'>8/1</a><div class='tooltiptext'><b>Test Cases:</b> 9<br><b>Passed:</b> 8<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-29T06:53:02.648+02:00<br><b>End:</b> 2025-09-29T06:59:46.429+02:00<br><b>Duration:</b> 6.729683333333333 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250825_065250_1756100765414.html' target='_blank'>58/1</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 58<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 1<br><b>Start:</b> 2025-08-25T07:12:25.811+02:00<br><b>End:</b> 2025-08-25T07:46:03.205+02:00<br><b>Duration:</b> 33.62323333333333 min</div></div></td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250822_064910_1755840592018.html' target='_blank'>58/1</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 58<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-22T06:56:11.493+02:00<br><b>End:</b> 2025-08-22T07:29:49.993+02:00<br><b>Duration:</b> 33.641666666666666 min</div></div></td>
 <td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_062737_1755666239235.html' target='_blank'>58/1</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 58<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-08-20T06:30:17.799+02:00<br><b>End:</b> 2025-08-20T07:03:57.301+02:00<br><b>Duration:</b> 33.658366666666666 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>Accounting</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_044142_1759468651639.html' target='_blank'>2/2</a><div class='tooltiptext'><b>Test Cases:</b> 4<br><b>Passed:</b> 2<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T07:14:43.656+02:00<br><b>End:</b> 2025-10-03T07:17:30.537+02:00<br><b>Duration:</b> 2.78135 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>billing/DoD Regression/DYNAREX on Demand</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250829_015544_1756439266731.html' target='_blank'>5/1</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 5<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-29T05:40:14.350+02:00<br><b>End:</b> 2025-08-29T05:47:45.910+02:00<br><b>Duration:</b> 7.526 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250826_055155_1756185204785.html' target='_blank'>5/1</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 5<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-26T07:06:33.507+02:00<br><b>End:</b> 2025-08-26T07:13:23.691+02:00<br><b>Duration:</b> 6.8364 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_015544_1755661244839.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 3<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 2<br><b>Start:</b> 2025-08-20T05:39:29.350+02:00<br><b>End:</b> 2025-08-20T05:40:44.406+02:00<br><b>Duration:</b> 1.2509333333333332 min</div></div></td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250819_065103_1755581244131.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 3<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 3<br><b>Start:</b> 2025-08-19T07:26:09.232+02:00<br><b>End:</b> 2025-08-19T07:27:23.971+02:00<br><b>Duration:</b> 1.2456500000000001 min</div></div></td>
+</tr>
+<tr>
+<td class='left-sticky'>billing/DoD Regression/DYNAREX on Demand - without old case</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_063014_1755666395988.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 2<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-20T07:05:27.085+02:00<br><b>End:</b> 2025-08-20T07:06:35.663+02:00<br><b>Duration:</b> 1.1429666666666667 min</div></div></td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>billing/DoD Regression/member - get final DoD check</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250827_015557_1756267296556.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-27T06:00:40.057+02:00<br><b>End:</b> 2025-08-27T06:01:35.710+02:00<br><b>Duration:</b> 0.92755 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250826_015555_1756180763472.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-26T05:58:26.857+02:00<br><b>End:</b> 2025-08-26T05:59:22.578+02:00<br><b>Duration:</b> 0.9286833333333333 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='yellow'><div class='tooltip'><a class='cell-link' href='reports/20250820_015556_1755661425951.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 1<br><b>Start:</b> 2025-08-20T05:42:49.004+02:00<br><b>End:</b> 2025-08-20T05:43:44.972+02:00<br><b>Duration:</b> 0.9328000000000001 min</div></div></td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>billing/DoD Regression/member - get initial billing counts</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250820_015548_1755661289552.html' target='_blank'>1/0</a><div class='tooltiptext'><b>Test Cases:</b> 1<br><b>Passed:</b> 1<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-20T05:40:51.638+02:00<br><b>End:</b> 2025-08-20T05:41:28.652+02:00<br><b>Duration:</b> 0.6169 min</div></div></td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>billing/State assessment/Billing state assessment for new client</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251008_160113_1759932471792.html' target='_blank'>22/0</a><div class='tooltiptext'><b>Test Cases:</b> 22<br><b>Passed:</b> 22<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-08T16:01:21.624+02:00<br><b>End:</b> 2025-10-08T16:07:51.456+02:00<br><b>Duration:</b> 6.4972 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>billing/State assessment/billing state assessment</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251007_132739_1759837285849.html' target='_blank'>25/2</a><div class='tooltiptext'><b>Test Cases:</b> 27<br><b>Passed:</b> 25<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-07T13:27:47.410+02:00<br><b>End:</b> 2025-10-07T13:41:24.870+02:00<br><b>Duration:</b> 13.624333333333334 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250828_015559_1756354072674.html' target='_blank'>21/0</a><div class='tooltiptext'><b>Test Cases:</b> 21<br><b>Passed:</b> 21<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-28T05:58:20.142+02:00<br><b>End:</b> 2025-08-28T06:07:51.109+02:00<br><b>Duration:</b> 9.516116666666667 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>invoice</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250929_015535_1759114077660.html' target='_blank'>13/1</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 13<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-29T04:39:08.086+02:00<br><b>End:</b> 2025-09-29T04:47:56.457+02:00<br><b>Duration:</b> 8.806183333333333 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250829_043531_1756440855221.html' target='_blank'>14/0</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 14<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-29T06:06:39.046+02:00<br><b>End:</b> 2025-08-29T06:14:14.516+02:00<br><b>Duration:</b> 7.591166666666667 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250828_015527_1756348628275.html' target='_blank'>14/0</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 14<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-28T04:29:18.254+02:00<br><b>End:</b> 2025-08-28T04:37:07.988+02:00<br><b>Duration:</b> 7.8289 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250821_043508_1755749767963.html' target='_blank'>14/0</a><div class='tooltiptext'><b>Test Cases:</b> 14<br><b>Passed:</b> 14<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-21T06:09:03.361+02:00<br><b>End:</b> 2025-08-21T06:16:07.571+02:00<br><b>Duration:</b> 7.070166666666666 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>settings/Test invoice number structure settings</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_052617_1759470122325.html' target='_blank'>3/5</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 3<br><b>Failed:</b> 5<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T07:26:24.138+02:00<br><b>End:</b> 2025-10-03T07:42:00.092+02:00<br><b>Duration:</b> 15.599233333333332 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250925_051636_1758778610878.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-25T07:05:27.178+02:00<br><b>End:</b> 2025-09-25T07:36:49.953+02:00<br><b>Duration:</b> 31.379583333333336 min</div></div></td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250924_045809_1758693630335.html' target='_blank'>5/3</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 5<br><b>Failed:</b> 3<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-24T07:32:49.970+02:00<br><b>End:</b> 2025-09-24T08:00:28.885+02:00<br><b>Duration:</b> 27.64858333333333 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>settings/invoice settings</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250930_015537_1759200757957.html' target='_blank'>9/0</a><div class='tooltiptext'><b>Test Cases:</b> 9<br><b>Passed:</b> 9<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-30T04:43:28.671+02:00<br><b>End:</b> 2025-09-30T04:52:37.146+02:00<br><b>Duration:</b> 9.141250000000001 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250925_044220_1758776234424.html' target='_blank'>9/0</a><div class='tooltiptext'><b>Test Cases:</b> 9<br><b>Passed:</b> 9<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-25T06:48:26.248+02:00<br><b>End:</b> 2025-09-25T06:57:14.045+02:00<br><b>Duration:</b> 8.796616666666667 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>settings/workflow/invoice wf - allowed actions</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250827_015540_1756266606376.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-27T05:44:05.299+02:00<br><b>End:</b> 2025-08-27T05:50:06.115+02:00<br><b>Duration:</b> 6.013599999999999 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>settings/workflow/workflow settings</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_055826_1759472008626.html' target='_blank'>29/30</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 29<br><b>Failed:</b> 30<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T07:42:06.587+02:00<br><b>End:</b> 2025-10-03T08:13:14.297+02:00<br><b>Duration:</b> 31.1285 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250930_124259_1759242690445.html' target='_blank'>57/2</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 57<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-30T15:55:31.968+02:00<br><b>End:</b> 2025-09-30T16:31:29.063+02:00<br><b>Duration:</b> 35.95158333333333 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250825_065250_1756100765414.html' target='_blank'>58/1</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 58<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 1<br><b>Start:</b> 2025-08-25T07:12:25.811+02:00<br><b>End:</b> 2025-08-25T07:46:03.205+02:00<br><b>Duration:</b> 33.62323333333333 min</div></div></td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250822_064910_1755840592018.html' target='_blank'>58/1</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 58<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-22T06:56:11.493+02:00<br><b>End:</b> 2025-08-22T07:29:49.993+02:00<br><b>Duration:</b> 33.641666666666666 min</div></div></td>
+<td class='empty'>–</td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_062737_1755666239235.html' target='_blank'>58/1</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 58<br><b>Failed:</b> 1<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-20T06:30:17.799+02:00<br><b>End:</b> 2025-08-20T07:03:57.301+02:00<br><b>Duration:</b> 33.658366666666666 min</div></div></td>
 <td class='empty'>–</td>
 </tr>
 <tr>
@@ -602,16 +617,12 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='project-row-right' colspan='21'></td>
 </tr>
 <tr>
-<td class='left-sticky'><div>Settings/Permissions - Standart roles</div></td>
+<td class='left-sticky'>Settings/Permissions - Standart roles</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251003_113631_1759484304362.html' target='_blank'>15/0</a><div class='tooltiptext'><b>Test Cases:</b> 15<br><b>Passed:</b> 15<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-03T11:36:45.708+02:00<br><b>End:</b> 2025-10-03T11:38:23.624+02:00<br><b>Duration:</b> 1.6319333333333332 min</div></div></td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251002_163034_1759415535153.html' target='_blank'>13/0</a><div class='tooltiptext'><b>Test Cases:</b> 13<br><b>Passed:</b> 13<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-02T16:30:47.263+02:00<br><b>End:</b> 2025-10-02T16:32:14.557+02:00<br><b>Duration:</b> 1.4548999999999999 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251003_113631_1759484304362.html' target='_blank'>15/0</a><div class='tooltiptext'><b>Test Cases:</b> 15<br><b>Passed:</b> 15<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T11:36:45.708+02:00<br><b>End:</b> 2025-10-03T11:38:23.624+02:00<br><b>Duration:</b> 1.6319333333333332 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251002_163034_1759415535153.html' target='_blank'>13/0</a><div class='tooltiptext'><b>Test Cases:</b> 13<br><b>Passed:</b> 13<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-02T16:30:47.263+02:00<br><b>End:</b> 2025-10-02T16:32:14.557+02:00<br><b>Duration:</b> 1.4548999999999999 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -619,26 +630,6 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>Settings/Users - Cleanup</div></td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251007_135016_1759838872373.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-07T14:06:38.762+02:00<br><b>End:</b> 2025-10-07T14:07:52.287+02:00<br><b>Duration:</b> 1.2254166666666668 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250923_134647_1758628907846.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-23T14:00:41.380+02:00<br><b>End:</b> 2025-09-23T14:01:47.637+02:00<br><b>Duration:</b> 1.1042833333333335 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -650,7 +641,31 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>Settings/Users - General</div></td>
+<td class='left-sticky'>Settings/Users - Cleanup</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251007_135016_1759838872373.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-07T14:06:38.762+02:00<br><b>End:</b> 2025-10-07T14:07:52.287+02:00<br><b>Duration:</b> 1.2254166666666668 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250923_134647_1758628907846.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-23T14:00:41.380+02:00<br><b>End:</b> 2025-09-23T14:01:47.637+02:00<br><b>Duration:</b> 1.1042833333333335 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>Settings/Users - General</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -662,7 +677,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250923_150102_1758632934947.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-23T15:01:20.080+02:00<br><b>End:</b> 2025-09-23T15:08:54.083+02:00<br><b>Duration:</b> 7.566716666666666 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250923_150102_1758632934947.html' target='_blank'>8/0</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 8<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-23T15:01:20.080+02:00<br><b>End:</b> 2025-09-23T15:08:54.083+02:00<br><b>Duration:</b> 7.566716666666666 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -678,11 +693,11 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='project-row-right' colspan='21'></td>
 </tr>
 <tr>
-<td class='left-sticky'><div>GU Interface (all)</div></td>
+<td class='left-sticky'>GU Interface (all)</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_081404_1759472483041.html' target='_blank'>23/7</a><div class='tooltiptext'><b>Test Cases:</b> 30<br><b>Passed:</b> 23<br><b>Failed:</b> 7<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-03T08:14:06.865+02:00<br><b>End:</b> 2025-10-03T08:21:21.101+02:00<br><b>Duration:</b> 7.237266666666667 min</div></div></td>
+<td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_081404_1759472483041.html' target='_blank'>23/7</a><div class='tooltiptext'><b>Test Cases:</b> 30<br><b>Passed:</b> 23<br><b>Failed:</b> 7<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T08:14:06.865+02:00<br><b>End:</b> 2025-10-03T08:21:21.101+02:00<br><b>Duration:</b> 7.237266666666667 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -706,7 +721,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='project-row-right' colspan='21'></td>
 </tr>
 <tr>
-<td class='left-sticky'><div>Accept order</div></td>
+<td class='left-sticky'>Accept order</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -717,31 +732,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250924_092229_1758698601174.html' target='_blank'>6/0</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 6<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-24T09:22:47.713+02:00<br><b>End:</b> 2025-09-24T09:23:20.669+02:00<br><b>Duration:</b> 0.5492666666666667 min</div></div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-<tr>
-<td class='left-sticky'><div>Order not accepted and revoked</div></td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250924_092824_1758699049011.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-24T09:30:08.641+02:00<br><b>End:</b> 2025-09-24T09:30:48.834+02:00<br><b>Duration:</b> 0.6698833333333333 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250924_092229_1758698601174.html' target='_blank'>6/0</a><div class='tooltiptext'><b>Test Cases:</b> 6<br><b>Passed:</b> 6<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-24T09:22:47.713+02:00<br><b>End:</b> 2025-09-24T09:23:20.669+02:00<br><b>Duration:</b> 0.5492666666666667 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -754,7 +745,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>Reject order</div></td>
+<td class='left-sticky'>Order not accepted and revoked</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -765,7 +756,7 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250924_092231_1758698646128.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-09-24T09:23:30.876+02:00<br><b>End:</b> 2025-09-24T09:24:05.574+02:00<br><b>Duration:</b> 0.5783 min</div></div></td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250924_092824_1758699049011.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-24T09:30:08.641+02:00<br><b>End:</b> 2025-09-24T09:30:48.834+02:00<br><b>Duration:</b> 0.6698833333333333 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -778,13 +769,37 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='left-sticky'><div>Return order</div></td>
+<td class='left-sticky'>Reject order</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251001_090030_1759302298188.html' target='_blank'>7/0</a><div class='tooltiptext'><b>Test Cases:</b> 7<br><b>Passed:</b> 7<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retry:</b> 0<br><b>Start:</b> 2025-10-01T09:04:09.646+02:00<br><b>End:</b> 2025-10-01T09:04:57.728+02:00<br><b>Duration:</b> 0.8013666666666667 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250924_092231_1758698646128.html' target='_blank'>5/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 5<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-09-24T09:23:30.876+02:00<br><b>End:</b> 2025-09-24T09:24:05.574+02:00<br><b>Duration:</b> 0.5783 min</div></div></td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr>
+<td class='left-sticky'>Return order</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251001_090030_1759302298188.html' target='_blank'>7/0</a><div class='tooltiptext'><b>Test Cases:</b> 7<br><b>Passed:</b> 7<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-01T09:04:09.646+02:00<br><b>End:</b> 2025-10-01T09:04:57.728+02:00<br><b>Duration:</b> 0.8013666666666667 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -801,4 +816,4 @@ td.empty { background:#1b1b1b; color:#666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-</tbody></table></div></body></html>
+</tbody></table></div></div></body></html>
