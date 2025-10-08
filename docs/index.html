@@ -4,7 +4,7 @@ body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }
 h1 { color: #fff; padding-bottom: 10px; }
 h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }
 table { border-collapse: collapse; margin-bottom: 40px; }
-th, td { border: 1px solid #444; text-align: center; padding: 6px; }
+th, td { border: 1px solid #444; text-align: center; padding: 6px; position: relative; }
 th { background-color: #2b2b2b; font-weight: bold; }
 td.green { background-color: #2e7d32; color: #fff; }
 td.yellow { background-color: #f9a825; color: #000; }
@@ -12,6 +12,21 @@ td.red { background-color: #c62828; color: #fff; }
 td.empty { background-color: #2b2b2b; color: #666; }
 .suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 592px; text-align: left; padding-left: 8px; font-weight: normal; }
 .table-container { overflow-x: auto; width: 100%; }
+td[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 125%;
+  background-color: #333; color: #fff;
+  padding: 6px 8px; border-radius: 6px;
+  white-space: pre; font-size: 12px; z-index: 10; 
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+td[data-tooltip]:hover::before {
+  content: ''; position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%);
+  border-width: 5px; border-style: solid; border-color: #333 transparent transparent transparent;
+}
+a { color: inherit; text-decoration: none; display: block; }
 </style></head><body>
 <h1>QA Automation Report</h1>
 <div class='table-container'>
@@ -22,10 +37,10 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>5/1</td>
+<td class='red' data-tooltip='Test Cases: 6\nPassed: 5\nFailed: 1\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-29T05:40:14.350+02:00\nEnd: 2025-08-29T05:47:45.910+02:00\nDuration: 7.526'><a href='../data/html/processed/20250829_015544_1756439266731.html' target='_blank'>5/1</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>5/1</td>
+<td class='red' data-tooltip='Test Cases: 6\nPassed: 5\nFailed: 1\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-26T07:06:33.507+02:00\nEnd: 2025-08-26T07:13:23.691+02:00\nDuration: 6.8364'><a href='../data/html/processed/20250826_055155_1756185204785.html' target='_blank'>5/1</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
@@ -37,7 +52,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>3/2</td>
+<td class='red' data-tooltip='Test Cases: 5\nPassed: 3\nFailed: 0\nError: 2\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-20T07:05:27.085+02:00\nEnd: 2025-08-20T07:06:35.663+02:00\nDuration: 1.1429666666666667'><a href='../data/html/processed/20250820_063014_1755666395988.html' target='_blank'>3/2</a></td>
 <td class='empty'>–</td>
 </tr>
 <tr><td class='suite-name'>billing/DoD Regression/member - get final DoD check</td>
@@ -46,10 +61,10 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'>2/0</td>
-<td class='yellow'>2/0</td>
-<td class='green'>2/0</td>
-<td class='green'>2/0</td>
+<td class='green' data-tooltip='Test Cases: 2\nPassed: 2\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-27T06:00:40.057+02:00\nEnd: 2025-08-27T06:01:35.710+02:00\nDuration: 0.92755'><a href='../data/html/processed/20250827_015557_1756267296556.html' target='_blank'>2/0</a></td>
+<td class='yellow' data-tooltip='Test Cases: 2\nPassed: 2\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 1\nStart: 2025-08-26T05:58:26.857+02:00\nEnd: 2025-08-26T05:59:22.578+02:00\nDuration: 0.9286833333333333'><a href='../data/html/processed/20250826_015555_1756180763472.html' target='_blank'>2/0</a></td>
+<td class='green' data-tooltip='Test Cases: 2\nPassed: 2\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-20T05:42:49.004+02:00\nEnd: 2025-08-20T05:43:44.972+02:00\nDuration: 0.9328000000000001'><a href='../data/html/processed/20250820_015556_1755661425951.html' target='_blank'>2/0</a></td>
+<td class='green' data-tooltip='Test Cases: 2\nPassed: 2\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2024-08-20T05:42:49.004+02:00\nEnd: 2025-08-20T05:43:44.972+02:00\nDuration: 0.9328000000000001'><a href='../data/html/processed/20250820_015556_1755661425951.html' target='_blank'>2/0</a></td>
 </tr>
 <tr><td class='suite-name'>billing/DoD Regression/member - get initial billing counts</td>
 <td class='empty'>–</td>
@@ -59,11 +74,11 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'>1/0</td>
+<td class='green' data-tooltip='Test Cases: 1\nPassed: 1\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-20T05:40:51.638+02:00\nEnd: 2025-08-20T05:41:28.652+02:00\nDuration: 0.6169'><a href='../data/html/processed/20250820_015548_1755661289552.html' target='_blank'>1/0</a></td>
 <td class='empty'>–</td>
 </tr>
 <tr><td class='suite-name'>billing/State assessment/Billing state assessment for new client</td>
-<td class='green'>22/0</td>
+<td class='green' data-tooltip='Test Cases: 22\nPassed: 22\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-10-08T16:01:21.624+02:00\nEnd: 2025-10-08T16:07:51.456+02:00\nDuration: 6.4972'><a href='../data/html/processed/20251008_160113_1759932471792.html' target='_blank'>22/0</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -75,10 +90,10 @@ td.empty { background-color: #2b2b2b; color: #666; }
 </tr>
 <tr><td class='suite-name'>billing/State assessment/billing state assessment</td>
 <td class='empty'>–</td>
-<td class='red'>25/2</td>
+<td class='red' data-tooltip='Test Cases: 27\nPassed: 25\nFailed: 2\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-10-07T13:27:47.410+02:00\nEnd: 2025-10-07T13:41:24.870+02:00\nDuration: 13.624333333333334'><a href='../data/html/processed/20251007_132739_1759837285849.html' target='_blank'>25/2</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'>21/0</td>
+<td class='green' data-tooltip='Test Cases: 21\nPassed: 21\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-28T05:58:20.142+02:00\nEnd: 2025-08-28T06:07:51.109+02:00\nDuration: 9.516116666666667'><a href='../data/html/processed/20250828_015559_1756354072674.html' target='_blank'>21/0</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -88,8 +103,8 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'>14/0</td>
-<td class='green'>14/0</td>
+<td class='green' data-tooltip='Test Cases: 14\nPassed: 14\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-29T06:06:39.046+02:00\nEnd: 2025-08-29T06:14:14.516+02:00\nDuration: 7.591166666666667'><a href='../data/html/processed/20250829_043531_1756440855221.html' target='_blank'>14/0</a></td>
+<td class='green' data-tooltip='Test Cases: 14\nPassed: 14\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-28T04:29:18.254+02:00\nEnd: 2025-08-28T04:37:07.988+02:00\nDuration: 7.8289'><a href='../data/html/processed/20250828_015527_1756348628275.html' target='_blank'>14/0</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -98,7 +113,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <tr><td class='suite-name'>settings/Test invoice number structure settings</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>3/5</td>
+<td class='red' data-tooltip='Test Cases: 8\nPassed: 3\nFailed: 5\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-10-03T07:26:24.138+02:00\nEnd: 2025-10-03T07:42:00.092+02:00\nDuration: 15.599233333333332'><a href='../data/html/processed/20251003_052617_1759470122325.html' target='_blank'>3/5</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -112,7 +127,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='green'>8/0</td>
+<td class='green' data-tooltip='Test Cases: 8\nPassed: 8\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-27T05:44:05.299+02:00\nEnd: 2025-08-27T05:50:06.115+02:00\nDuration: 6.013599999999999'><a href='../data/html/processed/20250827_015540_1756266606376.html' target='_blank'>8/0</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -120,12 +135,12 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <tr><td class='suite-name'>settings/workflow/workflow settings</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>29/30</td>
+<td class='red' data-tooltip='Test Cases: 59\nPassed: 29\nFailed: 30\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-10-03T07:42:06.587+02:00\nEnd: 2025-10-03T08:13:14.297+02:00\nDuration: 31.1285'><a href='../data/html/processed/20251003_055826_1759472008626.html' target='_blank'>29/30</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>58/1</td>
+<td class='red' data-tooltip='Test Cases: 59\nPassed: 58\nFailed: 1\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-08-20T06:30:17.799+02:00\nEnd: 2025-08-20T07:03:57.301+02:00\nDuration: 33.658366666666666'><a href='../data/html/processed/20250820_062737_1755666239235.html' target='_blank'>58/1</a></td>
 <td class='empty'>–</td>
 </tr>
 </table>
@@ -134,7 +149,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.03</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.20</th><th>08.20</th></tr>
 <tr><td class='suite-name'>Settings/Users - Cleanup</td>
 <td class='empty'>–</td>
-<td class='green'>2/0</td>
+<td class='green' data-tooltip='Test Cases: 2\nPassed: 2\nFailed: 0\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-10-07T14:06:38.762+02:00\nEnd: 2025-10-07T14:07:52.287+02:00\nDuration: 1.2254166666666668'><a href='../data/html/processed/20251007_135016_1759838872373.html' target='_blank'>2/0</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -150,7 +165,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <tr><td class='suite-name'>GU Interface (all)</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
-<td class='red'>23/7</td>
+<td class='red' data-tooltip='Test Cases: 30\nPassed: 23\nFailed: 7\nError: 0\nIncomplete: 0\nSkipped: 0\nRetry: 0\nStart: 2025-10-03T08:14:06.865+02:00\nEnd: 2025-10-03T08:21:21.101+02:00\nDuration: 7.237266666666667'><a href='../data/html/processed/20251003_081404_1759472483041.html' target='_blank'>23/7</a></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -159,5 +174,4 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 </table>
-</div>
-</body></html>
+</div></body></html>
