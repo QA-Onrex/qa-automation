@@ -3,7 +3,6 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <style>
 
-/* Page reset */
 html, body {
   height: 100%;
   margin: 0;
@@ -13,25 +12,19 @@ html, body {
   font-family: Inter, Roboto, Arial, sans-serif;
 }
 
-/* Page padding so content isn't glued to viewport */
-.page-wrapper {
-  padding: 16px;
-  box-sizing: border-box;
-}
-
-/* Container that handles both scrollbars.
-   scrollbar-gutter: stable ensures vertical scrollbar space is always reserved (avoids 1-2px jump). */
+/* keep some outer space using container margin (avoids interfering with sticky calculations) */
 .table-container {
   overflow: auto;
   width: 100%;
-  max-height: 85vh;          /* vertical scroll inside container */
+  max-height: 85vh;
+  margin: 16px;                /* page margin preserved here */
   border: 1px solid #2b2b2b;
   box-sizing: border-box;
-  scrollbar-gutter: stable both-edges;
+  scrollbar-gutter: stable both-edges; /* prevents 1-2px jump when scrollbar appears */
   background: #0f0f0f;
 }
 
-/* Table layout fixed so col widths are exact and stable */
+/* fixed-layout table with explicit colgroup */
 table.dashboard {
   border-collapse: collapse;
   border-spacing: 0;
@@ -40,10 +33,9 @@ table.dashboard {
   table-layout: fixed;
   margin: 0;
 }
-
-/* Columns and cells */
 col.left-col { width: 536px; }
 col.date-col { width: 96px; }
+
 th, td {
   border: 1px solid #2b2b2b;
   padding: 6px 10px;
@@ -51,43 +43,48 @@ th, td {
   white-space: nowrap;
   box-sizing: border-box;
 }
-/* Header (dates) sticky at top of the scrolling container */
+
+/* Header row (dates) sticky at top of the scrolling container */
 thead th {
   position: sticky;
   top: 0;
   height: 48px;
   line-height: 48px;
   background: #202020;
-  z-index: 14;
+  z-index: 16;
   margin: 0;
 }
 
-/* Top-left corner: sticky both top and left */
+/* top-left corner: sticky both top and left, highest z-index */
 th.corner {
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 18;
+  z-index: 20;
   background: #202020;
   text-align: left;
   padding-left: 12px;
+  border-left: none; /* remove left border so it aligns with container edge */
+  box-shadow: -1px 0 0 #2b2b2b; /* cover the container border seam */
 }
 
-/* Left sticky cells (suite names, project-left cell) — they sit below header,
-   so they use top offset = HEADER_HEIGHT_PX to avoid overlap. */
+/* left sticky cells (suite name and the project-left cell) - they sit below the header */
 .left-sticky {
   position: sticky;
   left: 0;
-  top: 48px;
-  z-index: 13;
+  top: 48px; /* place below header row */
+  z-index: 17;
   background: #111111;
   text-align: left;
   padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-left: none; /* remove border to avoid 1px seam */
+  box-shadow: -1px 0 0 #2b2b2b; /* draw a 1px line to visually match container border */
 }
+.left-sticky a { display:block; color:inherit; text-decoration:none; }
 
-/* Project header right cell uses background and spans dates; keep it behind header */
+/* project header right cell */
 .project-row-right {
   background: #181818;
   color: #fff;
@@ -96,35 +93,35 @@ th.corner {
   padding-left: 12px;
 }
 
-/* Colors for result cells */
+/* cell colors */
 td.green { background: #2e7d32; color: #fff; }
 td.yellow { background: #f9a825; color: #000; }
 td.red { background: #c62828; color: #fff; }
 td.empty { background: #0f0f0f; color: #666; }
 
-/* Make link fill the cell */
+/* fill cell link */
 .cell-link { display:block; width:100%; height:100%; color:inherit; text-decoration:none; }
 
-/* Tooltip */
+/* tooltip */
 .tooltip { position: relative; display: inline-block; }
 .tooltip .tooltiptext {
   visibility: hidden; opacity: 0; transition: opacity .18s;
   position: absolute; left: 50%; transform: translateX(-50%); bottom: 125%;
-  background: #222; color: #fff; padding: 8px 10px; border-radius: 6px;
-  white-space: normal; text-align: left; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  background: #222; color: #fff; padding: 8px 10px; border-radius: 6px; white-space: normal;
+  text-align: left; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
   width: 320px; font-size: 13px;
 }
 .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
-.tooltip .tooltiptext b { display: inline-block; width: 95px; }
+.tooltip .tooltiptext b { display:inline-block; width: 95px; }
 
-/* Responsive adjustments */
+/* small screens */
 @media (max-width: 800px) {
   .left-sticky { min-width: 160px; max-width: 320px; }
 }
 
 </style></head><body>
-<div class='page-wrapper'>
-<h1>QA Automation Report</h1>
+<div>
+<h1 style='margin:16px;'>QA Automation Report</h1>
 <div class='table-container'>
 <table class='dashboard'>
 <colgroup>
