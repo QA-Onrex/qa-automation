@@ -111,6 +111,7 @@ def build_dashboard():
         "  const seconds = totalSeconds % 60;",
         "  const durationStr = String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');",
         "  tooltip.innerHTML = `",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${record.profile || 'N/A'}</strong></div>",
         "    <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${record.test_cases || 0}</div>",
         "    <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${record.passed || 0}</div>",
         "    <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${record.failed || 0}</div>",
