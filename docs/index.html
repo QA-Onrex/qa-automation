@@ -1,6 +1,7 @@
 <html><head><meta charset='utf-8'><title>QA Automation Report</title>
 <style>
 body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }
+h1 { color: #fff; padding-bottom: 10px; }
 h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }
 table { border-collapse: collapse; width: 100%; margin-bottom: 40px; }
 th, td { border: 1px solid #444; text-align: center; padding: 6px; }
@@ -9,14 +10,13 @@ td.green { background-color: #2e7d32; color: #fff; }
 td.yellow { background-color: #f9a825; color: #000; }
 td.red { background-color: #c62828; color: #fff; }
 td.empty { background-color: #2b2b2b; color: #666; }
-.project { font-weight: bold; font-size: 1.2em; color: #fff; padding-top: 10px; }
-.suite-name { text-align: left; padding-left: 8px; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 220px; text-align: left; padding-left: 8px; font-weight: normal; }
 </style></head><body>
 <h1>QA Automation Report</h1>
 <h2>DYNAREX</h2>
 <table>
 <tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.03</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.20</th><th>08.20</th></tr>
-<tr><td class='suite-name'>Test Suites/billing/DoD Regression/DYNAREX on Demand</td>
+<tr><td class='suite-name'>billing/DoD Regression/DYNAREX on Demand</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -27,7 +27,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/billing/DoD Regression/DYNAREX on Demand - without old case</td>
+<tr><td class='suite-name'>billing/DoD Regression/DYNAREX on Demand - without old case</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -38,7 +38,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='red'>3/2</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/billing/DoD Regression/member - get final DoD check</td>
+<tr><td class='suite-name'>billing/DoD Regression/member - get final DoD check</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -49,7 +49,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='green'>2/0</td>
 <td class='green'>2/0</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/billing/DoD Regression/member - get initial billing counts</td>
+<tr><td class='suite-name'>billing/DoD Regression/member - get initial billing counts</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -60,7 +60,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='green'>1/0</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/billing/State assessment/Billing state assessment for new client</td>
+<tr><td class='suite-name'>billing/State assessment/Billing state assessment for new client</td>
 <td class='green'>22/0</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -71,7 +71,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/billing/State assessment/billing state assessment</td>
+<tr><td class='suite-name'>billing/State assessment/billing state assessment</td>
 <td class='empty'>–</td>
 <td class='red'>25/2</td>
 <td class='empty'>–</td>
@@ -82,7 +82,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/invoice</td>
+<tr><td class='suite-name'>invoice</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -93,7 +93,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/settings/Test invoice number structure settings</td>
+<tr><td class='suite-name'>settings/Test invoice number structure settings</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='red'>3/5</td>
@@ -104,7 +104,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/settings/workflow/invoice wf - allowed actions</td>
+<tr><td class='suite-name'>settings/workflow/invoice wf - allowed actions</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -115,7 +115,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-<tr><td class='suite-name'>Test Suites/settings/workflow/workflow settings</td>
+<tr><td class='suite-name'>settings/workflow/workflow settings</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='red'>29/30</td>
@@ -130,7 +130,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <h2>DYNAREX V2</h2>
 <table>
 <tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.03</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.20</th><th>08.20</th></tr>
-<tr><td class='suite-name'>Test Suites/Test Suites/Settings/Users - Cleanup</td>
+<tr><td class='suite-name'>Settings/Users - Cleanup</td>
 <td class='empty'>–</td>
 <td class='green'>2/0</td>
 <td class='empty'>–</td>
@@ -145,7 +145,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <h2>GUInterface</h2>
 <table>
 <tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.03</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.20</th><th>08.20</th></tr>
-<tr><td class='suite-name'>Test Suites/GU Interface (all)</td>
+<tr><td class='suite-name'>GU Interface (all)</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='red'>23/7</td>
