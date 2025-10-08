@@ -60,7 +60,7 @@ def build_dashboard():
             name = suite.replace("Test Suites/", "")
             if len(name) > max_length:
                 max_length = len(name)
-    left_col_width = max_length * 9 + 16  # approximate pixel width
+    left_col_width = min(max_length * 9 + 16, 200*9)  # cap at 200 characters
 
     # Collect all dates (latest first)
     all_dates = sorted(
@@ -73,27 +73,26 @@ def build_dashboard():
         "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
         "<style>",
         "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }",
-        "h1 { color: #fff; padding: 10px; margin:0; }",
-        "table { border-collapse: collapse; margin: 0; }",
+        "h1 { color: #fff; padding: 10px; }",
+        "h2 { color: #fff; padding: 6px 0 4px 0; margin:0; background-color: #1e1e1e; position: sticky; top:0; z-index:3; }",
+        "table { border-collapse: collapse; margin-bottom: 40px; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
-        "th { background-color: #2b2b2b; font-weight: bold; }",
+        "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index:2; }",
         "td.green { background-color: #2e7d32; color: #fff; }",
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
-        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index: 2; }}",
-        "th.sticky-header { position: sticky; left: 0; background-color: #2b2b2b; z-index:3; }",
-        ".table-container { overflow-x: auto; overflow-y: auto; max-height: 80vh; }",
+        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; }}",
+        ".table-container { overflow-x: auto; overflow-y: auto; max-height: 80vh; width: 100%; }",
         "</style></head><body>",
         "<h1>QA Automation Report</h1>",
-        "<div class='table-container'>"  # single scroll container
+        "<div class='table-container'>"
     ]
 
     for project in sorted(data.keys()):
-        # Add project as a full-width row inside the table
+        html.append(f"<h2>{project}</h2>")
         html.append("<table>")
-        html.append(f"<tr><th class='sticky-header' colspan='{len(all_dates)+1}'>{project}</th></tr>")
-        html.append("<tr><th class='sticky-header'>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>")
+        html.append("<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>")
 
         for suite in sorted(data[project].keys()):
             display_name = suite.replace("Test Suites/", "")
