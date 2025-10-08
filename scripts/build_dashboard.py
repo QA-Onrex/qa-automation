@@ -103,40 +103,123 @@ def build_dashboard():
         max_len = MAX_CHARS
     left_col_width = max(MIN_LEFT_PX, min(MAX_LEFT_PX, max_len * CHAR_PX + 24))
 
-    # Build HTML with colgroup to fix widths exactly
+    # Build HTML
     html = []
     html.append("<!doctype html>")
     html.append("<html lang='en'><head><meta charset='utf-8'><title>QA Automation Report</title>")
     html.append("<meta name='viewport' content='width=device-width, initial-scale=1'>")
     html.append("<style>")
-    html.append("body { background:#121212; color:#e0e0e0; font-family: Inter, Roboto, Arial, sans-serif; margin:16px; }")
-    html.append("h1 { color:#fff; margin:8px 0 16px 0; }")
-    html.append(".table-container { overflow-x:auto; width:100%; border:1px solid #2b2b2b; }")
-    html.append("table.dashboard { border-collapse:collapse; width:max-content; min-width:100%; table-layout:fixed; }")
-    # col styles will be inserted dynamically via colgroup below
-    html.append("th, td { border:1px solid #2b2b2b; padding:6px 10px; text-align:center; white-space:nowrap; }")
-    html.append("th { background:#202020; position:sticky; top:0; z-index:6; }")
-    html.append(".project-row-right { background:#181818; color:#fff; font-weight:700; text-align:left; padding-left:12px; }")
-    # sticky left column (suite name and left header/project-left)
-    html.append(f".left-sticky {{ position:sticky; left:0; z-index:7; background:#111111; width:{left_col_width}px; text-align:left; padding-left:10px; overflow:hidden; text-overflow:ellipsis; }}")
-    html.append(".left-sticky a { display:block; color:inherit; text-decoration:none; }")
-    # date cell fixed width (applies because we use colgroup)
-    html.append("td.green { background:#2e7d32; color:#fff; }")
-    html.append("td.yellow { background:#f9a825; color:#000; }")
-    html.append("td.red { background:#c62828; color:#fff; }")
-    html.append("td.empty { background:#1b1b1b; color:#666; }")
-    html.append(".cell-link { display:block; width:100%; height:100%; color:inherit; text-decoration:none; }")
-    # tooltip styles
-    html.append(".tooltip { position:relative; display:inline-block; }")
-    html.append(".tooltip .tooltiptext { visibility:hidden; opacity:0; transition:opacity .18s; position:absolute; left:50%; transform:translateX(-50%); bottom:125%; background:#222; color:#fff; padding:8px 10px; border-radius:6px; white-space:normal; text-align:left; z-index:50; box-shadow:0 4px 10px rgba(0,0,0,0.6); width:280px; font-size:13px; }")
-    html.append(".tooltip:hover .tooltiptext { visibility:visible; opacity:1; }")
-    html.append(".tooltip .tooltiptext b { display:inline-block; width:90px; }")
-    html.append("@media (max-width:800px){ .left-sticky{ min-width:160px; max-width:320px; } }")
+    html.append("""
+body {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: Inter, Roboto, Arial, sans-serif;
+  margin: 16px;
+}
+h1 {
+  color: #fff;
+  margin: 8px 0 16px 0;
+}
+.table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 85vh;
+  border: 1px solid #2b2b2b;
+  box-sizing: border-box;
+  scrollbar-gutter: stable both-edges;
+}
+table.dashboard {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+  table-layout: fixed;
+}
+th, td {
+  border: 1px solid #2b2b2b;
+  padding: 6px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+th {
+  background: #202020;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.project-row-right {
+  background: #181818;
+  color: #fff;
+  font-weight: 700;
+  text-align: left;
+  padding-left: 12px;
+}
+.left-sticky {
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background: #111111;
+  text-align: left;
+  padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.left-sticky a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+td.green { background:#2e7d32; color:#fff; }
+td.yellow { background:#f9a825; color:#000; }
+td.red { background:#c62828; color:#fff; }
+td.empty { background:#1b1b1b; color:#666; }
+.cell-link {
+  display:block;
+  width:100%;
+  height:100%;
+  color:inherit;
+  text-decoration:none;
+}
+.tooltip {
+  position:relative;
+  display:inline-block;
+}
+.tooltip .tooltiptext {
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .18s;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:125%;
+  background:#222;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:6px;
+  white-space:normal;
+  text-align:left;
+  z-index:50;
+  box-shadow:0 4px 10px rgba(0,0,0,0.6);
+  width:280px;
+  font-size:13px;
+}
+.tooltip:hover .tooltiptext {
+  visibility:visible;
+  opacity:1;
+}
+.tooltip .tooltiptext b {
+  display:inline-block;
+  width:90px;
+}
+@media (max-width:800px){
+  .left-sticky { min-width:160px; max-width:320px; }
+}
+    """)
     html.append("</style></head><body>")
     html.append("<h1>QA Automation Report</h1>")
     html.append("<div class='table-container'>")
 
-    # Start table, colgroup: first column width then one col per date with fixed width
+    # start table
     html.append("<table class='dashboard'>")
     html.append("<colgroup>")
     html.append(f"<col style='width: {left_col_width}px;'/>")
@@ -144,34 +227,26 @@ def build_dashboard():
         html.append(f"<col style='width: {DATE_COL_PX}px;'/>")
     html.append("</colgroup>")
 
-    # header row: first th sticky left, then dates
-    html.append("<thead>")
-    header = "<tr>"
-    header += f"<th class='left-sticky'>Test Suite</th>"
+    # header row
+    html.append("<thead><tr>")
+    html.append(f"<th class='left-sticky'>Test Suite</th>")
     for d in all_dates:
-        header += f"<th>{escape_html(d[5:])}</th>"
-    header += "</tr>"
-    html.append(header)
-    html.append("</thead>")
+        html.append(f"<th>{escape_html(d[5:])}</th>")
+    html.append("</tr></thead>")
 
-    # single table body where projects are represented by a project header row
+    # body
     html.append("<tbody>")
     for project in sorted(grouped.keys()):
-        # Project header: make two cells so left-most project name remains sticky
         colspan = len(all_dates)
-        # left sticky cell for project name
         html.append("<tr>")
         html.append(f"<td class='left-sticky'><strong>{escape_html(project)}</strong></td>")
-        # right spanning cell with background acting as header across dates
         html.append(f"<td class='project-row-right' colspan='{colspan}'></td>")
         html.append("</tr>")
 
         for suite in sorted(grouped[project].keys()):
             display_name = suite.replace("Test Suites/", "")
             html.append("<tr>")
-            # left sticky suite name
             html.append(f"<td class='left-sticky'><div>{escape_html(display_name)}</div></td>")
-            # date cells
             for d in all_dates:
                 entry = grouped[project][suite].get(d)
                 if not entry:
@@ -223,8 +298,7 @@ def build_dashboard():
 
                 html.append(f"<td class='{color}'>{cell_inner}</td>")
             html.append("</tr>")
-    html.append("</tbody>")
-    html.append("</table></div></body></html>")
+    html.append("</tbody></table></div></body></html>")
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
