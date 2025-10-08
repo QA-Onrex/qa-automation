@@ -4,7 +4,7 @@ from datetime import datetime
 from collections import defaultdict
 
 RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "site/index.html"
+OUTPUT_FILE = "docs/index.html"
 
 def load_results():
     """Load all results from JSON."""
