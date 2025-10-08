@@ -4,7 +4,7 @@ from datetime import datetime
 from collections import defaultdict
 
 RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"  # dashboard location
+OUTPUT_FILE = "docs/index.html"
 
 def load_results():
     if not os.path.exists(RESULTS_FILE):
@@ -37,9 +37,7 @@ def build_dashboard():
         print("No results found.")
         return
 
-    # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
-
     for r in results:
         project = r.get("project", "Unknown")
         suite = r.get("test_suite_id", "Unknown")
@@ -48,27 +46,23 @@ def build_dashboard():
             continue
         date = datetime.fromisoformat(start.replace("Z", "+00:00")).strftime("%Y.%m.%d")
 
-        # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
             r["color"] = get_color(r)
             data[project][suite][date] = r
 
-    # Calculate maximum suite name length for adaptive column width
     max_length = 0
     for project in data:
         for suite in data[project]:
             name = suite.replace("Test Suites/", "")
             if len(name) > max_length:
                 max_length = len(name)
-    left_col_width = max_length * 9 + 16  # approximate pixel width
+    left_col_width = max_length * 9 + 16
 
-    # Collect all dates (latest first)
     all_dates = sorted(
         {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
         reverse=True
     )[:365]
 
-    # Build HTML
     html = [
         "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
         "<style>",
@@ -76,17 +70,33 @@ def build_dashboard():
         "h1 { color: #fff; padding-bottom: 10px; }",
         "h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }",
         "table { border-collapse: collapse; margin-bottom: 40px; }",
-        "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
+        "th, td { border: 1px solid #444; text-align: center; padding: 6px; position: relative; }",
         "th { background-color: #2b2b2b; font-weight: bold; }",
         "td.green { background-color: #2e7d32; color: #fff; }",
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
         f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; }}",
-        ".table-container { overflow-x: auto; width: 100%; }",  # horizontal scroll wrapper
+        ".table-container { overflow-x: auto; width: 100%; }",
+        # Tooltip styling
+        "td[data-tooltip]:hover::after {",
+        "  content: attr(data-tooltip);",
+        "  position: absolute;",
+        "  left: 50%; transform: translateX(-50%);",
+        "  bottom: 125%;",
+        "  background-color: #333; color: #fff;",
+        "  padding: 6px 8px; border-radius: 6px;",
+        "  white-space: pre; font-size: 12px; z-index: 10; ",
+        "  box-shadow: 0 0 6px rgba(0,0,0,0.5);",
+        "}",
+        "td[data-tooltip]:hover::before {",
+        "  content: ''; position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%);",
+        "  border-width: 5px; border-style: solid; border-color: #333 transparent transparent transparent;",
+        "}",
+        "a { color: inherit; text-decoration: none; display: block; }",
         "</style></head><body>",
         "<h1>QA Automation Report</h1>",
-        "<div class='table-container'>"  # single scroll container
+        "<div class='table-container'>"
     ]
 
     for project in sorted(data.keys()):
@@ -97,22 +107,49 @@ def build_dashboard():
         for suite in sorted(data[project].keys()):
             display_name = suite.replace("Test Suites/", "")
             html.append(f"<tr><td class='suite-name'>{display_name}</td>")
+
             for date in all_dates:
                 if date in data[project][suite]:
                     record = data[project][suite][date]
                     color = record["color"]
                     passed = record.get("passed", 0)
+                    failed = record.get("failed", 0)
+                    errored = record.get("error", 0)
+                    incomplete = record.get("incomplete", 0)
+                    skipped = record.get("skipped", 0)
+                    retries = record.get("retry_count", 0)
                     total = record.get("test_cases", 0)
-                    failed = total - passed if total else 0
-                    html.append(f"<td class='{color}'>{passed}/{failed}</td>")
+                    duration = record.get("duration", "–")
+
+                    tooltip = (
+                        f"Test Cases: {total}\\n"
+                        f"Passed: {passed}\\n"
+                        f"Failed: {failed}\\n"
+                        f"Error: {errored}\\n"
+                        f"Incomplete: {incomplete}\\n"
+                        f"Skipped: {skipped}\\n"
+                        f"Retry: {retries}\\n"
+                        f"Start: {record.get('start', '–')}\\n"
+                        f"End: {record.get('end', '–')}\\n"
+                        f"Duration: {duration}"
+                    )
+
+                    html_path = record.get("html_file")
+                    display_text = f"{passed}/{total - passed}" if total else f"{passed}/–"
+
+                    if html_path and os.path.exists(html_path):
+                        html.append(
+                            f"<td class='{color}' data-tooltip='{tooltip}'><a href='../{html_path}' target='_blank'>{display_text}</a></td>"
+                        )
+                    else:
+                        html.append(f"<td class='{color}' data-tooltip='{tooltip}'>{display_text}</td>")
                 else:
                     html.append("<td class='empty'>–</td>")
             html.append("</tr>")
 
         html.append("</table>")
 
-    html.append("</div>")  # close table-container
-    html.append("</body></html>")
+    html.append("</div></body></html>")
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
