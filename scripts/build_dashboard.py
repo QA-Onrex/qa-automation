@@ -72,28 +72,27 @@ def build_dashboard():
     html = [
         "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
         "<style>",
-        "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }",
-        "h1 { color: #fff; padding-bottom: 10px; }",
-        "h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }",
-        "table { border-collapse: collapse; margin-bottom: 40px; }",
+        "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }",
+        "h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }",
+        "table { border-collapse: collapse; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
-        "th { background-color: #2b2b2b; font-weight: bold; }",
+        "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }",
         "td.green { background-color: #2e7d32; color: #fff; }",
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
-        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; }}",
-        ".table-container { overflow-x: auto; width: 100%; }",  # horizontal scroll wrapper
+        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; }}",
+        ".table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }",
         "</style></head><body>",
         "<h1>QA Automation Report</h1>",
-        "<div class='table-container'>"  # single scroll container
+        "<div class='table-container'>",
+        "<table>",
+        "<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>"
     ]
 
+    # Flatten all projects and suites into single table
     for project in sorted(data.keys()):
-        html.append(f"<h2>{project}</h2>")
-        html.append("<table>")
-        html.append("<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>")
-
+        html.append(f"<tr><td class='suite-name' colspan='{len(all_dates)+1}'><b>{project}</b></td></tr>")
         for suite in sorted(data[project].keys()):
             display_name = suite.replace("Test Suites/", "")
             html.append(f"<tr><td class='suite-name'>{display_name}</td>")
@@ -109,8 +108,7 @@ def build_dashboard():
                     html.append("<td class='empty'>–</td>")
             html.append("</tr>")
 
-        html.append("</table>")
-
+    html.append("</table>")
     html.append("</div>")  # close table-container
     html.append("</body></html>")
 
