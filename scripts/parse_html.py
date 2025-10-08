@@ -5,7 +5,7 @@ import re
 from datetime import datetime, timedelta
 
 HTML_FOLDER = "data/html"
-PROCESSED_FOLDER = os.path.join(HTML_FOLDER, "processed")
+PROCESSED_FOLDER = "docs/reports"
 RESULTS_FILE = "data/results.json"
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 
@@ -107,7 +107,7 @@ def parse_html_file(html_path):
                 color = "Yellow"
 
         return {
-            "html_file": os.path.join("data/html/processed", os.path.basename(html_path)),
+            "html_file": os.path.join("docs/reports", os.path.basename(html_path)),
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
