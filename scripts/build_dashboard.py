@@ -1,200 +1,124 @@
-import os
 import json
+import os
 from datetime import datetime
+from collections import defaultdict
 
 RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"
-HTML_FOLDER = "data/html/processed"
+OUTPUT_FILE = "docs/index.html"  # dashboard location
 
-# Load results
-with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-    results = json.load(f)
+def load_results():
+    if not os.path.exists(RESULTS_FILE):
+        print(f"Error: {RESULTS_FILE} not found.")
+        return []
+    with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-# Organize by project and test_suite_id
-projects = {}
-for r in results:
-    project = r["project"]
-    suite = r["test_suite_id"] or "N/A"
-    if project not in projects:
-        projects[project] = {}
-    if suite not in projects[project]:
-        projects[project][suite] = []
-    projects[project][suite].append(r)
+def get_color(record):
+    total = record.get("test_cases", 0) or 0
+    passed = record.get("passed", 0) or 0
+    failed = record.get("failed", 0) or 0
+    errored = record.get("error", 0) or 0
+    incomplete = record.get("incomplete", 0) or 0
+    skipped = record.get("skipped", 0) or 0
+    retry = record.get("retry_count", 0) or 0
 
-# For each suite, keep only latest entry per day
-for project in projects:
-    for suite in projects[project]:
-        # Sort by end time descending
-        projects[project][suite].sort(key=lambda x: x.get("end") or "", reverse=True)
-        daily = {}
-        filtered = []
-        for entry in projects[project][suite]:
-            if entry.get("end"):
-                day = entry["end"][:10]  # YYYY-MM-DD
-            else:
-                day = "N/A"
-            if day not in daily:
-                daily[day] = entry
-                filtered.append(entry)
-        projects[project][suite] = filtered
+    total_calc = passed + failed + errored + incomplete + skipped
+    if total_calc != total:
+        return "red"
 
-# Generate list of all dates for columns, descending
-all_dates = set()
-for project in projects.values():
-    for suite_entries in project.values():
-        for entry in suite_entries:
-            if entry.get("end"):
-                all_dates.add(entry["end"][:10])
-dates_sorted = sorted(all_dates, reverse=True)
+    if passed == total:
+        return "yellow" if retry > 0 else "green"
 
-# Start building HTML
-html = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>QA Automation Dashboard</title>
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #121212;
-    color: #eee;
-    font-family: Arial, sans-serif;
-    overflow: hidden; /* remove page scroll */
-}
-.table-container {
-    width: 100%;
-    height: 95vh;
-    overflow: auto;
-    position: relative;
-}
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: max-content;
-    min-width: 100%;
-}
-th, td {
-    border: 1px solid #333;
-    padding: 5px;
-    text-align: center;
-    white-space: nowrap;
-}
-th {
-    position: sticky;
-    top: 0;
-    background: #1e1e1e;
-    z-index: 3;
-}
-.left-sticky {
-    position: sticky;
-    left: 0;
-    background: #1e1e1e;
-    font-weight: bold;
-    z-index: 2;
-    border-right: 1px solid #333; /* border between first column and data */
-}
-.corner-cell {
-    z-index: 4;
-}
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: max-content;
-    background-color: #222;
-    color: #fff;
-    text-align: left;
-    padding: 5px;
-    border-radius: 4px;
-    position: absolute;
-    z-index: 10;
-    white-space: pre-line;
-}
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-.passed { background-color: #4caf50; color: #fff; }
-.failed { background-color: #f44336; color: #fff; }
-.yellow { background-color: #ffeb3b; color: #000; }
-</style>
-</head>
-<body>
-<div class="table-container">
-<table>
-<tr>
-<th class="corner-cell left-sticky">Test Suite</th>
-"""
+    return "red"
 
-# Header row with dates
-for d in dates_sorted:
-    html += f"<th>{d}</th>"
-html += "</tr>"
+def build_dashboard():
+    results = load_results()
+    if not results:
+        print("No results found.")
+        return
 
-# Generate table rows
-for project_name in sorted(projects.keys()):
-    html += f'<tr><td class="left-sticky" colspan="{len(dates_sorted)+1}" style="text-align:left;font-weight:bold;">{project_name}</td></tr>'
-    for suite_name in sorted(projects[project_name].keys()):
-        display_suite = suite_name.replace("Test Suites/", "")
-        html += f'<tr><td class="left-sticky" style="text-align:left;">{display_suite}</td>'
-        suite_entries = projects[project_name][suite_name]
-        entries_by_date = {e.get("end", "N/A")[:10]: e for e in suite_entries if e.get("end")}
-        for d in dates_sorted:
-            entry = entries_by_date.get(d)
-            if entry:
-                passed = entry.get("passed") or 0
-                failed = entry.get("failed") or 0
-                error = entry.get("error") or 0
-                incomplete = entry.get("incomplete") or 0
-                skipped = entry.get("skipped") or 0
-                test_cases = entry.get("test_cases") or 0
-                retry = entry.get("retry_count") or 0
-                start = entry.get("start") or ""
-                end = entry.get("end") or ""
-                duration = entry.get("duration") or ""
+    # Group data by Project → Test Suite ID → Date
+    data = defaultdict(lambda: defaultdict(dict))
 
-                # Compute color
-                sum_check = passed + failed + error + incomplete + skipped
-                if sum_check != test_cases or passed != test_cases:
-                    color_class = "failed"
-                elif retry > 0:
-                    color_class = "yellow"
+    for r in results:
+        project = r.get("project", "Unknown")
+        suite = r.get("test_suite_id", "Unknown")
+        start = r.get("start") or r.get("end")
+        if not start:
+            continue
+        date = datetime.fromisoformat(start.replace("Z", "+00:00")).strftime("%Y.%m.%d")
+
+        # Keep only latest record for the date
+        if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
+            r["color"] = get_color(r)
+            data[project][suite][date] = r
+
+    # Calculate maximum suite name length for adaptive column width
+    max_length = 0
+    for project in data:
+        for suite in data[project]:
+            name = suite.replace("Test Suites/", "")
+            if len(name) > max_length:
+                max_length = len(name)
+    left_col_width = max_length * 9 + 16  # approximate pixel width
+
+    # Collect all dates (latest first)
+    all_dates = sorted(
+        {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
+        reverse=True
+    )[:365]
+
+    # Build HTML
+    html = [
+        "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
+        "<style>",
+        "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }",
+        "h1 { color: #fff; padding-bottom: 10px; }",
+        "h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }",
+        "table { border-collapse: collapse; margin-bottom: 40px; }",
+        "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
+        "th { background-color: #2b2b2b; font-weight: bold; }",
+        "td.green { background-color: #2e7d32; color: #fff; }",
+        "td.yellow { background-color: #f9a825; color: #000; }",
+        "td.red { background-color: #c62828; color: #fff; }",
+        "td.empty { background-color: #2b2b2b; color: #666; }",
+        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; }}",
+        ".table-container { overflow-x: auto; width: 100%; }",  # horizontal scroll wrapper
+        "</style></head><body>",
+        "<h1>QA Automation Report</h1>",
+        "<div class='table-container'>"  # single scroll container
+    ]
+
+    for project in sorted(data.keys()):
+        html.append(f"<h2>{project}</h2>")
+        html.append("<table>")
+        html.append("<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>")
+
+        for suite in sorted(data[project].keys()):
+            display_name = suite.replace("Test Suites/", "")
+            html.append(f"<tr><td class='suite-name'>{display_name}</td>")
+            for date in all_dates:
+                if date in data[project][suite]:
+                    record = data[project][suite][date]
+                    color = record["color"]
+                    passed = record.get("passed", 0)
+                    total = record.get("test_cases", 0)
+                    failed = total - passed if total else 0
+                    html.append(f"<td class='{color}'>{passed}/{failed}</td>")
                 else:
-                    color_class = "passed"
+                    html.append("<td class='empty'>–</td>")
+            html.append("</tr>")
 
-                tooltip = (f"Test Cases: {test_cases}\n"
-                           f"Passed: {passed}\n"
-                           f"Failed: {failed}\n"
-                           f"Error: {error}\n"
-                           f"Incomplete: {incomplete}\n"
-                           f"Skipped: {skipped}\n"
-                           f"Retry: {retry}\n"
-                           f"Start: {start}\n"
-                           f"End: {end}\n"
-                           f"Duration: {duration}")
+        html.append("</table>")
 
-                html += (f'<td class="{color_class} tooltip">'
-                         f'{passed}/{test_cases}'
-                         f'<span class="tooltiptext">{tooltip}</span>'
-                         f'<a href="../{entry["html_file"]}" target="_blank"></a>'
-                         f'</td>')
-            else:
-                html += "<td></td>"
-        html += "</tr>"
+    html.append("</div>")  # close table-container
+    html.append("</body></html>")
 
-html += """
-</table>
-</div>
-</body>
-</html>
-"""
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write("\n".join(html))
 
-# Write HTML
-os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    f.write(html)
+    print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
 
-print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
+if __name__ == "__main__":
+    build_dashboard()
