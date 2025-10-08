@@ -76,11 +76,15 @@ def build_dashboard():
         "h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }",
         "table { border-collapse: collapse; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
+        # Fix: make first header sticky horizontally
+        f"th:first-child {{ position: sticky; left: 0; background-color: #2b2b2b; z-index: 3; }}",
         "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }",
         "td.green { background-color: #2e7d32; color: #fff; }",
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
+        # Fix: make project headers sticky horizontally
+        f".project-header {{ position: sticky; left: 0; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index:2; }}",
         f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; }}",
         ".table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }",
         "</style></head><body>",
@@ -92,7 +96,7 @@ def build_dashboard():
 
     # Flatten all projects and suites into single table
     for project in sorted(data.keys()):
-        html.append(f"<tr><td class='suite-name' colspan='{len(all_dates)+1}'><b>{project}</b></td></tr>")
+        html.append(f"<tr><td class='project-header' colspan='{len(all_dates)+1}'>{project}</td></tr>")
         for suite in sorted(data[project].keys()):
             display_name = suite.replace("Test Suites/", "")
             html.append(f"<tr><td class='suite-name'>{display_name}</td>")
