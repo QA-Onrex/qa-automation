@@ -2,48 +2,36 @@
 <html lang='en'><head><meta charset='utf-8'><title>QA Automation Report</title>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <style>
-/* Base */
 body { background:#121212; color:#e0e0e0; font-family: Inter, Roboto, Arial, sans-serif; margin:16px; }
-h1 { color: #fff; margin: 8px 0 16px 0; }
-/* Scroll wrapper: single horizontal scrollbar */
-.table-container { overflow-x: auto; width: 100%; border: 1px solid #2b2b2b; }
-table.dashboard { border-collapse: collapse; width: max-content; min-width: 100%; }
-th, td { border: 1px solid #2b2b2b; padding: 6px 10px; text-align: center; white-space: nowrap; }
-th { background: #202020; position: sticky; top: 0; z-index: 5; }
-/* Project header row */
-.project-row td { background: #181818; color: #ffffff; font-weight: 700; text-align: left; padding-left: 12px; }
-/* Sticky left column for suite names */
-.suite-name { position: sticky; left: 0; z-index: 4; background: #111111; width: 600px; text-align: left; padding-left: 10px; overflow: hidden; text-overflow: ellipsis; }
-.suite-name a { display: block; color: inherit; text-decoration: none; }
-/* result cell colors */
-td.green { background: #2e7d32; color: #fff; }
-td.yellow { background: #f9a825; color: #000; }
-td.red { background: #c62828; color: #fff; }
-td.empty { background: #1b1b1b; color: #666; }
-/* cell link fills full cell */
+h1 { color:#fff; margin:8px 0 16px 0; }
+.table-container { overflow-x:auto; width:100%; border:1px solid #2b2b2b; }
+table.dashboard { border-collapse:collapse; width:max-content; min-width:100%; table-layout:fixed; }
+th, td { border:1px solid #2b2b2b; padding:6px 10px; text-align:center; white-space:nowrap; }
+th { background:#202020; position:sticky; top:0; z-index:5; }
+.project-row td { background:#181818; color:#ffffff; font-weight:700; text-align:left; padding-left:12px; }
+.suite-name { position:sticky; left:0; z-index:4; background:#111111; width:600px; text-align:left; padding-left:10px; overflow:hidden; text-overflow:ellipsis; }
+th:not(:first-child), td:not(:first-child) { width:100px; }
+.suite-name a { display:block; color:inherit; text-decoration:none; }
+td.green { background:#2e7d32; color:#fff; }
+td.yellow { background:#f9a825; color:#000; }
+td.red { background:#c62828; color:#fff; }
+td.empty { background:#1b1b1b; color:#666; }
 .cell-link { display:block; width:100%; height:100%; color:inherit; text-decoration:none; }
-/* Tooltip using child element */
-.tooltip { position: relative; display: inline-block; }
-.tooltip .tooltiptext {
-  visibility: hidden; opacity: 0; transition: opacity .18s ease-in-out;
-  position: absolute; left: 50%; transform: translateX(-50%); bottom: 125%;
-  background:#222; color:#fff; padding:8px 10px; border-radius:6px; white-space:normal; text-align:left; z-index: 50;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.6); width: 260px; font-size:13px;
-}
-.tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
-.tooltip .tooltiptext b { display:inline-block; width: 86px; }
-/* small devices: allow table to be scrollable */
-@media (max-width: 800px) {
-  .suite-name { min-width: 160px; max-width: 240px; }
-}
+.tooltip { position:relative; display:inline-block; }
+.tooltip .tooltiptext { visibility:hidden; opacity:0; transition:opacity .18s ease-in-out;
+  position:absolute; left:50%; transform:translateX(-50%); bottom:125%;
+  background:#222; color:#fff; padding:8px 10px; border-radius:6px; white-space:normal;
+  text-align:left; z-index:50; box-shadow:0 4px 10px rgba(0,0,0,0.6); width:260px; font-size:13px; }
+.tooltip:hover .tooltiptext { visibility:visible; opacity:1; }
+.tooltip .tooltiptext b { display:inline-block; width:86px; }
+@media (max-width:800px){ .suite-name{min-width:160px;max-width:240px;} }
 </style></head><body>
 <h1>QA Automation Report</h1>
-<div class='table-container'>
-<table class='dashboard'>
+<div class='table-container'><table class='dashboard'>
 <tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.03</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.20</th></tr>
 <tr class='project-row'><td colspan='9'>DYNAREX</td></tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>billing/DoD Regression/DYNAREX on Demand</div></td>
+<td class='suite-name'>billing/DoD Regression/DYNAREX on Demand</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -54,7 +42,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>billing/DoD Regression/DYNAREX on Demand - without old case</div></td>
+<td class='suite-name'>billing/DoD Regression/DYNAREX on Demand - without old case</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -65,7 +53,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='red'><div class='tooltip'><a class='cell-link' href='reports/20250820_063014_1755666395988.html' target='_blank'>3/0</a><div class='tooltiptext'><b>Test Cases:</b> 5<br><b>Passed:</b> 3<br><b>Failed:</b> 0<br><b>Error:</b> 2<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-20T07:05:27.085+02:00<br><b>End:</b> 2025-08-20T07:06:35.663+02:00<br><b>Duration:</b> 1.1429666666666667 min</div></div></td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>billing/DoD Regression/member - get final DoD check</div></td>
+<td class='suite-name'>billing/DoD Regression/member - get final DoD check</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -76,7 +64,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='yellow'><div class='tooltip'><a class='cell-link' href='reports/20250820_015556_1755661425951.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 1<br><b>Start:</b> 2025-08-20T05:42:49.004+02:00<br><b>End:</b> 2025-08-20T05:43:44.972+02:00<br><b>Duration:</b> 0.9328000000000001 min</div></div></td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>billing/DoD Regression/member - get initial billing counts</div></td>
+<td class='suite-name'>billing/DoD Regression/member - get initial billing counts</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -87,7 +75,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='green'><div class='tooltip'><a class='cell-link' href='reports/20250820_015548_1755661289552.html' target='_blank'>1/0</a><div class='tooltiptext'><b>Test Cases:</b> 1<br><b>Passed:</b> 1<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-08-20T05:40:51.638+02:00<br><b>End:</b> 2025-08-20T05:41:28.652+02:00<br><b>Duration:</b> 0.6169 min</div></div></td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>billing/State assessment/Billing state assessment for new client</div></td>
+<td class='suite-name'>billing/State assessment/Billing state assessment for new client</td>
 <td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251008_160113_1759932471792.html' target='_blank'>22/0</a><div class='tooltiptext'><b>Test Cases:</b> 22<br><b>Passed:</b> 22<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-08T16:01:21.624+02:00<br><b>End:</b> 2025-10-08T16:07:51.456+02:00<br><b>Duration:</b> 6.4972 min</div></div></td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -98,7 +86,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>billing/State assessment/billing state assessment</div></td>
+<td class='suite-name'>billing/State assessment/billing state assessment</td>
 <td class='empty'>–</td>
 <td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251007_132739_1759837285849.html' target='_blank'>25/2</a><div class='tooltiptext'><b>Test Cases:</b> 27<br><b>Passed:</b> 25<br><b>Failed:</b> 2<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-07T13:27:47.410+02:00<br><b>End:</b> 2025-10-07T13:41:24.870+02:00<br><b>Duration:</b> 13.624333333333334 min</div></div></td>
 <td class='empty'>–</td>
@@ -109,7 +97,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>invoice</div></td>
+<td class='suite-name'>invoice</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -120,7 +108,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>settings/Test invoice number structure settings</div></td>
+<td class='suite-name'>settings/Test invoice number structure settings</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_052617_1759470122325.html' target='_blank'>3/5</a><div class='tooltiptext'><b>Test Cases:</b> 8<br><b>Passed:</b> 3<br><b>Failed:</b> 5<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T07:26:24.138+02:00<br><b>End:</b> 2025-10-03T07:42:00.092+02:00<br><b>Duration:</b> 15.599233333333332 min</div></div></td>
@@ -131,7 +119,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>settings/workflow/invoice wf - allowed actions</div></td>
+<td class='suite-name'>settings/workflow/invoice wf - allowed actions</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -142,7 +130,7 @@ td.empty { background: #1b1b1b; color: #666; }
 <td class='empty'>–</td>
 </tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>settings/workflow/workflow settings</div></td>
+<td class='suite-name'>settings/workflow/workflow settings</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_055826_1759472008626.html' target='_blank'>29/30</a><div class='tooltiptext'><b>Test Cases:</b> 59<br><b>Passed:</b> 29<br><b>Failed:</b> 30<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T07:42:06.587+02:00<br><b>End:</b> 2025-10-03T08:13:14.297+02:00<br><b>Duration:</b> 31.1285 min</div></div></td>
@@ -154,7 +142,7 @@ td.empty { background: #1b1b1b; color: #666; }
 </tr>
 <tr class='project-row'><td colspan='9'>DYNAREX V2</td></tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>Settings/Users - Cleanup</div></td>
+<td class='suite-name'>Settings/Users - Cleanup</td>
 <td class='empty'>–</td>
 <td class='green'><div class='tooltip'><a class='cell-link' href='reports/20251007_135016_1759838872373.html' target='_blank'>2/0</a><div class='tooltiptext'><b>Test Cases:</b> 2<br><b>Passed:</b> 2<br><b>Failed:</b> 0<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-07T14:06:38.762+02:00<br><b>End:</b> 2025-10-07T14:07:52.287+02:00<br><b>Duration:</b> 1.2254166666666668 min</div></div></td>
 <td class='empty'>–</td>
@@ -166,7 +154,7 @@ td.empty { background: #1b1b1b; color: #666; }
 </tr>
 <tr class='project-row'><td colspan='9'>GUInterface</td></tr>
 <tr>
-<td class='suite-name'><div class='suite-name-text'>GU Interface (all)</div></td>
+<td class='suite-name'>GU Interface (all)</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 <td class='red'><div class='tooltip'><a class='cell-link' href='reports/20251003_081404_1759472483041.html' target='_blank'>23/7</a><div class='tooltiptext'><b>Test Cases:</b> 30<br><b>Passed:</b> 23<br><b>Failed:</b> 7<br><b>Error:</b> 0<br><b>Incomplete:</b> 0<br><b>Skipped:</b> 0<br><b>Retries:</b> 0<br><b>Start:</b> 2025-10-03T08:14:06.865+02:00<br><b>End:</b> 2025-10-03T08:21:21.101+02:00<br><b>Duration:</b> 7.237266666666667 min</div></div></td>
