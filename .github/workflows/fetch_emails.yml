@@ -38,6 +38,9 @@ jobs:
       - name: Parse HTMLs
         run: python scripts/parse_html.py
 
+      - name: Build Dashboard
+        run: python scripts/build_dashboard.py
+
       - name: Commit updated data
         run: |
           git config user.name "github-actions"
