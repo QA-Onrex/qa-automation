@@ -4,10 +4,9 @@ from datetime import datetime
 from collections import defaultdict
 
 RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"
+OUTPUT_FILE = "docs/index.html"  # updated location
 
 def load_results():
-    """Load all results from JSON."""
     if not os.path.exists(RESULTS_FILE):
         print(f"Error: {RESULTS_FILE} not found.")
         return []
@@ -15,7 +14,6 @@ def load_results():
         return json.load(f)
 
 def get_color(record):
-    """Determine color based on result logic."""
     total = record.get("test_cases", 0) or 0
     passed = record.get("passed", 0) or 0
     failed = record.get("failed", 0) or 0
@@ -24,7 +22,6 @@ def get_color(record):
     skipped = record.get("skipped", 0) or 0
     retry = record.get("retry_count", 0) or 0
 
-    # Sum validation
     total_calc = passed + failed + errored + incomplete + skipped
     if total_calc != total:
         return "red"
@@ -51,25 +48,22 @@ def build_dashboard():
             continue
         date = datetime.fromisoformat(start.replace("Z", "+00:00")).strftime("%Y.%m.%d")
 
-        # Keep only the latest record for the date
+        # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
             r["color"] = get_color(r)
             data[project][suite][date] = r
 
-    # Collect all unique dates (reverse order: latest first)
     all_dates = sorted(
         {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
         reverse=True
-    )
-
-    # Limit to the last 365 days
-    all_dates = all_dates[:365]
+    )[:365]
 
     # Build HTML
     html = [
         "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
         "<style>",
         "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }",
+        "h1 { color: #fff; padding-bottom: 10px; }",
         "h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }",
         "table { border-collapse: collapse; width: 100%; margin-bottom: 40px; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
@@ -78,8 +72,7 @@ def build_dashboard():
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
-        ".project { font-weight: bold; font-size: 1.2em; color: #fff; padding-top: 10px; }",
-        ".suite-name { text-align: left; padding-left: 8px; }",
+        ".suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 220px; text-align: left; padding-left: 8px; font-weight: normal; }",
         "</style></head><body>",
         "<h1>QA Automation Report</h1>"
     ]
@@ -90,7 +83,8 @@ def build_dashboard():
         html.append("<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>")
 
         for suite in sorted(data[project].keys()):
-            html.append(f"<tr><td class='suite-name'>{suite}</td>")
+            display_name = suite.replace("Test Suites/", "")
+            html.append(f"<tr><td class='suite-name'>{display_name}</td>")
             for date in all_dates:
                 if date in data[project][suite]:
                     record = data[project][suite][date]
@@ -115,4 +109,3 @@ def build_dashboard():
 
 if __name__ == "__main__":
     build_dashboard()
-
