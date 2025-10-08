@@ -4,7 +4,7 @@ from datetime import datetime
 from collections import defaultdict
 
 RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"  # updated location
+OUTPUT_FILE = "docs/index.html"  # dashboard location
 
 def load_results():
     if not os.path.exists(RESULTS_FILE):
@@ -53,6 +53,16 @@ def build_dashboard():
             r["color"] = get_color(r)
             data[project][suite][date] = r
 
+    # Calculate maximum suite name length for adaptive column width
+    max_length = 0
+    for project in data:
+        for suite in data[project]:
+            name = suite.replace("Test Suites/", "")
+            if len(name) > max_length:
+                max_length = len(name)
+    left_col_width = max_length * 9 + 16  # approximate pixel width
+
+    # Collect all dates (latest first)
     all_dates = sorted(
         {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
         reverse=True
@@ -65,16 +75,18 @@ def build_dashboard():
         "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }",
         "h1 { color: #fff; padding-bottom: 10px; }",
         "h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }",
-        "table { border-collapse: collapse; width: 100%; margin-bottom: 40px; }",
+        "table { border-collapse: collapse; margin-bottom: 40px; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
         "th { background-color: #2b2b2b; font-weight: bold; }",
         "td.green { background-color: #2e7d32; color: #fff; }",
         "td.yellow { background-color: #f9a825; color: #000; }",
         "td.red { background-color: #c62828; color: #fff; }",
         "td.empty { background-color: #2b2b2b; color: #666; }",
-        ".suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 220px; text-align: left; padding-left: 8px; font-weight: normal; }",
+        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; }}",
+        ".table-container { overflow-x: auto; width: 100%; }",  # horizontal scroll wrapper
         "</style></head><body>",
-        "<h1>QA Automation Report</h1>"
+        "<h1>QA Automation Report</h1>",
+        "<div class='table-container'>"  # single scroll container
     ]
 
     for project in sorted(data.keys()):
@@ -99,6 +111,7 @@ def build_dashboard():
 
         html.append("</table>")
 
+    html.append("</div>")  # close table-container
     html.append("</body></html>")
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
