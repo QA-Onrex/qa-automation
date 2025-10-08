@@ -1,23 +1,22 @@
 <html><head><meta charset='utf-8'><title>QA Automation Report</title>
 <style>
-body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; }
-h1 { color: #fff; padding-bottom: 10px; }
-h2 { color: #fff; border-bottom: 2px solid #444; padding-bottom: 4px; }
-table { border-collapse: collapse; margin-bottom: 40px; }
+body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }
+h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
+table { border-collapse: collapse; }
 th, td { border: 1px solid #444; text-align: center; padding: 6px; }
-th { background-color: #2b2b2b; font-weight: bold; }
+th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }
 td.green { background-color: #2e7d32; color: #fff; }
 td.yellow { background-color: #f9a825; color: #000; }
 td.red { background-color: #c62828; color: #fff; }
 td.empty { background-color: #2b2b2b; color: #666; }
-.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 592px; text-align: left; padding-left: 8px; font-weight: normal; }
-.table-container { overflow-x: auto; width: 100%; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 592px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; }
+.table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }
 </style></head><body>
 <h1>QA Automation Report</h1>
 <div class='table-container'>
-<h2>DYNAREX</h2>
 <table>
 <tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.06</th><th>10.03</th><th>10.02</th><th>10.01</th><th>09.30</th><th>09.29</th><th>09.26</th><th>09.25</th><th>09.24</th><th>09.23</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.25</th><th>08.22</th><th>08.21</th><th>08.20</th><th>08.19</th></tr>
+<tr><td class='suite-name' colspan='22'><b>DYNAREX</b></td></tr>
 <tr><td class='suite-name'>3_vehicle page/3a_vehicle identification VIN</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -432,10 +431,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='red'>58/1</td>
 <td class='empty'>–</td>
 </tr>
-</table>
-<h2>DYNAREX V2</h2>
-<table>
-<tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.06</th><th>10.03</th><th>10.02</th><th>10.01</th><th>09.30</th><th>09.29</th><th>09.26</th><th>09.25</th><th>09.24</th><th>09.23</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.25</th><th>08.22</th><th>08.21</th><th>08.20</th><th>08.19</th></tr>
+<tr><td class='suite-name' colspan='22'><b>DYNAREX V2</b></td></tr>
 <tr><td class='suite-name'>Settings/Permissions - Standart roles</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -505,10 +501,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-</table>
-<h2>GUInterface</h2>
-<table>
-<tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.06</th><th>10.03</th><th>10.02</th><th>10.01</th><th>09.30</th><th>09.29</th><th>09.26</th><th>09.25</th><th>09.24</th><th>09.23</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.25</th><th>08.22</th><th>08.21</th><th>08.20</th><th>08.19</th></tr>
+<tr><td class='suite-name' colspan='22'><b>GUInterface</b></td></tr>
 <tr><td class='suite-name'>GU Interface (all)</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
@@ -532,10 +525,7 @@ td.empty { background-color: #2b2b2b; color: #666; }
 <td class='empty'>–</td>
 <td class='empty'>–</td>
 </tr>
-</table>
-<h2>claimnet</h2>
-<table>
-<tr><th>Test Suite</th><th>10.08</th><th>10.07</th><th>10.06</th><th>10.03</th><th>10.02</th><th>10.01</th><th>09.30</th><th>09.29</th><th>09.26</th><th>09.25</th><th>09.24</th><th>09.23</th><th>08.29</th><th>08.28</th><th>08.27</th><th>08.26</th><th>08.25</th><th>08.22</th><th>08.21</th><th>08.20</th><th>08.19</th></tr>
+<tr><td class='suite-name' colspan='22'><b>claimnet</b></td></tr>
 <tr><td class='suite-name'>Accept order</td>
 <td class='empty'>–</td>
 <td class='empty'>–</td>
