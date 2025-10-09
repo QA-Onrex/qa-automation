@@ -3,6 +3,7 @@ import json
 import shutil
 import re
 from datetime import datetime, timedelta
+from encryptor import decrypt_file_to_bytes
 
 HTML_FOLDER = "data/html"
 PROCESSED_FOLDER = "docs/reports"
@@ -34,11 +35,11 @@ def compute_retry_count(test_suite_id, start_time, results, hours=10):
             if not rec_start:
                 continue
             rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
-            
+
             # Stop as soon as the record is older than 10 hours
             if rec_dt < time_threshold:
                 break
-            
+
             if rec.get("test_suite_id") == test_suite_id:
                 retry_count += 1
 
@@ -48,10 +49,11 @@ def compute_retry_count(test_suite_id, start_time, results, hours=10):
     return retry_count
 
 def parse_html_file(html_path):
-    """Parse embedded JSON from HTML and extract all test data fields with color coding."""
+    """Decrypt and parse embedded JSON from HTML and extract all test data fields with color coding."""
     try:
-        with open(html_path, "r", encoding="utf-8") as f:
-            content = f.read()
+        # Decrypt HTML into memory
+        html_bytes = decrypt_file_to_bytes(html_path)
+        content = html_bytes.decode("utf-8")
 
         # Extract JSON inside loadExecutionData('main', {...})
         match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
@@ -142,11 +144,13 @@ def main():
         if data:
             results.append(data)
             processed_count += 1
+            # Move encrypted HTML to permanent folder
             shutil.move(html_path, os.path.join(PROCESSED_FOLDER, html_file))
             print(f"::notice::Processed {html_file} and moved to processed folder.")
         else:
             print(f"::warning::Skipping {html_file} due to parsing error.")
 
+    # Save results.json unencrypted
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
