@@ -35,6 +35,8 @@ jobs:
         run: python scripts/fetch_emails.py
 
       - name: Process Attachments
+        env: 
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/process_attachments.py
 
       # - name: Parse HTMLs
