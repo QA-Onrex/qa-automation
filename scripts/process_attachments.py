@@ -2,6 +2,8 @@ import os
 import zipfile
 import io
 import traceback
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from encryptor import decrypt_file_to_bytes, encrypt_bytes_to_file
 
 ATTACHMENTS_FOLDER = "data/attachments"
