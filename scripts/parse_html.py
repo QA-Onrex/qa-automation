@@ -3,6 +3,8 @@ import json
 import shutil
 import re
 from datetime import datetime, timedelta
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from encryptor import decrypt_file_to_bytes
 
 HTML_FOLDER = "data/html"
