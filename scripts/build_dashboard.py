@@ -1,5 +1,6 @@
 import json
 import os
+import hashlib
 from datetime import datetime
 from collections import defaultdict
 
@@ -36,6 +37,13 @@ def build_dashboard():
     if not results:
         print("No results found.")
         return
+
+    # Get password hash from environment
+    password = os.getenv("REPORT_PASSWORD", "")
+    password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
+    
+    if not password:
+        print("::warning::REPORT_PASSWORD not set. Dashboard will have no authentication.")
 
     # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
@@ -74,6 +82,14 @@ def build_dashboard():
         "<style>",
         "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }",
         "h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }",
+        "#login-container { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; }",
+        "#login-box { background-color: #2b2b2b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }",
+        "#login-box h2 { margin-top: 0; color: #fff; }",
+        "#password-input { width: 250px; padding: 10px; margin: 10px 0; background-color: #1e1e1e; border: 1px solid #444; color: #ddd; border-radius: 4px; }",
+        "#login-button { padding: 10px 20px; background-color: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }",
+        "#login-button:hover { background-color: #1b5e20; }",
+        "#error-message { color: #c62828; margin-top: 10px; display: none; }",
+        "#dashboard-content { display: none; }",
         "table { border-collapse: collapse; }",
         "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
         "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }",
@@ -96,7 +112,43 @@ def build_dashboard():
         ".tooltip-label { font-weight: bold; display: inline-block; width: 100px; }",
         "</style>",
         "<script>",
+        f"const PASSWORD_HASH = '{password_hash}';",
         "const data = " + json.dumps(data, default=str) + ";",
+        "",
+        "async function hashPassword(password) {",
+        "  const msgBuffer = new TextEncoder().encode(password);",
+        "  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);",
+        "  const hashArray = Array.from(new Uint8Array(hashBuffer));",
+        "  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');",
+        "}",
+        "",
+        "async function checkPassword() {",
+        "  const password = document.getElementById('password-input').value;",
+        "  const hash = await hashPassword(password);",
+        "  if (hash === PASSWORD_HASH) {",
+        "    sessionStorage.setItem('reportPassword', password);",
+        "    document.getElementById('login-container').style.display = 'none';",
+        "    document.getElementById('dashboard-content').style.display = 'block';",
+        "  } else {",
+        "    document.getElementById('error-message').style.display = 'block';",
+        "  }",
+        "}",
+        "",
+        "document.addEventListener('DOMContentLoaded', function() {",
+        "  const savedPassword = sessionStorage.getItem('reportPassword');",
+        "  if (savedPassword) {",
+        "    hashPassword(savedPassword).then(hash => {",
+        "      if (hash === PASSWORD_HASH) {",
+        "        document.getElementById('login-container').style.display = 'none';",
+        "        document.getElementById('dashboard-content').style.display = 'block';",
+        "      }",
+        "    });",
+        "  }",
+        "  document.getElementById('password-input').addEventListener('keypress', function(e) {",
+        "    if (e.key === 'Enter') checkPassword();",
+        "  });",
+        "});",
+        "",
         "function showTooltip(e, project, suite, date) {",
         "  const record = data[project][suite][date];",
         "  if (!record) return;",
@@ -139,6 +191,19 @@ def build_dashboard():
         "}",
         "</script>",
         "</head><body>",
+        "<div id='login-container'>",
+        "  <div id='login-box'>",
+        "    <h2>QA Automation Report</h2>",
+        "    <div>",
+        "      <input type='password' id='password-input' placeholder='Enter password' autofocus>",
+        "    </div>",
+        "    <div>",
+        "      <button id='login-button' onclick='checkPassword()'>Login</button>",
+        "    </div>",
+        "    <div id='error-message'>Incorrect password. Please try again.</div>",
+        "  </div>",
+        "</div>",
+        "<div id='dashboard-content'>",
         "<div id='tooltip' class='tooltip'></div>",
         "<h1>QA Automation Report</h1>",
         "<div class='table-container'>",
@@ -166,6 +231,7 @@ def build_dashboard():
 
     html.append("</table>")
     html.append("</div>")  # close table-container
+    html.append("</div>")  # close dashboard-content
     html.append("</body></html>")
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
