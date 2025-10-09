@@ -22,7 +22,7 @@ td.red { background-color: #c62828; color: #fff; cursor: pointer; }
 td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
 td.empty { background-color: #2b2b2b; color: #666; }
 td.project-separator { background-color: #1e1e1e; }
-.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 124px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 295px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
 .suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
 .project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
 .project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
@@ -33,7 +33,7 @@ td.project-separator { background-color: #1e1e1e; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const data = {"DYNAREX": {"Test Suites/8_media page": {"2025.10.09": {"html_file": "docs/reports/20251009_015514_1759977310823.zip.html", "project": "DYNAREX", "test_suite_id": "Test Suites/8_media page", "profile": "default DYNAREX intdev", "test_cases": 9, "passed": 8, "failed": 1, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T04:28:05.338+02:00", "end": "2025-10-09T04:35:10.214+02:00", "duration": 7.081266666666666, "retry_count": 0, "sum_check": true, "color": "red"}}}};
+const data = {"DYNAREX": {"Test Suites/7_market value page": {"2025.10.09": {"html_file": "docs/reports/20251009_015509_1759976881576.html", "project": "DYNAREX", "test_suite_id": "Test Suites/7_market value page", "profile": "default DYNAREX intdev", "test_cases": 7, "passed": 7, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T04:23:41.121+02:00", "end": "2025-10-09T04:28:01.017+02:00", "duration": 4.3316, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/6_valuation/6e_Manual Valuation": {"2025.10.09": {"html_file": "docs/reports/20251009_015505_1759976616963.html", "project": "DYNAREX", "test_suite_id": "Test Suites/6_valuation/6e_Manual Valuation", "profile": "default", "test_cases": 3, "passed": 0, "failed": 3, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T04:19:46.016+02:00", "end": "2025-10-09T04:23:33.898+02:00", "duration": 3.7980333333333336, "retry_count": 0, "sum_check": true, "color": "red"}}}};
 
 async function hashPassword(password) {
   const msgBuffer = new TextEncoder().encode(password);
@@ -147,8 +147,11 @@ async function openReport(project, suite, date) {
 <table>
 <tr><th>Test Suite</th><th>10.09</th></tr>
 <tr><td class='project-header'>DYNAREX</td><td class='project-separator'></td></tr>
-<tr><td class='suite-name'>8_media page</td>
-<td class='red' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/8_media page", "2025.10.09")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/8_media page", "2025.10.09")'>8/1</td>
+<tr><td class='suite-name'>6_valuation/6e_Manual Valuation</td>
+<td class='red' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/6_valuation/6e_Manual Valuation", "2025.10.09")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/6_valuation/6e_Manual Valuation", "2025.10.09")'>0/3</td>
+</tr>
+<tr><td class='suite-name'>7_market value page</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/7_market value page", "2025.10.09")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/7_market value page", "2025.10.09")'>7/0</td>
 </tr>
 </table>
 </div>
