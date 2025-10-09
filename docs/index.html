@@ -69,6 +69,58 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// AES-256-GCM decryption in browser
+async function decryptBytesAES(encryptedBytes, password) {
+  const salt = encryptedBytes.slice(0, 16);
+  const nonce = encryptedBytes.slice(16, 28);
+  const ciphertext = encryptedBytes.slice(28);
+
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(password),
+    {name: 'PBKDF2'},
+    false,
+    ['deriveKey']
+  );
+
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },
+    keyMaterial,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['decrypt']
+  );
+
+  const decrypted = await crypto.subtle.decrypt({
+    name: 'AES-GCM',
+    iv: nonce
+  }, key, ciphertext);
+
+  return new Uint8Array(decrypted);
+}
+
+// Modified openReport to decrypt encrypted HTML in-memory
+async function openReport(project, suite, date) {
+  const record = data[project][suite][date];
+  if (!record || !record.html_file) return;
+
+  const password = sessionStorage.getItem('reportPassword');
+  if (!password) return alert('Password missing!');
+
+  try {
+    const resp = await fetch(record.html_file.replace('docs/', ''));
+    const encryptedBytes = new Uint8Array(await resp.arrayBuffer());
+    const decryptedBytes = await decryptBytesAES(encryptedBytes, password);
+    const blob = new Blob([decryptedBytes], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  } catch (e) {
+    console.error('Failed to decrypt report:', e);
+    alert('Failed to decrypt report.');
+  }
+}
+
 function showTooltip(e, project, suite, date) {
   const record = data[project][suite][date];
   if (!record) return;
@@ -99,44 +151,14 @@ function showTooltip(e, project, suite, date) {
   tooltip.style.left = (e.pageX + 10) + 'px';
   tooltip.style.top = (e.pageY + 10) + 'px';
 }
-function hideTooltip() {
-  document.getElementById('tooltip').style.display = 'none';
-}
-
-// 🔒 Live decryption of HTML reports
-async function openReport(project, suite, date) {
-  const record = data[project][suite][date];
-  if (!record || !record.html_file) return;
-  const password = sessionStorage.getItem('reportPassword');
-  if (!password) { alert('Password not found in session. Please login again.'); return; }
-  try {
-    const response = await fetch(record.html_file.replace('docs/', ''));
-    const encryptedData = new Uint8Array(await response.arrayBuffer());
-    const enc = new TextEncoder();
-    const pwBytes = enc.encode(password);
-    const keyMaterial = await crypto.subtle.importKey('raw', pwBytes, { name: 'PBKDF2' }, false, ['deriveKey']);
-    const salt = enc.encode('qa_automation_salt');
-    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
-    const nonce = encryptedData.slice(0, 12);
-    const ciphertext = encryptedData.slice(12);
-    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: nonce }, key, ciphertext);
-    const htmlText = new TextDecoder().decode(decrypted);
-    const blob = new Blob([htmlText], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
-  } catch(e) { console.error('Failed to decrypt report:', e); alert('Failed to decrypt report.'); }
-}
+function hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
 </script>
 </head><body>
 <div id='login-container'>
   <div id='login-box'>
     <h2>QA Automation Report</h2>
-    <div>
-      <input type='password' id='password-input' placeholder='Enter password' autofocus>
-    </div>
-    <div>
-      <button id='login-button' onclick='checkPassword()'>Login</button>
-    </div>
+    <div><input type='password' id='password-input' placeholder='Enter password' autofocus></div>
+    <div><button id='login-button' onclick='checkPassword()'>Login</button></div>
     <div id='error-message'>Incorrect password. Please try again.</div>
   </div>
 </div>
