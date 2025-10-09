@@ -39,6 +39,8 @@ jobs:
         run: python scripts/parse_html.py
 
       - name: Build Dashboard
+        env:
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/build_dashboard.py
 
       - name: Commit updated data
