@@ -40,7 +40,7 @@ def extract_and_encrypt_html(zip_path, html_folder):
         return None
 
 def main():
-    zip_files = [f for f in os.listdir(ATTACHMENTS_FOLDER) if f.lower().endswith(".zip")]
+    zip_files = [f for f in os.listdir(ATTACHMENTS_FOLDER) if f.lower().endswith(".zip.enc")]
     if not zip_files:
         print("::notice::No ZIP files to process.")
         return
