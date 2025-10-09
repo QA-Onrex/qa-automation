@@ -35,13 +35,13 @@ jobs:
       # - name: Process Attachments
       #   run: python scripts/process_attachments.py
 
-      - name: Parse HTMLs
-        run: python scripts/parse_html.py
+      # - name: Parse HTMLs
+      #   run: python scripts/parse_html.py
 
-      - name: Build Dashboard
-        env:
-          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/build_dashboard.py
+      # - name: Build Dashboard
+      #   env:
+      #     REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+      #   run: python scripts/build_dashboard.py
 
       - name: Commit updated data
         run: |
