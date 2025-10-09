@@ -39,8 +39,10 @@ jobs:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/process_attachments.py
 
-      # - name: Parse HTMLs
-      #   run: python scripts/parse_html.py
+      - name: Parse HTMLs
+        env: 
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/parse_html.py
 
       # - name: Build Dashboard
       #   env:
