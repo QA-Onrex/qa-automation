@@ -10,11 +10,11 @@ ATTACHMENTS_FOLDER = "data/attachments"
 HTML_FOLDER = "data/html"
 os.makedirs(HTML_FOLDER, exist_ok=True)
 
-def extract_html_from_encrypted_zip(encrypted_zip_path, html_folder, password):
+def extract_html_from_encrypted_zip(encrypted_zip_path, html_folder):
     """Decrypt an encrypted ZIP, extract the first HTML, re-encrypt HTML in memory, save it."""
     try:
         # Decrypt ZIP into memory
-        zip_bytes = decrypt_file_to_bytes(encrypted_zip_path, password)
+        zip_bytes = decrypt_file_to_bytes(encrypted_zip_path)
         if zip_bytes is None:
             print(f"::error::Failed to decrypt {encrypted_zip_path}")
             return None
@@ -35,7 +35,7 @@ def extract_html_from_encrypted_zip(encrypted_zip_path, html_folder, password):
                 html_bytes = src.read()
 
             # Encrypt HTML bytes in memory and write to HTML_FOLDER
-            encrypt_bytes_to_file(html_bytes, html_path, password)
+            encrypt_bytes_to_file(html_bytes, html_path)
             print(f"::notice::Extracted and encrypted {html_filename} from {os.path.basename(encrypted_zip_path)}")
 
         return html_path
@@ -58,7 +58,7 @@ def main():
 
     for zip_file in encrypted_zip_files:
         zip_path = os.path.join(ATTACHMENTS_FOLDER, zip_file)
-        html_path = extract_html_from_encrypted_zip(zip_path, HTML_FOLDER, password)
+        html_path = extract_html_from_encrypted_zip(zip_path, HTML_FOLDER)
         if html_path:
             # Only delete ZIP after successful extraction
             os.remove(zip_path)
