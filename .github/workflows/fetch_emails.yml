@@ -31,6 +31,7 @@ jobs:
         env:
           ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/fetch_emails.py
 
       # - name: Process Attachments
