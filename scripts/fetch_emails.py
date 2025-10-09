@@ -64,7 +64,7 @@ def save_attachments(msg):
                 encrypted_path = os.path.join(ATTACHMENTS_FOLDER, encrypted_name)
 
                 # 🔒 Encrypt directly from memory, never saving plaintext ZIP
-                encrypt_bytes_to_file(content_bytes, encrypted_path, encrypt_password)
+                encrypt_bytes_to_file(content_bytes, encrypted_path)
 
                 saved_files.append(encrypted_name)
                 print(f"::notice::Encrypted and saved {encrypted_name}")
