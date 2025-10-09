@@ -41,7 +41,7 @@ def main():
         print("::error::REPORT_PASSWORD not set — cannot encrypt HTML files.")
         return
 
-    zip_files = [f for f in os.listdir(ATTACHMENTS_FOLDER) if f.lower().endswith(".zip.enc")]
+    zip_files = [f for f in os.listdir(ATTACHMENTS_FOLDER) if f.lower().endswith(".zip")]
     if not zip_files:
         print("::notice::No ZIP files to process.")
         return
