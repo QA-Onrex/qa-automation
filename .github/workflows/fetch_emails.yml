@@ -32,8 +32,8 @@ jobs:
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
         run: python scripts/fetch_emails.py
 
-      - name: Process Attachments
-        run: python scripts/process_attachments.py
+      # - name: Process Attachments
+      #   run: python scripts/process_attachments.py
 
       - name: Parse HTMLs
         run: python scripts/parse_html.py
