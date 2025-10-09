@@ -60,7 +60,7 @@ def save_attachments(msg):
                     print(f"::warning::Empty ZIP attachment {filename}")
                     continue
 
-                encrypted_name = filename + ".enc"
+                encrypted_name = filename
                 encrypted_path = os.path.join(ATTACHMENTS_FOLDER, encrypted_name)
 
                 # 🔒 Encrypt directly from memory, never saving plaintext ZIP
