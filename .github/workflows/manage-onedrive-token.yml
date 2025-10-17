@@ -25,4 +25,4 @@ jobs:
         ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
         ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         ONEDRIVE_TENANT_ID: ${{ secrets.ONEDRIVE_TENANT_ID }}
-      run: python scripts/manage_onedrive_token.py
+      run: python scripts/one_drive/manage_onedrive_token.py
