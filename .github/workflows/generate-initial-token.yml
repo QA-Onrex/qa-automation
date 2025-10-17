@@ -1,0 +1,29 @@
+# .github/workflows/generate-initial-token.yml
+name: 🔑 Generate Initial OneDrive Token
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  generate-token:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Generate OneDrive Auth URL
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_TENANT_ID: ${{ secrets.ONEDRIVE_TENANT_ID }}
+      run: |
+        echo "🚀 OneDrive Token Setup"
+        echo "========================"
+        echo ""
+        echo "1. Visit this URL in your browser:"
+        echo "https://login.microsoftonline.com/$ONEDRIVE_TENANT_ID/oauth2/v2.0/authorize?client_id=$ONEDRIVE_CLIENT_ID&scope=https://graph.microsoft.com/Files.ReadWrite&response_type=code&redirect_uri=http://localhost:8080&response_mode=query"
+        echo ""
+        echo "2. Log in with your organization account"
+        echo "3. Click 'Accept' on the permissions screen"
+        echo "4. You'll be redirected to localhost:8080 (page will fail to load)"
+        echo "5. COPY THE ENTIRE URL from your browser's address bar"
+        echo "6. The URL will look like: http://localhost:8080/?code=OAQABAAIAAA...&session_state=..."
+        echo "7. Copy everything after 'code=' and before '&'"
+        echo "8. Create a GitHub secret called 'ONEDRIVE_AUTH_CODE' with that code value"
+        echo "9. Then run the 'manage-onedrive-token' workflow"
