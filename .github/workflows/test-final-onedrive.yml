@@ -1,0 +1,86 @@
+# .github/workflows/test-final-onedrive.yml
+name: 🧪 Final OneDrive Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: pip install requests
+      
+    - name: Test OneDrive Connection
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+        ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+        ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
+      run: |
+        echo "🧪 Testing OneDrive Access..."
+        
+        python3 -c "
+        import requests
+        import os
+        
+        # Get access token using refresh token
+        token_url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
+        data = {
+            'client_id': os.getenv('ONEDRIVE_CLIENT_ID'),
+            'client_secret': os.getenv('ONEDRIVE_CLIENT_SECRET'),
+            'refresh_token': os.getenv('ONEDRIVE_REFRESH_TOKEN'),
+            'grant_type': 'refresh_token',
+            'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+        }
+        
+        print('🔄 Getting access token...')
+        response = requests.post(token_url, data=data)
+        
+        if response.status_code != 200:
+            print(f'❌ Token refresh failed: {response.status_code}')
+            print(f'Error: {response.text}')
+            exit(1)
+            
+        tokens = response.json()
+        access_token = tokens.get('access_token')
+        new_refresh_token = tokens.get('refresh_token')
+        
+        print('✅ Access token obtained successfully!')
+        
+        user_email = os.getenv('ONEDRIVE_USER_EMAIL')
+        
+        # Test creating a folder in OneDrive
+        url = f'https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/qa-automation-test'
+        headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        }
+        folder_data = {
+            'name': 'qa-automation-test',
+            'folder': {},
+            '@microsoft.graph.conflictBehavior': 'rename'
+        }
+        
+        print('📁 Creating test folder...')
+        response = requests.patch(url, headers=headers, json=folder_data)
+        
+        if response.status_code in [200, 201]:
+            print('✅ SUCCESS! OneDrive access confirmed!')
+            print('📝 Test folder created in your OneDrive')
+            print('')
+            print('🎉 Your OneDrive automation is ready!')
+            print('')
+            print('🔧 Next: Run the main OneDrive fetch workflow')
+        else:
+            print(f'❌ Folder creation failed: {response.status_code}')
+            print(f'Error: {response.text}')
+        "
