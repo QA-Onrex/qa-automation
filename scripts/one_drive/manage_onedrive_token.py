@@ -3,14 +3,17 @@ import requests
 import os
 import sys
 
-# Add the scripts directory to path so we can import other modules
+# Add the parent directory to path so we can import from scripts/one_drive
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from one_drive/update_github_token import update_github_secret
+from update_github_token import update_github_secret
 
 def get_new_token_via_browser():
     """Get initial token via browser OAuth flow"""
     tenant_id = os.getenv("ONEDRIVE_TENANT_ID")
     client_id = os.getenv("ONEDRIVE_CLIENT_ID")
+    
+    if not tenant_id or not client_id:
+        raise Exception("Missing ONEDRIVE_TENANT_ID or ONEDRIVE_CLIENT_ID in secrets")
     
     scope = "https://graph.microsoft.com/Files.ReadWrite"
     auth_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/authorize?client_id={client_id}&scope={scope}&response_type=code&redirect_uri=http://localhost:8080&response_mode=query"
@@ -46,6 +49,10 @@ def refresh_existing_token():
     refresh_token = os.getenv("ONEDRIVE_REFRESH_TOKEN")
     tenant_id = os.getenv("ONEDRIVE_TENANT_ID")
     
+    if not all([client_id, client_secret, refresh_token, tenant_id]):
+        print("❌ Missing required credentials for token refresh")
+        return None
+    
     token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
     data = {
         'client_id': client_id,
@@ -61,6 +68,7 @@ def refresh_existing_token():
         return tokens.get('refresh_token')
     else:
         print(f"❌ Token refresh failed: {response.status_code}")
+        print(f"💡 Error details: {response.text}")
         return None
 
 def main():
