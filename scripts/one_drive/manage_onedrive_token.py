@@ -1,11 +1,11 @@
-# scripts/manage_onedrive_token.py
+# scripts/one_drive/manage_onedrive_token.py
 import requests
 import os
 import sys
 
 # Add the scripts directory to path so we can import other modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from update_github_token import update_github_secret
+from one_drive/update_github_token import update_github_secret
 
 def get_new_token_via_browser():
     """Get initial token via browser OAuth flow"""
