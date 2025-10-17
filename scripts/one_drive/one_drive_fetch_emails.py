@@ -15,7 +15,7 @@ SOURCE_FOLDER = "Automation"
 PROCESSED_FOLDER = "Automation/Processed"
 
 # OneDrive configuration
-ONEDRIVE_FOLDER = "qa-automation/attachments"
+ONEDRIVE_FOLDER = "qa-automation/data/attachments"
 
 def get_onedrive_access_token():
     """Get access token using refresh token"""
