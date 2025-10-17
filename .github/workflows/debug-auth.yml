@@ -1,0 +1,47 @@
+# .github/workflows/debug-auth.yml
+name: 🔍 Debug Authentication Setup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check All Settings
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_TENANT_ID: ${{ secrets.ONEDRIVE_TENANT_ID }}
+      run: |
+        echo "🔍 Checking Authentication Configuration"
+        echo "========================================"
+        echo ""
+        echo "📋 Current Settings:"
+        echo "Tenant ID: $ONEDRIVE_TENANT_ID"
+        echo "Client ID: $ONEDRIVE_CLIENT_ID"
+        echo ""
+        
+        # Validate GUID formats
+        if [[ "$ONEDRIVE_TENANT_ID" =~ ^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$ ]]; then
+          echo "✅ Tenant ID format: VALID"
+        else
+          echo "❌ Tenant ID format: INVALID"
+        fi
+        
+        if [[ "$ONEDRIVE_CLIENT_ID" =~ ^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$ ]]; then
+          echo "✅ Client ID format: VALID"
+        else
+          echo "❌ Client ID format: INVALID"
+        fi
+        
+        echo ""
+        echo "🔗 Test Authentication URL:"
+        echo "https://login.microsoftonline.com/$ONEDRIVE_TENANT_ID/oauth2/v2.0/authorize?client_id=$ONEDRIVE_CLIENT_ID&scope=https://graph.microsoft.com/Files.ReadWrite&response_type=code&redirect_uri=http://localhost:8080&response_mode=query"
+        
+        echo ""
+        echo "📝 Common Issues Checklist:"
+        echo "1. ✅ Tenant ID format is correct"
+        echo "2. ✅ Client ID format is correct" 
+        echo "3. ❓ Azure App is properly configured"
+        echo "4. ❓ Redirect URI is set in Azure App"
+        echo "5. ❓ API permissions are granted"
