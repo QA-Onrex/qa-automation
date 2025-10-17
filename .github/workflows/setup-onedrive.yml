@@ -1,0 +1,26 @@
+# .github/workflows/setup-onedrive.yml
+name: ⚙️ Setup OneDrive Token
+
+on:
+  workflow_dispatch:  # Manual only - for initial setup
+
+jobs:
+  get-token:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: pip install requests
+      
+    - name: Get OneDrive Refresh Token
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_TENANT_ID: ${{ secrets.ONEDRIVE_TENANT_ID }}
+      run: python scripts/get_onedrive_token.py
