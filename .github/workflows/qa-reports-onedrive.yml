@@ -35,7 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: fetch-emails
     if: always()  # Run even if fetch fails
-    
+    permissions:
+      contents: read
+      secrets: write  
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
