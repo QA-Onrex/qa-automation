@@ -1,5 +1,5 @@
-# .github/workflows/test-personal-app.yml
-name: 🔧 Test Personal Account App
+# .github/workflows/test-ncb-onedrive.yml
+name: 🔧 Test NCB OneDrive Access
 
 on:
   workflow_dispatch:
@@ -8,15 +8,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Test Personal Account Auth
+    - name: Test NCB OneDrive Authentication
       env:
         ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
       run: |
-        echo "🔧 Testing with Personal Microsoft Account"
+        echo "🔧 Testing NCB OneDrive Access"
         echo ""
-        echo "Visit this URL and sign in with ANY Microsoft account:"
+        echo "Your work email: $ONEDRIVE_USER_EMAIL"
+        echo ""
+        echo "Visit this URL and sign in with your NCB work account:"
         echo "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=$ONEDRIVE_CLIENT_ID&scope=https://graph.microsoft.com/Files.ReadWrite&response_type=code&redirect_uri=http://localhost:8080&response_mode=query"
         echo ""
-        echo "This should work with:"
-        echo "- Personal accounts (Outlook.com, Hotmail.com)"
-        echo "- Work/school accounts (if admin allows external apps)"
+        echo "This will ask you to sign in to your ncb.global account and grant permissions to the app."
