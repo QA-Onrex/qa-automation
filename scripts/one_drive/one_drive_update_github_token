@@ -21,12 +21,13 @@ def encrypt_github_secret(public_key: str, secret_value: str) -> str:
         return None
 
 def update_github_secret(secret_name: str, secret_value: str) -> bool:
-    """Update GitHub secret"""
-    repo = os.getenv('GITHUB_REPOSITORY')
-    token = os.getenv('GITHUB_TOKEN')
+    """Update GitHub secret using auto-injected GitHub variables"""
+    # These are automatically provided by GitHub Actions
+    repo = os.getenv('GITHUB_REPOSITORY')  # Auto-injected
+    token = os.getenv('GITHUB_TOKEN')      # Auto-injected
     
     if not all([repo, token]):
-        print("❌ Missing GITHUB_TOKEN or GITHUB_REPOSITORY")
+        print("❌ Missing auto-injected GitHub variables")
         return False
     
     # Get public key
@@ -63,46 +64,3 @@ def update_github_secret(secret_name: str, secret_value: str) -> bool:
     else:
         print(f"❌ Failed to update secret: {response.status_code}")
         return False
-
-def get_new_refresh_token():
-    """Get new refresh token using current credentials"""
-    client_id = os.getenv("ONEDRIVE_CLIENT_ID")
-    client_secret = os.getenv("ONEDRIVE_CLIENT_SECRET")
-    refresh_token = os.getenv("ONEDRIVE_REFRESH_TOKEN")
-    tenant_id = os.getenv("ONEDRIVE_TENANT_ID")
-    
-    token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
-    data = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'refresh_token': refresh_token,
-        'grant_type': 'refresh_token',
-        'scope': 'https://graph.microsoft.com/Files.ReadWrite'
-    }
-    
-    response = requests.post(token_url, data=data)
-    if response.status_code == 200:
-        tokens = response.json()
-        return tokens.get('refresh_token')
-    else:
-        raise Exception(f"Token refresh failed: {response.status_code}")
-
-def main():
-    print("🔄 Checking for token refresh...")
-    
-    try:
-        new_refresh_token = get_new_refresh_token()
-        if new_refresh_token:
-            print("🆕 New refresh token obtained")
-            if update_github_secret("ONEDRIVE_REFRESH_TOKEN", new_refresh_token):
-                print("🎉 GitHub secret updated successfully!")
-            else:
-                print("❌ Failed to update GitHub secret")
-        else:
-            print("ℹ️  Current token is still valid")
-            
-    except Exception as e:
-        print(f"❌ Error: {e}")
-
-if __name__ == "__main__":
-    main()
