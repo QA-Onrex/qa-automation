@@ -85,6 +85,7 @@ jobs:
         else
             echo "✅ Token refreshed successfully"
             echo "💾 Updating GitHub secret..."
-            echo "$NEW_TOKEN" | gh secret set ONEDRIVE_REFRESH_TOKEN -b
+            # Use --body flag with the token value directly
+            gh secret set ONEDRIVE_REFRESH_TOKEN --body "$NEW_TOKEN"
             echo "🎉 GitHub secret updated! Token valid for another 90 days."
         fi
