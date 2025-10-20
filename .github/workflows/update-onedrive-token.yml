@@ -1,0 +1,150 @@
+# .github/workflows/update-onedrive-token.yml
+name: 🔄 Update OneDrive Token
+
+on:
+  schedule:
+    - cron: '0 2 1 * *'  # Run at 02:00 on the 1st of every month
+  workflow_dispatch:      # Manual trigger
+
+jobs:
+  update-token:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: pip install requests
+    
+    - name: Check current token status
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+        ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+      run: |
+        echo "🔍 Checking current token status..."
+        
+        python -c "
+        import requests, os
+        from datetime import datetime, timedelta
+        
+        # Test current token
+        response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data={
+            'client_id': os.getenv('ONEDRIVE_CLIENT_ID'),
+            'client_secret': os.getenv('ONEDRIVE_CLIENT_SECRET'),
+            'refresh_token': os.getenv('ONEDRIVE_REFRESH_TOKEN'),
+            'grant_type': 'refresh_token',
+            'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+        })
+        
+        if response.status_code == 200:
+            current_expiry = datetime.now() + timedelta(days=90)
+            print(f'::notice::Current token expires: {current_expiry.strftime(\"%Y-%m-%d\")}')
+            print(f'::notice::Days remaining: {(current_expiry - datetime.now()).days}')
+        else:
+            print('::warning::Current token may be expired or invalid')
+        "
+    
+    - name: Update OneDrive token
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+        ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+        GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+      run: |
+        echo "🔄 Refreshing OneDrive token..."
+        
+        # Get new refresh token
+        NEW_TOKEN=$(python -c "
+        import requests, os
+        from datetime import datetime, timedelta
+        
+        try:
+            response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data={
+                'client_id': os.getenv('ONEDRIVE_CLIENT_ID'),
+                'client_secret': os.getenv('ONEDRIVE_CLIENT_SECRET'), 
+                'refresh_token': os.getenv('ONEDRIVE_REFRESH_TOKEN'),
+                'grant_type': 'refresh_token',
+                'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+            })
+            
+            if response.status_code == 200:
+                tokens = response.json()
+                new_token = tokens.get('refresh_token')
+                if new_token:
+                    # Calculate new expiration date
+                    new_expiry = datetime.now() + timedelta(days=90)
+                    print(f'NEW_TOKEN:{new_token}')
+                    print(f'NEW_EXPIRY:{new_expiry.strftime(\"%Y-%m-%d\")}')
+                else:
+                    current_token = os.getenv('ONEDRIVE_REFRESH_TOKEN')
+                    current_expiry = datetime.now() + timedelta(days=90)
+                    print(f'NO_CHANGE:{current_token}')
+                    print(f'CURRENT_EXPIRY:{current_expiry.strftime(\"%Y-%m-%d\")}')
+            else:
+                print(f'ERROR:{response.status_code}')
+        except Exception as e:
+            print(f'ERROR:{e}')
+        ")
+        
+        # Parse the output
+        if [[ "$NEW_TOKEN" == ERROR* ]]; then
+            ERROR_MSG=$(echo "$NEW_TOKEN" | cut -d':' -f2-)
+            echo "::error::Token refresh failed: $ERROR_MSG"
+            exit 1
+        elif [[ "$NEW_TOKEN" == NO_CHANGE* ]]; then
+            CURRENT_TOKEN=$(echo "$NEW_TOKEN" | grep 'NO_CHANGE:' | cut -d':' -f2-)
+            EXPIRY_DATE=$(echo "$NEW_TOKEN" | grep 'CURRENT_EXPIRY:' | cut -d':' -f2-)
+            echo "::notice::No new token needed - current token is still valid"
+            echo "::notice::Token expires: $EXPIRY_DATE"
+            echo "ℹ️ Token remains valid until $EXPIRY_DATE"
+        else
+            # Extract new token and expiry from output
+            ACTUAL_NEW_TOKEN=$(echo "$NEW_TOKEN" | grep 'NEW_TOKEN:' | cut -d':' -f2-)
+            NEW_EXPIRY=$(echo "$NEW_TOKEN" | grep 'NEW_EXPIRY:' | cut -d':' -f2-)
+            
+            echo "✅ Token refreshed successfully"
+            echo "::notice::New token expiration: $NEW_EXPIRY"
+            
+            echo "💾 Updating GitHub secret..."
+            gh secret set ONEDRIVE_REFRESH_TOKEN --body "$ACTUAL_NEW_TOKEN"
+            
+            echo "::notice::OneDrive token updated successfully"
+            echo "::notice::New expiration date: $NEW_EXPIRY"
+            echo "🎉 GitHub secret updated! Token valid until $NEW_EXPIRY"
+        fi
+    
+    - name: Verify token update
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+        ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+      run: |
+        echo "🔍 Verifying token update..."
+        
+        python -c "
+        import requests, os
+        from datetime import datetime, timedelta
+        
+        response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data={
+            'client_id': os.getenv('ONEDRIVE_CLIENT_ID'),
+            'client_secret': os.getenv('ONEDRIVE_CLIENT_SECRET'),
+            'refresh_token': os.getenv('ONEDRIVE_REFRESH_TOKEN'),
+            'grant_type': 'refresh_token',
+            'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+        })
+        
+        if response.status_code == 200:
+            verified_expiry = datetime.now() + timedelta(days=90)
+            print('::notice::Token verification: SUCCESS')
+            print(f'::notice::Verified expiration: {verified_expiry.strftime(\"%Y-%m-%d\")}')
+            print(f'✅ Token is valid and will expire on {verified_expiry.strftime(\"%B %d, %Y\")}')
+        else:
+            print('::error::Token verification: FAILED')
+            print(f'❌ Token update may not have worked correctly')
+        "
