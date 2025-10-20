@@ -1,4 +1,3 @@
-
 # scripts/one_drive/onedrive_process_attachments.py
 import os
 import zipfile
@@ -170,6 +169,8 @@ def main():
                 print(f"❌ Error processing {zip_file}: {e}")
                 traceback.print_exc()
         
+        # Final annotation with processed count
+        print(f"::notice::Processed {processed_count} HTML files from attachments")
         print(f"🎉 Processed {processed_count} out of {len(zip_files)} ZIP files")
         
     except Exception as e:
