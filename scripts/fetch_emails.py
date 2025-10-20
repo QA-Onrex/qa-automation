@@ -125,7 +125,10 @@ def main():
 
     mail.expunge()
     mail.logout()
-    print(f"::notice::Processed {processed_count} emails and saved encrypted attachments.")
+    
+    # Final annotation with processed count
+    print(f"::notice::Processed {processed_count} emails with attachments")
+    print(f"Processed {processed_count} emails and saved encrypted attachments.")
 
 
 if __name__ == "__main__":
