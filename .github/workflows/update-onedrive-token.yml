@@ -21,6 +21,38 @@ jobs:
     - name: Install dependencies
       run: pip install requests
     
+    - name: Check current token status
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+        ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+      run: |
+        echo "🔍 Checking current token status..."
+        
+        python -c "
+        import requests, os
+        from datetime import datetime, timedelta
+        
+        # Test current token
+        response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data={
+            'client_id': os.getenv('ONEDRIVE_CLIENT_ID'),
+            'client_secret': os.getenv('ONEDRIVE_CLIENT_SECRET'),
+            'refresh_token': os.getenv('ONEDRIVE_REFRESH_TOKEN'),
+            'grant_type': 'refresh_token',
+            'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+        })
+        
+        if response.status_code == 200:
+            current_expiry = datetime.now() + timedelta(days=90)
+            days_remaining = (current_expiry - datetime.now()).days
+            print(f'::notice::Verified expiration: {current_expiry.strftime(\"%Y-%m-%d\")}')
+            print(f'::notice::Days remaining: {days_remaining}')
+            print(f'Verified expiration: {current_expiry.strftime(\"%Y-%m-%d\")}')
+            print(f'Days remaining: {days_remaining}')
+        else:
+            print('::warning::Current token may be expired or invalid')
+        "
+    
     - name: Update OneDrive token
       env:
         ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
@@ -71,7 +103,7 @@ jobs:
         # Parse the output
         if [[ "$NEW_TOKEN" == ERROR* ]]; then
             ERROR_MSG=$(echo "$NEW_TOKEN" | cut -d':' -f2-)
-            echo "❌ Token refresh failed: $ERROR_MSG"
+            echo "::error::Token refresh failed: $ERROR_MSG"
             exit 1
         else
             # Extract new token and expiry from output
@@ -82,6 +114,9 @@ jobs:
             echo "💾 Updating GitHub secret..."
             gh secret set ONEDRIVE_REFRESH_TOKEN --body "$ACTUAL_NEW_TOKEN"
             
+            echo "::notice::OneDrive token updated successfully"
+            echo "::notice::New token expiration: $NEW_EXPIRY"
+            echo "::notice::Days remaining: $NEW_DAYS"
             echo "✅ OneDrive token updated successfully"
             echo "New token expiration: $NEW_EXPIRY"
             echo "Days remaining: $NEW_DAYS"
