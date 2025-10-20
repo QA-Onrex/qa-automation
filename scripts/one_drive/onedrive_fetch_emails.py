@@ -38,11 +38,7 @@ def get_onedrive_access_token():
     response = requests.post(token_url, data=data)
     if response.status_code == 200:
         tokens = response.json()
-        # Log if we got a new refresh token (for debugging)
-        new_refresh_token = tokens.get('refresh_token')
-        if new_refresh_token and new_refresh_token != refresh_token:
-            print("::notice::New refresh token available - will be updated by token job")
-        
+        # Removed the refresh token notice message
         return tokens.get('access_token')
     else:
         raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
@@ -197,6 +193,8 @@ def main():
             except Exception as e:
                 print(f"❌ Error processing email UID {uid.decode()}: {e}")
 
+        # Final annotation with processed count
+        print(f"::notice::Processed {processed_count} emails with attachments")
         print(f"✅ Processed {processed_count} emails with attachments")
 
     finally:
