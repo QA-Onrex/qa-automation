@@ -82,14 +82,12 @@ jobs:
             echo "💾 Updating GitHub secret..."
             gh secret set ONEDRIVE_REFRESH_TOKEN --body "$ACTUAL_NEW_TOKEN"
             
-            # Output in exact desired format with annotations
-            echo "::notice::Verified expiration: $NEW_EXPIRY"
-            echo "::notice::Days remaining: $NEW_DAYS"
+            # Output to annotations
+            echo "::notice::Verified expiration: $NEW_EXPIRY | Days remaining: $NEW_DAYS"
             echo "::notice::OneDrive token updated successfully"
-            echo "::notice::New token expiration: $NEW_EXPIRY"
-            echo "::notice::Days remaining: $NEW_DAYS"
+            echo "::notice::New token expiration: $NEW_EXPIRY | Days remaining: $NEW_DAYS"
             
-            # Also output to logs
+            # Output to logs
             echo "Verified expiration: $NEW_EXPIRY"
             echo "Days remaining: $NEW_DAYS"
             echo "OneDrive token updated successfully"
