@@ -8,8 +8,8 @@ import requests
 from urllib.parse import quote
 
 # OneDrive folder paths
-ONEDRIVE_ATTACHMENTS_FOLDER = "qa-automation/attachments"
-ONEDRIVE_HTML_FOLDER = "qa-automation/html"
+ONEDRIVE_ATTACHMENTS_FOLDER = "qa-automation/data/attachments"
+ONEDRIVE_HTML_FOLDER = "qa-automation/data/html"
 
 def get_onedrive_access_token():
     """Get access token using refresh token"""
