@@ -29,7 +29,7 @@ jobs:
         ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
         ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
-      run: python scripts/one_drive/one_drive_fetch_emails.py
+      run: python scripts/one_drive/onedrive_fetch_emails.py
 
   update-token:
     runs-on: ubuntu-latest
