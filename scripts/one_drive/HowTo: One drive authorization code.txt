@@ -1,0 +1,17 @@
+One drive authorization code
+Need CLIENT_ID
+
+
+1. Visit follow page:
+
+https://login.microsoftonline.com/common/oauth2/v2.0/authorize?
+client_id=YOUR_CLIENT_ID&
+scope=https://graph.microsoft.com/Files.ReadWrite&
+response_type=code&
+redirect_uri=http://localhost:8080&
+response_mode=query
+
+2. Clicked on Accept and updated the token in github secrets with the code from the url:
+http://localhost:8080/?code=1.AR8AZEdvX9U640mBCBgi5 ... WRk4JFckls&session_state=009b3679-4b24-2d6c-eaff-12f76330e526#
+
+3. 
