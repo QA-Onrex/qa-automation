@@ -3,7 +3,7 @@ name: 🚀 QA Reports - OneDrive Storage
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */6 * * *'  # Every 6 hours
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
   process-attachments:
     runs-on: ubuntu-latest
     needs: fetch-emails
-    if: success()  # Only run if fetch succeeded
+    if: success()
     
     steps:
     - name: Checkout repository
@@ -55,4 +55,47 @@ jobs:
         ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
       run: python scripts/one_drive/onedrive_process_attachments.py
-  
+
+  parse-html:
+    runs-on: ubuntu-latest
+    needs: process-attachments
+    if: success()
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Parse HTML files from OneDrive
+      env:
+        ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+        ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+        ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+        ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
+      run: python scripts/one_drive/onedrive_parse_html.py
+
+  update-results:
+    runs-on: ubuntu-latest
+    needs: parse-html  # Change this to your-additional-step when you add it
+    if: success()
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Commit and push results.json
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/results.json
+        git diff --staged --quiet || git commit -m "Update QA results - $(date +'%Y-%m-%d %H:%M')"
+        git push
