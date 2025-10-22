@@ -3,6 +3,7 @@ import os
 import json
 import re
 import requests
+import time
 from datetime import datetime, timedelta
 from urllib.parse import quote
 
@@ -54,6 +55,9 @@ def download_from_onedrive_to_memory(file_path, access_token):
     url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
     headers = {'Authorization': f'Bearer {access_token}'}
     
+    # Rate limiting
+    time.sleep(0.5)
+    
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         return response.content
@@ -78,6 +82,9 @@ def move_file_in_onedrive(source_path, destination_path, access_token):
         },
         "name": os.path.basename(destination_path)
     }
+    
+    # Rate limiting
+    time.sleep(0.5)
         
     response = requests.patch(url, headers=headers, json=move_data)
     return response.status_code in [200, 201]
