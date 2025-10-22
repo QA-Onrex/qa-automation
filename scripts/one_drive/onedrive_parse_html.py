@@ -288,7 +288,7 @@ def main():
             json.dump(results, f, indent=2, ensure_ascii=False)
 
         # Final annotation with processed count
-        print(f"::notice::Parsed {processed_count} HTML files and updated results.json")
+        print(f"::notice::Parsed {processed_count} HTML files")
         print(f"🎉 Processed {processed_count} out of {len(html_files)} HTML files")
 
     except Exception as e:
