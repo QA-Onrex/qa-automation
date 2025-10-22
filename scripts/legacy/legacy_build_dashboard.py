@@ -5,8 +5,8 @@ import hashlib
 from datetime import datetime
 from collections import defaultdict
 
-RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"  # dashboard location
+RESULTS_FILE = "data/legacy_results.json"
+OUTPUT_FILE = "docs/legacy_index.html"
 
 def load_results():
     if not os.path.exists(RESULTS_FILE):
