@@ -10,7 +10,7 @@ from legacy_encryptor import decrypt_file_to_bytes
 
 HTML_FOLDER = "data/html"
 PROCESSED_FOLDER = "docs/reports"
-RESULTS_FILE = "data/results.json"
+RESULTS_FILE = "data/legacy_results.json"
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 
 # Load existing results.json into memory
