@@ -250,7 +250,7 @@ def main():
                      if f.lower().endswith(".html")]
         
         if not html_files:
-            print("::notice::No HTML files to process in OneDrive.")
+            print("::notice::Processed 0 HTML files.")
             return
 
         processed_count = 0
