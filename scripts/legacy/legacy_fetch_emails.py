@@ -5,7 +5,7 @@ import os
 import traceback
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from encryptor import encrypt_bytes_to_file  # 🔒 in-memory encryption
+from legacy_encryptor import encrypt_bytes_to_file  # 🔒 in-memory encryption
 
 # --- Config ---
 zoho_user = os.getenv("ZOHO_EMAIL")
