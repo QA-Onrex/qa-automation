@@ -71,14 +71,14 @@ def move_file_in_onedrive(source_path, destination_path, access_token):
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
-    
+
     move_data = {
         "parentReference": {
-            "path": f"/drive/root:/{ONEDRIVE_PROCESSED_FOLDER.rsplit('/', 1)[0]}"
+            "path": f"/drive/root:/{ONEDRIVE_PROCESSED_FOLDER}"
         },
-        "name": destination_path.split('/')[-1]
+        "name": os.path.basename(destination_path)
     }
-    
+        
     response = requests.patch(url, headers=headers, json=move_data)
     return response.status_code in [200, 201]
 
