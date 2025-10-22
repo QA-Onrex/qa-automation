@@ -128,6 +128,7 @@ def main():
         
         if not zip_files:
             print("ℹ️ No ZIP files to process in OneDrive attachments folder")
+            print(f"::notice::Processed 0 ZIP files")
             return
 
         print(f"📦 Found {len(zip_files)} ZIP files to process")
