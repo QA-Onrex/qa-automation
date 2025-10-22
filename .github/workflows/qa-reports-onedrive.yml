@@ -60,13 +60,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: process-attachments
     if: success()
+
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v4
       with:
         python-version: '3.9'
         
@@ -80,21 +85,7 @@ jobs:
         ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
       run: python scripts/one_drive/onedrive_parse_html.py
-
-  update-results:
-    runs-on: ubuntu-latest
-    needs: parse-html
-    if: success()
-
-    permissions:
-      contents: write
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
+      
     - name: Commit updated data
       run: |
         git config user.name "github-actions"
