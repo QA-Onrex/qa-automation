@@ -194,8 +194,8 @@ def main():
                 print(f"❌ Error processing email UID {uid.decode()}: {e}")
 
         # Final annotation with processed count
-        print(f"::notice::Processed {processed_count} emails with attachments")
-        print(f"✅ Processed {processed_count} emails with attachments")
+        print(f"::notice::Processed {processed_count} emails")
+        print(f"✅ Processed {processed_count} emails")
 
     finally:
         mail.expunge()
