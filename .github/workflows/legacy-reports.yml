@@ -1,8 +1,8 @@
 name: Legacy Reports
 
 on:
-  schedule:
-    - cron: "0 * * * *"   # Runs every hour
+  # schedule:
+  #   - cron: "0 * * * *"   # Runs every hour
   workflow_dispatch:       # Allow manual run
 
 permissions:
@@ -32,22 +32,22 @@ jobs:
           ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/fetch_emails.py
+        run: python scripts/legacy/legacy_fetch_emails.py
 
       - name: Process Attachments
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/process_attachments.py
+        run: python scripts/legacy/legacy_process_attachments.py
 
       - name: Parse HTMLs
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/parse_html.py
+        run: python scripts/legacy/legacy_parse_html.py
 
       - name: Build Dashboard
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/build_dashboard.py
+        run: python scripts/legacy/legacy_build_dashboard.py
 
       - name: Commit updated data
         run: |
