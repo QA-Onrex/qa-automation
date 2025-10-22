@@ -1,0 +1,162 @@
+import os
+import json
+import shutil
+import re
+from datetime import datetime, timedelta
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from encryptor import decrypt_file_to_bytes
+
+HTML_FOLDER = "data/html"
+PROCESSED_FOLDER = "docs/reports"
+RESULTS_FILE = "data/results.json"
+os.makedirs(PROCESSED_FOLDER, exist_ok=True)
+
+# Load existing results.json into memory
+results = []
+if os.path.exists(RESULTS_FILE):
+    try:
+        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+            results = json.load(f)
+    except json.JSONDecodeError:
+        print("::warning::results.json is empty or invalid, starting fresh.")
+        results = []
+
+def compute_retry_count(test_suite_id, start_time, results, hours=10):
+    """Compute retry count using chronological results, stop when older than 10 hours."""
+    retry_count = 0
+    if not test_suite_id or not start_time:
+        return 0
+    try:
+        start_dt = datetime.strptime(start_time.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
+        time_threshold = start_dt - timedelta(hours=hours)
+
+        # Iterate results in reverse chronological order
+        for rec in reversed(results):
+            rec_start = rec.get("start")
+            if not rec_start:
+                continue
+            rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
+
+            # Stop as soon as the record is older than 10 hours
+            if rec_dt < time_threshold:
+                break
+
+            if rec.get("test_suite_id") == test_suite_id:
+                retry_count += 1
+
+    except Exception:
+        pass
+
+    return retry_count
+
+def parse_html_file(html_path):
+    """Decrypt and parse embedded JSON from HTML and extract all test data fields with color coding."""
+    try:
+        # Decrypt HTML into memory
+        html_bytes = decrypt_file_to_bytes(html_path)
+        content = html_bytes.decode("utf-8")
+
+        # Extract JSON inside loadExecutionData('main', {...})
+        match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
+        if not match:
+            print(f"::warning::No embedded JSON found in {html_path}")
+            return None
+
+        data_json = json.loads(match.group(1))
+        entity = data_json.get("entity", {})
+
+        # Project is outside entity
+        project_name = data_json.get("project", {}).get("name")
+
+        test_suite_id = entity.get("entityId")
+        profile = entity.get("context", {}).get("profile")
+
+        stats = entity.get("statistics", {})
+        test_cases = stats.get("total")
+        passed = stats.get("passed")
+        failed = stats.get("failed")
+        error = stats.get("errored")
+        incomplete = stats.get("incomplete")
+        skipped = stats.get("skipped")
+
+        start = entity.get("startTime")
+        end = entity.get("endTime")
+
+        # Compute duration in minutes
+        duration = None
+        if start and end:
+            try:
+                fmt = "%Y-%m-%dT%H:%M:%S.%f%z" if '+' in start or '-' in start else "%Y-%m-%dT%H:%M:%S.%fZ"
+                start_dt = datetime.strptime(start.replace('Z', '+0000'), fmt)
+                end_dt = datetime.strptime(end.replace('Z', '+0000'), fmt)
+                duration = (end_dt - start_dt).total_seconds() / 60  # minutes
+            except Exception:
+                duration = None
+
+        # Compute retry count dynamically
+        retry_count = compute_retry_count(test_suite_id, start, results)
+
+        # Sum check
+        sum_check = True
+        if test_cases is not None:
+            total_sum = sum(filter(None, [passed, failed, error, incomplete, skipped]))
+            sum_check = (total_sum == test_cases)
+
+        # Color logic
+        color = "Red"  # default
+        if test_cases is not None and passed == test_cases and sum_check:
+            color = "Green"
+            if retry_count and retry_count != 0:
+                color = "Yellow"
+
+        return {
+            "html_file": os.path.join("docs/reports", os.path.basename(html_path)),
+            "project": project_name,
+            "test_suite_id": test_suite_id,
+            "profile": profile,
+            "test_cases": test_cases,
+            "passed": passed,
+            "failed": failed,
+            "error": error,
+            "incomplete": incomplete,
+            "skipped": skipped,
+            "start": start,
+            "end": end,
+            "duration": duration,
+            "retry_count": retry_count,
+            "sum_check": sum_check,
+            "color": color
+        }
+
+    except Exception as e:
+        print(f"::error::Failed to parse {html_path}: {e}")
+        return None
+
+def main():
+    html_files = [f for f in os.listdir(HTML_FOLDER) if f.lower().endswith(".html")]
+    if not html_files:
+        print("::notice::No HTML files to process.")
+        return
+
+    processed_count = 0
+    for html_file in html_files:
+        html_path = os.path.join(HTML_FOLDER, html_file)
+        data = parse_html_file(html_path)
+        if data:
+            results.append(data)
+            processed_count += 1
+            # Move encrypted HTML to permanent folder
+            shutil.move(html_path, os.path.join(PROCESSED_FOLDER, html_file))
+            print(f"::notice::Processed {html_file} and moved to processed folder.")
+        else:
+            print(f"::warning::Skipping {html_file} due to parsing error.")
+
+    # Save results.json unencrypted
+    with open(RESULTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+
+    print(f"::notice::Updated {RESULTS_FILE} with {processed_count} new entries.")
+
+if __name__ == "__main__":
+    main()
