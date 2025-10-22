@@ -220,7 +220,7 @@ def parse_html_content(html_content, html_filename):
                 color = "Yellow"
 
         return {
-            "html_file": f"reports/{html_filename}",  # Relative path for dashboard
+            "html_file": f"qa-automation/data/reports/{html_filename}",  # Fixed path to match OneDrive
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
@@ -261,6 +261,8 @@ def main():
             return
 
         processed_count = 0
+        new_results = []
+        
         for html_file in html_files:
             try:
                 print(f"🔍 Processing {html_file}...")
@@ -275,7 +277,7 @@ def main():
                 # Parse HTML content
                 data = parse_html_content(html_content, html_file)
                 if data:
-                    results.append(data)
+                    new_results.append(data)
                     processed_count += 1
                     
                     # Move HTML to processed folder in OneDrive
@@ -290,9 +292,28 @@ def main():
             except Exception as e:
                 print(f"❌ Error processing {html_file}: {e}")
 
-        # Save results.json locally (will be committed by workflow)
-        with open(RESULTS_FILE, "w", encoding="utf-8") as f:
-            json.dump(results, f, indent=2, ensure_ascii=False)
+        # Add new results to existing results
+        if new_results:
+            results.extend(new_results)
+            print(f"📊 Added {len(new_results)} new records to results")
+            
+            # Ensure the data directory exists
+            os.makedirs(os.path.dirname(RESULTS_FILE), exist_ok=True)
+            
+            # Save results.json locally
+            with open(RESULTS_FILE, "w", encoding="utf-8") as f:
+                json.dump(results, f, indent=2, ensure_ascii=False)
+            
+            print(f"💾 Saved {len(results)} total records to {RESULTS_FILE}")
+            
+            # Verify the file was written
+            if os.path.exists(RESULTS_FILE):
+                file_size = os.path.getsize(RESULTS_FILE)
+                print(f"📄 Results file verified: {file_size} bytes")
+            else:
+                print("❌ ERROR: results.json was not created!")
+        else:
+            print("ℹ️ No new results to save")
 
         # Final annotation with processed count
         print(f"::notice::Parsed {processed_count} HTML files")
