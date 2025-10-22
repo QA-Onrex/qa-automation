@@ -4,6 +4,7 @@ import email
 import os
 import traceback
 import requests
+import time
 from datetime import datetime
 
 # --- Config ---
@@ -38,17 +39,66 @@ def get_onedrive_access_token():
     response = requests.post(token_url, data=data)
     if response.status_code == 200:
         tokens = response.json()
-        # Removed the refresh token notice message
         return tokens.get('access_token')
     else:
         raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
 
-def upload_to_onedrive(file_content, filename, access_token):
-    """Upload file to OneDrive"""
+def upload_large_file_session(file_content, filename, access_token):
+    """Upload large files (> 4MB) using upload sessions"""
     user_email = os.getenv("ONEDRIVE_USER_EMAIL")
     safe_filename = requests.utils.quote(filename)
     
-    # Upload to qa-automation/attachments folder
+    # Create upload session
+    create_session_url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{ONEDRIVE_FOLDER}/{safe_filename}:/createUploadSession"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    
+    # Create upload session
+    session_response = requests.post(create_session_url, headers=headers)
+    if session_response.status_code != 200:
+        print(f"❌ Failed to create upload session for {filename}: {session_response.status_code}")
+        return False
+    
+    upload_url = session_response.json()['uploadUrl']
+    
+    # Upload file in chunks
+    chunk_size = 4 * 1024 * 1024  # 4MB chunks
+    total_size = len(file_content)
+    
+    for i in range(0, total_size, chunk_size):
+        chunk_end = min(i + chunk_size, total_size)
+        chunk_data = file_content[i:chunk_end]
+        
+        chunk_headers = {
+            'Content-Length': str(len(chunk_data)),
+            'Content-Range': f'bytes {i}-{chunk_end-1}/{total_size}'
+        }
+        
+        chunk_response = requests.put(upload_url, headers=chunk_headers, data=chunk_data)
+        
+        if chunk_response.status_code not in [200, 201, 202]:
+            print(f"❌ Chunk upload failed for {filename}: {chunk_response.status_code}")
+            return False
+    
+    print(f"✅ Uploaded large file {filename} ({total_size//1024}KB) via upload session")
+    return True
+
+def upload_to_onedrive(file_content, filename, access_token):
+    """Upload file to OneDrive with memory management and rate limiting"""
+    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+    safe_filename = requests.utils.quote(filename)
+    
+    # Rate limiting: small delay between uploads
+    time.sleep(0.5)  # 500ms between uploads
+    
+    # For files larger than 4MB, use upload sessions
+    if len(file_content) > 4 * 1024 * 1024:
+        return upload_large_file_session(file_content, filename, access_token)
+    
+    # Standard upload for smaller files
     url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{ONEDRIVE_FOLDER}/{safe_filename}:/content"
     
     headers = {
@@ -59,7 +109,8 @@ def upload_to_onedrive(file_content, filename, access_token):
     response = requests.put(url, headers=headers, data=file_content)
     
     if response.status_code in [200, 201]:
-        print(f"✅ Uploaded {filename} to OneDrive")
+        file_size_kb = len(file_content) // 1024
+        print(f"✅ Uploaded {filename} ({file_size_kb}KB) to OneDrive")
         return True
     else:
         print(f"❌ Failed to upload {filename}: {response.status_code}")
@@ -107,7 +158,7 @@ def save_attachments_to_onedrive(msg, access_token):
                     print(f"⚠️ Empty ZIP attachment {filename}")
                     continue
 
-                # Upload directly to OneDrive
+                # Upload directly to OneDrive with enhanced memory management
                 if upload_to_onedrive(content_bytes, filename, access_token):
                     saved_files.append(filename)
 
@@ -140,6 +191,9 @@ def main():
     print("🚀 Starting OneDrive Email Fetch...")
     print(f"📧 Source: {zoho_user}")
     print(f"📁 Destination: OneDrive/{ONEDRIVE_FOLDER}")
+    print("⚡ Features: Memory management for large files, Rate limiting")
+    
+    start_time = datetime.now()
     
     # Get OneDrive access token
     try:
@@ -172,6 +226,8 @@ def main():
         print(f"📧 Found {len(uids)} emails in '{SOURCE_FOLDER}'")
 
         processed_count = 0
+        total_attachments = 0
+        
         for uid in uids:
             try:
                 typ, msg_data = mail.uid("fetch", uid, "(RFC822)")
@@ -187,15 +243,18 @@ def main():
                 print(f"📨 Processing: {subject[:50]}...")
 
                 saved_files = save_attachments_to_onedrive(msg, access_token)
-                if saved_files and move_message(mail, uid):
-                    processed_count += 1
+                if saved_files:
+                    total_attachments += len(saved_files)
+                    if move_message(mail, uid):
+                        processed_count += 1
 
             except Exception as e:
                 print(f"❌ Error processing email UID {uid.decode()}: {e}")
 
-        # Final annotation with processed count
-        print(f"::notice::Processed {processed_count} emails")
-        print(f"✅ Processed {processed_count} emails")
+        # Performance summary
+        duration = (datetime.now() - start_time).total_seconds()
+        print(f"✅ Processed {processed_count} emails with {total_attachments} attachments in {duration:.1f}s")
+        print(f"::notice::Processed {processed_count} emails with {total_attachments} attachments")
 
     finally:
         mail.expunge()
