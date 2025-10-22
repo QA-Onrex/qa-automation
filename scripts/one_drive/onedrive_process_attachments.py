@@ -4,6 +4,7 @@ import zipfile
 import io
 import traceback
 import requests
+import time
 from urllib.parse import quote
 
 # OneDrive folder paths
@@ -50,11 +51,62 @@ def download_from_onedrive_to_memory(file_path, access_token):
         print(f"❌ Failed to download {file_path}: {response.status_code}")
         return None
 
-def upload_to_onedrive_from_memory(file_content, file_path, access_token):
-    """Upload a file to OneDrive directly from memory"""
+def upload_large_file_session(file_content, file_path, access_token):
+    """Upload large files (> 4MB) using upload sessions"""
     user_email = os.getenv("ONEDRIVE_USER_EMAIL")
     safe_path = quote(file_path)
     
+    # Create upload session
+    create_session_url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/createUploadSession"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    
+    # Create upload session
+    session_response = requests.post(create_session_url, headers=headers)
+    if session_response.status_code != 200:
+        print(f"❌ Failed to create upload session for {file_path}: {session_response.status_code}")
+        return False
+    
+    upload_url = session_response.json()['uploadUrl']
+    
+    # Upload file in chunks
+    chunk_size = 4 * 1024 * 1024  # 4MB chunks
+    total_size = len(file_content)
+    
+    for i in range(0, total_size, chunk_size):
+        chunk_end = min(i + chunk_size, total_size)
+        chunk_data = file_content[i:chunk_end]
+        
+        chunk_headers = {
+            'Content-Length': str(len(chunk_data)),
+            'Content-Range': f'bytes {i}-{chunk_end-1}/{total_size}'
+        }
+        
+        chunk_response = requests.put(upload_url, headers=chunk_headers, data=chunk_data)
+        
+        if chunk_response.status_code not in [200, 201, 202]:
+            print(f"❌ Chunk upload failed for {file_path}: {chunk_response.status_code}")
+            return False
+    
+    print(f"✅ Uploaded large file {os.path.basename(file_path)} ({total_size//1024}KB) via upload session")
+    return True
+
+def upload_to_onedrive_from_memory(file_content, file_path, access_token):
+    """Upload a file to OneDrive directly from memory with rate limiting and large file support"""
+    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+    safe_path = quote(file_path)
+    
+    # Rate limiting: small delay between uploads
+    time.sleep(0.5)  # 500ms between uploads
+    
+    # For files larger than 4MB, use upload sessions
+    if len(file_content) > 4 * 1024 * 1024:
+        return upload_large_file_session(file_content, file_path, access_token)
+    
+    # Standard upload for smaller files
     url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -62,7 +114,14 @@ def upload_to_onedrive_from_memory(file_content, file_path, access_token):
     }
     
     response = requests.put(url, headers=headers, data=file_content)
-    return response.status_code in [200, 201]
+    
+    if response.status_code in [200, 201]:
+        file_size_kb = len(file_content) // 1024
+        print(f"✅ Uploaded {os.path.basename(file_path)} ({file_size_kb}KB) to OneDrive")
+        return True
+    else:
+        print(f"❌ Failed to upload {os.path.basename(file_path)}: {response.status_code}")
+        return False
 
 def delete_from_onedrive(file_path, access_token):
     """Delete a file from OneDrive"""
@@ -101,7 +160,7 @@ def extract_html_from_zip_in_memory(zip_bytes, original_zip_name):
                 return None
 
             html_file_in_zip = html_files[0]
-            html_filename = os.path.splitext(os.path.basename(original_zip_name))[0] + ".html"
+            html_filename = os.path.basename(html_file_in_zip)
 
             # Read HTML bytes from ZIP in memory
             with z.open(html_file_in_zip) as src:
@@ -117,6 +176,7 @@ def extract_html_from_zip_in_memory(zip_bytes, original_zip_name):
 
 def main():
     print("🔄 Processing OneDrive attachments in memory...")
+    print("⚡ Features: Large file support, Rate limiting")
     
     try:
         # Get OneDrive access token
@@ -134,9 +194,13 @@ def main():
         print(f"📦 Found {len(zip_files)} ZIP files to process")
         
         processed_count = 0
-        for zip_file in zip_files:
+        for i, zip_file in enumerate(zip_files):
             try:
-                print(f"🔍 Processing {zip_file}...")
+                print(f"🔍 Processing {i+1}/{len(zip_files)}: {zip_file}...")
+                
+                # Rate limiting between files
+                if i > 0:
+                    time.sleep(0.5)
                 
                 # Download ZIP from OneDrive directly to memory
                 zip_path = f"{ONEDRIVE_ATTACHMENTS_FOLDER}/{zip_file}"
@@ -158,6 +222,7 @@ def main():
                     print(f"✅ Uploaded {html_filename} to OneDrive")
                     
                     # Delete original ZIP from OneDrive
+                    time.sleep(0.5)  # Rate limiting for delete
                     if delete_from_onedrive(zip_path, access_token):
                         print(f"🗑️ Deleted {zip_file} from OneDrive")
                         processed_count += 1
