@@ -8,9 +8,6 @@ from collections import defaultdict
 RESULTS_FILE = "data/results.json"
 OUTPUT_FILE = "docs/index.html"  # dashboard location
 
-# Proxy configuration (update this to your actual proxy URL)
-PROXY_BASE_URL = "https://your-proxy-domain.com"  # Change this to your proxy URL
-
 def load_results():
     if not os.path.exists(RESULTS_FILE):
         print(f"Error: {RESULTS_FILE} not found.")
@@ -63,12 +60,6 @@ def build_dashboard():
         # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
             r["color"] = get_color(r)
-            
-            # Update html_file to use proxy URL
-            if "html_file" in r:
-                filename = os.path.basename(r["html_file"])
-                r["html_file"] = f"{PROXY_BASE_URL}/api/report/{filename}"
-                
             data[project][suite][date] = r
 
     # Calculate maximum suite name length for adaptive column width
@@ -120,11 +111,11 @@ def build_dashboard():
         ".tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }",
         ".tooltip-row { margin: 3px 0; }",
         ".tooltip-label { font-weight: bold; display: inline-block; width: 100px; }",
-        ".loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }",
+        ".no-link { cursor: not-allowed; opacity: 0.6; }",
+        ".no-link:hover { opacity: 0.6; }",
         "</style>",
         "<script>",
         f"const PASSWORD_HASH = '{password_hash}';",
-        f"const PROXY_BASE_URL = '{PROXY_BASE_URL}';",
         "const data = " + json.dumps(data, default=str) + ";",
         "",
         "async function hashPassword(password) {",
@@ -134,35 +125,13 @@ def build_dashboard():
         "  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');",
         "}",
         "",
-        "async function authenticateWithProxy(password) {",
-        "  try {",
-        "    const response = await fetch(PROXY_BASE_URL + '/api/auth/login', {",
-        "      method: 'POST',",
-        "      headers: { 'Content-Type': 'application/json' },",
-        "      body: JSON.stringify({ password: password })",
-        "    });",
-        "    return await response.json();",
-        "  } catch (error) {",
-        "    console.error('Proxy authentication failed:', error);",
-        "    return { success: false, error: 'Proxy connection failed' };",
-        "  }",
-        "}",
-        "",
         "async function checkPassword() {",
         "  const password = document.getElementById('password-input').value;",
         "  const hash = await hashPassword(password);",
-        "  ",
         "  if (hash === PASSWORD_HASH) {",
-        "    // Authenticate with proxy",
-        "    const proxyAuth = await authenticateWithProxy(password);",
-        "    if (proxyAuth.success) {",
-        "      sessionStorage.setItem('reportPassword', password);",
-        "      document.getElementById('login-container').style.display = 'none';",
-        "      document.getElementById('dashboard-content').style.display = 'block';",
-        "    } else {",
-        "      document.getElementById('error-message').textContent = 'Proxy authentication failed: ' + (proxyAuth.error || 'Unknown error');",
-        "      document.getElementById('error-message').style.display = 'block';",
-        "    }",
+        "    sessionStorage.setItem('reportPassword', password);",
+        "    document.getElementById('login-container').style.display = 'none';",
+        "    document.getElementById('dashboard-content').style.display = 'block';",
         "  } else {",
         "    document.getElementById('error-message').textContent = 'Incorrect password. Please try again.';",
         "    document.getElementById('error-message').style.display = 'block';",
@@ -174,13 +143,8 @@ def build_dashboard():
         "  if (savedPassword) {",
         "    hashPassword(savedPassword).then(hash => {",
         "      if (hash === PASSWORD_HASH) {",
-        "        // Re-authenticate with proxy",
-        "        authenticateWithProxy(savedPassword).then(proxyAuth => {",
-        "          if (proxyAuth.success) {",
-        "            document.getElementById('login-container').style.display = 'none';",
-        "            document.getElementById('dashboard-content').style.display = 'block';",
-        "          }",
-        "        });",
+        "        document.getElementById('login-container').style.display = 'none';",
+        "        document.getElementById('dashboard-content').style.display = 'block';",
         "      }",
         "    });",
         "  }",
@@ -189,30 +153,14 @@ def build_dashboard():
         "  });",
         "});",
         "",
-        "function showLoading() {",
-        "  document.getElementById('loading').style.display = 'block';",
-        "}",
-        "",
-        "function hideLoading() {",
-        "  document.getElementById('loading').style.display = 'none';",
-        "}",
-        "",
-        "// Open report through proxy",
-        "async function openReport(project, suite, date) {",
+        "// Temporary function - reports won't work yet but login will",
+        "function openReport(project, suite, date) {",
         "  const record = data[project][suite][date];",
-        "  if (!record || !record.html_file) return;",
-        "",
-        "  showLoading();",
-        "  ",
-        "  try {",
-        "    // The html_file now contains the proxy URL, so we can open it directly",
-        "    window.open(record.html_file, '_blank');",
-        "  } catch (e) {",
-        "    console.error('Failed to open report:', e);",
-        "    alert('Failed to open report. Check console for details.');",
-        "  } finally {",
-        "    hideLoading();",
+        "  if (!record || !record.html_file) {",
+        "    alert('Report access not yet configured');",
+        "    return;",
         "  }",
+        "  alert('Report access will be configured in the next step. Login is now working!');",
         "}",
         "",
         "function showTooltip(e, project, suite, date) {",
@@ -258,7 +206,6 @@ def build_dashboard():
         "</div>",
         "<div id='dashboard-content'>",
         "<div id='tooltip' class='tooltip'></div>",
-        "<div id='loading' class='loading'>Loading report...</div>",
         "<h1>QA Automation Report</h1>",
         "<div class='table-container'>",
         "<table>",
