@@ -293,6 +293,7 @@ def build_dashboard():
         f.write("\n".join(html))
 
     print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
+    print(f"::notice::Dashboard built successfully: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     build_dashboard()
