@@ -2,83 +2,11 @@
 import json
 import os
 import hashlib
-import requests
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import defaultdict
-from urllib.parse import quote
-
-# Import our encryptor
-from onedrive_encryptor import encrypt_string, decrypt_string
 
 RESULTS_FILE = "data/results.json"
 OUTPUT_FILE = "docs/index.html"
-
-def get_onedrive_access_token():
-    """Get access token using refresh token"""
-    client_id = os.getenv("ONEDRIVE_CLIENT_ID")
-    client_secret = os.getenv("ONEDRIVE_CLIENT_SECRET")
-    refresh_token = os.getenv("ONEDRIVE_REFRESH_TOKEN")
-    
-    if not all([client_id, client_secret, refresh_token]):
-        raise Exception("OneDrive credentials missing")
-    
-    token_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
-    data = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'refresh_token': refresh_token,
-        'grant_type': 'refresh_token',
-        'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
-    }
-    
-    response = requests.post(token_url, data=data)
-    if response.status_code == 200:
-        tokens = response.json()
-        return tokens.get('access_token')
-    else:
-        raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
-
-def create_onedrive_sharing_link(filename, access_token, expiry_days=90):
-    """Create a long-term sharing link for a OneDrive file"""
-    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
-    file_path = f"qa-automation/data/reports/{filename}"
-    safe_path = quote(file_path)
-    
-    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/createLink"
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json'
-    }
-    
-    # Calculate expiry date
-    expiry_date = datetime.now() + timedelta(days=expiry_days)
-    
-    link_data = {
-        "type": "view",
-        "scope": "anonymous",
-        "expirationDateTime": expiry_date.isoformat() + "Z"
-    }
-    
-    # Rate limiting
-    time.sleep(0.5)
-    
-    response = requests.post(url, headers=headers, json=link_data)
-    if response.status_code == 200:
-        sharing_info = response.json()
-        web_url = sharing_info.get('link', {}).get('webUrl')
-        if web_url:
-            print(f"✅ Created {expiry_days}-day sharing link for {filename}")
-            return web_url
-    else:
-        print(f"❌ Failed to create sharing link for {filename}: {response.status_code}")
-        if response.status_code == 404:
-            print(f"⚠️ File not found in OneDrive: {filename}")
-        elif response.status_code == 403:
-            print(f"⚠️ Permission denied for: {filename}")
-        else:
-            print(f"⚠️ Response: {response.text}")
-    return None
 
 def load_results():
     if not os.path.exists(RESULTS_FILE):
@@ -111,25 +39,12 @@ def build_dashboard():
         print("No results found.")
         return
 
-    # Get password from environment
+    # Get password hash from environment
     password = os.getenv("REPORT_PASSWORD", "")
     password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
     
     if not password:
         print("::warning::REPORT_PASSWORD not set. Dashboard will have no authentication.")
-        # Without password, we can't create encrypted links
-        password = "no_password_set"
-
-    # Get OneDrive access token for creating sharing links
-    access_token = None
-    sharing_links_created = 0
-    sharing_links_failed = 0
-    
-    try:
-        access_token = get_onedrive_access_token()
-        print("✅ Obtained OneDrive access token for sharing links")
-    except Exception as e:
-        print(f"⚠️ Failed to get OneDrive token for sharing links: {e}")
 
     # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
@@ -145,33 +60,7 @@ def build_dashboard():
         # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
             r["color"] = get_color(r)
-            
-            # Create and encrypt sharing link if we have OneDrive access and password
-            if access_token and "html_file" in r and password != "no_password_set":
-                filename = os.path.basename(r["html_file"])
-                sharing_link = create_onedrive_sharing_link(filename, access_token, expiry_days=90)
-                
-                if sharing_link:
-                    try:
-                        # Encrypt the sharing link with dashboard password
-                        encrypted_link = encrypt_string(sharing_link, password)
-                        r["encrypted_url"] = encrypted_link
-                        sharing_links_created += 1
-                        print(f"🔐 Encrypted link for {filename}")
-                    except Exception as e:
-                        print(f"❌ Failed to encrypt link for {filename}: {e}")
-                        sharing_links_failed += 1
-                        r["encrypted_url"] = None
-                else:
-                    print(f"⚠️ Failed to create sharing link for {filename}")
-                    sharing_links_failed += 1
-                    r["encrypted_url"] = None
-            else:
-                r["encrypted_url"] = None
-                
             data[project][suite][date] = r
-
-    print(f"📊 Sharing links: {sharing_links_created} created, {sharing_links_failed} failed")
 
     # Calculate maximum suite name length for adaptive column width
     max_length = 0
@@ -187,6 +76,10 @@ def build_dashboard():
         {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
         reverse=True
     )[:365]
+
+    # Count encrypted URLs for reporting
+    encrypted_count = sum(1 for r in results if r.get("encrypted_url"))
+    print(f"📊 Building dashboard with {encrypted_count}/{len(results)} encrypted report links")
 
     # Build HTML
     html = [
@@ -435,7 +328,7 @@ def build_dashboard():
         f.write("\n".join(html))
 
     print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
-    print(f"::notice::Dashboard built with {sharing_links_created} encrypted report links")
+    print(f"::notice::Dashboard built with {encrypted_count} encrypted report links")
 
 if __name__ == "__main__":
     build_dashboard()
