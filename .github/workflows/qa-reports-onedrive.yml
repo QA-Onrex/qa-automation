@@ -71,7 +71,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
         
@@ -86,12 +86,67 @@ jobs:
         ONEDRIVE_USER_EMAIL: ${{ secrets.ONEDRIVE_USER_EMAIL }}
       run: python scripts/one_drive/onedrive_parse_html.py
       
-    - name: Commit updated data
+    - name: Verify files before commit
+      run: |
+        echo "📁 Files to be committed:"
+        ls -la data/ || echo "data/ directory not found"
+        if [ -f "data/results.json" ]; then
+          echo "✅ results.json exists"
+          echo "📊 Record count: $(jq length data/results.json 2>/dev/null || echo 'Unknown')"
+        else
+          echo "❌ results.json missing!"
+        fi
+        
+    - name: Commit parsed results
       run: |
         git config user.name "github-actions"
         git config user.email "actions@github.com"
         git add data/
-        git add docs/
-        git commit -m "Update results [skip ci]" || echo "No changes"
+        git commit -m "Update parsed results [skip ci]" || echo "No changes to commit"
         git push
+
+  build-dashboard:
+    runs-on: ubuntu-latest
+    needs: parse-html
+    if: success()
+
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Build dashboard
+      env:
+        REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+      run: python scripts/one_drive/onedrive_build_dashboard.py
+      
+    - name: Verify dashboard files
+      run: |
+        echo "📁 Dashboard files:"
+        ls -la docs/ || echo "docs/ directory not found"
+        if [ -f "docs/index.html" ]; then
+          echo "✅ index.html exists"
+          echo "📄 File size: $(wc -c < docs/index.html) bytes"
+        else
+          echo "❌ index.html missing!"
+        fi
+        
+    - name: Commit dashboard
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add docs/
+        git commit -m "Update dashboard [skip ci]" || echo "No changes to commit"
+        git push
