@@ -2,11 +2,83 @@
 import json
 import os
 import hashlib
-from datetime import datetime
+import requests
+import time
+from datetime import datetime, timedelta
 from collections import defaultdict
+from urllib.parse import quote
+
+# Import our encryptor
+from onedrive_encryptor import encrypt_string, decrypt_string
 
 RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"  # dashboard location
+OUTPUT_FILE = "docs/index.html"
+
+def get_onedrive_access_token():
+    """Get access token using refresh token"""
+    client_id = os.getenv("ONEDRIVE_CLIENT_ID")
+    client_secret = os.getenv("ONEDRIVE_CLIENT_SECRET")
+    refresh_token = os.getenv("ONEDRIVE_REFRESH_TOKEN")
+    
+    if not all([client_id, client_secret, refresh_token]):
+        raise Exception("OneDrive credentials missing")
+    
+    token_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+    data = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'refresh_token': refresh_token,
+        'grant_type': 'refresh_token',
+        'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+    }
+    
+    response = requests.post(token_url, data=data)
+    if response.status_code == 200:
+        tokens = response.json()
+        return tokens.get('access_token')
+    else:
+        raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
+
+def create_onedrive_sharing_link(filename, access_token, expiry_days=90):
+    """Create a long-term sharing link for a OneDrive file"""
+    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+    file_path = f"qa-automation/data/reports/{filename}"
+    safe_path = quote(file_path)
+    
+    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/createLink"
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    
+    # Calculate expiry date
+    expiry_date = datetime.now() + timedelta(days=expiry_days)
+    
+    link_data = {
+        "type": "view",
+        "scope": "anonymous",
+        "expirationDateTime": expiry_date.isoformat() + "Z"
+    }
+    
+    # Rate limiting
+    time.sleep(0.5)
+    
+    response = requests.post(url, headers=headers, json=link_data)
+    if response.status_code == 200:
+        sharing_info = response.json()
+        web_url = sharing_info.get('link', {}).get('webUrl')
+        if web_url:
+            print(f"✅ Created {expiry_days}-day sharing link for {filename}")
+            return web_url
+    else:
+        print(f"❌ Failed to create sharing link for {filename}: {response.status_code}")
+        if response.status_code == 404:
+            print(f"⚠️ File not found in OneDrive: {filename}")
+        elif response.status_code == 403:
+            print(f"⚠️ Permission denied for: {filename}")
+        else:
+            print(f"⚠️ Response: {response.text}")
+    return None
 
 def load_results():
     if not os.path.exists(RESULTS_FILE):
@@ -39,12 +111,25 @@ def build_dashboard():
         print("No results found.")
         return
 
-    # Get password hash from environment
+    # Get password from environment
     password = os.getenv("REPORT_PASSWORD", "")
     password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
     
     if not password:
         print("::warning::REPORT_PASSWORD not set. Dashboard will have no authentication.")
+        # Without password, we can't create encrypted links
+        password = "no_password_set"
+
+    # Get OneDrive access token for creating sharing links
+    access_token = None
+    sharing_links_created = 0
+    sharing_links_failed = 0
+    
+    try:
+        access_token = get_onedrive_access_token()
+        print("✅ Obtained OneDrive access token for sharing links")
+    except Exception as e:
+        print(f"⚠️ Failed to get OneDrive token for sharing links: {e}")
 
     # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
@@ -60,7 +145,33 @@ def build_dashboard():
         # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
             r["color"] = get_color(r)
+            
+            # Create and encrypt sharing link if we have OneDrive access and password
+            if access_token and "html_file" in r and password != "no_password_set":
+                filename = os.path.basename(r["html_file"])
+                sharing_link = create_onedrive_sharing_link(filename, access_token, expiry_days=90)
+                
+                if sharing_link:
+                    try:
+                        # Encrypt the sharing link with dashboard password
+                        encrypted_link = encrypt_string(sharing_link, password)
+                        r["encrypted_url"] = encrypted_link
+                        sharing_links_created += 1
+                        print(f"🔐 Encrypted link for {filename}")
+                    except Exception as e:
+                        print(f"❌ Failed to encrypt link for {filename}: {e}")
+                        sharing_links_failed += 1
+                        r["encrypted_url"] = None
+                else:
+                    print(f"⚠️ Failed to create sharing link for {filename}")
+                    sharing_links_failed += 1
+                    r["encrypted_url"] = None
+            else:
+                r["encrypted_url"] = None
+                
             data[project][suite][date] = r
+
+    print(f"📊 Sharing links: {sharing_links_created} created, {sharing_links_failed} failed")
 
     # Calculate maximum suite name length for adaptive column width
     max_length = 0
@@ -113,10 +224,62 @@ def build_dashboard():
         ".tooltip-label { font-weight: bold; display: inline-block; width: 100px; }",
         ".no-link { cursor: not-allowed; opacity: 0.6; }",
         ".no-link:hover { opacity: 0.6; }",
+        ".loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }",
         "</style>",
         "<script>",
         f"const PASSWORD_HASH = '{password_hash}';",
         "const data = " + json.dumps(data, default=str) + ";",
+        "",
+        "// AES-GCM decryption in browser (matches Python encryption)",
+        "async function decryptUrl(encryptedUrl, password) {",
+        "  try {",
+        "    // Decode base64",
+        "    const encryptedData = Uint8Array.from(atob(encryptedUrl), c => c.charCodeAt(0));",
+        "    ",
+        "    // Extract salt (16 bytes), nonce (12 bytes), ciphertext",
+        "    const salt = encryptedData.slice(0, 16);",
+        "    const nonce = encryptedData.slice(16, 28);",
+        "    const ciphertext = encryptedData.slice(28);",
+        "    ",
+        "    // Derive key using PBKDF2",
+        "    const encoder = new TextEncoder();",
+        "    const passwordKey = await crypto.subtle.importKey(",
+        "      'raw',",
+        "      encoder.encode(password),",
+        "      'PBKDF2',",
+        "      false,",
+        "      ['deriveKey']",
+        "    );",
+        "    ",
+        "    const key = await crypto.subtle.deriveKey(",
+        "      {",
+        "        name: 'PBKDF2',",
+        "        salt: salt,",
+        "        iterations: 100000,",
+        "        hash: 'SHA-256'",
+        "      },",
+        "      passwordKey,",
+        "      { name: 'AES-GCM', length: 256 },",
+        "      false,",
+        "      ['decrypt']",
+        "    );",
+        "    ",
+        "    // Decrypt",
+        "    const decrypted = await crypto.subtle.decrypt(",
+        "      {",
+        "        name: 'AES-GCM',",
+        "        iv: nonce",
+        "      },",
+        "      key,",
+        "      ciphertext",
+        "    );",
+        "    ",
+        "    return new TextDecoder().decode(decrypted);",
+        "  } catch (error) {",
+        "    console.error('URL decryption failed:', error);",
+        "    throw new Error('Failed to decrypt report URL');",
+        "  }",
+        "}",
         "",
         "async function hashPassword(password) {",
         "  const msgBuffer = new TextEncoder().encode(password);",
@@ -128,6 +291,7 @@ def build_dashboard():
         "async function checkPassword() {",
         "  const password = document.getElementById('password-input').value;",
         "  const hash = await hashPassword(password);",
+        "  ",
         "  if (hash === PASSWORD_HASH) {",
         "    sessionStorage.setItem('reportPassword', password);",
         "    document.getElementById('login-container').style.display = 'none';",
@@ -153,14 +317,40 @@ def build_dashboard():
         "  });",
         "});",
         "",
-        "// Temporary function - reports won't work yet but login will",
-        "function openReport(project, suite, date) {",
+        "function showLoading() {",
+        "  document.getElementById('loading').style.display = 'block';",
+        "}",
+        "",
+        "function hideLoading() {",
+        "  document.getElementById('loading').style.display = 'none';",
+        "}",
+        "",
+        "// Open report with encrypted URL",
+        "async function openReport(project, suite, date) {",
         "  const record = data[project][suite][date];",
-        "  if (!record || !record.html_file) {",
-        "    alert('Report access not yet configured');",
+        "  if (!record) return;",
+        "",
+        "  const password = sessionStorage.getItem('reportPassword');",
+        "  if (!password) {",
+        "    alert('Please login first');",
         "    return;",
         "  }",
-        "  alert('Report access will be configured in the next step. Login is now working!');",
+        "",
+        "  // Check if we have an encrypted URL",
+        "  if (record.encrypted_url) {",
+        "    showLoading();",
+        "    try {",
+        "      const decryptedUrl = await decryptUrl(record.encrypted_url, password);",
+        "      window.open(decryptedUrl, '_blank');",
+        "    } catch (e) {",
+        "      console.error('Failed to decrypt and open report:', e);",
+        "      alert('Failed to access report. The link may be expired or invalid.');",
+        "    } finally {",
+        "      hideLoading();",
+        "    }",
+        "  } else {",
+        "    alert('Report link not available. This may be because no password is set or the link could not be created.');",
+        "  }",
         "}",
         "",
         "function showTooltip(e, project, suite, date) {",
@@ -206,6 +396,7 @@ def build_dashboard():
         "</div>",
         "<div id='dashboard-content'>",
         "<div id='tooltip' class='tooltip'></div>",
+        "<div id='loading' class='loading'>Loading report...</div>",
         "<h1>QA Automation Report</h1>",
         "<div class='table-container'>",
         "<table>",
@@ -225,7 +416,11 @@ def build_dashboard():
                     passed = record.get("passed", 0)
                     total = record.get("test_cases", 0)
                     failed = total - passed if total else 0
-                    html.append(f"<td class='{color}' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' onclick='openReport(\"{project}\", \"{suite}\", \"{date}\")'>{passed}/{failed}</td>")
+                    
+                    if record.get("encrypted_url"):
+                        html.append(f"<td class='{color}' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' onclick='openReport(\"{project}\", \"{suite}\", \"{date}\")'>{passed}/{failed}</td>")
+                    else:
+                        html.append(f"<td class='{color} no-link' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' title='Report link not available'>{passed}/{failed}</td>")
                 else:
                     html.append("<td class='empty'>–</td>")
             html.append("</tr>")
@@ -240,7 +435,7 @@ def build_dashboard():
         f.write("\n".join(html))
 
     print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
-    print(f"::notice::Dashboard built successfully: {OUTPUT_FILE}")
+    print(f"::notice::Dashboard built with {sharing_links_created} encrypted report links")
 
 if __name__ == "__main__":
     build_dashboard()
