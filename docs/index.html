@@ -30,12 +30,12 @@ td.project-separator { background-color: #1e1e1e; }
 .tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }
 .tooltip-row { margin: 3px 0; }
 .tooltip-label { font-weight: bold; display: inline-block; width: 100px; }
-.loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }
+.no-link { cursor: not-allowed; opacity: 0.6; }
+.no-link:hover { opacity: 0.6; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const PROXY_BASE_URL = 'https://your-proxy-domain.com';
-const data = {"DYNAREX V2": {"Test Suites/Test Suites/Settings/Users - General": {"2025.09.23": {"html_file": "https://your-proxy-domain.com/api/report/20250923_150102.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - General", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-09-23T15:01:20.080+02:00", "end": "2025-09-23T15:08:54.083+02:00", "duration": 7.566716666666666, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/Test Suites/_Sandbox/Users": {"2025.10.23": {"html_file": "https://your-proxy-domain.com/api/report/20251023_090850.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-23T09:08:57.857+02:00", "end": "2025-10-23T09:10:59.224+02:00", "duration": 2.0227833333333334, "retry_count": 0, "sum_check": true, "color": "green"}}}, "DYNAREX": {"Test Suites/3_vehicle page/3e_vehicle states tab": {"2025.10.08": {"html_file": "https://your-proxy-domain.com/api/report/20251008_095446.html", "project": "DYNAREX", "test_suite_id": "Test Suites/3_vehicle page/3e_vehicle states tab", "profile": "default DYNAREX intdev", "test_cases": 13, "passed": 12, "failed": 1, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-08T11:11:18.459+02:00", "end": "2025-10-08T11:16:00.902+02:00", "duration": 4.7073833333333335, "retry_count": 0, "sum_check": true, "color": "red"}}, "Test Suites/1_Login_logout/1a_Login-Logout": {"2025.10.09": {"html_file": "https://your-proxy-domain.com/api/report/20251009_015322.html", "project": "DYNAREX", "test_suite_id": "Test Suites/1_Login_logout/1a_Login-Logout", "profile": "default DYNAREX intdev", "test_cases": 8, "passed": 5, "failed": 3, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T01:56:14.222+02:00", "end": "2025-10-09T01:58:45.485+02:00", "duration": 2.5210500000000002, "retry_count": 0, "sum_check": true, "color": "red"}}, "Test Suites/2_case admin page/2a_Case admin data": {"2025.10.09": {"html_file": "https://your-proxy-domain.com/api/report/20251009_015331.html", "project": "DYNAREX", "test_suite_id": "Test Suites/2_case admin page/2a_Case admin data", "profile": "default DYNAREX intdev", "test_cases": 6, "passed": 6, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T02:01:43.830+02:00", "end": "2025-10-09T02:03:21.003+02:00", "duration": 1.61955, "retry_count": 0, "sum_check": true, "color": "green"}}}};
+const data = {"DYNAREX V2": {"Test Suites/Test Suites/Settings/Users - General": {"2025.09.23": {"html_file": "qa-automation/data/reports/20250923_150102.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - General", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-09-23T15:01:20.080+02:00", "end": "2025-09-23T15:08:54.083+02:00", "duration": 7.566716666666666, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/Test Suites/_Sandbox/Users": {"2025.10.23": {"html_file": "qa-automation/data/reports/20251023_090850.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-23T09:08:57.857+02:00", "end": "2025-10-23T09:10:59.224+02:00", "duration": 2.0227833333333334, "retry_count": 0, "sum_check": true, "color": "green"}}}, "DYNAREX": {"Test Suites/3_vehicle page/3e_vehicle states tab": {"2025.10.08": {"html_file": "qa-automation/data/reports/20251008_095446.html", "project": "DYNAREX", "test_suite_id": "Test Suites/3_vehicle page/3e_vehicle states tab", "profile": "default DYNAREX intdev", "test_cases": 13, "passed": 12, "failed": 1, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-08T11:11:18.459+02:00", "end": "2025-10-08T11:16:00.902+02:00", "duration": 4.7073833333333335, "retry_count": 0, "sum_check": true, "color": "red"}}, "Test Suites/1_Login_logout/1a_Login-Logout": {"2025.10.09": {"html_file": "qa-automation/data/reports/20251009_015322.html", "project": "DYNAREX", "test_suite_id": "Test Suites/1_Login_logout/1a_Login-Logout", "profile": "default DYNAREX intdev", "test_cases": 8, "passed": 5, "failed": 3, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T01:56:14.222+02:00", "end": "2025-10-09T01:58:45.485+02:00", "duration": 2.5210500000000002, "retry_count": 0, "sum_check": true, "color": "red"}}, "Test Suites/2_case admin page/2a_Case admin data": {"2025.10.09": {"html_file": "qa-automation/data/reports/20251009_015331.html", "project": "DYNAREX", "test_suite_id": "Test Suites/2_case admin page/2a_Case admin data", "profile": "default DYNAREX intdev", "test_cases": 6, "passed": 6, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T02:01:43.830+02:00", "end": "2025-10-09T02:03:21.003+02:00", "duration": 1.61955, "retry_count": 0, "sum_check": true, "color": "green"}}}};
 
 async function hashPassword(password) {
   const msgBuffer = new TextEncoder().encode(password);
@@ -44,35 +44,13 @@ async function hashPassword(password) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function authenticateWithProxy(password) {
-  try {
-    const response = await fetch(PROXY_BASE_URL + '/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: password })
-    });
-    return await response.json();
-  } catch (error) {
-    console.error('Proxy authentication failed:', error);
-    return { success: false, error: 'Proxy connection failed' };
-  }
-}
-
 async function checkPassword() {
   const password = document.getElementById('password-input').value;
   const hash = await hashPassword(password);
-  
   if (hash === PASSWORD_HASH) {
-    // Authenticate with proxy
-    const proxyAuth = await authenticateWithProxy(password);
-    if (proxyAuth.success) {
-      sessionStorage.setItem('reportPassword', password);
-      document.getElementById('login-container').style.display = 'none';
-      document.getElementById('dashboard-content').style.display = 'block';
-    } else {
-      document.getElementById('error-message').textContent = 'Proxy authentication failed: ' + (proxyAuth.error || 'Unknown error');
-      document.getElementById('error-message').style.display = 'block';
-    }
+    sessionStorage.setItem('reportPassword', password);
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
   } else {
     document.getElementById('error-message').textContent = 'Incorrect password. Please try again.';
     document.getElementById('error-message').style.display = 'block';
@@ -84,13 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (savedPassword) {
     hashPassword(savedPassword).then(hash => {
       if (hash === PASSWORD_HASH) {
-        // Re-authenticate with proxy
-        authenticateWithProxy(savedPassword).then(proxyAuth => {
-          if (proxyAuth.success) {
-            document.getElementById('login-container').style.display = 'none';
-            document.getElementById('dashboard-content').style.display = 'block';
-          }
-        });
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('dashboard-content').style.display = 'block';
       }
     });
   }
@@ -99,30 +72,14 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-function showLoading() {
-  document.getElementById('loading').style.display = 'block';
-}
-
-function hideLoading() {
-  document.getElementById('loading').style.display = 'none';
-}
-
-// Open report through proxy
-async function openReport(project, suite, date) {
+// Temporary function - reports won't work yet but login will
+function openReport(project, suite, date) {
   const record = data[project][suite][date];
-  if (!record || !record.html_file) return;
-
-  showLoading();
-  
-  try {
-    // The html_file now contains the proxy URL, so we can open it directly
-    window.open(record.html_file, '_blank');
-  } catch (e) {
-    console.error('Failed to open report:', e);
-    alert('Failed to open report. Check console for details.');
-  } finally {
-    hideLoading();
+  if (!record || !record.html_file) {
+    alert('Report access not yet configured');
+    return;
   }
+  alert('Report access will be configured in the next step. Login is now working!');
 }
 
 function showTooltip(e, project, suite, date) {
@@ -168,7 +125,6 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 </div>
 <div id='dashboard-content'>
 <div id='tooltip' class='tooltip'></div>
-<div id='loading' class='loading'>Loading report...</div>
 <h1>QA Automation Report</h1>
 <div class='table-container'>
 <table>
