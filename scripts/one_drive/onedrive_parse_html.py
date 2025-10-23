@@ -220,7 +220,8 @@ def parse_html_content(html_content, html_filename):
                 color = "Yellow"
 
         return {
-            "html_file": f"qa-automation/data/reports/{html_filename}",  # Fixed path to match OneDrive
+            "html_file": f"qa-automation/data/reports/{html_filename}",  # Original OneDrive path
+            "encrypted_url": None,  # Will be populated during dashboard build
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
@@ -310,6 +311,12 @@ def main():
             if os.path.exists(RESULTS_FILE):
                 file_size = os.path.getsize(RESULTS_FILE)
                 print(f"📄 Results file verified: {file_size} bytes")
+                
+                # Check if encrypted_url field is present
+                with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+                    saved_data = json.load(f)
+                    if saved_data and "encrypted_url" in saved_data[0]:
+                        print("✅ encrypted_url field is present in results")
             else:
                 print("❌ ERROR: results.json was not created!")
         else:
