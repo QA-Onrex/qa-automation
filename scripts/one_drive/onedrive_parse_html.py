@@ -330,8 +330,20 @@ def main():
                 
                 # Parse HTML content
                 data = parse_html_content(html_content, html_file)
-                if data:
-                    # Create and encrypt sharing link if we have password
+                if not data:
+                    print(f"::warning::Skipping {html_file} due to parsing error.")
+                    continue
+                
+                # FIRST: Move HTML to processed folder in OneDrive
+                destination_path = f"{ONEDRIVE_PROCESSED_FOLDER}/{html_file}"
+                if move_file_in_onedrive(html_path, destination_path, access_token):
+                    print(f"✅ Moved {html_file} to reports folder")
+                    
+                    # Wait for OneDrive to process the move operation
+                    print("⏳ Waiting for OneDrive to process file move...")
+                    time.sleep(3)  # 3 second delay for OneDrive sync
+                    
+                    # SECOND: Create and encrypt sharing link AFTER file is moved and synced
                     if password:
                         sharing_link = create_onedrive_sharing_link(html_file, access_token, expiry_days=90)
                         if sharing_link:
@@ -353,15 +365,13 @@ def main():
                     
                     new_results.append(data)
                     processed_count += 1
-                    
-                    # Move HTML to processed folder in OneDrive
-                    destination_path = f"{ONEDRIVE_PROCESSED_FOLDER}/{html_file}"
-                    if move_file_in_onedrive(html_path, destination_path, access_token):
-                        print(f"✅ Processed and moved {html_file} to reports folder")
-                    else:
-                        print(f"⚠️ Processed {html_file} but failed to move to reports folder")
+                    print(f"✅ Successfully processed {html_file}")
                 else:
-                    print(f"::warning::Skipping {html_file} due to parsing error.")
+                    print(f"❌ Failed to move {html_file} to reports folder")
+                    # Still add to results but without encrypted URL
+                    data["encrypted_url"] = None
+                    new_results.append(data)
+                    processed_count += 1
                     
             except Exception as e:
                 print(f"❌ Error processing {html_file}: {e}")
