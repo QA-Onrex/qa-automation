@@ -4,8 +4,14 @@ import json
 import re
 import requests
 import time
+import hashlib
+import base64
 from datetime import datetime, timedelta
 from urllib.parse import quote
+from collections import defaultdict
+
+# Import our encryptor
+from onedrive_encryptor import encrypt_string
 
 # OneDrive folder paths
 ONEDRIVE_HTML_FOLDER = "qa-automation/data/html"
@@ -46,6 +52,47 @@ def get_onedrive_access_token():
         return tokens.get('access_token')
     else:
         raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
+
+def create_onedrive_sharing_link(filename, access_token, expiry_days=90):
+    """Create a long-term sharing link for a OneDrive file"""
+    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+    file_path = f"qa-automation/data/reports/{filename}"
+    safe_path = quote(file_path)
+    
+    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/createLink"
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    
+    # Calculate expiry date
+    expiry_date = datetime.now() + timedelta(days=expiry_days)
+    
+    link_data = {
+        "type": "view",
+        "scope": "anonymous",
+        "expirationDateTime": expiry_date.isoformat() + "Z"
+    }
+    
+    # Rate limiting
+    time.sleep(0.5)
+    
+    response = requests.post(url, headers=headers, json=link_data)
+    if response.status_code == 200:
+        sharing_info = response.json()
+        web_url = sharing_info.get('link', {}).get('webUrl')
+        if web_url:
+            print(f"✅ Created {expiry_days}-day sharing link for {filename}")
+            return web_url
+    else:
+        print(f"❌ Failed to create sharing link for {filename}: {response.status_code}")
+        if response.status_code == 404:
+            print(f"⚠️ File not found in OneDrive: {filename}")
+        elif response.status_code == 403:
+            print(f"⚠️ Permission denied for: {filename}")
+        else:
+            print(f"⚠️ Response: {response.text}")
+    return None
 
 def download_from_onedrive_to_memory(file_path, access_token):
     """Download a file from OneDrive directly to memory"""
@@ -221,7 +268,6 @@ def parse_html_content(html_content, html_filename):
 
         return {
             "html_file": f"qa-automation/data/reports/{html_filename}",  # Original OneDrive path
-            "encrypted_url": None,  # Will be populated during dashboard build
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
@@ -246,6 +292,11 @@ def parse_html_content(html_content, html_filename):
 def main():
     print("🔄 Processing HTML files from OneDrive...")
     
+    # Get password from environment for encryption
+    password = os.getenv("REPORT_PASSWORD", "")
+    if not password:
+        print("::warning::REPORT_PASSWORD not set. Encrypted URLs will not be generated.")
+    
     try:
         # Get OneDrive access token
         access_token = get_onedrive_access_token()
@@ -263,6 +314,8 @@ def main():
 
         processed_count = 0
         new_results = []
+        encrypted_links_created = 0
+        encrypted_links_failed = 0
         
         for html_file in html_files:
             try:
@@ -278,6 +331,26 @@ def main():
                 # Parse HTML content
                 data = parse_html_content(html_content, html_file)
                 if data:
+                    # Create and encrypt sharing link if we have password
+                    if password:
+                        sharing_link = create_onedrive_sharing_link(html_file, access_token, expiry_days=90)
+                        if sharing_link:
+                            try:
+                                encrypted_url = encrypt_string(sharing_link, password)
+                                data["encrypted_url"] = encrypted_url
+                                encrypted_links_created += 1
+                                print(f"🔐 Encrypted link created for {html_file}")
+                            except Exception as e:
+                                print(f"❌ Failed to encrypt link for {html_file}: {e}")
+                                encrypted_links_failed += 1
+                                data["encrypted_url"] = None
+                        else:
+                            print(f"⚠️ Failed to create sharing link for {html_file}")
+                            encrypted_links_failed += 1
+                            data["encrypted_url"] = None
+                    else:
+                        data["encrypted_url"] = None
+                    
                     new_results.append(data)
                     processed_count += 1
                     
@@ -293,6 +366,8 @@ def main():
             except Exception as e:
                 print(f"❌ Error processing {html_file}: {e}")
 
+        print(f"📊 Encrypted links: {encrypted_links_created} created, {encrypted_links_failed} failed")
+
         # Add new results to existing results
         if new_results:
             results.extend(new_results)
@@ -307,23 +382,23 @@ def main():
             
             print(f"💾 Saved {len(results)} total records to {RESULTS_FILE}")
             
-            # Verify the file was written
+            # Verify the file was written and check encrypted_url fields
             if os.path.exists(RESULTS_FILE):
                 file_size = os.path.getsize(RESULTS_FILE)
                 print(f"📄 Results file verified: {file_size} bytes")
                 
-                # Check if encrypted_url field is present
+                # Count how many records have encrypted URLs
                 with open(RESULTS_FILE, "r", encoding="utf-8") as f:
                     saved_data = json.load(f)
-                    if saved_data and "encrypted_url" in saved_data[0]:
-                        print("✅ encrypted_url field is present in results")
+                    encrypted_count = sum(1 for record in saved_data if record.get("encrypted_url"))
+                    print(f"🔐 Records with encrypted URLs: {encrypted_count}/{len(saved_data)}")
             else:
                 print("❌ ERROR: results.json was not created!")
         else:
             print("ℹ️ No new results to save")
 
         # Final annotation with processed count
-        print(f"::notice::Parsed {processed_count} HTML files")
+        print(f"::notice::Parsed {processed_count} HTML files with {encrypted_links_created} encrypted links")
         print(f"🎉 Processed {processed_count} out of {len(html_files)} HTML files")
 
     except Exception as e:
