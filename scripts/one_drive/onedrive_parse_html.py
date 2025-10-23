@@ -78,12 +78,17 @@ def create_onedrive_sharing_link(filename, access_token, expiry_days=90):
     time.sleep(0.5)
     
     response = requests.post(url, headers=headers, json=link_data)
-    if response.status_code == 200:
+    
+    # Both 200 (OK) and 201 (Created) are success status codes
+    if response.status_code in [200, 201]:
         sharing_info = response.json()
         web_url = sharing_info.get('link', {}).get('webUrl')
         if web_url:
             print(f"✅ Created {expiry_days}-day sharing link for {filename}")
             return web_url
+        else:
+            print(f"❌ Sharing link created but no webUrl found in response for {filename}")
+            print(f"⚠️ Full response: {json.dumps(sharing_info, indent=2)}")
     else:
         print(f"❌ Failed to create sharing link for {filename}: {response.status_code}")
         if response.status_code == 404:
