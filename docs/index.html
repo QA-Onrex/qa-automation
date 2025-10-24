@@ -22,7 +22,7 @@ td.red { background-color: #c62828; color: #fff; cursor: pointer; }
 td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
 td.empty { background-color: #2b2b2b; color: #666; }
 td.project-separator { background-color: #1e1e1e; }
-.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 646px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 358px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
 .suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
 .project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
 .project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
@@ -36,7 +36,7 @@ td.project-separator { background-color: #1e1e1e; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const data = {"DYNAREX": {"Test Suites/billing/State assessment/billing state assessment - DYNAREX": {"2025.10.22": {"html_file": "qa-automation/data/reports/20251022_102038.html", "project": "DYNAREX", "test_suite_id": "Test Suites/billing/State assessment/billing state assessment - DYNAREX", "profile": "default member intacc", "test_cases": 40, "passed": 40, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-22T10:20:46.962+02:00", "end": "2025-10-22T10:43:16.687+02:00", "duration": 22.495416666666664, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "A2oCMPK9H2renRqGcCoip9jMbwFE6UgkaVEAiNcU4uaTAwQgh6SJ-cAxUdBguutBKlDiG4hXdE0vja91ashP90JRffF3jlIPoR6kTpjLdR5jU2SKVZysBWbDAF7g0fGQv1YXXzAV01nTQNum0jrJZ0Y8zZqbqYYF9BaWdSaKnPyw8LT3JrqkKcue5fYrF1J9I0Cg3IBLIepNd58CZlE9ivCODEkZBkaTNw=="}}, "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client": {"2025.10.22": {"html_file": "qa-automation/data/reports/20251022_143556.html", "project": "DYNAREX", "test_suite_id": "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client", "profile": "default member intacc", "test_cases": 18, "passed": 18, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-22T16:35:14.954+02:00", "end": "2025-10-22T16:43:54.972+02:00", "duration": 8.666966666666667, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "xaD922FbwcxYO3mJw4XiTV3QG9mhfJqMwVyUEwO-6H36XPxyk6wolWMDezu8WdPtMOZIFnIiOZ35suHI7BSRK4dTAH-7jwS6jLB3TfkD9UKnjDlWea6g82o5Hz8_dVrCocUe4C27vEOdk7KIsNY6nbBss5SPEVrS9yxmM8vFonoE9Ve7ZfwN04_l5RrzCanyqB74L3cPUXnhCdG3oDw3aKkW3R6dQuek4g=="}}}};
+const data = {"DYNAREX V2": {"Test Suites/Test Suites/departments/settings - department page": {"2025.10.13": {"html_file": "qa-automation/data/reports/20251013_092337.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/departments/settings - department page", "profile": "dynarex intdev", "test_cases": 3, "passed": 3, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-13T09:29:02.745+02:00", "end": "2025-10-13T09:30:02.274+02:00", "duration": 0.9921500000000001, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "yz_4to6t4-QRVHV63rY1VFFUrikQ419dqY23DcewPfe-YX67y9KsSgU2dgAHrfOVOru6iweGF48sXu2124Vhm_yXpns65tAECs5G5myaI1c9EwkWhpKj5Ypno2QL8H9oYUA6UQLtKXuft-1Dvi6PkpacFGvEukUczSM9tw3w49IiO5ou7Zp6DbSwJpRbBKdELrQoKX1MuwuNnJU-MdW2SRnArYWp87ox_w=="}}}};
 
 // AES-GCM decryption in browser (matches Python encryption)
 async function decryptUrl(encryptedUrl, password) {
@@ -208,13 +208,10 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 <h1>QA Automation Report</h1>
 <div class='table-container'>
 <table>
-<tr><th>Test Suite</th><th>10.22</th></tr>
-<tr><td class='project-header'>DYNAREX</td><td class='project-separator'></td></tr>
-<tr><td class='suite-name'>billing/State assessment/Billing state assessment for new Sd3EP client</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client", "2025.10.22")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client", "2025.10.22")'>18/0</td>
-</tr>
-<tr><td class='suite-name'>billing/State assessment/billing state assessment - DYNAREX</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/billing/State assessment/billing state assessment - DYNAREX", "2025.10.22")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/billing/State assessment/billing state assessment - DYNAREX", "2025.10.22")'>40/0</td>
+<tr><th>Test Suite</th><th>10.13</th></tr>
+<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td></tr>
+<tr><td class='suite-name'>departments/settings - department page</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/departments/settings - department page", "2025.10.13")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/departments/settings - department page", "2025.10.13")'>3/0</td>
 </tr>
 </table>
 </div>
