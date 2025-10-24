@@ -16,17 +16,7 @@ from onedrive_encryptor import encrypt_string
 # OneDrive folder paths
 ONEDRIVE_HTML_FOLDER = "qa-automation/data/html"
 ONEDRIVE_PROCESSED_FOLDER = "qa-automation/data/reports"
-RESULTS_FILE = "data/results.json"
-
-# Load existing results.json into memory
-results = []
-if os.path.exists(RESULTS_FILE):
-    try:
-        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-            results = json.load(f)
-    except json.JSONDecodeError:
-        print("::warning::results.json is empty or invalid, starting fresh.")
-        results = []
+ONEDRIVE_RESULTS_FILE = "qa-automation/data/results.json"
 
 def get_onedrive_access_token():
     """Get access token using refresh token"""
@@ -52,6 +42,87 @@ def get_onedrive_access_token():
         return tokens.get('access_token')
     else:
         raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
+
+def download_from_onedrive_to_memory(file_path, access_token):
+    """Download a file from OneDrive directly to memory"""
+    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+    safe_path = quote(file_path)
+    
+    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
+    headers = {'Authorization': f'Bearer {access_token}'}
+    
+    # Rate limiting
+    time.sleep(0.5)
+    
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.content
+    elif response.status_code == 404:
+        print(f"ℹ️ File not found in OneDrive: {file_path}")
+        return None
+    else:
+        print(f"❌ Failed to download {file_path}: {response.status_code}")
+        return None
+
+def upload_to_onedrive_from_memory(content, file_path, access_token):
+    """Upload content to OneDrive file"""
+    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+    safe_path = quote(file_path)
+    
+    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/octet-stream'
+    }
+    
+    # Rate limiting
+    time.sleep(0.5)
+    
+    response = requests.put(url, headers=headers, data=content)
+    if response.status_code in [200, 201]:
+        print(f"✅ Uploaded {file_path} to OneDrive")
+        return True
+    else:
+        print(f"❌ Failed to upload {file_path}: {response.status_code}")
+        return False
+
+def load_results_from_onedrive(access_token):
+    """Load results.json from OneDrive"""
+    print("📥 Loading results from OneDrive...")
+    content = download_from_onedrive_to_memory(ONEDRIVE_RESULTS_FILE, access_token)
+    
+    if content:
+        try:
+            results = json.loads(content.decode('utf-8'))
+            print(f"✅ Loaded {len(results)} records from OneDrive")
+            return results
+        except json.JSONDecodeError as e:
+            print(f"❌ Failed to parse results.json from OneDrive: {e}")
+            return []
+    else:
+        print("ℹ️ No existing results.json found in OneDrive, starting fresh")
+        return []
+
+def save_results_to_onedrive(results, access_token):
+    """Save results.json to OneDrive with cleanup"""
+    # Apply 8-week cleanup
+    cleaned_results = cleanup_old_records(results, weeks=8)
+    removed_count = len(results) - len(cleaned_results)
+    
+    if removed_count > 0:
+        print(f"🧹 Cleaned up {removed_count} records older than 8 weeks")
+        print(f"📊 Remaining records: {len(cleaned_results)}")
+    
+    # Convert to JSON
+    content = json.dumps(cleaned_results, indent=2, ensure_ascii=False).encode('utf-8')
+    
+    # Upload to OneDrive
+    if upload_to_onedrive_from_memory(content, ONEDRIVE_RESULTS_FILE, access_token):
+        print(f"💾 Saved {len(cleaned_results)} records to OneDrive")
+        return True
+    else:
+        print("❌ Failed to save results to OneDrive")
+        return False
 
 def create_onedrive_sharing_link(filename, access_token, expiry_days=90):
     """Create a long-term sharing link for a OneDrive file"""
@@ -88,34 +159,13 @@ def create_onedrive_sharing_link(filename, access_token, expiry_days=90):
             return web_url
         else:
             print(f"❌ Sharing link created but no webUrl found in response for {filename}")
-            print(f"⚠️ Full response: {json.dumps(sharing_info, indent=2)}")
     else:
         print(f"❌ Failed to create sharing link for {filename}: {response.status_code}")
         if response.status_code == 404:
             print(f"⚠️ File not found in OneDrive: {filename}")
         elif response.status_code == 403:
             print(f"⚠️ Permission denied for: {filename}")
-        else:
-            print(f"⚠️ Response: {response.text}")
     return None
-
-def download_from_onedrive_to_memory(file_path, access_token):
-    """Download a file from OneDrive directly to memory"""
-    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
-    safe_path = quote(file_path)
-    
-    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
-    headers = {'Authorization': f'Bearer {access_token}'}
-    
-    # Rate limiting
-    time.sleep(0.5)
-    
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.content
-    else:
-        print(f"❌ Failed to download {file_path}: {response.status_code}")
-        return None
 
 def move_file_in_onedrive(source_path, destination_path, access_token):
     """Move a file within OneDrive"""
@@ -156,34 +206,6 @@ def list_onedrive_files(folder_path, access_token):
     else:
         print(f"❌ Failed to list files in {folder_path}: {response.status_code}")
         return []
-
-def ensure_onedrive_folder(folder_path, access_token):
-    """Ensure a folder exists in OneDrive"""
-    user_email = os.getenv("ONEDRIVE_USER_EMAIL")
-    
-    # Check if folder exists
-    safe_path = quote(folder_path)
-    url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}"
-    headers = {'Authorization': f'Bearer {access_token}'}
-    
-    response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        # Folder doesn't exist, create it
-        parent_path = '/'.join(folder_path.split('/')[:-1])
-        folder_name = folder_path.split('/')[-1]
-        
-        create_url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{parent_path}:/children"
-        folder_data = {
-            "name": folder_name,
-            "folder": {},
-            "@microsoft.graph.conflictBehavior": "rename"
-        }
-        
-        create_response = requests.post(create_url, headers=headers, json=folder_data)
-        if create_response.status_code in [200, 201]:
-            print(f"📁 Created folder: {folder_path}")
-        else:
-            print(f"⚠️ Could not create folder {folder_path}")
 
 def compute_retry_count(test_suite_id, start_time, results, hours=10):
     """Compute retry count using chronological results, stop when older than 10 hours."""
@@ -256,7 +278,8 @@ def parse_html_content(html_content, html_filename):
                 duration = None
 
         # Compute retry count dynamically
-        retry_count = compute_retry_count(test_suite_id, start, results)
+        # Note: We'll compute this during dashboard build since we don't have all results here
+        retry_count = 0
 
         # Sum check
         sum_check = True
@@ -264,7 +287,7 @@ def parse_html_content(html_content, html_filename):
             total_sum = sum(filter(None, [passed, failed, error, incomplete, skipped]))
             sum_check = (total_sum == test_cases)
 
-        # Color logic
+        # Color logic (basic - will be finalized in dashboard)
         color = "Red"  # default
         if test_cases is not None and passed == test_cases and sum_check:
             color = "Green"
@@ -285,9 +308,9 @@ def parse_html_content(html_content, html_filename):
             "start": start,
             "end": end,
             "duration": duration,
-            "retry_count": retry_count,
+            "retry_count": retry_count,  # Will be computed in dashboard
             "sum_check": sum_check,
-            "color": color
+            "color": color  # Will be finalized in dashboard
         }
 
     except Exception as e:
@@ -305,9 +328,9 @@ def main():
     try:
         # Get OneDrive access token
         access_token = get_onedrive_access_token()
-        
-        # Ensure processed folder exists
-        ensure_onedrive_folder(ONEDRIVE_PROCESSED_FOLDER, access_token)
+                
+        # Load existing results from OneDrive
+        results = load_results_from_onedrive(access_token)
         
         # List HTML files in OneDrive
         html_files = [f for f in list_onedrive_files(ONEDRIVE_HTML_FOLDER, access_token) 
@@ -383,32 +406,16 @@ def main():
 
         print(f"📊 Encrypted links: {encrypted_links_created} created, {encrypted_links_failed} failed")
 
-        # Add new results to existing results
+        # Add new results to existing results and save to OneDrive
         if new_results:
             results.extend(new_results)
             print(f"📊 Added {len(new_results)} new records to results")
             
-            # Ensure the data directory exists
-            os.makedirs(os.path.dirname(RESULTS_FILE), exist_ok=True)
-            
-            # Save results.json locally
-            with open(RESULTS_FILE, "w", encoding="utf-8") as f:
-                json.dump(results, f, indent=2, ensure_ascii=False)
-            
-            print(f"💾 Saved {len(results)} total records to {RESULTS_FILE}")
-            
-            # Verify the file was written and check encrypted_url fields
-            if os.path.exists(RESULTS_FILE):
-                file_size = os.path.getsize(RESULTS_FILE)
-                print(f"📄 Results file verified: {file_size} bytes")
-                
-                # Count how many records have encrypted URLs
-                with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-                    saved_data = json.load(f)
-                    encrypted_count = sum(1 for record in saved_data if record.get("encrypted_url"))
-                    print(f"🔐 Records with encrypted URLs: {encrypted_count}/{len(saved_data)}")
+            # Save updated results to OneDrive
+            if save_results_to_onedrive(results, access_token):
+                print(f"💾 Successfully updated OneDrive with {len(results)} total records")
             else:
-                print("❌ ERROR: results.json was not created!")
+                print("❌ Failed to update results in OneDrive")
         else:
             print("ℹ️ No new results to save")
 
