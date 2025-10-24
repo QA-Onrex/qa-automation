@@ -104,15 +104,7 @@ def load_results_from_onedrive(access_token):
         return []
 
 def save_results_to_onedrive(results, access_token):
-    """Save results.json to OneDrive with cleanup"""
-    # Apply 8-week cleanup
-    cleaned_results = cleanup_old_records(results, weeks=8)
-    removed_count = len(results) - len(cleaned_results)
-    
-    if removed_count > 0:
-        print(f"🧹 Cleaned up {removed_count} records older than 8 weeks")
-        print(f"📊 Remaining records: {len(cleaned_results)}")
-    
+    """Save results.json to OneDrive"""
     # Convert to JSON
     content = json.dumps(cleaned_results, indent=2, ensure_ascii=False).encode('utf-8')
     
