@@ -2,18 +2,65 @@
 import json
 import os
 import hashlib
+import requests
 from datetime import datetime
 from collections import defaultdict
+from urllib.parse import quote
 
-RESULTS_FILE = "data/results.json"
+RESULTS_FILE = "qa-automation/data/results.json"  # OneDrive path
 OUTPUT_FILE = "docs/index.html"
 
-def load_results():
-    if not os.path.exists(RESULTS_FILE):
-        print(f"Error: {RESULTS_FILE} not found.")
+def get_onedrive_access_token():
+    """Get access token using refresh token"""
+    client_id = os.getenv("ONEDRIVE_CLIENT_ID")
+    client_secret = os.getenv("ONEDRIVE_CLIENT_SECRET")
+    refresh_token = os.getenv("ONEDRIVE_REFRESH_TOKEN")
+    
+    if not all([client_id, client_secret, refresh_token]):
+        raise Exception("OneDrive credentials missing")
+    
+    token_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+    data = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'refresh_token': refresh_token,
+        'grant_type': 'refresh_token',
+        'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+    }
+    
+    response = requests.post(token_url, data=data)
+    if response.status_code == 200:
+        tokens = response.json()
+        return tokens.get('access_token')
+    else:
+        raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
+
+def load_results_from_onedrive():
+    """Load results.json from OneDrive"""
+    print("📥 Loading results from OneDrive...")
+    
+    try:
+        access_token = get_onedrive_access_token()
+        user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+        safe_path = quote(RESULTS_FILE)
+        
+        url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
+        headers = {'Authorization': f'Bearer {access_token}'}
+        
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            results = json.loads(response.content.decode('utf-8'))
+            print(f"✅ Loaded {len(results)} records from OneDrive")
+            return results
+        elif response.status_code == 404:
+            print("ℹ️ No existing results.json found in OneDrive")
+            return []
+        else:
+            print(f"❌ Failed to load results from OneDrive: {response.status_code}")
+            return []
+    except Exception as e:
+        print(f"❌ Error loading results from OneDrive: {e}")
         return []
-    with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
 
 def get_color(record):
     total = record.get("test_cases", 0) or 0
@@ -34,9 +81,10 @@ def get_color(record):
     return "red"
 
 def build_dashboard():
-    results = load_results()
+    # Load results from OneDrive instead of local file
+    results = load_results_from_onedrive()
     if not results:
-        print("No results found.")
+        print("No results found in OneDrive.")
         return
 
     # Get password hash from environment
@@ -62,6 +110,16 @@ def build_dashboard():
             r["color"] = get_color(r)
             data[project][suite][date] = r
 
+    # Debug: Print what we found
+    print("📊 Data structure:")
+    for project in data:
+        print(f"  Project: {project}")
+        for suite in data[project]:
+            print(f"    Suite: {suite}")
+            for date in data[project][suite]:
+                record = data[project][suite][date]
+                print(f"      Date: {date}, File: {record.get('html_file', 'N/A')}, Encrypted: {'Yes' if record.get('encrypted_url') else 'No'}")
+
     # Calculate maximum suite name length for adaptive column width
     max_length = 0
     for project in data:
@@ -80,6 +138,8 @@ def build_dashboard():
     # Count encrypted URLs for reporting
     encrypted_count = sum(1 for r in results if r.get("encrypted_url"))
     print(f"📊 Building dashboard with {encrypted_count}/{len(results)} encrypted report links")
+    print(f"📅 Dates found: {len(all_dates)}")
+    print(f"📁 Projects found: {len(data)}")
 
     # Build HTML
     html = [
@@ -124,6 +184,9 @@ def build_dashboard():
         "<script>",
         f"const PASSWORD_HASH = '{password_hash}';",
         "const data = " + json.dumps(data, default=str) + ";",
+        "",
+        "// Debug: log data structure",
+        "console.log('Dashboard data:', data);",
         "",
         "// AES-GCM decryption in browser (matches Python encryption)",
         "async function decryptUrl(encryptedUrl, password) {",
