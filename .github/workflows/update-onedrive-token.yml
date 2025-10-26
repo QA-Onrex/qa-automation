@@ -93,4 +93,5 @@ jobs:
             echo "OneDrive token updated successfully"
             echo "New token expiration: $NEW_EXPIRY"
             echo "Days remaining: $NEW_DAYS"
+            print(f"REFRESH_TOKEN:{tokens.get('refresh_token')}")
         fi
