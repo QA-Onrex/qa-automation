@@ -10,28 +10,35 @@ export async function onRequest(context) {
       return new Response('Missing encrypted URL parameter', { status: 400 });
     }
 
-    // The URL is already decrypted by the dashboard, just use it directly
-    console.log('Fetching from decrypted OneDrive URL...');
-    const response = await fetch(encryptedUrl);
+    // Simulate a browser request to bypass OneDrive blocking
+    console.log('Fetching from OneDrive with browser headers...');
+    const response = await fetch(encryptedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Cache-Control': 'max-age=0'
+      }
+    });
     
     console.log('OneDrive response status:', response.status);
     
     if (!response.ok) {
-      // If we get 403, the sharing link might have expired or have restrictions
       const errorText = await response.text();
-      console.log('OneDrive error details:', errorText);
+      console.log('OneDrive error details:', errorText.substring(0, 500)); // Limit log size
       
-      if (response.status === 403) {
-        return new Response(
-          'OneDrive access forbidden. The sharing link may have expired or have viewing restrictions. ' +
-          'Please check that the link is still valid and accessible.', 
-          { status: 403 }
-        );
-      }
-      
-      return new Response(`OneDrive error: ${response.status} - ${response.statusText}`, { 
-        status: response.status 
-      });
+      return new Response(
+        `OneDrive access failed (${response.status}): The sharing link may not allow automated access. ` +
+        'Please check the link permissions in OneDrive.',
+        { status: response.status }
+      );
     }
 
     const html = await response.text();
