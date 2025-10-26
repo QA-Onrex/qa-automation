@@ -54,10 +54,6 @@ jobs:
                     print(f'NEW_TOKEN:{new_token}')
                     print(f'NEW_EXPIRY:{new_expiry.strftime(\"%Y-%m-%d\")}')
                     print(f'NEW_DAYS:{days_remaining}')
-                    print(f'REFRESH_TOKEN_FOR_CLOUDFLARE:{new_token}')
-                    print(f"CLOUDFLARE_TOKEN_PART1:{new_token[:20]}")
-                    print(f"CLOUDFLARE_TOKEN_PART2:{new_token[20:40]}") 
-                    print(f"CLOUDFLARE_TOKEN_PART3:{new_token[40:]}")
                 else:
                     # Fallback - use current token but still update
                     current_token = os.getenv('ONEDRIVE_REFRESH_TOKEN')
