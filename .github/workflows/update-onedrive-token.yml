@@ -54,6 +54,7 @@ jobs:
                     print(f'NEW_TOKEN:{new_token}')
                     print(f'NEW_EXPIRY:{new_expiry.strftime(\"%Y-%m-%d\")}')
                     print(f'NEW_DAYS:{days_remaining}')
+                    print(f'REFRESH_TOKEN_FOR_CLOUDFLARE:{new_token}')
                 else:
                     # Fallback - use current token but still update
                     current_token = os.getenv('ONEDRIVE_REFRESH_TOKEN')
@@ -93,5 +94,4 @@ jobs:
             echo "OneDrive token updated successfully"
             echo "New token expiration: $NEW_EXPIRY"
             echo "Days remaining: $NEW_DAYS"
-            print(f"REFRESH_TOKEN:{tokens.get('refresh_token')}")
         fi
