@@ -33,6 +33,8 @@ td.project-separator { background-color: #1e1e1e; }
 .no-link { cursor: not-allowed; opacity: 0.6; }
 .no-link:hover { opacity: 0.6; }
 .loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }
+.test-button { margin-left: 20px; padding: 5px 10px; background: #555; color: white; border: none; border-radius: 3px; cursor: pointer; }
+.test-button:hover { background: #666; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
@@ -41,8 +43,10 @@ const data = {"DYNAREX V2": {"Test Suites/Test Suites/Settings/Offices": {"2025.
 // AES-GCM decryption in browser (matches Python encryption)
 async function decryptUrl(encryptedUrl, password) {
   try {
+    // Convert URL-safe base64 to standard base64
+    const standardBase64 = encryptedUrl.replace(/-/g, '+').replace(/_/g, '/');
     // Decode base64
-    const encryptedData = Uint8Array.from(atob(encryptedUrl), c => c.charCodeAt(0));
+    const encryptedData = Uint8Array.from(atob(standardBase64), c => c.charCodeAt(0));
     
     // Extract salt (16 bytes), nonce (12 bytes), ciphertext
     const salt = encryptedData.slice(0, 16);
@@ -133,6 +137,49 @@ function hideLoading() {
   document.getElementById('loading').style.display = 'none';
 }
 
+// Test function to verify encryption/decryption
+async function testDecryption() {
+  const password = sessionStorage.getItem('reportPassword');
+  if (!password) {
+    alert('Please login first');
+    return;
+  }
+  
+  // Get first available encrypted URL for testing
+  let testEncryptedUrl = null;
+  for (const project in data) {
+    for (const suite in data[project]) {
+      for (const date in data[project][suite]) {
+        const record = data[project][suite][date];
+        if (record && record.encrypted_url) {
+          testEncryptedUrl = record.encrypted_url;
+          break;
+        }
+      }
+      if (testEncryptedUrl) break;
+    }
+    if (testEncryptedUrl) break;
+  }
+  
+  if (!testEncryptedUrl) {
+    alert('No encrypted URLs found to test');
+    return;
+  }
+  
+  showLoading();
+  try {
+    console.log('Testing decryption with URL:', testEncryptedUrl);
+    const decrypted = await decryptUrl(testEncryptedUrl, password);
+    console.log('Test decryption successful:', decrypted);
+    alert('Decryption test successful! URL: ' + decrypted);
+  } catch (e) {
+    console.error('Test decryption failed:', e);
+    alert('Decryption test failed: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
 // Open report with encrypted URL
 async function openReport(project, suite, date) {
   const record = data[project][suite][date];
@@ -148,10 +195,25 @@ async function openReport(project, suite, date) {
   if (record.encrypted_url) {
     showLoading();
     try {
+      console.log('Encrypted URL:', record.encrypted_url);
+      console.log('Password length:', password.length);
+      
       const decryptedUrl = await decryptUrl(record.encrypted_url, password);
-      window.open(decryptedUrl, '_blank');
+      console.log('Decrypted URL:', decryptedUrl);
+      
+      // Test if the URL is valid
+      try {
+        new URL(decryptedUrl);
+        console.log('URL is valid');
+        window.open(decryptedUrl, '_blank');
+      } catch (urlError) {
+        console.error('Invalid URL:', decryptedUrl);
+        alert('Decrypted URL is invalid: ' + decryptedUrl);
+      }
+      
     } catch (e) {
       console.error('Failed to decrypt and open report:', e);
+      console.error('Error details:', e.message, e.stack);
       alert('Failed to access report. The link may be expired or invalid.');
     } finally {
       hideLoading();
@@ -205,7 +267,7 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 <div id='dashboard-content'>
 <div id='tooltip' class='tooltip'></div>
 <div id='loading' class='loading'>Loading report...</div>
-<h1>QA Automation Report</h1>
+<h1>QA Automation Report <button onclick="testDecryption()" class="test-button">Test Decryption</button></h1>
 <div class='table-container'>
 <table>
 <tr><th>Test Suite</th><th>10.21</th></tr>
