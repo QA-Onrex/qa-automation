@@ -132,7 +132,6 @@ jobs:
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: qa-onrex
         directory: docs
-        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Commit dashboard to GitHub (backup)
       run: |
