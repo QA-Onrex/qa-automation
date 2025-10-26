@@ -2,39 +2,34 @@
 export async function onRequest(context) {
   try {
     const url = new URL(context.request.url);
-    const filePath = url.searchParams.get('path');
+    const encryptedUrl = url.searchParams.get('url');
     
-    console.log('Proxy request received for file path:', filePath);
+    console.log('Proxy request received for encrypted URL');
     
-    if (!filePath) {
-      return new Response('Missing file path parameter', { status: 400 });
+    if (!encryptedUrl) {
+      return new Response('Missing encrypted URL parameter', { status: 400 });
     }
 
-    // Get OneDrive access token
-    const accessToken = await getOneDriveAccessToken(context);
-    if (!accessToken) {
-      return new Response('Failed to get OneDrive access token', { status: 500 });
-    }
-
-    // Download file from OneDrive using Graph API
-    const userEmail = 'velko.ikonomov@ncb.global'; // Replace with your email if different
-    const safePath = encodeURIComponent(filePath);
-    const graphUrl = `https://graph.microsoft.com/v1.0/users/${userEmail}/drive/root:/${safePath}:/content`;
+    // The URL is already decrypted by the dashboard, just use it directly
+    console.log('Fetching from decrypted OneDrive URL...');
+    const response = await fetch(encryptedUrl);
     
-    console.log('Fetching from Graph API:', graphUrl);
-    
-    const response = await fetch(graphUrl, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    });
-    
-    console.log('Graph API response status:', response.status);
+    console.log('OneDrive response status:', response.status);
     
     if (!response.ok) {
+      // If we get 403, the sharing link might have expired or have restrictions
       const errorText = await response.text();
-      console.log('Graph API error response:', errorText);
-      return new Response(`Graph API error: ${response.status} - ${response.statusText}`, { 
+      console.log('OneDrive error details:', errorText);
+      
+      if (response.status === 403) {
+        return new Response(
+          'OneDrive access forbidden. The sharing link may have expired or have viewing restrictions. ' +
+          'Please check that the link is still valid and accessible.', 
+          { status: 403 }
+        );
+      }
+      
+      return new Response(`OneDrive error: ${response.status} - ${response.statusText}`, { 
         status: response.status 
       });
     }
@@ -54,44 +49,5 @@ export async function onRequest(context) {
   } catch (error) {
     console.log('Proxy error:', error.message);
     return new Response(`Proxy error: ${error.message}`, { status: 500 });
-  }
-}
-
-async function getOneDriveAccessToken(context) {
-  try {
-    const clientId = context.env.ONEDRIVE_CLIENT_ID;
-    const clientSecret = context.env.ONEDRIVE_CLIENT_SECRET;
-    const refreshToken = context.env.ONEDRIVE_REFRESH_TOKEN;
-    
-    if (!clientId || !clientSecret || !refreshToken) {
-      console.error('Missing OneDrive environment variables');
-      return null;
-    }
-
-    const tokenUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
-    const response = await fetch(tokenUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        refresh_token: refreshToken,
-        grant_type: 'refresh_token',
-        scope: 'https://graph.microsoft.com/Files.ReadWrite offline_access'
-      })
-    });
-
-    if (!response.ok) {
-      console.error('Token refresh failed:', response.status, await response.text());
-      return null;
-    }
-
-    const tokens = await response.json();
-    return tokens.access_token;
-  } catch (error) {
-    console.error('Token error:', error);
-    return null;
   }
 }
