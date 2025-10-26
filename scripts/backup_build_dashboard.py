@@ -1,18 +1,66 @@
+# scripts/one_drive/onedrive_build_dashboard.py
 import json
 import os
 import hashlib
+import requests
 from datetime import datetime
 from collections import defaultdict
+from urllib.parse import quote
 
-RESULTS_FILE = "data/results.json"
-OUTPUT_FILE = "docs/index.html"  # dashboard location
+RESULTS_FILE = "qa-automation/data/results.json"  # OneDrive path
+OUTPUT_FILE = "docs/index.html"
 
-def load_results():
-    if not os.path.exists(RESULTS_FILE):
-        print(f"Error: {RESULTS_FILE} not found.")
+def get_onedrive_access_token():
+    """Get access token using refresh token"""
+    client_id = os.getenv("ONEDRIVE_CLIENT_ID")
+    client_secret = os.getenv("ONEDRIVE_CLIENT_SECRET")
+    refresh_token = os.getenv("ONEDRIVE_REFRESH_TOKEN")
+    
+    if not all([client_id, client_secret, refresh_token]):
+        raise Exception("OneDrive credentials missing")
+    
+    token_url = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+    data = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'refresh_token': refresh_token,
+        'grant_type': 'refresh_token',
+        'scope': 'https://graph.microsoft.com/Files.ReadWrite offline_access'
+    }
+    
+    response = requests.post(token_url, data=data)
+    if response.status_code == 200:
+        tokens = response.json()
+        return tokens.get('access_token')
+    else:
+        raise Exception(f"Token refresh failed: {response.status_code} - {response.text}")
+
+def load_results_from_onedrive():
+    """Load results.json from OneDrive"""
+    print("📥 Loading results from OneDrive...")
+    
+    try:
+        access_token = get_onedrive_access_token()
+        user_email = os.getenv("ONEDRIVE_USER_EMAIL")
+        safe_path = quote(RESULTS_FILE)
+        
+        url = f"https://graph.microsoft.com/v1.0/users/{user_email}/drive/root:/{safe_path}:/content"
+        headers = {'Authorization': f'Bearer {access_token}'}
+        
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            results = json.loads(response.content.decode('utf-8'))
+            print(f"✅ Loaded {len(results)} records from OneDrive")
+            return results
+        elif response.status_code == 404:
+            print("ℹ️ No existing results.json found in OneDrive")
+            return []
+        else:
+            print(f"❌ Failed to load results from OneDrive: {response.status_code}")
+            return []
+    except Exception as e:
+        print(f"❌ Error loading results from OneDrive: {e}")
         return []
-    with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
 
 def get_color(record):
     total = record.get("test_cases", 0) or 0
@@ -33,9 +81,10 @@ def get_color(record):
     return "red"
 
 def build_dashboard():
-    results = load_results()
+    # Load results from OneDrive instead of local file
+    results = load_results_from_onedrive()
     if not results:
-        print("No results found.")
+        print("No results found in OneDrive.")
         return
 
     # Get password hash from environment
@@ -61,6 +110,16 @@ def build_dashboard():
             r["color"] = get_color(r)
             data[project][suite][date] = r
 
+    # Debug: Print what we found
+    print("📊 Data structure:")
+    for project in data:
+        print(f"  Project: {project}")
+        for suite in data[project]:
+            print(f"    Suite: {suite}")
+            for date in data[project][suite]:
+                record = data[project][suite][date]
+                print(f"      Date: {date}, File: {record.get('html_file', 'N/A')}, Encrypted: {'Yes' if record.get('encrypted_url') else 'No'}")
+
     # Calculate maximum suite name length for adaptive column width
     max_length = 0
     for project in data:
@@ -75,6 +134,12 @@ def build_dashboard():
         {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
         reverse=True
     )[:365]
+
+    # Count encrypted URLs for reporting
+    encrypted_count = sum(1 for r in results if r.get("encrypted_url"))
+    print(f"📊 Building dashboard with {encrypted_count}/{len(results)} encrypted report links")
+    print(f"📅 Dates found: {len(all_dates)}")
+    print(f"📁 Projects found: {len(data)}")
 
     # Build HTML
     html = [
@@ -110,10 +175,71 @@ def build_dashboard():
         ".tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }",
         ".tooltip-row { margin: 3px 0; }",
         ".tooltip-label { font-weight: bold; display: inline-block; width: 100px; }",
+        ".no-link { cursor: not-allowed; opacity: 0.6; }",
+        ".no-link:hover { opacity: 0.6; }",
+        ".loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }",
+        ".test-button { margin-left: 20px; padding: 5px 10px; background: #555; color: white; border: none; border-radius: 3px; cursor: pointer; }",
+        ".test-button:hover { background: #666; }",
         "</style>",
         "<script>",
         f"const PASSWORD_HASH = '{password_hash}';",
         "const data = " + json.dumps(data, default=str) + ";",
+        "",
+        "// Debug: log data structure",
+        "console.log('Dashboard data:', data);",
+        "",
+        "// AES-GCM decryption in browser (matches Python encryption)",
+        "async function decryptUrl(encryptedUrl, password) {",
+        "  try {",
+        "    // Convert URL-safe base64 to standard base64",
+        "    const standardBase64 = encryptedUrl.replace(/-/g, '+').replace(/_/g, '/');",
+        "    // Decode base64",
+        "    const encryptedData = Uint8Array.from(atob(standardBase64), c => c.charCodeAt(0));",
+        "    ",
+        "    // Extract salt (16 bytes), nonce (12 bytes), ciphertext",
+        "    const salt = encryptedData.slice(0, 16);",
+        "    const nonce = encryptedData.slice(16, 28);",
+        "    const ciphertext = encryptedData.slice(28);",
+        "    ",
+        "    // Derive key using PBKDF2",
+        "    const encoder = new TextEncoder();",
+        "    const passwordKey = await crypto.subtle.importKey(",
+        "      'raw',",
+        "      encoder.encode(password),",
+        "      'PBKDF2',",
+        "      false,",
+        "      ['deriveKey']",
+        "    );",
+        "    ",
+        "    const key = await crypto.subtle.deriveKey(",
+        "      {",
+        "        name: 'PBKDF2',",
+        "        salt: salt,",
+        "        iterations: 100000,",
+        "        hash: 'SHA-256'",
+        "      },",
+        "      passwordKey,",
+        "      { name: 'AES-GCM', length: 256 },",
+        "      false,",
+        "      ['decrypt']",
+        "    );",
+        "    ",
+        "    // Decrypt",
+        "    const decrypted = await crypto.subtle.decrypt(",
+        "      {",
+        "        name: 'AES-GCM',",
+        "        iv: nonce",
+        "      },",
+        "      key,",
+        "      ciphertext",
+        "    );",
+        "    ",
+        "    return new TextDecoder().decode(decrypted);",
+        "  } catch (error) {",
+        "    console.error('URL decryption failed:', error);",
+        "    throw new Error('Failed to decrypt report URL');",
+        "  }",
+        "}",
         "",
         "async function hashPassword(password) {",
         "  const msgBuffer = new TextEncoder().encode(password);",
@@ -125,11 +251,13 @@ def build_dashboard():
         "async function checkPassword() {",
         "  const password = document.getElementById('password-input').value;",
         "  const hash = await hashPassword(password);",
+        "  ",
         "  if (hash === PASSWORD_HASH) {",
         "    sessionStorage.setItem('reportPassword', password);",
         "    document.getElementById('login-container').style.display = 'none';",
         "    document.getElementById('dashboard-content').style.display = 'block';",
         "  } else {",
+        "    document.getElementById('error-message').textContent = 'Incorrect password. Please try again.';",
         "    document.getElementById('error-message').style.display = 'block';",
         "  }",
         "}",
@@ -149,68 +277,130 @@ def build_dashboard():
         "  });",
         "});",
         "",
-        "// Fixed AES-256-GCM decryption in browser",
-        "async function decryptBytesAES(encryptedBytes, password) {",
-        "  const salt = encryptedBytes.slice(0, 16);",
-        "  const nonce = encryptedBytes.slice(16, 28);",
-        "  const ciphertext = encryptedBytes.slice(28);",
-        "",
-        "  const enc = new TextEncoder();",
-        "  const keyMaterial = await crypto.subtle.importKey(",
-        "    'raw',",
-        "    enc.encode(password),",
-        "    {name: 'PBKDF2'},",
-        "    false,",
-        "    ['deriveKey']",
-        "  );",
-        "",
-        "  const key = await crypto.subtle.deriveKey(",
-        "    { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },",
-        "    keyMaterial,",
-        "    { name: 'AES-GCM', length: 256 },",
-        "    false,",
-        "    ['decrypt']",
-        "  );",
-        "",
-        "  const decrypted = await crypto.subtle.decrypt({",
-        "    name: 'AES-GCM',",
-        "    iv: nonce",
-        "  }, key, ciphertext);",
-        "",
-        "  return new Uint8Array(decrypted);",
+        "function showLoading() {",
+        "  document.getElementById('loading').style.display = 'block';",
         "}",
         "",
-        "// Fixed openReport to decrypt encrypted HTML in-memory",
+        "function hideLoading() {",
+        "  document.getElementById('loading').style.display = 'none';",
+        "}",
+        "",
+        "// Test function to verify encryption/decryption",
+        "async function testDecryption() {",
+        "  const password = sessionStorage.getItem('reportPassword');",
+        "  if (!password) {",
+        "    alert('Please login first');",
+        "    return;",
+        "  }",
+        "  ",
+        "  // Get first available encrypted URL for testing",
+        "  let testEncryptedUrl = null;",
+        "  for (const project in data) {",
+        "    for (const suite in data[project]) {",
+        "      for (const date in data[project][suite]) {",
+        "        const record = data[project][suite][date];",
+        "        if (record && record.encrypted_url) {",
+        "          testEncryptedUrl = record.encrypted_url;",
+        "          break;",
+        "        }",
+        "      }",
+        "      if (testEncryptedUrl) break;",
+        "    }",
+        "    if (testEncryptedUrl) break;",
+        "  }",
+        "  ",
+        "  if (!testEncryptedUrl) {",
+        "    alert('No encrypted URLs found to test');",
+        "    return;",
+        "  }",
+        "  ",
+        "  showLoading();",
+        "  try {",
+        "    console.log('Testing decryption with URL:', testEncryptedUrl);",
+        "    const decrypted = await decryptUrl(testEncryptedUrl, password);",
+        "    console.log('Test decryption successful:', decrypted);",
+        "    ",
+        "    // Test downloading the content",
+        "    console.log('Testing download...');",
+        "    const response = await fetch(decrypted);",
+        "    if (response.ok) {",
+        "      const content = await response.text();",
+        "      console.log('Download test successful, content length:', content.length);",
+        "      alert('Decryption and download test successful! Content length: ' + content.length + ' bytes');",
+        "    } else {",
+        "      throw new Error(`Download failed: ${response.status}`);",
+        "    }",
+        "  } catch (e) {",
+        "    console.error('Test decryption failed:', e);",
+        "    alert('Decryption test failed: ' + e.message);",
+        "  } finally {",
+        "    hideLoading();",
+        "  }",
+        "}",
+        "",
+        "// Open report with encrypted URL - memory download approach",
         "async function openReport(project, suite, date) {",
         "  const record = data[project][suite][date];",
-        "  if (!record || !record.html_file) return;",
+        "  if (!record) return;",
         "",
         "  const password = sessionStorage.getItem('reportPassword');",
-        "  if (!password) return alert('Password missing!');",
+        "  if (!password) {",
+        "    alert('Please login first');",
+        "    return;",
+        "  }",
         "",
-        "  try {",
-        "    // Fetch the encrypted file (which is base64 encoded)",
-        "    const resp = await fetch(record.html_file.replace('docs/', ''));",
-        "    const base64Data = await resp.text();",
-        "    ",
-        "    // Decode base64 to get raw bytes",
-        "    const binaryString = atob(base64Data);",
-        "    const encryptedBytes = new Uint8Array(binaryString.length);",
-        "    for (let i = 0; i < binaryString.length; i++) {",
-        "      encryptedBytes[i] = binaryString.charCodeAt(i);",
+        "  // Check if we have an encrypted URL",
+        "  if (record.encrypted_url) {",
+        "    showLoading();",
+        "    try {",
+        "      console.log('Encrypted URL:', record.encrypted_url);",
+        "      ",
+        "      const decryptedUrl = await decryptUrl(record.encrypted_url, password);",
+        "      console.log('Decrypted URL:', decryptedUrl);",
+        "      ",
+        "      // Test if the URL is valid",
+        "      try {",
+        "        new URL(decryptedUrl);",
+        "        console.log('URL is valid');",
+        "        ",
+        "        // Download HTML content from OneDrive into memory",
+        "        console.log('Downloading HTML content...');",
+        "        const response = await fetch(decryptedUrl);",
+        "        if (!response.ok) {",
+        "          throw new Error(`HTTP ${response.status}: ${response.statusText}`);",
+        "        }",
+        "        ",
+        "        const htmlContent = await response.text();",
+        "        console.log('HTML content downloaded, length:', htmlContent.length);",
+        "        ",
+        "        // Create blob URL from the HTML content",
+        "        const blob = new Blob([htmlContent], { type: 'text/html' });",
+        "        const blobUrl = URL.createObjectURL(blob);",
+        "        console.log('Created blob URL:', blobUrl);",
+        "        ",
+        "        // Open in new tab - this should work on Cloudflare Pages!",
+        "        window.open(blobUrl, '_blank');",
+        "        ",
+        "        // Clean up blob URL after some time",
+        "        setTimeout(() => {",
+        "          URL.revokeObjectURL(blobUrl);",
+        "          console.log('Blob URL revoked');",
+        "        }, 60000);",
+        "        ",
+        "      } catch (urlError) {",
+        "        console.error('Invalid URL or download failed:', urlError);",
+        "        alert('Failed to download report: ' + urlError.message);",
+        "      }",
+        "      ",
+        "    } catch (e) {",
+        "      console.error('Failed to decrypt and open report:', e);",
+        "      console.error('Error details:', e.message, e.stack);",
+        "      alert('Failed to access report. The link may be expired or invalid.');",
+        "    } finally {",
+        "      hideLoading();",
         "    }",
-        "",
-        "    // Decrypt the bytes",
-        "    const decryptedBytes = await decryptBytesAES(encryptedBytes, password);",
-        "    ",
-        "    // Create and open the HTML report",
-        "    const decryptedText = new TextDecoder().decode(decryptedBytes);",
-        "    const blob = new Blob([decryptedText], { type: 'text/html' });",
-        "    const url = URL.createObjectURL(blob);",
-        "    window.open(url, '_blank');",
-        "  } catch (e) {",
-        "    console.error('Failed to decrypt report:', e);",
-        "    alert('Failed to decrypt report. Check console for details.');",
+        "  } else {",
+        "    alert('Report link not available. This may be because no password is set or the link could not be created.');",
         "  }",
         "}",
         "",
@@ -257,7 +447,8 @@ def build_dashboard():
         "</div>",
         "<div id='dashboard-content'>",
         "<div id='tooltip' class='tooltip'></div>",
-        "<h1>QA Automation Report</h1>",
+        "<div id='loading' class='loading'>Loading report...</div>",
+        "<h1>QA Automation Report <button onclick=\"testDecryption()\" class=\"test-button\">Test Decryption</button></h1>",
         "<div class='table-container'>",
         "<table>",
         "<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>"
@@ -276,7 +467,11 @@ def build_dashboard():
                     passed = record.get("passed", 0)
                     total = record.get("test_cases", 0)
                     failed = total - passed if total else 0
-                    html.append(f"<td class='{color}' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' onclick='openReport(\"{project}\", \"{suite}\", \"{date}\")'>{passed}/{failed}</td>")
+                    
+                    if record.get("encrypted_url"):
+                        html.append(f"<td class='{color}' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' onclick='openReport(\"{project}\", \"{suite}\", \"{date}\")'>{passed}/{failed}</td>")
+                    else:
+                        html.append(f"<td class='{color} no-link' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' title='Report link not available'>{passed}/{failed}</td>")
                 else:
                     html.append("<td class='empty'>–</td>")
             html.append("</tr>")
@@ -291,6 +486,7 @@ def build_dashboard():
         f.write("\n".join(html))
 
     print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
+    print(f"::notice::Dashboard built with {encrypted_count} encrypted report links")
 
 if __name__ == "__main__":
     build_dashboard()
