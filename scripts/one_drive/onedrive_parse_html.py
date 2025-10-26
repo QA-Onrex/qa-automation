@@ -106,11 +106,11 @@ def load_results_from_onedrive(access_token):
 def save_results_to_onedrive(results, access_token):
     """Save results.json to OneDrive"""
     # Convert to JSON
-    content = json.dumps(cleaned_results, indent=2, ensure_ascii=False).encode('utf-8')
+    content = json.dumps(results, indent=2, ensure_ascii=False).encode('utf-8')
     
     # Upload to OneDrive
     if upload_to_onedrive_from_memory(content, ONEDRIVE_RESULTS_FILE, access_token):
-        print(f"💾 Saved {len(cleaned_results)} records to OneDrive")
+        print(f"💾 Saved {len(results)} records to OneDrive")
         return True
     else:
         print("❌ Failed to save results to OneDrive")
