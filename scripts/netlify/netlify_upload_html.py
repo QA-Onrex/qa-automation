@@ -152,7 +152,7 @@ def wait_for_deploy_processing(site_id: str, auth_token: str, deploy_id: str, ma
 
 # --- Main Logic ---
 
-def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str], site_id: str) -> Dict[str, str]:
+def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str]) -> Dict[str, str]:
     """
     Executes the complete Netlify deploy workflow for a list of files.
     Returns a dictionary of filename: url for successfully uploaded and verified files.
