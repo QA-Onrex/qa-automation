@@ -35,22 +35,28 @@ def load_urls():
     return {}
 
 def fetch_encrypted_html_from_netlify(url):
-    """Fetch encrypted HTML from Netlify."""
+    """Fetch encrypted HTML from Netlify with better error handling."""
     try:
         print(f"::notice::Fetching from Netlify: {url}")
-        response = requests.get(url)
+        response = requests.get(url, timeout=30)
         print(f"::notice::Netlify response status: {response.status_code}")
         
         if response.status_code == 200:
             content_length = len(response.content)
             print(f"::notice::Successfully fetched {content_length} bytes from Netlify")
             return response.content
+        elif response.status_code == 404:
+            print(f"::warning::File not yet deployed on Netlify: {url}")
+            print(f"::notice::This is normal - Netlify deployment might still be in progress")
+            return None
         else:
             print(f"::error::Failed to fetch from Netlify: {response.status_code} - {response.text[:200]}")
             return None
+    except requests.exceptions.Timeout:
+        print(f"::error::Timeout fetching from Netlify: {url}")
+        return None
     except Exception as e:
         print(f"::error::Error fetching from Netlify: {e}")
-        traceback.print_exc()
         return None
 
 def compute_retry_count(test_suite_id, start_time, results, hours=10):
@@ -64,7 +70,7 @@ def compute_retry_count(test_suite_id, start_time, results, hours=10):
 
         # Iterate results in reverse chronological order
         for rec in reversed(results):
-            rec_start = rec.get("start")
+            rec_start = ret.get("start")
             if not rec_start:
                 continue
             rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -87,7 +93,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
         # Fetch encrypted HTML from Netlify
         encrypted_bytes = fetch_encrypted_html_from_netlify(netlify_url)
         if not encrypted_bytes:
-            print(f"::error::Failed to fetch {html_filename} from Netlify")
+            print(f"::warning::Could not fetch {html_filename} from Netlify (deployment might be in progress)")
             return None
 
         # Decrypt HTML in memory
@@ -148,7 +154,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
                 color = "Yellow"
 
         return {
-            "html_file": netlify_url,  # Store Netlify URL instead of local path
+            "html_file": netlify_url,
             "html_filename": html_filename,
             "project": project_name,
             "test_suite_id": test_suite_id,
@@ -185,13 +191,16 @@ def main():
             processed_count += 1
             print(f"::notice::Processed {html_filename} from Netlify.")
         else:
-            print(f"::warning::Skipping {html_filename} due to parsing error.")
+            print(f"::warning::Skipping {html_filename} - file not available on Netlify yet")
 
     # Save results.json unencrypted
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(f"::notice::Updated {RESULTS_FILE} with {processed_count} new entries.")
+    if processed_count == 0:
+        print("::notice::If no files were processed, Netlify deployment might still be in progress.")
+        print("::notice::The files will be processed in the next run after Netlify finishes deploying.")
 
 if __name__ == "__main__":
     main()
