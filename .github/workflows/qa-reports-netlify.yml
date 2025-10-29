@@ -1,108 +1,66 @@
-# .github/workflows/qa-reports-netlify.yml
-name: 🚀 QA Reports - Netlify Storage
+name: QA Reports Netlify
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Every 6 hours
-  workflow_dispatch:
+    - cron: "0 * * * *"   # Runs every hour
+  workflow_dispatch:       # Allow manual run
+
+permissions:
+  contents: write           # Allow commit to repo
 
 jobs:
-  fetch-emails:
+  QA-Reports-Netlify:
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-        
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-      
-    - name: Fetch emails and process attachments
-      env:
-        ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
-        ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
-      run: python scripts/netlify/netlify_fetch_emails.py
 
-  deploy-reports:
-    runs-on: ubuntu-latest
-    needs: fetch-emails
-    if: success()
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-        
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-      
-    - name: Process and prepare reports for Netlify
-      env:
-        REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-      run: python scripts/netlify/netlify_process_reports.py
-      
-    - name: Deploy reports to Netlify
-      uses: nwtgck/actions-netlify@v1.2
-      with:
-        publish-dir: './netlify-reports'
-        production-branch: main
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      timeout-minutes: 1
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  build-dashboard:
-    runs-on: ubuntu-latest
-    needs: deploy-reports
-    if: success()
-  
-    permissions:
-      contents: write
-      
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-        
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-        
-    - name: Build dashboard with Netlify URLs
-      env:
-        REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-      run: python scripts/netlify/netlify_build_dashboard.py
-      
-    - name: Verify dashboard files
-      run: |
-        echo "📁 Dashboard files:"
-        ls -la docs/ || echo "docs/ directory not found"
-        if [ -f "docs/index.html" ]; then
-          echo "✅ index.html exists"
-          echo "📄 File size: $(wc -c < docs/index.html) bytes"
-        else
-          echo "❌ index.html missing!"
-          exit 1
-        fi
-        
-    - name: Deploy dashboard to Cloudflare Pages
-      uses: cloudflare/pages-action@v1
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        projectName: qa-onrex
-        directory: docs
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install cryptography
+          pip install requests
+
+      - name: Fetch Emails
+        env:
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_fetch_emails.py
+
+      - name: Extract HTML from Attachments
+        env: 
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_extract_html.py
+
+      - name: Upload HTML to Netlify
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_upload_html.py
+
+      - name: Parse HTML and Build Results
+        env: 
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_parse_html.py
+
+      - name: Build Dashboard
+        env:
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_build_dashboard.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/
+          git add docs/
+          git commit -m "Update QA reports [skip ci]" || echo "No changes"
+          git push
