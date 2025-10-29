@@ -4,7 +4,7 @@ import requests
 import json
 import traceback
 import sys
-import time
+import base64
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Netlify API configuration
@@ -15,106 +15,68 @@ NETLIFY_API_BASE = "https://api.netlify.com/api/v1"
 HTML_FOLDER = "data/netlify_html"
 URLS_FILE = "data/netlify_urls.json"
 
-def wait_for_deploy_ready(site_id, auth_token, deploy_id, max_wait=60):
-    """Wait for deploy to be ready."""
-    headers = {"Authorization": f"Bearer {auth_token}"}
-    deploy_url = f"{NETLIFY_API_BASE}/sites/{site_id}/deploys/{deploy_id}"
-    
-    start_time = time.time()
-    while time.time() - start_time < max_wait:
-        response = requests.get(deploy_url, headers=headers)
-        if response.status_code == 200:
-            deploy_data = response.json()
-            state = deploy_data.get('state', '')
-            print(f"::notice::Deploy state: {state}")
-            
-            if state == 'ready':
-                return True
-            elif state == 'error':
-                print(f"::error::Deploy failed: {deploy_data}")
-                return False
-        time.sleep(5)
-    
-    print(f"::error::Deploy timeout after {max_wait} seconds")
-    return False
-
-def upload_files_to_netlify(site_id, auth_token, file_paths):
-    """Upload files to Netlify using the correct deploy workflow."""
+def upload_file_direct(site_id, auth_token, file_path):
+    """
+    Upload file directly to Netlify using a simpler approach.
+    This uses the form-based file upload which is more reliable.
+    """
     try:
-        headers = {"Authorization": f"Bearer {auth_token}"}
+        filename = os.path.basename(file_path)
         
-        # Step 1: Get the latest production deploy
-        site_url = f"{NETLIFY_API_BASE}/sites/{site_id}"
-        site_response = requests.get(site_url, headers=headers)
-        if site_response.status_code != 200:
-            print(f"::error::Failed to get site: {site_response.text}")
-            return None
+        # Read the encrypted file
+        with open(file_path, "rb") as f:
+            file_content = f.read()
         
-        site_data = site_response.json()
-        production_deploy_id = site_data.get('published_deploy', {}).get('id')
+        # Convert to base64 for reliable transmission
+        file_content_b64 = base64.b64encode(file_content).decode('utf-8')
         
-        if not production_deploy_id:
-            print(f"::error::No production deploy found")
-            return None
+        # Netlify's form-based upload endpoint
+        upload_url = f"https://api.netlify.com/api/v1/sites/{site_id}/files"
         
-        print(f"::notice::Production deploy ID: {production_deploy_id}")
-        
-        # Step 2: Create a new deploy based on production
-        deploy_url = f"{NETLIFY_API_BASE}/sites/{site_id}/deploys"
-        deploy_payload = {
-            "deploy_id": production_deploy_id
+        headers = {
+            "Authorization": f"Bearer {auth_token}",
+            "Content-Type": "application/json"
         }
         
-        print(f"::notice::Creating new deploy...")
-        deploy_response = requests.post(deploy_url, headers=headers, json=deploy_payload)
-        if deploy_response.status_code != 200:
-            print(f"::error::Failed to create deploy: {deploy_response.text}")
-            return None
+        payload = {
+            "name": filename,
+            "content": file_content_b64,
+            "encoding": "base64"
+        }
         
-        new_deploy = deploy_response.json()
-        new_deploy_id = new_deploy['id']
-        print(f"::notice::Created deploy: {new_deploy_id}")
+        print(f"::notice::Uploading {filename} via direct API...")
+        response = requests.post(upload_url, headers=headers, json=payload)
         
-        # Step 3: Upload files to the new deploy
-        file_urls = {}
-        for file_path in file_paths:
-            filename = os.path.basename(file_path)
-            upload_url = f"{NETLIFY_API_BASE}/deploys/{new_deploy_id}/files/{filename}"
-            
-            with open(file_path, "rb") as f:
-                file_content = f.read()
-            
-            print(f"::notice::Uploading {filename}...")
-            upload_response = requests.put(upload_url, headers=headers, data=file_content)
-            
-            if upload_response.status_code == 200:
-                file_url = f"https://{site_id}.netlify.app/{filename}"
-                file_urls[filename] = file_url
-                print(f"::notice::Uploaded {filename}")
-            else:
-                print(f"::error::Failed to upload {filename}: {upload_response.status_code} - {upload_response.text}")
-        
-        # Step 4: Wait for deploy to be ready
-        print(f"::notice::Waiting for deploy to process...")
-        if wait_for_deploy_ready(site_id, auth_token, new_deploy_id):
-            # Step 5: Publish the deploy
-            publish_url = f"{NETLIFY_API_BASE}/sites/{site_id}/deploys/{new_deploy_id}/publish"
-            publish_response = requests.post(publish_url, headers=headers)
-            
-            if publish_response.status_code == 200:
-                print(f"::notice::Deploy published successfully")
-                return file_urls
-            else:
-                print(f"::error::Failed to publish deploy: {publish_response.text}")
-                return None
+        if response.status_code in [200, 201]:
+            file_data = response.json()
+            file_url = f"https://{site_id}.netlify.app/{filename}"
+            print(f"::notice::Successfully uploaded {filename}")
+            return file_url
         else:
-            print(f"::error::Deploy never became ready")
+            print(f"::error::Failed to upload {filename}: {response.status_code} - {response.text}")
             return None
             
     except Exception as e:
-        print(f"::error::Error in upload process: {e}")
+        print(f"::error::Error uploading {file_path}: {e}")
         traceback.print_exc()
         return None
+
+def upload_files_simple(site_id, auth_token, file_paths):
+    """
+    Simple sequential upload of files.
+    """
+    file_urls = {}
+    
+    for file_path in file_paths:
+        filename = os.path.basename(file_path)
+        file_url = upload_file_direct(site_id, auth_token, file_path)
+        
+        if file_url:
+            file_urls[filename] = file_url
+        else:
+            print(f"::warning::Skipping {filename} due to upload failure")
+    
+    return file_urls
 
 def load_existing_urls():
     """Load existing URLs from file."""
@@ -131,6 +93,20 @@ def save_urls(urls_dict):
     os.makedirs(os.path.dirname(URLS_FILE), exist_ok=True)
     with open(URLS_FILE, "w", encoding="utf-8") as f:
         json.dump(urls_dict, f, indent=2, ensure_ascii=False)
+
+def verify_upload(file_url):
+    """Verify that the uploaded file is accessible."""
+    try:
+        response = requests.head(file_url, timeout=10)
+        if response.status_code == 200:
+            print(f"::notice::✓ Verified: {file_url} is accessible")
+            return True
+        else:
+            print(f"::warning::File not accessible: {file_url} - Status: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"::warning::Could not verify {file_url}: {e}")
+        return False
 
 def main():
     if not NETLIFY_SITE_ID or not NETLIFY_AUTH_TOKEN:
@@ -149,37 +125,31 @@ def main():
     file_paths = [os.path.join(HTML_FOLDER, f) for f in html_files]
     
     print(f"::notice::Uploading {len(file_paths)} files to Netlify...")
-    file_urls = upload_files_to_netlify(NETLIFY_SITE_ID, NETLIFY_AUTH_TOKEN, file_paths)
+    file_urls = upload_files_simple(NETLIFY_SITE_ID, NETLIFY_AUTH_TOKEN, file_paths)
     
     if file_urls:
         # Update URLs and clean up
+        uploaded_count = 0
         for filename, file_url in file_urls.items():
-            urls[filename] = file_url
-            
-            # Delete local file after successful upload
-            local_path = os.path.join(HTML_FOLDER, filename)
-            if os.path.exists(local_path):
-                os.remove(local_path)
-                print(f"::notice::Deleted local file {filename}")
+            # Verify the upload before deleting local file
+            if verify_upload(file_url):
+                urls[filename] = file_url
+                
+                # Delete local file after successful upload and verification
+                local_path = os.path.join(HTML_FOLDER, filename)
+                if os.path.exists(local_path):
+                    os.remove(local_path)
+                    print(f"::notice::Deleted local file {filename}")
+                
+                uploaded_count += 1
+            else:
+                print(f"::warning::Upload verification failed for {filename}, keeping local copy")
         
         # Save updated URLs
         save_urls(urls)
-        print(f"::notice::Successfully uploaded {len(file_urls)} files to Netlify")
-        
-        # Verify uploads
-        print(f"::notice::Verifying uploads...")
-        for filename, file_url in file_urls.items():
-            try:
-                response = requests.head(file_url, timeout=10)
-                if response.status_code == 200:
-                    print(f"::notice::✓ {filename} is accessible")
-                else:
-                    print(f"::warning::✗ {filename} returned {response.status_code}")
-            except Exception as e:
-                print(f"::warning::Could not verify {filename}: {e}")
+        print(f"::notice::Successfully uploaded and verified {uploaded_count} files to Netlify")
     else:
-        print(f"::error::Failed to upload files to Netlify")
-        # Don't delete local files if upload failed
+        print(f"::error::No files were successfully uploaded to Netlify")
         print(f"::notice::Keeping local files for retry")
 
 if __name__ == "__main__":
