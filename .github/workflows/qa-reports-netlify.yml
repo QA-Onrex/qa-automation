@@ -2,8 +2,8 @@ name: QA Reports Netlify
 
 on:
   schedule:
-    - cron: "0 * * * *"   # Runs every hour
-  workflow_dispatch:       # Allow manual run
+    - cron: "0 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,7 +11,6 @@ permissions:
 jobs:
   QA-Reports-Netlify:
     runs-on: ubuntu-latest
-    continue-on-error: true  # Continue even if some steps fail
 
     steps:
       - name: Checkout repository
@@ -34,7 +33,7 @@ jobs:
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: |
-          python scripts/netlify/netlify_fetch_emails.py || echo "Email fetch completed (with or without new emails)"
+          python scripts/netlify/netlify_fetch_emails.py || echo "Email fetch completed"
 
       - name: Extract HTML from Attachments
         env: 
@@ -42,30 +41,25 @@ jobs:
         run: |
           python scripts/netlify/netlify_extract_html.py || echo "No attachments to extract"
 
-      - name: Upload HTML to Netlify
-        env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: |
-          python scripts/netlify/netlify_upload_html.py || echo "Upload step completed"
+      - name: Prepare Netlify Deployment
+        run: python scripts/netlify/netlify_upload_html.py
 
       - name: Parse HTML and Build Results
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: |
-          python scripts/netlify/netlify_parse_html.py || echo "No new results to parse"
+        run: python scripts/netlify/netlify_parse_html.py
 
       - name: Build Dashboard
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_build_dashboard.py
 
-      - name: Commit updated data
+      - name: Commit and Deploy to Netlify
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/
           git add docs/
-          git commit -m "Update QA reports [skip ci]" || echo "No changes"
+          git add public/  # This triggers Netlify deployment
+          git commit -m "Update QA reports and deploy to Netlify [skip ci]" || echo "No changes"
           git push
