@@ -37,14 +37,20 @@ def load_urls():
 def fetch_encrypted_html_from_netlify(url):
     """Fetch encrypted HTML from Netlify."""
     try:
+        print(f"::notice::Fetching from Netlify: {url}")
         response = requests.get(url)
+        print(f"::notice::Netlify response status: {response.status_code}")
+        
         if response.status_code == 200:
+            content_length = len(response.content)
+            print(f"::notice::Successfully fetched {content_length} bytes from Netlify")
             return response.content
         else:
-            print(f"::error::Failed to fetch from Netlify: {response.status_code}")
+            print(f"::error::Failed to fetch from Netlify: {response.status_code} - {response.text[:200]}")
             return None
     except Exception as e:
         print(f"::error::Error fetching from Netlify: {e}")
+        traceback.print_exc()
         return None
 
 def compute_retry_count(test_suite_id, start_time, results, hours=10):
