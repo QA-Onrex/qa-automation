@@ -34,11 +34,18 @@ def get_color(record):
     return "red"
 
 def build_dashboard():
+    print(f"=== Dashboard Build Debug ===")
+    print(f"RESULTS_FILE: {RESULTS_FILE}")
+    print(f"OUTPUT_FILE: {OUTPUT_FILE}")
+    print(f"REPORT_PASSWORD set: {bool(os.getenv('REPORT_PASSWORD'))}")
+    
     results = load_results()
+    print(f"Number of results loaded: {len(results)}")
+    
     if not results:
         print("No results found.")
         return
-
+        
     # Get password hash from environment
     password = os.getenv("REPORT_PASSWORD", "")
     password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
