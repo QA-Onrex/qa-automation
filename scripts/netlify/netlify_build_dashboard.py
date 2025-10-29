@@ -86,7 +86,7 @@ def build_dashboard():
 
     # Build HTML
     html = [
-        "<html><head><meta charset='utf-8'><title>QA Automation Report - Netlify</title>",
+        "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
         "<style>",
         "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }",
         "h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }",
