@@ -1,4 +1,5 @@
 # scripts/netlify/netlify_upload_html.py
+# scripts/netlify/netlify_upload_html.py
 import os
 import requests
 import json
@@ -77,7 +78,7 @@ def create_initial_deploy(site_id: str, auth_token: str, file_manifest: Dict[str
     payload = {
         "files": file_manifest,
         "title": f"QA Reports - {time.strftime('%Y-%m-%d %H:%M')}",
-        "draft": True # Set to False to publish immediately
+        "draft": True # IMPORTANT: Keeping this TRUE for a draft deploy to save credits
     }
 
     print("::notice::Initiating new deploy with file manifest...")
@@ -177,6 +178,14 @@ def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str]
     deploy_id = deploy_data.get('id')
     required_hashes = deploy_data.get('required', [])
     
+    # *** FIX: Retrieve the unique draft deploy URL for verification ***
+    deploy_base_url = deploy_data.get('deploy_ssl_url')
+    if not deploy_base_url:
+        print("::error::Could not find deploy_ssl_url in deploy data. Cannot verify draft deploy.")
+        return {}
+    print(f"::notice::Draft Deploy URL Base: {deploy_base_url}")
+    # ***************************************************************
+    
     # 3. Upload Required Files
     if required_hashes:
         upload_missing_files(deploy_id, auth_token, required_hashes, {hash: path for hash, path in file_path_map.items()})
@@ -188,14 +197,17 @@ def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str]
 
     # 5. Final Verification and Cleanup
     successful_urls = {}
-    base_url = f"https://{site_name}.netlify.app"
+    # base_url = f"https://{site_name}.netlify.app" # OLD/INCORRECT for draft deploys
     
     if deploy_success:
         for full_path in file_paths:
             filename = os.path.basename(full_path)
-            file_url = f"{base_url}/{filename}"
-
+            
+            # *** FIX: Use the draft deploy's unique URL for verification ***
+            file_url = f"{deploy_base_url}/{filename}"
+            
             if verify_upload(file_url):
+            # *************************************************************
                 successful_urls[filename] = file_url
                 
                 # Delete local file after successful upload and verification
@@ -218,9 +230,9 @@ def main():
         print("::error::NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN not set")
         sys.exit(1)
         
-    # Fallback/guess the site name if not explicitly set (requires the Netlify ID to be the subdomain part)
+    # Fallback/guess the site name if not explicitly set (no longer used for verification, but kept for clarity)
     if not netlify_site_name:
-        print("::warning::NETLIFY_SITE_NAME not set. Using NETLIFY_SITE_ID for base URL construction.")
+        print("::warning::NETLIFY_SITE_NAME not set. Using NETLIFY_SITE_ID for base URL construction (but draft URL is used for verification).")
         netlify_site_name = netlify_site_id
 
     # --- File Preparation ---
@@ -243,7 +255,7 @@ def main():
         site_id=netlify_site_id, 
         auth_token=netlify_auth_token, 
         file_paths=file_paths,
-        site_name=netlify_site_name
+        site_name=netlify_site_name # site_name is not strictly needed anymore, but keeping interface consistent
     )
 
     # --- Final Result Handling ---
@@ -255,6 +267,7 @@ def main():
         # Save updated URLs
         save_urls(urls)
         print(f"\n::notice::Successfully uploaded and verified {len(uploaded_file_urls)} files to Netlify")
+        print(f"::notice::URLs saved are for the **temporary Draft Deploy URL** to avoid build costs.")
     else:
         print(f"\n::error::No files were successfully uploaded or verified on Netlify")
         print(f"::notice::Keeping local files for retry")
