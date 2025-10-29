@@ -152,7 +152,7 @@ def wait_for_deploy_processing(site_id: str, auth_token: str, deploy_id: str, ma
 
 # --- Main Logic ---
 
-def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str], site_name: str) -> Dict[str, str]:
+def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str], site_id: str) -> Dict[str, str]:
     """
     Executes the complete Netlify deploy workflow for a list of files.
     Returns a dictionary of filename: url for successfully uploaded and verified files.
@@ -188,7 +188,7 @@ def upload_files_to_netlify(site_id: str, auth_token: str, file_paths: List[str]
 
     # 5. Final Verification and Cleanup
     successful_urls = {}
-    base_url = f"https://{site_name}.netlify.app"
+    base_url = f"https://{site_id}.netlify.app"
     
     if deploy_success:
         for full_path in file_paths:
@@ -212,17 +212,11 @@ def main():
     # --- Environment Check ---
     netlify_site_id = os.getenv("NETLIFY_SITE_ID")
     netlify_auth_token = os.getenv("NETLIFY_AUTH_TOKEN")
-    netlify_site_name = os.getenv("NETLIFY_SITE_NAME") # Highly recommended to set this for URL creation
     
     if not netlify_site_id or not netlify_auth_token:
         print("::error::NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN not set")
         sys.exit(1)
         
-    # Fallback/guess the site name if not explicitly set (requires the Netlify ID to be the subdomain part)
-    if not netlify_site_name:
-        print("::warning::NETLIFY_SITE_NAME not set. Using NETLIFY_SITE_ID for base URL construction.")
-        netlify_site_name = netlify_site_id
-
     # --- File Preparation ---
     if not os.path.exists(HTML_FOLDER):
         print(f"::notice::HTML folder '{HTML_FOLDER}' not found. Exiting.")
@@ -243,7 +237,6 @@ def main():
         site_id=netlify_site_id, 
         auth_token=netlify_auth_token, 
         file_paths=file_paths,
-        site_name=netlify_site_name
     )
 
     # --- Final Result Handling ---
