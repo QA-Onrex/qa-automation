@@ -53,17 +53,135 @@ jobs:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_parse_html.py
 
+      - name: Debug before dashboard build
+        run: |
+          echo "=== DEBUG: Checking files before dashboard build ==="
+          echo "Current directory: $(pwd)"
+          echo "Files in data/:"
+          ls -la data/ || echo "data/ directory not found"
+          echo "Files in docs/:"
+          ls -la docs/ || echo "docs/ directory not found"
+          echo "Checking for results file:"
+          if [ -f "data/netlify_results.json" ]; then
+            echo "✅ netlify_results.json exists"
+            echo "File size: $(wc -l < data/netlify_results.json) lines"
+            echo "First 200 chars:"
+            head -c 200 data/netlify_results.json
+            echo ""
+          else
+            echo "❌ netlify_results.json not found"
+          fi
+
       - name: Build Dashboard
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/netlify/netlify_build_dashboard.py
+        run: |
+          echo "=== STARTING DASHBOARD BUILD ==="
+          echo "REPORT_PASSWORD is set: $([ -z '$REPORT_PASSWORD' ] && echo 'NO' || echo 'YES')"
+          echo "Running dashboard script..."
+          
+          # Run with error handling and detailed output
+          set -x  # Enable debug output
+          python scripts/netlify/netlify_build_dashboard.py
+          EXIT_CODE=$?
+          set +x  # Disable debug output
+          
+          echo "Dashboard script exit code: $EXIT_CODE"
+          
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "✅ Dashboard script completed successfully"
+          else
+            echo "❌ Dashboard script failed with exit code: $EXIT_CODE"
+          fi
+
+      - name: Debug after dashboard build
+        run: |
+          echo "=== DEBUG: Checking files after dashboard build ==="
+          echo "Checking if index.html was created:"
+          if [ -f "docs/index.html" ]; then
+            echo "✅ index.html exists in docs/"
+            echo "File size: $(wc -c < docs/index.html) bytes"
+            echo "First few lines:"
+            head -5 docs/index.html
+          else
+            echo "❌ index.html NOT created in docs/"
+            echo "Contents of docs/ directory:"
+            ls -la docs/ || echo "docs/ directory not found"
+          fi
+          
+          echo "Checking Python script location:"
+          if [ -f "scripts/netlify/netlify_build_dashboard.py" ]; then
+            echo "✅ Dashboard script exists"
+            echo "Script size: $(wc -l < scripts/netlify/netlify_build_dashboard.py) lines"
+          else
+            echo "❌ Dashboard script not found at scripts/netlify/netlify_build_dashboard.py"
+            echo "Available scripts in scripts/netlify/:"
+            ls -la scripts/netlify/ || echo "scripts/netlify/ directory not found"
+          fi
+
+      - name: Test dashboard script directly
+        if: failure()
+        run: |
+          echo "=== TESTING DASHBOARD SCRIPT DIRECTLY ==="
+          echo "Current directory: $(pwd)"
+          echo "Python version: $(python --version)"
+          echo "Python path: $(which python)"
+          
+          # Test if we can import required modules
+          echo "Testing Python imports..."
+          python -c "import json, os, hashlib, datetime, collections; print('✅ All imports successful')"
+          
+          # Test if script can be parsed
+          echo "Testing script syntax..."
+          python -m py_compile scripts/netlify/netlify_build_dashboard.py && echo "✅ Script syntax is valid"
+          
+          # Run a simple test
+          echo "Running minimal test..."
+          python -c "
+import sys
+sys.path.append('scripts/netlify')
+try:
+    from netlify_build_dashboard import load_results, get_color
+    print('✅ Functions imported successfully')
+    
+    # Test loading results
+    try:
+        results = load_results()
+        print(f'✅ Loaded {len(results)} results')
+    except Exception as e:
+        print(f'❌ Failed to load results: {e}')
+        
+except Exception as e:
+    print(f'❌ Import failed: {e}')
+          "
 
       - name: Commit results (no public folder)
         run: |
+          echo "=== COMMITTING RESULTS ==="
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          
+          echo "Checking git status:"
+          git status
+          
+          echo "Adding files..."
           git add data/
           git add docs/
-          # DO NOT add public/ folder - files should be deleted after Netlify upload
-          git commit -m "Update QA reports [skip ci]" || echo "No changes"
-          git push
+          
+          echo "Committing changes..."
+          git commit -m "Update QA reports [skip ci]" || echo "No changes to commit"
+          
+          echo "Pushing changes..."
+          git push || echo "Push failed or no changes"
+
+      - name: Final status report
+        run: |
+          echo "=== WORKFLOW COMPLETION REPORT ==="
+          echo "Workflow completed at: $(date)"
+          if [ -f "docs/index.html" ]; then
+            echo "🎉 SUCCESS: Dashboard was generated successfully!"
+            echo "📊 Dashboard location: docs/index.html"
+          else
+            echo "❌ FAILURE: Dashboard was NOT generated"
+            echo "Please check the debug output above for details"
+          fi
