@@ -10,17 +10,31 @@ NETLIFY_DEPLOY_FOLDER = "public"  # Netlify serves from /public by default
 URLS_FILE = "data/netlify_urls.json"
 
 def load_existing_urls():
-    """Load existing URLs from file."""
+    """Load existing URLs from file - ensure it returns a dict."""
     if os.path.exists(URLS_FILE):
         try:
             with open(URLS_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+                # If it's a list, convert it to a dict
+                if isinstance(data, list):
+                    print("::warning::Converting URLs from list to dictionary format")
+                    # Convert list of dicts to a single dict
+                    new_dict = {}
+                    for item in data:
+                        if isinstance(item, dict):
+                            # Take the first key-value pair from each dict
+                            for key, value in item.items():
+                                new_dict[key] = value
+                                break
+                    return new_dict
+                return data
         except json.JSONDecodeError:
+            print("::warning::URLs file is invalid, starting fresh")
             return {}
     return {}
 
 def save_urls(urls_dict):
-    """Save URLs to file."""
+    """Save URLs to file as a dictionary."""
     os.makedirs(os.path.dirname(URLS_FILE), exist_ok=True)
     with open(URLS_FILE, "w", encoding="utf-8") as f:
         json.dump(urls_dict, f, indent=2, ensure_ascii=False)
@@ -31,8 +45,9 @@ def main():
         print("::notice::No HTML files to process.")
         return
 
-    # Load existing URLs
+    # Load existing URLs - this should now always return a dict
     urls = load_existing_urls()
+    print(f"::notice::Loaded {len(urls)} existing URLs")
     
     # Ensure Netlify deploy folder exists
     os.makedirs(NETLIFY_DEPLOY_FOLDER, exist_ok=True)
@@ -46,9 +61,11 @@ def main():
         # Copy file to Netlify deploy folder
         shutil.copy2(html_path, dest_path)
         
-        # Create Netlify URL (this will be the actual URL after deployment)
-        file_url = f"https://{os.getenv('NETLIFY_SITE_ID', 'your-site')}.netlify.app/{html_file}"
+        # Create Netlify URL
+        netlify_site_id = os.getenv('NETLIFY_SITE_ID', 'your-site')
+        file_url = f"https://{netlify_site_id}.netlify.app/{html_file}"
         
+        # This should now work - urls is a dict
         urls[html_file] = file_url
         uploaded_count += 1
         
@@ -59,6 +76,7 @@ def main():
     # Save updated URLs
     save_urls(urls)
     print(f"::notice::Processed {uploaded_count} files for Netlify deployment")
+    print(f"::notice::Total URLs in mapping: {len(urls)}")
 
 if __name__ == "__main__":
     main()
