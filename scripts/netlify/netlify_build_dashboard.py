@@ -1,4 +1,5 @@
 # scripts/netlify/netlify_build_dashboard.py
+# scripts/netlify/netlify_build_dashboard.py
 import json
 import os
 import hashlib
@@ -37,7 +38,19 @@ def build_dashboard():
     print(f"=== Dashboard Build Debug ===")
     print(f"RESULTS_FILE: {RESULTS_FILE}")
     print(f"OUTPUT_FILE: {OUTPUT_FILE}")
-    print(f"REPORT_PASSWORD set: {bool(os.getenv('REPORT_PASSWORD'))}")
+    
+    # Debug password information
+    password = os.getenv("REPORT_PASSWORD", "")
+    print(f"REPORT_PASSWORD exists: {bool(password)}")
+    print(f"REPORT_PASSWORD length: {len(password)}")
+    
+    password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
+    print(f"Password hash generated: {password_hash}")
+    
+    if not password:
+        print("::warning::REPORT_PASSWORD not set. Dashboard will have no authentication.")
+    else:
+        print("::notice::Password authentication is enabled")
     
     results = load_results()
     print(f"Number of results loaded: {len(results)}")
@@ -46,12 +59,11 @@ def build_dashboard():
         print("No results found.")
         return
         
-    # Get password hash from environment
-    password = os.getenv("REPORT_PASSWORD", "")
-    password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
-    
-    if not password:
-        print("::warning::REPORT_PASSWORD not set. Dashboard will have no authentication.")
+    # Debug: Show sample result structure
+    if results:
+        sample = results[0]
+        print(f"Sample result keys: {list(sample.keys())}")
+        print(f"Sample html_file: {sample.get('html_file', 'N/A')}")
 
     # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
@@ -118,10 +130,17 @@ def build_dashboard():
         ".tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }",
         ".tooltip-row { margin: 3px 0; }",
         ".tooltip-label { font-weight: bold; display: inline-block; width: 100px; }",
+        ".test-button { margin-left: 20px; padding: 5px 10px; background: #555; color: white; border: none; border-radius: 3px; cursor: pointer; }",
+        ".test-button:hover { background: #666; }",
+        ".loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }",
         "</style>",
         "<script>",
         f"const PASSWORD_HASH = '{password_hash}';",
         "const data = " + json.dumps(data, default=str) + ";",
+        "",
+        "// Debug: log data structure",
+        "console.log('Dashboard data:', data);",
+        "console.log('Expected password hash:', PASSWORD_HASH);",
         "",
         "async function hashPassword(password) {",
         "  const msgBuffer = new TextEncoder().encode(password);",
@@ -132,7 +151,10 @@ def build_dashboard():
         "",
         "async function checkPassword() {",
         "  const password = document.getElementById('password-input').value;",
+        "  console.log('Checking password:', password);",
         "  const hash = await hashPassword(password);",
+        "  console.log('Computed hash:', hash);",
+        "  console.log('Hash match:', hash === PASSWORD_HASH);",
         "  if (hash === PASSWORD_HASH) {",
         "    sessionStorage.setItem('reportPassword', password);",
         "    document.getElementById('login-container').style.display = 'none';",
@@ -188,7 +210,55 @@ def build_dashboard():
         "  return new Uint8Array(decrypted);",
         "}",
         "",
-        "// Updated openReport to fetch from Netlify and decrypt",
+        "function showLoading() {",
+        "  document.getElementById('loading').style.display = 'block';",
+        "}",
+        "",
+        "function hideLoading() {",
+        "  document.getElementById('loading').style.display = 'none';",
+        "}",
+        "",
+        "// Test function to check Netlify content",
+        "async function testNetlifyContent() {",
+        "  // Get first available URL for testing",
+        "  let testUrl = null;",
+        "  for (const project in data) {",
+        "    for (const suite in data[project]) {",
+        "      for (const date in data[project][suite]) {",
+        "        const record = data[project][suite][date];",
+        "        if (record && record.html_file) {",
+        "          testUrl = record.html_file;",
+        "          break;",
+        "        }",
+        "      }",
+        "      if (testUrl) break;",
+        "    }",
+        "    if (testUrl) break;",
+        "  }",
+        "  ",
+        "  if (!testUrl) {",
+        "    alert('No URLs found to test');",
+        "    return;",
+        "  }",
+        "  ",
+        "  console.log('=== Testing Netlify Content ===');",
+        "  console.log('URL:', testUrl);",
+        "  ",
+        "  try {",
+        "    const resp = await fetch(testUrl);",
+        "    const content = await resp.text();",
+        "    console.log('Content type:', resp.headers.get('content-type'));",
+        "    console.log('Content length:', content.length);",
+        "    console.log('First 200 chars:', content.substring(0, 200));",
+        "    console.log('Is it base64?', /^[A-Za-z0-9+/]*={0,2}$/.test(content.trim()));",
+        "    alert('Check console for Netlify content details');",
+        "  } catch (e) {",
+        "    console.error('Test failed:', e);",
+        "    alert('Test failed: ' + e.message);",
+        "  }",
+        "}",
+        "",
+        "// Updated openReport with debug logging",
         "async function openReport(project, suite, date) {",
         "  const record = data[project][suite][date];",
         "  if (!record || !record.html_file) return;",
@@ -196,29 +266,73 @@ def build_dashboard():
         "  const password = sessionStorage.getItem('reportPassword');",
         "  if (!password) return alert('Password missing!');",
         "",
+        "  showLoading();",
+        "  ",
         "  try {",
+        "    console.log('=== Starting Report Open ===');",
+        "    console.log('Record:', record);",
+        "    console.log('Netlify URL:', record.html_file);",
+        "    ",
         "    // Fetch the encrypted file from Netlify",
+        "    console.log('Fetching from Netlify...');",
         "    const resp = await fetch(record.html_file);",
         "    if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);",
         "    ",
+        "    console.log('Fetch successful, getting content...');",
         "    const encryptedData = await resp.arrayBuffer();",
         "    const encryptedBytes = new Uint8Array(encryptedData);",
+        "    ",
+        "    console.log('Encrypted data size:', encryptedBytes.length);",
+        "    console.log('First 50 bytes:', Array.from(encryptedBytes.slice(0, 50)));",
+        "    ",
+        "    // Check if this is base64 encoded",
+        "    const textContent = new TextDecoder().decode(encryptedBytes);",
+        "    const isBase64 = textContent.length > 0 && /^[A-Za-z0-9+/]*={0,2}$/.test(textContent.trim());",
+        "    console.log('Is this base64?', isBase64);",
+        "    ",
+        "    let rawEncryptedBytes;",
+        "    if (isBase64) {",
+        "      console.log('Trying base64 decode...');",
+        "      try {",
+        "        rawEncryptedBytes = new Uint8Array(atob(textContent).split('').map(c => c.charCodeAt(0)));",
+        "        console.log('Base64 decode successful, size:', rawEncryptedBytes.length);",
+        "      } catch (e) {",
+        "        console.log('Base64 decode failed, using raw bytes');",
+        "        rawEncryptedBytes = encryptedBytes;",
+        "      }",
+        "    } else {",
+        "      console.log('Using raw bytes (not base64)');",
+        "      rawEncryptedBytes = encryptedBytes;",
+        "    }",
         "",
-        "    // Decode base64 to get raw bytes (Netlify stores as base64)",
-        "    const binaryString = new TextDecoder().decode(encryptedBytes);",
-        "    const rawEncryptedBytes = new Uint8Array(atob(binaryString).split('').map(c => c.charCodeAt(0)));",
+        "    console.log('Final encrypted bytes size:', rawEncryptedBytes.length);",
+        "    ",
+        "    // Check if we have enough data for salt + nonce",
+        "    if (rawEncryptedBytes.length < 28) {",
+        "      throw new Error(`Insufficient data: expected at least 28 bytes, got ${rawEncryptedBytes.length}`);",
+        "    }",
         "",
         "    // Decrypt the bytes",
+        "    console.log('Starting decryption...');",
         "    const decryptedBytes = await decryptBytesAES(rawEncryptedBytes, password);",
+        "    console.log('Decryption successful, size:', decryptedBytes.length);",
         "    ",
         "    // Create and open the HTML report",
         "    const decryptedText = new TextDecoder().decode(decryptedBytes);",
+        "    console.log('Decrypted text length:', decryptedText.length);",
+        "    console.log('First 200 chars:', decryptedText.substring(0, 200));",
+        "    ",
         "    const blob = new Blob([decryptedText], { type: 'text/html' });",
         "    const url = URL.createObjectURL(blob);",
+        "    console.log('Opening report...');",
         "    window.open(url, '_blank');",
+        "    ",
         "  } catch (e) {",
         "    console.error('Failed to decrypt report:', e);",
+        "    console.error('Error stack:', e.stack);",
         "    alert('Failed to decrypt report. Check console for details.');",
+        "  } finally {",
+        "    hideLoading();",
         "  }",
         "}",
         "",
@@ -265,7 +379,8 @@ def build_dashboard():
         "</div>",
         "<div id='dashboard-content'>",
         "<div id='tooltip' class='tooltip'></div>",
-        "<h1>QA Automation Report</h1>",
+        "<div id='loading' class='loading'>Loading report...</div>",
+        "<h1>QA Automation Report <button onclick=\"testNetlifyContent()\" class=\"test-button\">Test Content</button></h1>",
         "<div class='table-container'>",
         "<table>",
         "<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>"
