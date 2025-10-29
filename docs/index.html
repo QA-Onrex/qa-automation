@@ -22,7 +22,7 @@ td.red { background-color: #c62828; color: #fff; cursor: pointer; }
 td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
 td.empty { background-color: #2b2b2b; color: #666; }
 td.project-separator { background-color: #1e1e1e; }
-.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 565px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 142px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
 .suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
 .project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
 .project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
@@ -33,7 +33,7 @@ td.project-separator { background-color: #1e1e1e; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const data = {"DYNAREX": {"Test Suites/3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda": {"2025.10.20": {"html_file": "https://86b8c928-7a60-49c4-ad89-b7c2df31af79.netlify.app/20251020_015402_1760922229651.html", "html_filename": "20251020_015402_1760922229651.html", "project": "DYNAREX", "test_suite_id": "Test Suites/3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda", "profile": "default DYNAREX intdev", "test_cases": 23, "passed": 0, "failed": 23, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-20T02:47:19.221+02:00", "end": "2025-10-20T03:03:35.855+02:00", "duration": 16.277233333333335, "retry_count": 0, "sum_check": true, "color": "red"}}}};
+const data = {"DYNAREX V2": {"Test Suites/Test Suites/_Sandbox/Users": {"2025.10.27": {"html_file": "https://69027cc425006c093e9e7126--qa-onrex.netlify.app/20251027_154755_1761576623544.html", "html_filename": "20251027_154755_1761576623544.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-27T15:48:02.261+01:00", "end": "2025-10-27T15:50:23.140+01:00", "duration": 2.347983333333333, "retry_count": 0, "sum_check": true, "color": "green"}}}};
 
 async function hashPassword(password) {
   const msgBuffer = new TextEncoder().encode(password);
@@ -180,10 +180,10 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 <h1>QA Automation Report - Netlify</h1>
 <div class='table-container'>
 <table>
-<tr><th>Test Suite</th><th>10.20</th></tr>
-<tr><td class='project-header'>DYNAREX</td><td class='project-separator'></td></tr>
-<tr><td class='suite-name'>3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda</td>
-<td class='red' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda", "2025.10.20")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda", "2025.10.20")'>0/23</td>
+<tr><th>Test Suite</th><th>10.27</th></tr>
+<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td></tr>
+<tr><td class='suite-name'>_Sandbox/Users</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.27")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.27")'>1/0</td>
 </tr>
 </table>
 </div>
