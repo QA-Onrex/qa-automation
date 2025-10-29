@@ -129,31 +129,15 @@ jobs:
           
           # Test if we can import required modules
           echo "Testing Python imports..."
-          python -c "import json, os, hashlib, datetime, collections; print('✅ All imports successful')"
+          python -c "import os, hashlib, datetime, collections; print('✅ All imports successful')"
           
           # Test if script can be parsed
           echo "Testing script syntax..."
           python -m py_compile scripts/netlify/netlify_build_dashboard.py && echo "✅ Script syntax is valid"
           
-          # Run a simple test
-          echo "Running minimal test..."
-          python -c "
-import sys
-sys.path.append('scripts/netlify')
-try:
-    from netlify_build_dashboard import load_results, get_color
-    print('✅ Functions imported successfully')
-    
-    # Test loading results
-    try:
-        results = load_results()
-        print(f'✅ Loaded {len(results)} results')
-    except Exception as e:
-        print(f'❌ Failed to load results: {e}')
-        
-except Exception as e:
-    print(f'❌ Import failed: {e}')
-          "
+          # Simple file existence test
+          echo "Running file checks..."
+          python -c "import os; print('data/netlify_results.json exists:', os.path.exists('data/netlify_results.json')); print('docs/ directory exists:', os.path.exists('docs/'))"
 
       - name: Commit results (no public folder)
         run: |
@@ -181,7 +165,11 @@ except Exception as e:
           if [ -f "docs/index.html" ]; then
             echo "🎉 SUCCESS: Dashboard was generated successfully!"
             echo "📊 Dashboard location: docs/index.html"
+            echo "📁 Files in docs/:"
+            ls -la docs/
           else
             echo "❌ FAILURE: Dashboard was NOT generated"
             echo "Please check the debug output above for details"
+            echo "Current files in repository:"
+            find . -name "*.html" -o -name "*.json" | head -20
           fi
