@@ -257,7 +257,7 @@ def build_dashboard():
         "</head><body>",
         "<div id='login-container'>",
         "  <div id='login-box'>",
-        "    <h2>QA Automation Report - Netlify</h2>",
+        "    <h2>QA Automation Report</h2>",
         "    <div><input type='password' id='password-input' placeholder='Enter password' autofocus></div>",
         "    <div><button id='login-button' onclick='checkPassword()'>Login</button></div>",
         "    <div id='error-message'>Incorrect password. Please try again.</div>",
@@ -265,7 +265,7 @@ def build_dashboard():
         "</div>",
         "<div id='dashboard-content'>",
         "<div id='tooltip' class='tooltip'></div>",
-        "<h1>QA Automation Report - Netlify</h1>",
+        "<h1>QA Automation Report</h1>",
         "<div class='table-container'>",
         "<table>",
         "<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>"
