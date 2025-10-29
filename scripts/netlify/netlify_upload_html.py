@@ -77,7 +77,7 @@ def create_initial_deploy(site_id: str, auth_token: str, file_manifest: Dict[str
     payload = {
         "files": file_manifest,
         "title": f"QA Reports - {time.strftime('%Y-%m-%d %H:%M')}",
-        "draft": False # Set to False to publish immediately
+        "draft": True # Set to False to publish immediately
     }
 
     print("::notice::Initiating new deploy with file manifest...")
