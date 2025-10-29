@@ -1,3 +1,4 @@
+# scripts/netlify/netlify_encryptor.py
 import os
 import base64
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
