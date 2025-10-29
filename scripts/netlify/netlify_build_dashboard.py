@@ -6,7 +6,7 @@ from datetime import datetime
 from collections import defaultdict
 
 RESULTS_FILE = "data/netlify_results.json"
-OUTPUT_FILE = "docs/netlify_index.html"
+OUTPUT_FILE = "docs/index.html"
 
 def load_results():
     if not os.path.exists(RESULTS_FILE):
