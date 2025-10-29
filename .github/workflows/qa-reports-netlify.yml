@@ -2,8 +2,8 @@ name: QA Reports Netlify
 
 on:
   schedule:
-    - cron: "0 * * * *"
-  workflow_dispatch:
+    - cron: "0 * * * *"   # Runs every hour
+  workflow_dispatch:       # Allow manual run
 
 permissions:
   contents: write
@@ -41,7 +41,11 @@ jobs:
         run: |
           python scripts/netlify/netlify_extract_html.py || echo "No attachments to extract"
 
-      - name: Prepare Netlify Deployment
+      - name: Upload HTML to Netlify
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_upload_html.py
 
       - name: Parse HTML and Build Results
@@ -54,12 +58,12 @@ jobs:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_build_dashboard.py
 
-      - name: Commit and Deploy to Netlify
+      - name: Commit results (no public folder)
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/
           git add docs/
-          git add public/  # This triggers Netlify deployment
-          git commit -m "Update QA reports and deploy to Netlify [skip ci]" || echo "No changes"
+          # DO NOT add public/ folder - files should be deleted after Netlify upload
+          git commit -m "Update QA reports [skip ci]" || echo "No changes"
           git push
