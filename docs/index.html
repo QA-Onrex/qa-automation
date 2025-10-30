@@ -1,0 +1,480 @@
+<html><head><meta charset='utf-8'><title>QA Automation Report</title>
+<style>
+body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }
+h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
+#login-container { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; }
+#login-box { background-color: #2b2b2b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+#login-box h2 { margin-top: 0; color: #fff; }
+#password-input { width: 250px; padding: 10px; margin: 10px 0; background-color: #1e1e1e; border: 1px solid #444; color: #ddd; border-radius: 4px; }
+#login-button { padding: 10px 20px; background-color: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+#login-button:hover { background-color: #1b5e20; }
+#error-message { color: #c62828; margin-top: 10px; display: none; }
+#dashboard-content { display: none; }
+table { border-collapse: collapse; }
+th, td { border: 1px solid #444; text-align: center; padding: 6px; }
+th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }
+th::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background-color: #2b2b2b; }
+th:first-child { position: sticky; left: 0; z-index: 4; background-color: #2b2b2b; text-align: left; padding-left: 8px; border-right: 2px solid #444; }
+th:first-child::before { content: ''; position: absolute; top: -1px; left: -1px; width: calc(100% + 1px); height: calc(100% + 1px); background-color: #2b2b2b; z-index: -1; }
+td.green { background-color: #2e7d32; color: #fff; cursor: pointer; }
+td.yellow { background-color: #f9a825; color: #000; cursor: pointer; }
+td.red { background-color: #c62828; color: #fff; cursor: pointer; }
+td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
+td.empty { background-color: #2b2b2b; color: #666; }
+td.project-separator { background-color: #1e1e1e; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 646px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
+.suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
+.project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
+.project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
+.table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }
+.tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }
+.tooltip-row { margin: 3px 0; }
+.tooltip-label { font-weight: bold; display: inline-block; width: 100px; }
+.no-link { cursor: not-allowed; opacity: 0.6; }
+.no-link:hover { opacity: 0.6; }
+.loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #2b2b2b; padding: 20px; border-radius: 8px; z-index: 1001; }
+.test-button { margin-left: 20px; padding: 5px 10px; background: #555; color: white; border: none; border-radius: 3px; cursor: pointer; }
+.test-button:hover { background: #666; }
+</style>
+<script>
+const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
+const data = {"DYNAREX V2": {"Test Suites/Test Suites/Settings/Offices": {"2025.10.21": {"html_file": "qa-automation/data/reports/20251021_160724.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Offices", "profile": "default - Deutsch", "test_cases": 2, "passed": 2, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-21T16:08:55.295+02:00", "end": "2025-10-21T16:11:06.665+02:00", "duration": 2.1895000000000002, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "jCobK8hguXOUSaFOgm01eaG8qyNOZifsxV0topbiiftO0YGYd8sOuDC5ZAgmMnrZcqKGuWoALcM_I0qzHTHm4GLz1aT7Vdsnmf3wgWeusF3cmXt1VqGWMEfTO6bO2eEt3dCDu8cbWQbWnaYJRP_9geP4JpXgSaGPCevO8wuTuUGokihME-N8VQX67ezQfcUNUaBuih_0uApe1ksOBep-kismoRWt6TmpWg=="}}, "Test Suites/Test Suites/Settings/Users - Filters": {"2025.10.21": {"html_file": "qa-automation/data/reports/20251021_153231.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Filters", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-21T15:49:15.799+02:00", "end": "2025-10-21T15:50:21.401+02:00", "duration": 1.0933666666666668, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "ua-kTvi5gQFVHZ55tnwOyvAgkEE8QZANh3cueFwORhmC9Lzw71ocmDZGJcLi0bkXXGYgFDttAtehLT63_4gYmhj9f6eM8p9e_MObHCdW6-ymMj7J9pgmO3NfFNwH8m-5R-twyQS7jmwgOIGyr_lC8PAbPf44wHn77iZnUUcPbfKJXmOeVNOu9yVHVFXlhH3vkAbaP8ZiN0YrbrAmZ0N2d87emzdFmpdMNQ=="}}, "Test Suites/Test Suites/Settings/Permissions - Standart roles": {"2025.10.21": {"html_file": "qa-automation/data/reports/20251021_144729.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Standart roles", "profile": "default", "test_cases": 2, "passed": 1, "failed": 1, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-21T14:47:43.866+02:00", "end": "2025-10-21T14:48:32.411+02:00", "duration": 0.8090833333333334, "retry_count": 0, "sum_check": true, "color": "red", "encrypted_url": "sdmmaszt_qMrcutNGv3_Lfvraxna8-e0Y5RlWieTy6lDOjuXDJPQmR0sW6E72jW6wCC4kRBRfun-7U_nCtSL-6Ct3W1BfSnHxw1TGMqu5Yhl3a81fFLGXhOVcgqVANtM05nn9dUu4ar3-kMSDYMoPRxB9fi9q7eiFdKWp8Bj9XVPgM0dHN04i7NwnthC-nIr_s-WWVsS0_hGLSPwTmtI5UUIsn5yF8tNHQ=="}}, "Test Suites/Test Suites/Settings/Users - General": {"2025.10.21": {"html_file": "qa-automation/data/reports/20251021_153224.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - General", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-21T15:32:44.282+02:00", "end": "2025-10-21T15:41:39.884+02:00", "duration": 8.9267, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "6eZoQ7KetsNqOJuDRsTVUQtUec5wkRLNLK3eEP-8LiL5dzMTXh1DP9YxPl4pGkDeuSQEq8XtJCKb2UCxhWRpNdLowsfUXWD8zvKq_5IQknNfyNpLhenmPniJWP6wk4_M2rcfvUIo1S3Ix5c2U-lUpUKaauJsu29P2ciKe5hFbVn5rHo4F15k-C9V96vhFAuBki5jqAGnmPC-sr2udy21E9p4KRVOKhVlbg=="}}, "Test Suites/Test Suites/departments/settings - department page": {"2025.10.13": {"html_file": "qa-automation/data/reports/20251013_092337.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/departments/settings - department page", "profile": "dynarex intdev", "test_cases": 3, "passed": 3, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-13T09:29:02.745+02:00", "end": "2025-10-13T09:30:02.274+02:00", "duration": 0.9921500000000001, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "KK5F8XzmQbtC7pynepUiuGLfwgzyOz_bkpg3kf6oCenlOKpjP49rsMVT9XHGSghEPjUP4Cy0xMRr8Lycn5d9PH1QGbet17nOIoHYqHSsIbLmJgULpaups2DFGcdLd5bT5EanHW5TzRsjqvbQMWaLnVPixs8HNeJGHr-cyHKepaCiXeY4wfOV_0cLXrj__2zlfNB8N6eHEGY-tK9_G73jeujpSKVHQRRpBQ=="}}, "Test Suites/Test Suites/login-logout": {"2025.10.13": {"html_file": "qa-automation/data/reports/20251013_100055.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/login-logout", "profile": "dynarex intdev", "test_cases": 7, "passed": 7, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-13T10:01:18.400+02:00", "end": "2025-10-13T10:02:15.428+02:00", "duration": 0.9504666666666667, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "aT82Dff6G6jPjM9Txg_Dxsfe9zgrNNpHR4g81low86OQ-dGVEaPAkpKK0LmfvID2523iQsdIIVMNaHIyNe6EPGTvbJRr4MnicZsb6JJxWOWSIz6MiJ9K8MOTf0m2Cw8Jx7oVPj-WAHOPxpPt3BZOCUKRsprZr81ddDQeug1nBl4Z0UJyMuJXdTkpGqxRHJZ8g_54HXuHH1nVna4BX5oRZakUmgGXEx-_JA=="}, "2025.10.28": {"html_file": "qa-automation/data/reports/20251028_174025.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/login-logout", "profile": "default - Deutsch", "test_cases": 7, "passed": 7, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-28T17:40:49.804+01:00", "end": "2025-10-28T17:41:45.186+01:00", "duration": 0.9230333333333333, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "EOYHwRitLyHde2l6pXsw7RuO_0S89PIA3nr85S8dcvCZ28pTZcLiiWqqJduOYgvW_I4Osb__Oa6rLjYzwvifYUp68PuzvGqSn5W3sltMO2qqrCYRz2mS4j8AwUl9AEQ60aXbeSE9zanR7xiuv2HiGUumAzd8I1DKoD0tNeVw3RR5qwzHW4TtVsLDnUqi9nWEHjMQdQgXWwddhYGxxf--DIB2zpVPbf5D8w=="}}, "Test Suites/Test Suites/_Sandbox/Users": {"2025.10.27": {"html_file": "qa-automation/data/reports/20251027_225028.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-27T22:50:35.708+01:00", "end": "2025-10-27T22:52:39.577+01:00", "duration": 2.0644833333333334, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "OBnXpzA2ynrw-BGGiXqyta35kh1PmL9rxAELzyeQ8U2KHUfMe7JQA833ILaPtfCNKVpHMCeeWHBrzc8PkrwVC567MfPYkmA04jehBVMT48BMvR6tMRimaAHir-Fgc_YT1JL5XyBRREBTXdziP1tSty8wyVKFQk9g9F812Jgc1stvjWGoVzMK-VH1QDydS7w3QTVppog9-0R9TYmeFBsLZTyJ8k7MMUb5Sw=="}, "2025.10.28": {"html_file": "qa-automation/data/reports/20251028_101926.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-28T10:19:33.404+01:00", "end": "2025-10-28T10:24:24.742+01:00", "duration": 4.8556333333333335, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "ogz_RsOKU0G9M2P3fp6zI7NxZJ7QioqfJdGeYdyk8p3zzZWJ1OECyMn65gie7FJch3XwEh3kAq36bmG_O70XiLZ1YJ-FtZfzr49UFaNe8-t9LgFFajNiCWeDOJf2bBx5Dz28W1izALKogA8zaC8MozOOm-ZDt95RjR04lwAdFn-gSFgrdONymAQA73jrbjj7xKQd3qpdmAUhIePdEcbpso2B6ayuQju3Qw=="}}}, "DYNAREX": {"Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client": {"2025.10.22": {"html_file": "qa-automation/data/reports/20251022_143556.html", "project": "DYNAREX", "test_suite_id": "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client", "profile": "default member intacc", "test_cases": 18, "passed": 18, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-22T16:35:14.954+02:00", "end": "2025-10-22T16:43:54.972+02:00", "duration": 8.666966666666667, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "EX-6FOIVZysgicPqNd10Ot6dFM9TUguQ3pH2uLN_qUKkvpnSKqNQRhGQdM7C6tdOX1WyWtznLynL41SKxaxP7Qtwu6dRm4mXztE7-ktFqskfIf3_jWOAF3vupd1FJX-Nhq87eF2yHmdC0iclcCjrvcu-6BvCGWgFDEDJ5WZnH1y9yKo-JawdvT-KE4wo7J0kVj7vXr-nVjQEf_UAA1kkLiEKUsvI3pO_jw=="}}, "Test Suites/3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda": {"2025.10.09": {"html_file": "qa-automation/data/reports/20251009_015406.html", "project": "DYNAREX", "test_suite_id": "Test Suites/3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda", "profile": "default DYNAREX intdev", "test_cases": 11, "passed": 0, "failed": 11, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-09T02:48:40.677+02:00", "end": "2025-10-09T02:54:17.632+02:00", "duration": 5.615916666666666, "retry_count": 0, "sum_check": true, "color": "red", "encrypted_url": "GKm_s8IF9gvs5-rZG-cjF3mG2yJHIvs6u5ThUzlG1ix7f1eUQrKUyhIkRB9eWd3NwRSSpYjcQoIM1D15jpaIXp2D77cEbNkSyizAXtCmpKA6LQIYC8duF8w_jI8VRS4H7BjUwVGDhnxyLVDcGRJ56cKNJBBShvlUZ-zrF6qiwiiUyLlrkThfIYs1jAZaPf3pkvjb_Ka9YTxAhEb762g_Vk-bNmAIMl6AMA=="}}, "Test Suites/6_valuation/6c_valuation ExpertPlusPartner": {"2025.09.25": {"html_file": "qa-automation/data/reports/20250925_015459.html", "project": "DYNAREX", "test_suite_id": "Test Suites/6_valuation/6c_valuation ExpertPlusPartner", "profile": "anke SD3ep intdev", "test_cases": 5, "passed": 5, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-09-25T03:52:41.509+02:00", "end": "2025-09-25T03:58:22.029+02:00", "duration": 5.675333333333333, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "oiqElrLtBTyAVJzbO-2ux-Euby0sV95r-Tzuwlj47iYp7oTUQRxR2zCnjN95jilL-gIKmI3QQonZO8l3wSnm297JOpBrCPrkRLbzpFyA4IH7n-rnfa8haMMThd5KqjGsOllE-z6m-4Rxz66QzyPqIpc3uQUN8iKGQ1RNrZbqn8mQqO7lbc6jU3HhxWwW4oSKwu95tt7ymAonFfdwh_g9vNY3MBhH2-MC-Q=="}}, "Test Suites/8_media page": {"2025.09.29": {"html_file": "qa-automation/data/reports/20250929_042014.html", "project": "DYNAREX", "test_suite_id": "Test Suites/8_media page", "profile": "default DYNAREX intdev", "test_cases": 9, "passed": 8, "failed": 1, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-09-29T06:53:02.648+02:00", "end": "2025-09-29T06:59:46.429+02:00", "duration": 6.729683333333333, "retry_count": 0, "sum_check": true, "color": "red", "encrypted_url": "e0PNBrJCQpK_hhpVJnQcWhmZh3Wr_L8rMaqnUkjr2HhArbVv69_FXrn6G1apfhY3U8LQzvvo2jKUVesRh6p0YAqSkUrN-6S9mVzoaL5DehFwGDU5pzYw3rBv8f6ZOGJTsDM4i7lnmA8fMyyVefMSKDrgQHo2RNeONRZjFt06USkEarzMmqbww2ID3-R_2VDJp_sJ_f9ycpoJZ1gO1LAw0kbc70eL6Obokg=="}}, "Test Suites/billing/DoD Regression/member - get final DoD check": {"2025.08.27": {"html_file": "qa-automation/data/reports/20250827_015557.html", "project": "DYNAREX", "test_suite_id": "Test Suites/billing/DoD Regression/member - get final DoD check", "profile": "default member intdev", "test_cases": 2, "passed": 2, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-08-27T06:00:40.057+02:00", "end": "2025-08-27T06:01:35.710+02:00", "duration": 0.92755, "retry_count": 0, "sum_check": true, "color": "green", "encrypted_url": "KvV1umnQKXdemkt2zjXHjGx3hJn9mGSOOrySxfRR_WyFv4bVOLUH_813MzzqmADwwxtSDgFCv4nLCZPEmLg2Eh0e7ethBP8tX9WgDRZ_33vjOSdZq3F9F68Tg-Cg9E6gkTzlpnTcL92Ev_7bkq278sFDDHHzGpYVhDXtfIW4do2fv8VV8uTop0bSOtIfGuVoNz3m8lcNTjnYTpZuiVxVFrUlgIkLS4k6MA=="}}, "Test Suites/settings/workflow/workflow settings": {"2025.10.03": {"html_file": "qa-automation/data/reports/20251003_055826.html", "project": "DYNAREX", "test_suite_id": "Test Suites/settings/workflow/workflow settings", "profile": "default DYNAREX intdev", "test_cases": 59, "passed": 29, "failed": 30, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-03T07:42:06.587+02:00", "end": "2025-10-03T08:13:14.297+02:00", "duration": 31.1285, "retry_count": 0, "sum_check": true, "color": "red", "encrypted_url": "34OhWLN-_yW_ZZ4tncKkosHWx42nxoGZJryxW2VRjvPCjMmHOTqd2hwPRQuvCBpz6SvwqnNmEp7P7gT6wJ3J-rSactPnEKtx74lRYMKoEefa0i5nXrjfAtWR76Z-spgpPCau4kqeTwoyTWCw6KKXO_MpV-ttXhGZuEF2vdmhdiGfV798SzvOWDL7aPKQyAtDPctFonTysDhtda6aARbomZVds3Rtj4yYYQ=="}}}};
+
+// Debug: log data structure
+console.log('Dashboard data:', data);
+
+// AES-GCM decryption in browser (matches Python encryption)
+async function decryptUrl(encryptedUrl, password) {
+  try {
+    // Convert URL-safe base64 to standard base64
+    const standardBase64 = encryptedUrl.replace(/-/g, '+').replace(/_/g, '/');
+    // Decode base64
+    const encryptedData = Uint8Array.from(atob(standardBase64), c => c.charCodeAt(0));
+    
+    // Extract salt (16 bytes), nonce (12 bytes), ciphertext
+    const salt = encryptedData.slice(0, 16);
+    const nonce = encryptedData.slice(16, 28);
+    const ciphertext = encryptedData.slice(28);
+    
+    // Derive key using PBKDF2
+    const encoder = new TextEncoder();
+    const passwordKey = await crypto.subtle.importKey(
+      'raw',
+      encoder.encode(password),
+      'PBKDF2',
+      false,
+      ['deriveKey']
+    );
+    
+    const key = await crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: salt,
+        iterations: 100000,
+        hash: 'SHA-256'
+      },
+      passwordKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+    
+    // Decrypt
+    const decrypted = await crypto.subtle.decrypt(
+      {
+        name: 'AES-GCM',
+        iv: nonce
+      },
+      key,
+      ciphertext
+    );
+    
+    return new TextDecoder().decode(decrypted);
+  } catch (error) {
+    console.error('URL decryption failed:', error);
+    throw new Error('Failed to decrypt report URL');
+  }
+}
+
+async function hashPassword(password) {
+  const msgBuffer = new TextEncoder().encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function checkPassword() {
+  const password = document.getElementById('password-input').value;
+  const hash = await hashPassword(password);
+  
+  if (hash === PASSWORD_HASH) {
+    sessionStorage.setItem('reportPassword', password);
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
+  } else {
+    document.getElementById('error-message').textContent = 'Incorrect password. Please try again.';
+    document.getElementById('error-message').style.display = 'block';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const savedPassword = sessionStorage.getItem('reportPassword');
+  if (savedPassword) {
+    hashPassword(savedPassword).then(hash => {
+      if (hash === PASSWORD_HASH) {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('dashboard-content').style.display = 'block';
+      }
+    });
+  }
+  document.getElementById('password-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') checkPassword();
+  });
+});
+
+function showLoading() {
+  document.getElementById('loading').style.display = 'block';
+}
+
+function hideLoading() {
+  document.getElementById('loading').style.display = 'none';
+}
+
+// Test function to verify encryption/decryption - DEBUG VERSION
+async function testDecryption() {
+  const password = sessionStorage.getItem('reportPassword');
+  if (!password) {
+    alert('Please login first');
+    return;
+  }
+  
+  // Get first available encrypted URL for testing
+  let testEncryptedUrl = null;
+  let testRecord = null;
+  for (const project in data) {
+    for (const suite in data[project]) {
+      for (const date in data[project][suite]) {
+        const record = data[project][suite][date];
+        if (record && record.encrypted_url) {
+          testEncryptedUrl = record.encrypted_url;
+          testRecord = record;
+          break;
+        }
+      }
+      if (testEncryptedUrl) break;
+    }
+    if (testEncryptedUrl) break;
+  }
+  
+  if (!testEncryptedUrl) {
+    alert('No encrypted URLs found to test');
+    return;
+  }
+  
+  showLoading();
+  try {
+    console.log('Testing decryption with encrypted URL:', testEncryptedUrl);
+    const decrypted = await decryptUrl(testEncryptedUrl, password);
+    console.log('Decrypted URL:', decrypted);
+    
+    // Show the actual URLs in the alert
+    alert(
+      'Decryption successful!\\n\\n' +
+      'Encrypted URL (first 50 chars): ' + testEncryptedUrl.substring(0, 50) + '...\\n' +
+      'Decrypted URL: ' + decrypted + '\\n\\n' +
+      'Testing proxy now...'
+    );
+
+    // Test the proxy download
+    const proxyUrl = `/proxy-report?url=${encodeURIComponent(decrypted)}`;
+    console.log('Proxy URL:', proxyUrl);
+    const response = await fetch(proxyUrl);
+    if (response.ok) {
+      const content = await response.text();
+      console.log('Proxy test successful, content length:', content.length);
+      alert(
+        'Proxy test successful!\\n\\n' +
+        'Content length: ' + content.length + ' bytes\\n' +
+        'Decrypted URL used: ' + decrypted
+      );
+    } else {
+      throw new Error(`Proxy failed: ${response.status}`);
+    }
+  } catch (e) {
+    console.error('Test decryption failed:', e);
+    alert('Decryption test failed: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+// Open report with encrypted URL - using Cloudflare Functions proxy
+async function openReport(project, suite, date) {
+  const record = data[project][suite][date];
+  if (!record) return;
+
+  const password = sessionStorage.getItem('reportPassword');
+  if (!password) {
+    alert('Please login first');
+    return;
+  }
+
+  // Check if we have an encrypted URL
+  if (record.encrypted_url) {
+    showLoading();
+    try {
+      console.log('Encrypted URL:', record.encrypted_url);
+      
+      const decryptedUrl = await decryptUrl(record.encrypted_url, password);
+      console.log('Decrypted URL:', decryptedUrl);
+      
+      // Use Cloudflare Functions proxy instead of direct OneDrive fetch
+      const proxyUrl = `/proxy-report?url=${encodeURIComponent(decryptedUrl)}`;
+      console.log('Proxy URL:', proxyUrl);
+      
+      // Download HTML content via Cloudflare Functions proxy
+      console.log('Downloading HTML content via proxy...');
+      const response = await fetch(proxyUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const htmlContent = await response.text();
+      console.log('HTML content downloaded via proxy, length:', htmlContent.length);
+      
+      // Create blob URL from the HTML content
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const blobUrl = URL.createObjectURL(blob);
+      console.log('Created blob URL:', blobUrl);
+      
+      // Open in new tab - this should work now!
+      window.open(blobUrl, '_blank');
+      
+      // Clean up blob URL after some time
+      setTimeout(() => {
+        URL.revokeObjectURL(blobUrl);
+        console.log('Blob URL revoked');
+      }, 60000);
+      
+    } catch (e) {
+      console.error('Failed to open report:', e);
+      console.error('Error details:', e.message, e.stack);
+      alert('Failed to access report: ' + e.message);
+    } finally {
+      hideLoading();
+    }
+  } else {
+    alert('Report link not available. This may be because no password is set or the link could not be created.');
+  }
+}
+
+function showTooltip(e, project, suite, date) {
+  const record = data[project][suite][date];
+  if (!record) return;
+  const tooltip = document.getElementById('tooltip');
+  const start = new Date(record.start);
+  const end = new Date(record.end);
+  const formatDate = (d) => d.getFullYear().toString().slice(2) + '/' + 
+    String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0') + ' - ' +
+    String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
+  const totalSeconds = Math.floor(record.duration * 60);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const durationStr = String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');
+  tooltip.innerHTML = `
+    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${record.profile || 'N/A'}</strong></div>
+    <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${record.test_cases || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${record.passed || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${record.failed || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${record.error || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Incomplete:</span>${record.incomplete || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${record.skipped || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Retry:</span>${record.retry_count || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${formatDate(start)}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>End:</span>${formatDate(end)}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
+  `;
+  tooltip.style.display = 'block';
+  tooltip.style.left = (e.pageX + 10) + 'px';
+  tooltip.style.top = (e.pageY + 10) + 'px';
+}
+function hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
+</script>
+</head><body>
+<div id='login-container'>
+  <div id='login-box'>
+    <h2>QA Automation Report</h2>
+    <div><input type='password' id='password-input' placeholder='Enter password' autofocus></div>
+    <div><button id='login-button' onclick='checkPassword()'>Login</button></div>
+    <div id='error-message'>Incorrect password. Please try again.</div>
+  </div>
+</div>
+<div id='dashboard-content'>
+<div id='tooltip' class='tooltip'></div>
+<div id='loading' class='loading'>Loading report...</div>
+<h1>QA Automation Report <button onclick="testDecryption()" class="test-button">Test Decryption</button></h1>
+<div class='table-container'>
+<table>
+<tr><th>Test Suite</th><th>10.28</th><th>10.27</th><th>10.22</th><th>10.21</th><th>10.13</th><th>10.09</th><th>10.03</th><th>09.29</th><th>09.25</th><th>08.27</th></tr>
+<tr><td class='project-header'>DYNAREX</td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td></tr>
+<tr><td class='suite-name'>3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda", "2025.10.09")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda", "2025.10.09")'>0/11</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>6_valuation/6c_valuation ExpertPlusPartner</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/6_valuation/6c_valuation ExpertPlusPartner", "2025.09.25")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/6_valuation/6c_valuation ExpertPlusPartner", "2025.09.25")'>5/0</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>8_media page</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/8_media page", "2025.09.29")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/8_media page", "2025.09.29")'>8/1</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>billing/DoD Regression/member - get final DoD check</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/billing/DoD Regression/member - get final DoD check", "2025.08.27")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/billing/DoD Regression/member - get final DoD check", "2025.08.27")'>2/0</td>
+</tr>
+<tr><td class='suite-name'>billing/State assessment/Billing state assessment for new Sd3EP client</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client", "2025.10.22")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client", "2025.10.22")'>18/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>settings/workflow/workflow settings</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red' onmousemove='showTooltip(event, "DYNAREX", "Test Suites/settings/workflow/workflow settings", "2025.10.03")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX", "Test Suites/settings/workflow/workflow settings", "2025.10.03")'>29/30</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td></tr>
+<tr><td class='suite-name'>Settings/Offices</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Offices", "2025.10.21")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Offices", "2025.10.21")'>2/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>Settings/Permissions - Standart roles</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='red' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.10.21")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.10.21")'>1/1</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>Settings/Users - Filters</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Filters", "2025.10.21")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Filters", "2025.10.21")'>8/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>Settings/Users - General</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - General", "2025.10.21")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - General", "2025.10.21")'>8/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>_Sandbox/Users</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.28")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.28")'>1/0</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.27")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.27")'>1/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>departments/settings - department page</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/departments/settings - department page", "2025.10.13")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/departments/settings - department page", "2025.10.13")'>3/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+<tr><td class='suite-name'>login-logout</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.28")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.28")'>7/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.13")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.13")'>7/0</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+<td class='empty'>–</td>
+</tr>
+</table>
+</div>
+</div>
+</body></html>
