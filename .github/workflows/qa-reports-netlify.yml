@@ -2,8 +2,8 @@
 name: QA Reports Netlify
 
 on:
-  schedule:
-    - cron: "0 * * * *"    # Runs every hour
+#  schedule:
+#    - cron: "0 * * * *"    # Runs every hour
   workflow_dispatch:        # Allow manual run
 
 permissions:
