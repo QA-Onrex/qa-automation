@@ -1,0 +1,5 @@
+# _headers file
+# Netlify directive to force all files in the /reports directory (or equivalent) to be served as raw binary data.
+/reports/*
+  Content-Type: application/octet-stream
+  Cache-Control: public, max-age=0, must-revalidate
