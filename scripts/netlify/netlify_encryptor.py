@@ -24,9 +24,9 @@ def _derive_key(password: str, salt: bytes) -> bytes:
     )
     return kdf.derive(password.encode())
 
-def encrypt_bytes_to_bytes(data: bytes) -> bytes:
+def encrypt_bytes_to_file(data: bytes, output_path: str):
     """
-    Encrypts given bytes in memory and returns encrypted bytes.
+    Encrypts given bytes in memory and writes encrypted file to output_path.
     Output format: base64(SALT + NONCE + CIPHERTEXT)
     """
     password = os.getenv(PASSWORD_ENV)
@@ -39,16 +39,20 @@ def encrypt_bytes_to_bytes(data: bytes) -> bytes:
     aesgcm = AESGCM(key)
     ciphertext = aesgcm.encrypt(nonce, data, None)
 
-    return base64.b64encode(salt + nonce + ciphertext)
+    encrypted_data = base64.b64encode(salt + nonce + ciphertext)
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "wb") as f:
+        f.write(encrypted_data)
 
-def decrypt_bytes_to_bytes(encrypted_data: bytes) -> bytes:
-    """Decrypts encrypted bytes and returns original bytes."""
+def decrypt_file_to_bytes(encrypted_path: str) -> bytes:
+    """Decrypts an encrypted file and returns original bytes."""
     password = os.getenv(PASSWORD_ENV)
     if not password:
         raise ValueError("Environment variable REPORT_PASSWORD not set")
 
-    encrypted_data = base64.b64decode(encrypted_data)
-    
+    with open(encrypted_path, "rb") as f:
+        encrypted_data = base64.b64decode(f.read())
+
     salt = encrypted_data[:SALT_SIZE]
     nonce = encrypted_data[SALT_SIZE:SALT_SIZE + NONCE_SIZE]
     ciphertext = encrypted_data[SALT_SIZE + NONCE_SIZE:]
@@ -56,21 +60,3 @@ def decrypt_bytes_to_bytes(encrypted_data: bytes) -> bytes:
     key = _derive_key(password, salt)
     aesgcm = AESGCM(key)
     return aesgcm.decrypt(nonce, ciphertext, None)
-
-def encrypt_bytes_to_file(data: bytes, output_path: str):
-    """Encrypts bytes and writes to file."""
-    encrypted_data = encrypt_bytes_to_bytes(data) # This is Base64 BYTES (e.g., b'aGVsbG8=')
-    
-    # 1. DECODE THE BYTES TO A STRING for clean file writing (ASCII is safe for Base64)
-    encrypted_data_str = encrypted_data.decode('ascii')
-    
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    # 2. Open in text mode ("w") and write the string
-    with open(output_path, "w", encoding="ascii") as f:
-        f.write(encrypted_data_str)
-
-def decrypt_file_to_bytes(encrypted_path: str) -> bytes:
-    """Decrypts a file and returns original bytes."""
-    with open(encrypted_path, "rb") as f:
-        encrypted_data = f.read()
-    return decrypt_bytes_to_bytes(encrypted_data)
