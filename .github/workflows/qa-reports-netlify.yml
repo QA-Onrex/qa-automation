@@ -74,13 +74,3 @@ jobs:
           
           git commit -m "Update QA reports and dashboard [skip ci]" || echo "No changes to commit"
           git push || echo "Push failed or no changes"
-
-      - name: Final Status Report
-        run: |
-          if [ -f "docs/index.html" ]; then
-            echo "🎉 SUCCESS: Dashboard was generated and committed!"
-            echo "📊 Dashboard size: $(wc -c < docs/index.html) bytes"
-          else
-            echo "❌ FAILURE: Dashboard (docs/index.html) was NOT created. Check traceback above."
-            exit 1
-          fi
