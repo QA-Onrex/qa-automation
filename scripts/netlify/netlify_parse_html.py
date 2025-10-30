@@ -2,11 +2,12 @@
 import os
 import json
 import re
-import requests
+import requests # Still imported but unused in primary function
 from datetime import datetime, timedelta
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from netlify_encryptor import decrypt_bytes_to_bytes
+# NOTE: decrypt_file_to_bytes is now used to read the local encrypted HTML file
+from netlify_encryptor import decrypt_file_to_bytes
 
 HTML_FOLDER = "data/netlify_html"
 URLS_FILE = "data/netlify_urls.json"
@@ -34,30 +35,7 @@ def load_urls():
             return {}
     return {}
 
-def fetch_encrypted_html_from_netlify(url):
-    """Fetch encrypted HTML from Netlify with better error handling."""
-    try:
-        print(f"::notice::Fetching from Netlify: {url}")
-        response = requests.get(url, timeout=30)
-        print(f"::notice::Netlify response status: {response.status_code}")
-        
-        if response.status_code == 200:
-            content_length = len(response.content)
-            print(f"::notice::Successfully fetched {content_length} bytes from Netlify")
-            return response.content
-        elif response.status_code == 404:
-            print(f"::warning::File not yet deployed on Netlify: {url}")
-            print(f"::notice::This is normal - Netlify deployment might still be in progress")
-            return None
-        else:
-            print(f"::error::Failed to fetch from Netlify: {response.status_code} - {response.text[:200]}")
-            return None
-    except requests.exceptions.Timeout:
-        print(f"::error::Timeout fetching from Netlify: {url}")
-        return None
-    except Exception as e:
-        print(f"::error::Error fetching from Netlify: {e}")
-        return None
+# REMOVED: fetch_encrypted_html_from_netlify (no longer needed)
 
 def compute_retry_count(test_suite_id, start_time, results, hours=10):
     """Compute retry count using chronological results, stop when older than 10 hours."""
@@ -65,39 +43,48 @@ def compute_retry_count(test_suite_id, start_time, results, hours=10):
     if not test_suite_id or not start_time:
         return 0
     try:
+        # Fix date parsing if needed (the previous script had a bug here: ret.get("start"))
         start_dt = datetime.strptime(start_time.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
         time_threshold = start_dt - timedelta(hours=hours)
 
         # Iterate results in reverse chronological order
         for rec in reversed(results):
-            rec_start = ret.get("start")
+            # NOTE: Fixed the variable name from 'ret' to 'rec'
+            rec_start = rec.get("start")
             if not rec_start:
                 continue
-            rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
+            # Handle potential non-uniform datetime formats (from the original script's logic)
+            fmt = "%Y-%m-%dT%H:%M:%S.%f%z" if '+' in rec_start or '-' in rec_start else "%Y-%m-%dT%H:%M:%S.%fZ"
+            rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), fmt)
 
             # Stop as soon as the record is older than 10 hours
             if rec_dt < time_threshold:
                 break
 
             if rec.get("test_suite_id") == test_suite_id:
-                retry_count += 1
+                # Only count *previous* runs, the current record being processed shouldn't count as a retry for itself
+                # The count will be applied to the new record *after* this loop finishes.
+                retry_count += 1 
 
     except Exception:
         pass
 
     return retry_count
 
+# NOTE: The function name is kept for compatibility but its logic has changed.
 def parse_html_from_netlify(html_filename, netlify_url):
-    """Fetch, decrypt and parse embedded JSON from Netlify HTML."""
-    try:
-        # Fetch encrypted HTML from Netlify
-        encrypted_bytes = fetch_encrypted_html_from_netlify(netlify_url)
-        if not encrypted_bytes:
-            print(f"::warning::Could not fetch {html_filename} from Netlify (deployment might be in progress)")
-            return None
+    """Decrypt, parse embedded JSON from local HTML file, and delete the file."""
+    local_path = os.path.join(HTML_FOLDER, html_filename)
+    
+    if not os.path.exists(local_path):
+        print(f"::warning::Local encrypted file not found: {local_path}")
+        return None
 
-        # Decrypt HTML in memory
-        html_bytes = decrypt_bytes_to_bytes(encrypted_bytes)
+    try:
+        # Decrypt HTML from local file into memory
+        # Uses the decrypt_file_to_bytes function from netlify_encryptor
+        print(f"::notice::Decrypting local file: {local_path}")
+        html_bytes = decrypt_file_to_bytes(local_path)
         content = html_bytes.decode("utf-8")
 
         # Extract JSON inside loadExecutionData('main', {...})
@@ -106,15 +93,15 @@ def parse_html_from_netlify(html_filename, netlify_url):
             print(f"::warning::No embedded JSON found in {html_filename}")
             return None
 
+        # --- Parsing Logic (Unchanged) ---
         data_json = json.loads(match.group(1))
         entity = data_json.get("entity", {})
 
-        # Project is outside entity
         project_name = data_json.get("project", {}).get("name")
-
         test_suite_id = entity.get("entityId")
         profile = entity.get("context", {}).get("profile")
-
+        
+        # ... (statistics extraction is unchanged)
         stats = entity.get("statistics", {})
         test_cases = stats.get("total")
         passed = stats.get("passed")
@@ -126,35 +113,40 @@ def parse_html_from_netlify(html_filename, netlify_url):
         start = entity.get("startTime")
         end = entity.get("endTime")
 
-        # Compute duration in minutes
+        # Compute duration in minutes (unchanged)
         duration = None
         if start and end:
             try:
                 fmt = "%Y-%m-%dT%H:%M:%S.%f%z" if '+' in start or '-' in start else "%Y-%m-%dT%H:%M:%S.%fZ"
-                start_dt = datetime.strptime(start.replace('Z', '+0000'), fmt)
-                end_dt = datetime.strptime(end.replace('Z', '+0000'), fmt)
+                # Use .replace('Z', '+0000') only if the string contains 'Z' and not a timezone offset
+                start_str = start.replace('Z', '+0000') if 'Z' in start and '+' not in start and '-' not in start else start
+                end_str = end.replace('Z', '+0000') if 'Z' in end and '+' not in end and '-' not in end else end
+                
+                start_dt = datetime.strptime(start_str, fmt)
+                end_dt = datetime.strptime(end_str, fmt)
                 duration = (end_dt - start_dt).total_seconds() / 60  # minutes
             except Exception:
                 duration = None
-
+                
         # Compute retry count dynamically
+        # NOTE: The current record is *not* in 'results' yet, so the count is for previous runs.
         retry_count = compute_retry_count(test_suite_id, start, results)
 
-        # Sum check
+        # Sum check (unchanged)
         sum_check = True
         if test_cases is not None:
             total_sum = sum(filter(None, [passed, failed, error, incomplete, skipped]))
             sum_check = (total_sum == test_cases)
 
-        # Color logic
+        # Color logic (unchanged)
         color = "Red"  # default
         if test_cases is not None and passed == test_cases and sum_check:
             color = "Green"
             if retry_count and retry_count != 0:
                 color = "Yellow"
 
-        return {
-            "html_file": netlify_url,
+        result = {
+            "html_file": netlify_url, # KEEP the Netlify URL for the dashboard link
             "html_filename": html_filename,
             "project": project_name,
             "test_suite_id": test_suite_id,
@@ -172,35 +164,46 @@ def parse_html_from_netlify(html_filename, netlify_url):
             "sum_check": sum_check,
             "color": color
         }
+        
+        # --- CRITICAL CHANGE: DELETE LOCAL FILE AFTER SUCCESSFUL PARSING ---
+        try:
+            os.remove(local_path)
+            print(f"::notice::Successfully deleted local file: {local_path}")
+        except Exception as delete_e:
+            print(f"::error::Failed to delete local file {local_path}: {delete_e}")
+            
+        return result
 
     except Exception as e:
-        print(f"::error::Failed to parse {html_filename}: {e}")
+        print(f"::error::Failed to parse {html_filename} from local disk: {e}")
+        # Ensure file is NOT deleted if parsing fails
         return None
 
 def main():
     urls = load_urls()
     if not urls:
-        print("::notice::No Netlify URLs found to process.")
+        print("::notice::No Netlify URLs found to process (waiting for upload step).")
         return
 
     processed_count = 0
+    
+    # Iterate through the URLs mapping (which gives us the filename and the dashboard link)
     for html_filename, netlify_url in urls.items():
+        # netlify_url is passed so it can be stored as the final report link in results.json
         data = parse_html_from_netlify(html_filename, netlify_url)
+        
         if data:
             results.append(data)
             processed_count += 1
-            print(f"::notice::Processed {html_filename} from Netlify.")
+            print(f"::notice::Processed {html_filename} from local disk.")
         else:
-            print(f"::warning::Skipping {html_filename} - file not available on Netlify yet")
+            print(f"::warning::Skipping {html_filename} - failed to parse or file missing locally.")
 
     # Save results.json unencrypted
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(f"::notice::Updated {RESULTS_FILE} with {processed_count} new entries.")
-    if processed_count == 0:
-        print("::notice::If no files were processed, Netlify deployment might still be in progress.")
-        print("::notice::The files will be processed in the next run after Netlify finishes deploying.")
 
 if __name__ == "__main__":
     main()
