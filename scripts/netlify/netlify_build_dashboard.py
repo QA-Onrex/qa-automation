@@ -55,7 +55,20 @@ def build_dashboard():
         start = r.get("start") or r.get("end")
         if not start:
             continue
-        date = datetime.fromisoformat(start.replace("Z", "+00:00")).strftime("%Y.%m.%d")
+        # Use strptime for robust ISO 8601 parsing with timezone info
+        try:
+            # Handle both Z and timezone offset formats
+            start_str = start.replace("Z", "+00:00")
+            if "." in start_str:
+                 # Check for fractional seconds
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+            else:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
+
+            date = dt_obj.strftime("%Y.%m.%d")
+        except ValueError:
+            # Fallback if parsing fails
+            continue
 
         # Keep only latest record for the date
         if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
@@ -137,13 +150,17 @@ def build_dashboard():
         "",
         "document.addEventListener('DOMContentLoaded', function() {",
         "  const savedPassword = sessionStorage.getItem('reportPassword');",
-        "  if (savedPassword) {",
+        "  if (PASSWORD_HASH && savedPassword) {",
         "    hashPassword(savedPassword).then(hash => {",
         "      if (hash === PASSWORD_HASH) {",
         "        document.getElementById('login-container').style.display = 'none';",
         "        document.getElementById('dashboard-content').style.display = 'block';",
         "      }",
         "    });",
+        "  } else if (!PASSWORD_HASH) {",
+        "    // Skip login if no password is set",
+        "    document.getElementById('login-container').style.display = 'none';",
+        "    document.getElementById('dashboard-content').style.display = 'block';",
         "  }",
         "  document.getElementById('password-input').addEventListener('keypress', function(e) {",
         "    if (e.key === 'Enter') checkPassword();",
@@ -155,7 +172,7 @@ def build_dashboard():
         "  const salt = encryptedBytes.slice(0, 16);",
         "  const nonce = encryptedBytes.slice(16, 28);",
         "  const ciphertext = encryptedBytes.slice(28);",
-        "",
+        "  ",
         "  const enc = new TextEncoder();",
         "  const keyMaterial = await crypto.subtle.importKey(",
         "    'raw',",
@@ -164,7 +181,7 @@ def build_dashboard():
         "    false,",
         "    ['deriveKey']",
         "  );",
-        "",
+        "  ",
         "  const key = await crypto.subtle.deriveKey(",
         "    { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },",
         "    keyMaterial,",
@@ -172,35 +189,52 @@ def build_dashboard():
         "    false,",
         "    ['decrypt']",
         "  );",
-        "",
+        "  ",
         "  const decrypted = await crypto.subtle.decrypt({",
         "    name: 'AES-GCM',",
         "    iv: nonce",
         "  }, key, ciphertext);",
-        "",
+        "  ",
         "  return new Uint8Array(decrypted);",
         "}",
         "",
-        "// Fixed openReport to decrypt encrypted HTML in-memory",
+        "// -------------------------------------------------------------",
+        "// CRITICAL FIX: URL-SAFE BASE64 DECODING HELPER",
+        "// -------------------------------------------------------------",
+        "function urlSafeB64Decode(str) {",
+        "  // 1. Convert URL-Safe Base64 characters to standard Base64 characters",
+        "  let base64 = str.replace(/-/g, '+').replace(/_/g, '/');",
+        "  // 2. Add padding '=' until length is a multiple of 4",
+        "  while (base64.length % 4) {",
+        "    base64 += '=';",
+        "  }",
+        "  // 3. Use standard atob for decoding to binary string",
+        "  return atob(base64);",
+        "}",
+        "",
+        "// Updated openReport to use URL-Safe Base64 Decoding",
         "async function openReport(project, suite, date) {",
         "  const record = data[project][suite][date];",
         "  if (!record || !record.html_file) return;",
-        "",
+        "  ",
         "  const password = sessionStorage.getItem('reportPassword');",
         "  if (!password) return alert('Password missing!');",
-        "",
+        "  ",
         "  try {",
-        "    // Fetch the encrypted file (which is base64 encoded)",
-        "    const resp = await fetch(record.html_file.replace('docs/', ''));",
+        "    // Fetch the encrypted file (which is URL-Safe Base64 encoded)",
+        "    const resp = await fetch(record.html_file);", 
+        "    if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);",
         "    const base64Data = await resp.text();",
         "    ",
-        "    // Decode base64 to get raw bytes",
-        "    const binaryString = atob(base64Data);",
+        "    // CRITICAL STEP: Decode URL-Safe Base64 to get raw binary string",
+        "    const binaryString = urlSafeB64Decode(base64Data);",
+        "    ",
+        "    // Convert binary string to encrypted bytes (Uint8Array)",
         "    const encryptedBytes = new Uint8Array(binaryString.length);",
         "    for (let i = 0; i < binaryString.length; i++) {",
         "      encryptedBytes[i] = binaryString.charCodeAt(i);",
         "    }",
-        "",
+        "    ",
         "    // Decrypt the bytes",
         "    const decryptedBytes = await decryptBytesAES(encryptedBytes, password);",
         "    ",
@@ -211,7 +245,14 @@ def build_dashboard():
         "    window.open(url, '_blank');",
         "  } catch (e) {",
         "    console.error('Failed to decrypt report:', e);",
-        "    alert('Failed to decrypt report. Check console for details.');",
+        "    ",
+        "    // Improved Error Handling",
+        "    let msg = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';",
+        "    if (e.name === 'OperationError') {",
+        "        // This often means the Authentication Tag check failed (wrong password or tampered data)",
+        "        msg = 'Decryption failed: Check your password or the report data is tampered.';",
+        "    }",
+        "    alert(msg + ' Check the browser console for details (F12).');",
         "  }",
         "}",
         "",
