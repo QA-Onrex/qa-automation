@@ -72,5 +72,5 @@ jobs:
           git add data/
           git add docs/
           
-          git commit -m "Update QA reports and dashboard [skip ci]" || echo "No changes to commit"
+          git commit -m "Update results" || echo "No changes"
           git push || echo "Push failed or no changes"
