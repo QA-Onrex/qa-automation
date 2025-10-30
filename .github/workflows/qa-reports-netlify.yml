@@ -60,10 +60,7 @@ jobs:
       - name: Build Dashboard
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: |
-          echo "=== STARTING DASHBOARD BUILD ==="
-          # Execute the script, enabling Python traceback (-m) for detailed failure output
-          python -m scripts/netlify/netlify_build_dashboard.py
+        run: python scripts/netlify/netlify_build_dashboard.py
           
       - name: Commit Updated Data and Dashboard
         run: |
