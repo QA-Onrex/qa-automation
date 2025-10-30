@@ -2,8 +2,8 @@
 name: 🔄 Update OneDrive Token
 
 on:
-  schedule:
-    - cron: '0 2 1 * *'  # Run at 02:00 on the 1st of every month
+#  schedule:
+#    - cron: '0 2 1 * *'  # Run at 02:00 on the 1st of every month
   workflow_dispatch:      # Manual trigger
 
 jobs:
