@@ -2,6 +2,7 @@
 import os
 import base64
 import sys
+import binascii
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
@@ -12,7 +13,7 @@ PASSWORD_ENV = "REPORT_PASSWORD"
 ITERATIONS = 100_000
 SALT_SIZE = 16
 NONCE_SIZE = 12
-KEY_SIZE = 32  # AES-256 (256 bits)
+KEY_SIZE = 32  # AES-256 (32 bytes)
 
 def _derive_key(password: str, salt: bytes) -> bytes:
     """Derive a secure 256-bit key from password using PBKDF2."""
@@ -24,7 +25,11 @@ def _derive_key(password: str, salt: bytes) -> bytes:
             iterations=ITERATIONS,
             backend=default_backend()
         )
-        return kdf.derive(password.encode())
+        key = kdf.derive(password.encode())
+        # --- TROUBLESHOOTING LOGGING ---
+        print(f"[ENCRYPTOR:KEY] Derived Key (First 10 bytes HEX): {binascii.hexlify(key[:10]).decode()}")
+        # ---
+        return key
     except Exception as e:
         print(f"::error::Key derivation failed: {e}", file=sys.stderr)
         raise
@@ -32,7 +37,7 @@ def _derive_key(password: str, salt: bytes) -> bytes:
 def encrypt_bytes_to_bytes(data: bytes) -> bytes:
     """
     Encrypts given bytes in memory and returns encrypted bytes.
-    Output format: URL_SAFE_BASE64(SALT + NONCE + CIPHERTEXT)
+    Output format: STANDARD_BASE64(SALT + NONCE + CIPHERTEXT)
     """
     password = os.getenv(PASSWORD_ENV)
     if not password:
@@ -41,49 +46,42 @@ def encrypt_bytes_to_bytes(data: bytes) -> bytes:
     salt = os.urandom(SALT_SIZE)
     nonce = os.urandom(NONCE_SIZE)
     
-    # --- Troubleshooting Output (Encryption) ---
-    print(f"[ENCRYPTOR] Input Data Size: {len(data)} bytes")
-    print(f"[ENCRYPTOR] Salt Size: {SALT_SIZE}, Nonce Size: {NONCE_SIZE}, Key Size: {KEY_SIZE}")
+    # --- TROUBLESHOOTING LOGGING ---
+    print(f"[ENCRYPTOR:PARAMS] Salt (HEX): {binascii.hexlify(salt).decode()}")
+    print(f"[ENCRYPTOR:PARAMS] Nonce (HEX): {binascii.hexlify(nonce).decode()}")
     # ---
 
     key = _derive_key(password, salt)
     aesgcm = AESGCM(key)
-    ciphertext = aesgcm.encrypt(nonce, data, None) # None is AAD (Additional Authenticated Data)
+    ciphertext = aesgcm.encrypt(nonce, data, None)
 
-    # Use URL-SAFE encoding for maximum browser compatibility
-    encrypted_data_b64 = base64.urlsafe_b64encode(salt + nonce + ciphertext)
+    # Use STANDARD Base64 encoding
+    encrypted_data_b64 = base64.b64encode(salt + nonce + ciphertext)
     
-    # --- Troubleshooting Output (Encryption) ---
-    print(f"[ENCRYPTOR] Ciphertext+Tag Size: {len(ciphertext)}")
-    print(f"[ENCRYPTOR] Base64 Output Size: {len(encrypted_data_b64)} bytes")
+    # --- TROUBLESHOOTING LOGGING ---
+    print(f"[ENCRYPTOR:OUTPUT] Ciphertext+Tag Size: {len(ciphertext)}")
+    print(f"[ENCRYPTOR:OUTPUT] Total Base64 Size: {len(encrypted_data_b64)} bytes")
+    print(f"[ENCRYPTOR:OUTPUT] Base64 Start: {encrypted_data_b64[:50].decode()}...")
     # ---
     
     return encrypted_data_b64
 
-def decrypt_bytes_to_bytes(encrypted_data_b64: bytes) -> bytes:
-    """Decrypts encrypted URL_SAFE_BASE64 bytes and returns original bytes."""
+def decrypt_file_to_bytes(encrypted_path: str) -> bytes:
+    """Decrypts a file (containing STANDARD Base64) and returns original bytes."""
     password = os.getenv(PASSWORD_ENV)
     if not password:
         raise ValueError(f"Environment variable {PASSWORD_ENV} not set")
     
-    try:
-        # Use URL-SAFE decoding
-        encrypted_data = base64.urlsafe_b64decode(encrypted_data_b64)
-    except Exception as e:
-        print(f"::error::[DECRYPTOR] Base64 decoding failed: {e}", file=sys.stderr)
-        raise ValueError("Invalid Base64 format.")
-
-    if len(encrypted_data) < SALT_SIZE + NONCE_SIZE:
-        print(f"::error::[DECRYPTOR] Data too short. Expected min {SALT_SIZE + NONCE_SIZE} bytes.", file=sys.stderr)
-        raise ValueError("Encrypted data is truncated or corrupt.")
-
+    # Read the file as raw bytes, matching how it was written
+    with open(encrypted_path, "rb") as f:
+        encrypted_data_b64 = f.read()
+    
+    # Perform standard Base64 decode
+    encrypted_data = base64.b64decode(encrypted_data_b64)
+    
     salt = encrypted_data[:SALT_SIZE]
     nonce = encrypted_data[SALT_SIZE:SALT_SIZE + NONCE_SIZE]
     ciphertext = encrypted_data[SALT_SIZE + NONCE_SIZE:]
-
-    # --- Troubleshooting Output (Decryption) ---
-    print(f"[DECRYPTOR] Salt Size: {len(salt)}, Nonce Size: {len(nonce)}, Ciphertext Size: {len(ciphertext)}")
-    # ---
     
     key = _derive_key(password, salt)
     aesgcm = AESGCM(key)
@@ -91,30 +89,15 @@ def decrypt_bytes_to_bytes(encrypted_data_b64: bytes) -> bytes:
     try:
         return aesgcm.decrypt(nonce, ciphertext, None)
     except Exception as e:
-        print(f"::error::[DECRYPTOR] AES-GCM Decryption failed (Authentication Tag or Key Invalid): {e}", file=sys.stderr)
-        # This is the standard exception for bad key/password or tampered data
+        # Better error handling for Python-side checks
+        print(f"::error::[DECRYPTOR] AES-GCM check failed (Key/Tag Invalid): {e}", file=sys.stderr)
         raise ValueError("Decryption failed. Invalid password or tampered data.")
 
 
 def encrypt_bytes_to_file(data: bytes, output_path: str):
-    """Encrypts bytes and writes to file as a string (URL-Safe Base64)."""
-    encrypted_data_b64 = encrypt_bytes_to_bytes(data) # Base64 BYTES
-    
-    # Decode to a clean ASCII string for writing to disk in text mode
-    encrypted_data_str = encrypted_data_b64.decode('ascii')
-    
+    """Encrypts bytes and writes to file as raw Base64 bytes."""
+    encrypted_data = encrypt_bytes_to_bytes(data)
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    # Write as a string to prevent BOMs or other byte issues
-    with open(output_path, "w", encoding="ascii") as f:
-        f.write(encrypted_data_str)
-
-def decrypt_file_to_bytes(encrypted_path: str) -> bytes:
-    """Decrypts a file (containing URL-Safe Base64 string) and returns original bytes."""
-    # Read the content as a string
-    with open(encrypted_path, "r", encoding="ascii") as f:
-        encrypted_data_str = f.read()
-    
-    # Encode back to bytes before passing to the helper
-    encrypted_data_b64 = encrypted_data_str.encode('ascii')
-    
-    return decrypt_bytes_to_bytes(encrypted_data_b64)
+    # CRITICAL: Write as raw bytes 'wb'
+    with open(output_path, "wb") as f:
+        f.write(encrypted_data)
