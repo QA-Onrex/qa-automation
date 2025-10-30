@@ -22,7 +22,7 @@ td.red { background-color: #c62828; color: #fff; cursor: pointer; }
 td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
 td.empty { background-color: #2b2b2b; color: #666; }
 td.project-separator { background-color: #1e1e1e; }
-.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 439px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 142px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
 .suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
 .project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
 .project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
@@ -33,7 +33,7 @@ td.project-separator { background-color: #1e1e1e; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const data = {"DYNAREX V2": {"Test Suites/Test Suites/_Sandbox/Users": {"2025.10.23": {"html_file": "https://690397beef483dffadc8e1d7--qa-onrex.netlify.app/reports/20251023_090850_1761203459604.html", "html_filename": "20251023_090850_1761203459604.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-23T09:08:57.857+02:00", "end": "2025-10-23T09:10:59.224+02:00", "duration": 2.0227833333333334, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/Test Suites/login-logout": {"2025.10.28": {"html_file": "https://690398968f165c1309e3b4cd--qa-onrex.netlify.app/reports/20251028_174025_1761669705298.html", "html_filename": "20251028_174025_1761669705298.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/login-logout", "profile": "default - Deutsch", "test_cases": 7, "passed": 7, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-28T17:40:49.804+01:00", "end": "2025-10-28T17:41:45.186+01:00", "duration": 0.9230333333333333, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/Test Suites/departments/settings - department page": {"2025.10.21": {"html_file": "https://69039aecf8571f1f52448123--qa-onrex.netlify.app/reports/20251021_160735_1761056131050.html", "html_filename": "20251021_160735_1761056131050.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/departments/settings - department page", "profile": "default - Deutsch", "test_cases": 3, "passed": 3, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-21T16:14:29.784+02:00", "end": "2025-10-21T16:15:30.627+02:00", "duration": 1.0140500000000001, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/Test Suites/departments/member - activate DYNAREXorg module": {"2025.10.21": {"html_file": "https://69039f286b50c835f222fac5--qa-onrex.netlify.app/reports/20251021_160733_1761056060740.html", "html_filename": "20251021_160733_1761056060740.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/departments/member - activate DYNAREXorg module", "profile": "member intacc", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-21T16:13:54.100+02:00", "end": "2025-10-21T16:14:20.147+02:00", "duration": 0.43411666666666665, "retry_count": 0, "sum_check": true, "color": "green"}}}};
+const data = {"DYNAREX V2": {"Test Suites/Test Suites/_Sandbox/Users": {"2025.10.23": {"html_file": "https://6903a8326ba0790c12355257--qa-onrex.netlify.app/reports/20251023_090850_1761203459604.html", "html_filename": "20251023_090850_1761203459604.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-23T09:08:57.857+02:00", "end": "2025-10-23T09:10:59.224+02:00", "duration": 2.0227833333333334, "retry_count": 0, "sum_check": true, "color": "green"}}}};
 
 async function hashPassword(password) {
   const msgBuffer = new TextEncoder().encode(password);
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   } else if (!PASSWORD_HASH) {
-    // Skip login if no password is set
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('dashboard-content').style.display = 'block';
   }
@@ -73,17 +72,26 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Fixed AES-256-GCM decryption in browser
+// AES-256-GCM decryption with extensive logging for debugging
 async function decryptBytesAES(encryptedBytes, password) {
+  // Check for minimum length (Salt 16 + Nonce 12 = 28 bytes)
+  if (encryptedBytes.length < 28) {
+      throw new Error('Invalid encrypted data length. Data is too short.');
+  }
   const salt = encryptedBytes.slice(0, 16);
   const nonce = encryptedBytes.slice(16, 28);
   const ciphertext = encryptedBytes.slice(28);
+  
+  // --- TROUBLESHOOTING LOGGING (Key Components) ---
+  console.log('[DECRYPTOR:PARAMS] Salt (First 10 bytes HEX):', Array.from(salt.slice(0, 10)).map(b => b.toString(16).padStart(2, '0')).join(''));
+  console.log('[DECRYPTOR:PARAMS] Nonce (HEX):', Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join(''));
+  // ---
   
   const enc = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
     'raw',
     enc.encode(password),
-    {name: 'PBKDF2'},
+    { name: 'PBKDF2' },
     false,
     ['deriveKey']
   );
@@ -96,6 +104,11 @@ async function decryptBytesAES(encryptedBytes, password) {
     ['decrypt']
   );
   
+  // --- TROUBLESHOOTING LOGGING (Derived Key) ---
+  const exportedKey = await crypto.subtle.exportKey('raw', key);
+  console.log('[DECRYPTOR:KEY] Derived Key (First 10 bytes HEX):', Array.from(new Uint8Array(exportedKey)).slice(0, 10).map(b => b.toString(16).padStart(2, '0')).join(''));
+  // ---
+  
   const decrypted = await crypto.subtle.decrypt({
     name: 'AES-GCM',
     iv: nonce
@@ -104,21 +117,7 @@ async function decryptBytesAES(encryptedBytes, password) {
   return new Uint8Array(decrypted);
 }
 
-// -------------------------------------------------------------
-// CRITICAL FIX: URL-SAFE BASE64 DECODING HELPER
-// -------------------------------------------------------------
-function urlSafeB64Decode(str) {
-  // 1. Convert URL-Safe Base64 characters to standard Base64 characters
-  let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
-  // 2. Add padding '=' until length is a multiple of 4
-  while (base64.length % 4) {
-    base64 += '=';
-  }
-  // 3. Use standard atob for decoding to binary string
-  return atob(base64);
-}
-
-// Updated openReport to use URL-Safe Base64 Decoding
+// openReport using STANDARD Base64 (atob) decoding
 async function openReport(project, suite, date) {
   const record = data[project][suite][date];
   if (!record || !record.html_file) return;
@@ -127,13 +126,18 @@ async function openReport(project, suite, date) {
   if (!password) return alert('Password missing!');
   
   try {
-    // Fetch the encrypted file (which is URL-Safe Base64 encoded)
+    // Fetch the encrypted file (STANDARD Base64 encoded)
     const resp = await fetch(record.html_file);
     if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
     const base64Data = await resp.text();
     
-    // CRITICAL STEP: Decode URL-Safe Base64 to get raw binary string
-    const binaryString = urlSafeB64Decode(base64Data);
+    // --- TROUBLESHOOTING LOGGING (Received Data) ---
+    console.log('[FETCH:OUTPUT] Base64 Data Length:', base64Data.length);
+    console.log('[FETCH:OUTPUT] Base64 Data Start:', base64Data.substring(0, 50));
+    // ---
+    
+    // Decode STANDARD base64 to get raw binary string
+    const binaryString = atob(base64Data);
     
     // Convert binary string to encrypted bytes (Uint8Array)
     const encryptedBytes = new Uint8Array(binaryString.length);
@@ -152,10 +156,8 @@ async function openReport(project, suite, date) {
   } catch (e) {
     console.error('Failed to decrypt report:', e);
     
-    // Improved Error Handling
     let msg = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';
     if (e.name === 'OperationError') {
-        // This often means the Authentication Tag check failed (wrong password or tampered data)
         msg = 'Decryption failed: Check your password or the report data is tampered.';
     }
     alert(msg + ' Check the browser console for details (F12).');
@@ -208,27 +210,10 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 <h1>QA Automation Report</h1>
 <div class='table-container'>
 <table>
-<tr><th>Test Suite</th><th>10.28</th><th>10.23</th><th>10.21</th></tr>
-<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td></tr>
+<tr><th>Test Suite</th><th>10.23</th></tr>
+<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td></tr>
 <tr><td class='suite-name'>_Sandbox/Users</td>
-<td class='empty'>–</td>
 <td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.23")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.23")'>1/0</td>
-<td class='empty'>–</td>
-</tr>
-<tr><td class='suite-name'>departments/member - activate DYNAREXorg module</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/departments/member - activate DYNAREXorg module", "2025.10.21")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/departments/member - activate DYNAREXorg module", "2025.10.21")'>1/0</td>
-</tr>
-<tr><td class='suite-name'>departments/settings - department page</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/departments/settings - department page", "2025.10.21")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/departments/settings - department page", "2025.10.21")'>3/0</td>
-</tr>
-<tr><td class='suite-name'>login-logout</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.28")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.28")'>7/0</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
 </tr>
 </table>
 </div>
