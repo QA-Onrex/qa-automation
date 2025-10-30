@@ -33,7 +33,7 @@ td.project-separator { background-color: #1e1e1e; }
 </style>
 <script>
 const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const data = {"DYNAREX V2": {"Test Suites/Test Suites/_Sandbox/Users": {"2025.10.23": {"html_file": "https://690397beef483dffadc8e1d7--qa-onrex.netlify.app/reports/20251023_090850_1761203459604.html", "html_filename": "20251023_090850_1761203459604.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-23T09:08:57.857+02:00", "end": "2025-10-23T09:10:59.224+02:00", "duration": 2.0227833333333334, "retry_count": 0, "sum_check": true, "color": "green"}}}};
+const data = {"DYNAREX V2": {"Test Suites/Test Suites/_Sandbox/Users": {"2025.10.23": {"html_file": "https://690397beef483dffadc8e1d7--qa-onrex.netlify.app/reports/20251023_090850_1761203459604.html", "html_filename": "20251023_090850_1761203459604.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/_Sandbox/Users", "profile": "default", "test_cases": 1, "passed": 1, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-23T09:08:57.857+02:00", "end": "2025-10-23T09:10:59.224+02:00", "duration": 2.0227833333333334, "retry_count": 0, "sum_check": true, "color": "green"}}, "Test Suites/Test Suites/login-logout": {"2025.10.28": {"html_file": "https://690398968f165c1309e3b4cd--qa-onrex.netlify.app/reports/20251028_174025_1761669705298.html", "html_filename": "20251028_174025_1761669705298.html", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/login-logout", "profile": "default - Deutsch", "test_cases": 7, "passed": 7, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-10-28T17:40:49.804+01:00", "end": "2025-10-28T17:41:45.186+01:00", "duration": 0.9230333333333333, "retry_count": 0, "sum_check": true, "color": "green"}}}};
 
 async function hashPassword(password) {
   const msgBuffer = new TextEncoder().encode(password);
@@ -180,10 +180,15 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 <h1>QA Automation Report</h1>
 <div class='table-container'>
 <table>
-<tr><th>Test Suite</th><th>10.23</th></tr>
-<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td></tr>
+<tr><th>Test Suite</th><th>10.28</th><th>10.23</th></tr>
+<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td><td class='project-separator'></td></tr>
 <tr><td class='suite-name'>_Sandbox/Users</td>
+<td class='empty'>–</td>
 <td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.23")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/_Sandbox/Users", "2025.10.23")'>1/0</td>
+</tr>
+<tr><td class='suite-name'>login-logout</td>
+<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.28")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.10.28")'>7/0</td>
+<td class='empty'>–</td>
 </tr>
 </table>
 </div>
