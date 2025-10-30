@@ -1,9 +1,10 @@
+# .github/workflows/qa_reports_netlify.yml
 name: QA Reports Netlify
 
 on:
   schedule:
-    - cron: "0 * * * *"   # Runs every hour
-  workflow_dispatch:       # Allow manual run
+    - cron: "0 * * * *"    # Runs every hour
+  workflow_dispatch:        # Allow manual run
 
 permissions:
   contents: write
@@ -21,155 +22,79 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          pip install cryptography
-          pip install requests
+          # Ensure all core dependencies are installed (requests and cryptography are confirmed)
+          pip install cryptography requests # Add other known dependencies if necessary (e.g., BeautifulSoup, pandas)
 
-      - name: Fetch Emails
+      # --- Report Ingestion and Processing ---
+
+      - name: Fetch Emails (Encrypted ZIPs)
         env:
           ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: |
-          python scripts/netlify/netlify_fetch_emails.py || echo "Email fetch completed"
+        # Use || true to prevent the entire workflow from failing if no emails are found
+        run: python scripts/netlify/netlify_fetch_emails.py || true 
 
-      - name: Extract HTML from Attachments
+      - name: Extract & Re-Encrypt HTML
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: |
-          python scripts/netlify/netlify_extract_html.py || echo "No attachments to extract"
+        # Use || true to prevent the entire workflow from failing if no attachments are found
+        run: python scripts/netlify/netlify_extract_html.py || true
 
-      - name: Upload HTML to Netlify
+      - name: Upload HTML to Netlify (Draft Deploy)
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        # The upload script should be the first to fail if critical setup is missing
         run: python scripts/netlify/netlify_upload_html.py
 
-      - name: Parse HTML and Build Results
+      - name: Parse HTML, Update Metrics, & Delete Local Files
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_parse_html.py
 
-      - name: Debug before dashboard build
+      # --- Dashboard Build Stage (Focus of the fix) ---
+
+      - name: Debug: Verify Results File
         run: |
-          echo "=== DEBUG: Checking files before dashboard build ==="
-          echo "Current directory: $(pwd)"
-          echo "Files in data/:"
-          ls -la data/ || echo "data/ directory not found"
-          echo "Files in docs/:"
-          ls -la docs/ || echo "docs/ directory not found"
-          echo "Checking for results file:"
           if [ -f "data/netlify_results.json" ]; then
-            echo "✅ netlify_results.json exists"
-            echo "File size: $(wc -l < data/netlify_results.json) lines"
-            echo "First 200 chars:"
-            head -c 200 data/netlify_results.json
-            echo ""
+            echo "✅ data/netlify_results.json exists and is ready."
           else
-            echo "❌ netlify_results.json not found"
+            echo "❌ CRITICAL: data/netlify_results.json not found. Stopping build."
+            exit 1
           fi
 
-      - name: Build Dashboard
+      - name: Build Dashboard (Critical Step) 🚨
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: |
           echo "=== STARTING DASHBOARD BUILD ==="
-          echo "REPORT_PASSWORD is set: $([ -z '$REPORT_PASSWORD' ] && echo 'NO' || echo 'YES')"
-          echo "Running dashboard script..."
+          # Execute the script, enabling Python traceback (-m) for detailed failure output
+          python -m scripts.netlify.netlify_build_dashboard
           
-          # Run with error handling and detailed output
-          set -x  # Enable debug output
-          python scripts/netlify/netlify_build_dashboard.py
-          EXIT_CODE=$?
-          set +x  # Disable debug output
-          
-          echo "Dashboard script exit code: $EXIT_CODE"
-          
-          if [ $EXIT_CODE -eq 0 ]; then
-            echo "✅ Dashboard script completed successfully"
-          else
-            echo "❌ Dashboard script failed with exit code: $EXIT_CODE"
-          fi
-
-      - name: Debug after dashboard build
-        run: |
-          echo "=== DEBUG: Checking files after dashboard build ==="
-          echo "Checking if index.html was created:"
-          if [ -f "docs/index.html" ]; then
-            echo "✅ index.html exists in docs/"
-            echo "File size: $(wc -c < docs/index.html) bytes"
-            echo "First few lines:"
-            head -5 docs/index.html
-          else
-            echo "❌ index.html NOT created in docs/"
-            echo "Contents of docs/ directory:"
-            ls -la docs/ || echo "docs/ directory not found"
-          fi
-          
-          echo "Checking Python script location:"
-          if [ -f "scripts/netlify/netlify_build_dashboard.py" ]; then
-            echo "✅ Dashboard script exists"
-            echo "Script size: $(wc -l < scripts/netlify/netlify_build_dashboard.py) lines"
-          else
-            echo "❌ Dashboard script not found at scripts/netlify/netlify_build_dashboard.py"
-            echo "Available scripts in scripts/netlify/:"
-            ls -la scripts/netlify/ || echo "scripts/netlify/ directory not found"
-          fi
-
-      - name: Test dashboard script directly
-        if: failure()
-        run: |
-          echo "=== TESTING DASHBOARD SCRIPT DIRECTLY ==="
-          echo "Current directory: $(pwd)"
-          echo "Python version: $(python --version)"
-          echo "Python path: $(which python)"
-          
-          # Test if we can import required modules
-          echo "Testing Python imports..."
-          python -c "import os, hashlib, datetime, collections; print('✅ All imports successful')"
-          
-          # Test if script can be parsed
-          echo "Testing script syntax..."
-          python -m py_compile scripts/netlify/netlify_build_dashboard.py && echo "✅ Script syntax is valid"
-          
-          # Simple file existence test
-          echo "Running file checks..."
-          python -c "import os; print('data/netlify_results.json exists:', os.path.exists('data/netlify_results.json')); print('docs/ directory exists:', os.path.exists('docs/'))"
-
-      - name: Commit results (no public folder)
+      - name: Commit Updated Data and Dashboard
         run: |
           echo "=== COMMITTING RESULTS ==="
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           
-          echo "Checking git status:"
-          git status
+          # Add the generated files
+          git add data/netlify_results.json
+          git add docs/index.html
           
-          echo "Adding files..."
-          git add data/
-          git add docs/
-          
-          echo "Committing changes..."
-          git commit -m "Update QA reports [skip ci]" || echo "No changes to commit"
-          
-          echo "Pushing changes..."
+          git commit -m "Update QA reports and dashboard [skip ci]" || echo "No changes to commit"
           git push || echo "Push failed or no changes"
 
-      - name: Final status report
+      - name: Final Status Report
         run: |
-          echo "=== WORKFLOW COMPLETION REPORT ==="
-          echo "Workflow completed at: $(date)"
           if [ -f "docs/index.html" ]; then
-            echo "🎉 SUCCESS: Dashboard was generated successfully!"
-            echo "📊 Dashboard location: docs/index.html"
-            echo "📁 Files in docs/:"
-            ls -la docs/
+            echo "🎉 SUCCESS: Dashboard was generated and committed!"
+            echo "📊 Dashboard size: $(wc -c < docs/index.html) bytes"
           else
-            echo "❌ FAILURE: Dashboard was NOT generated"
-            echo "Please check the debug output above for details"
-            echo "Current files in repository:"
-            find . -name "*.html" -o -name "*.json" | head -20
+            echo "❌ FAILURE: Dashboard (docs/index.html) was NOT created. Check traceback above."
+            exit 1
           fi
