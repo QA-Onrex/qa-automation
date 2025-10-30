@@ -59,10 +59,15 @@ def decrypt_bytes_to_bytes(encrypted_data: bytes) -> bytes:
 
 def encrypt_bytes_to_file(data: bytes, output_path: str):
     """Encrypts bytes and writes to file."""
-    encrypted_data = encrypt_bytes_to_bytes(data)
+    encrypted_data = encrypt_bytes_to_bytes(data) # This is Base64 BYTES (e.g., b'aGVsbG8=')
+    
+    # 1. DECODE THE BYTES TO A STRING for clean file writing (ASCII is safe for Base64)
+    encrypted_data_str = encrypted_data.decode('ascii')
+    
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, "wb") as f:
-        f.write(encrypted_data)
+    # 2. Open in text mode ("w") and write the string
+    with open(output_path, "w", encoding="ascii") as f:
+        f.write(encrypted_data_str)
 
 def decrypt_file_to_bytes(encrypted_path: str) -> bytes:
     """Decrypts a file and returns original bytes."""
