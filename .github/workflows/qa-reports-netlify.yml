@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies 📦
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           # Ensure all core dependencies are installed (requests and cryptography are confirmed)
@@ -57,18 +57,7 @@ jobs:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_parse_html.py
 
-      # --- Dashboard Build Stage (Focus of the fix) ---
-
-      - name: Debug: Verify Results File
-        run: |
-          if [ -f "data/netlify_results.json" ]; then
-            echo "✅ data/netlify_results.json exists and is ready."
-          else
-            echo "❌ CRITICAL: data/netlify_results.json not found. Stopping build."
-            exit 1
-          fi
-
-      - name: Build Dashboard (Critical Step) 🚨
+      - name: Build Dashboard
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: |
