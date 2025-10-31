@@ -1,182 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic QA Automation Dashboard</title>
+    <title>QA Automation Report Dashboard</title>
     <style>
-        /* Define your status classes here */
-        .status-failed { background-color: #ffcccc; }
-        .status-passed { background-color: #ccffcc; }
-        .status-skipped { background-color: #ffffcc; }
-        .status-neutral { background-color: #f0f0f0; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-        /* Add other styles as needed */
+        /* --- General Styling (Matching original Python script output) --- */
+        body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }
+        h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
+
+        /* --- Login/Auth Styling --- */
+        #login-container { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; }
+        #login-box { background-color: #2b2b2b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        #login-box h2 { margin-top: 0; color: #fff; }
+        #password-input { width: 250px; padding: 10px; margin: 10px 0; background-color: #1e1e1e; border: 1px solid #444; color: #ddd; border-radius: 4px; }
+        #login-button { padding: 10px 20px; background-color: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        #login-button:hover { background-color: #1b5e20; }
+        #error-message { color: #c62828; margin-top: 10px; display: none; }
+        #dashboard-content { display: none; }
+        #loading-indicator { color: #f9a825; margin-top: 20px; display: none; }
+
+
+        /* --- Table/Matrix Styling --- */
+        table { border-collapse: collapse; table-layout: fixed; width: auto; min-width: 100%; }
+        th, td { border: 1px solid #444; text-align: center; padding: 6px; white-space: nowrap; }
+        
+        /* Sticky Column Header (Date headers) */
+        th { 
+            background-color: #2b2b2b; 
+            font-weight: bold; 
+            position: sticky; 
+            top: 0; 
+            z-index: 2; 
+        }
+        /* Fix top border issue on sticky headers */
+        th::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background-color: #2b2b2b; }
+        
+        /* Sticky Row Header (Test Suite column) */
+        th:first-child { 
+            position: sticky; 
+            left: 0; 
+            z-index: 4; 
+            background-color: #2b2b2b; 
+            text-align: left; 
+            padding-left: 8px; 
+            border-right: 2px solid #444; 
+            min-width: 250px; /* Base width for suite names */
+            width: 20%;
+        }
+        /* Ensure sticky column doesn't show background artifacts */
+        th:first-child::before { content: ''; position: absolute; top: -1px; left: -1px; width: calc(100% + 1px); height: calc(100% + 1px); background-color: #2b2b2b; z-index: -1; }
+        
+        /* Suite Name cells (sticky) */
+        .suite-name { 
+            position: sticky; 
+            left: 0; 
+            background-color: #1e1e1e; 
+            text-align: left; 
+            padding-left: 8px; 
+            font-weight: normal; 
+            z-index: 1; 
+            border-right: 2px solid #444; 
+            word-break: break-all;
+        }
+
+        /* Project Header cells (sticky) */
+        .project-header { 
+            position: sticky; 
+            left: 0; 
+            background-color: #1e1e1e; 
+            text-align: left; 
+            padding-left: 8px; 
+            font-weight: bold; 
+            z-index: 1; 
+            border-right: 2px solid #444; 
+            border-bottom: 2px solid #444; 
+        }
+        .project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
+        .project-separator { background-color: #2b2b2b; }
+
+        /* Status Colors */
+        .status-passed { background-color: #2e7d32; color: #fff; cursor: pointer; } /* green */
+        .status-retried { background-color: #f9a825; color: #000; cursor: pointer; } /* yellow */
+        .status-failed { background-color: #c62828; color: #fff; cursor: pointer; } /* red */
+        .status-neutral { background-color: #2b2b2b; color: #666; } /* empty/no-run */
+        
+        .status-passed:hover, .status-retried:hover, .status-failed:hover { opacity: 0.8; }
+
+        .table-container { overflow: auto; max-height: 90vh; }
+        
+        /* Tooltip */
+        .tooltip { 
+            position: absolute; 
+            display: none; 
+            background-color: #2b2b2b; 
+            border: 1px solid #444; 
+            padding: 10px; 
+            border-radius: 4px; 
+            z-index: 1000; 
+            pointer-events: none; 
+            white-space: nowrap; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+        }
+        .tooltip-row { margin: 3px 0; }
+        .tooltip-label { font-weight: bold; display: inline-block; width: 100px; }
+
     </style>
 </head>
 <body>
-    <div id="auth-container">
-        <h1>QA Report Dashboard (Dynamic)</h1>
-        <p>Please enter the decryption password:</p>
-        <input type="password" id="password-input" placeholder="Enter password" autofocus>
-        <button onclick="checkPasswordAndLoadData()">Load Dashboard</button>
+    <div id='login-container'>
+        <div id='login-box'>
+            <h2>QA Automation Report</h2>
+            <div><input type='password' id='password-input' placeholder='Enter password' autofocus></div>
+            <div><button id='login-button' onclick='checkPasswordAndLoad()'>Login</button></div>
+            <div id='error-message'>Incorrect password. Please try again.</div>
+            <div id='loading-indicator'>Loading data...</div>
+        </div>
     </div>
 
-    <div id="dashboard-container" style="display: none;">
-        <h2>Decrypted Reports</h2>
-        <div id="table-render-area">
-            </div>
-        <p>
-            <button onclick="clearPassword()">Clear Password and Logout</button>
-        </p>
+    <div id='dashboard-content'>
+        <div id='tooltip' class='tooltip'></div>
+        <h1>QA Automation Report</h1>
+        <div class='table-container'>
+            <table id="dashboard-table">
+                <!-- Table content generated by JavaScript -->
+            </table>
+        </div>
     </div>
-
     <script>
-        // --- Configuration & Utility ---
+        // NOTE: This PASSWORD_HASH must be populated during your CI/CD process 
+        // using the environment variable REPORT_PASSWORD, as done by your Python script.
+        const PASSWORD_HASH = ''; 
         const DATA_FILE = 'dashboard_data.json';
-        const PASSWORD_KEY = 'qa_password'; // Key for localStorage
-        let REPORT_PASSWORD = '';
+        const SESSION_PASSWORD_KEY = 'reportPassword';
+        let dashboardData = {}; // To store the fetched matrix data
 
-        // Placeholder for your existing decryption logic
-        // You MUST inject your existing 'decryptBytesAES' and related functions here.
-        // For now, we'll use a placeholder function.
-        async function decryptBytesAES(encryptedBytes, password) {
-            // Your existing decryption logic goes here.
-            // Placeholder: Simulate failure if password is wrong, otherwise return empty array
-            if (password !== 'correct_password_placeholder') {
-                 throw new Error("Simulated decryption failure.");
+        /* --- Decryption/Auth Logic --- */
+
+        async function hashPassword(password) {
+            if (typeof crypto.subtle === 'undefined') {
+                // Fallback for environments without crypto.subtle (shouldn't happen in modern browsers)
+                console.warn("crypto.subtle not available. Using simple hashing for demo/testing.");
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                let hash = 0;
+                for (let i = 0; i < data.length; i++) {
+                    hash = (hash * 31) + data[i];
+                    hash |= 0; // Convert to 32bit integer
+                }
+                return hash.toString(16).padStart(64, '0'); // Return a mock hash
             }
-            return new Uint8Array(0); // Return empty array after successful decryption
+            
+            const msgBuffer = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        // Your existing openReport logic goes here, updated to use REPORT_PASSWORD
-        async function openReport(encoded_url) {
-            const url = decodeURIComponent(encoded_url);
-            console.log("Attempting to fetch and decrypt report from:", url);
+        async function checkPasswordAndLoad() {
+            const input = document.getElementById('password-input');
+            const errorMessage = document.getElementById('error-message');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const password = input.value;
             
-            // Your existing fetch and decryption code (using REPORT_PASSWORD)
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const encryptedBytes = new Uint8Array(await response.arrayBuffer());
-                
-                // --- Your decryption code using REPORT_PASSWORD goes here ---
-                const decryptedBytes = await decryptBytesAES(encryptedBytes, REPORT_PASSWORD);
+            loadingIndicator.style.display = 'block';
+            errorMessage.style.display = 'none';
 
-                // Assuming successful decryption, render the report
-                const htmlContent = new TextDecoder().decode(decryptedBytes);
-                const newWindow = window.open();
-                newWindow.document.write(htmlContent);
-                newWindow.document.close();
-                // --- End of existing logic ---
+            if (!PASSWORD_HASH) {
+                // Skip authentication if no hash is set (as per your script's warning)
+                sessionStorage.setItem(SESSION_PASSWORD_KEY, password);
+                loadDashboard();
+                return;
+            }
+
+            const hash = await hashPassword(password);
+            
+            if (hash === PASSWORD_HASH) {
+                sessionStorage.setItem(SESSION_PASSWORD_KEY, password);
+                loadDashboard();
+            } else {
+                loadingIndicator.style.display = 'none';
+                errorMessage.style.display = 'block';
+                input.value = ''; // Clear password on failure
+            }
+        }
+
+        async function loadDashboard() {
+            try {
+                const loadingIndicator = document.getElementById('loading-indicator');
+                loadingIndicator.style.display = 'block';
                 
-            } catch (error) {
-                console.error(`Failed to fetch or decrypt report: ${error.message}`);
-                alert("Failed to decrypt report. The password may be incorrect or the data is corrupt.");
+                // 1. Fetch the data file
+                const resp = await fetch(DATA_FILE);
+                if (!resp.ok) throw new Error(`HTTP error fetching ${DATA_FILE}: ${resp.status}`);
+                dashboardData = await resp.json();
+
+                // 2. Render the table
+                renderTable(dashboardData.data_map, dashboardData.all_dates);
+
+                // 3. Show content
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                
+            } catch (e) {
+                console.error('Failed to load dashboard data:', e);
+                document.getElementById('dashboard-table').innerHTML = `<tr><td><h2 style="color:red;">Error loading data: ${e.message}</h2></td></tr>`;
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+            } finally {
+                document.getElementById('loading-indicator').style.display = 'none';
             }
         }
         
-        function clearPassword() {
-            localStorage.removeItem(PASSWORD_KEY);
-            document.getElementById('auth-container').style.display = 'block';
-            document.getElementById('dashboard-container').style.display = 'none';
-            document.getElementById('password-input').value = '';
-            REPORT_PASSWORD = '';
+        /* --- Report Decryption Logic (Replicated from your original script) --- */
+
+        async function decryptBytesAES(encryptedBytes, password) {
+            if (encryptedBytes.length < 28) {
+                throw new Error('Invalid encrypted data length. Data is too short.');
+            }
+            const salt = encryptedBytes.slice(0, 16);
+            const nonce = encryptedBytes.slice(16, 28);
+            const ciphertext = encryptedBytes.slice(28);
+            
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw',
+                enc.encode(password),
+                { name: 'PBKDF2' },
+                false,
+                ['deriveKey']
+            );
+            
+            const key = await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['decrypt']
+            );
+            
+            const decrypted = await crypto.subtle.decrypt({
+                name: 'AES-GCM',
+                iv: nonce
+            }, key, ciphertext);
+            
+            return new Uint8Array(decrypted);
         }
 
-        // --- Core Dynamic Loading Functions ---
-
-        async function fetchAndRenderDashboard() {
+        async function openReport(project, suite, date) {
+            const record = dashboardData.data_map[project][suite][date];
+            if (!record || !record.html_file) return;
+            
+            // NOTE: The record stores 'html_file' which is a relative path like 'reports/20251021_...html'
+            // We use this as the URL to fetch the encrypted report data.
+            const reportUrl = record.html_file; 
+            const password = sessionStorage.getItem(SESSION_PASSWORD_KEY);
+            
+            if (!password) {
+                console.error('Password missing from session storage.');
+                // Using a custom message box instead of alert()
+                showCustomMessage('Error', 'Password missing! Please refresh and log in again.');
+                return;
+            }
+            
             try {
-                // Fetch the small JSON data file
-                const response = await fetch(DATA_FILE);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-
-                // Build and display the table
-                renderTable(data);
+                // Fetch the encrypted file (assumed to be Base64 encoded)
+                const resp = await fetch(reportUrl); 
+                if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
+                const base64Data = await resp.text();
                 
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('dashboard-container').style.display = 'block';
-
-            } catch (error) {
-                console.error('Error fetching dashboard data:', error);
-                alert('Failed to load dashboard data. Check console.');
-                clearPassword();
+                // Decode STANDARD base64 to get raw binary string
+                const binaryString = atob(base64Data);
+                
+                // Convert binary string to encrypted bytes (Uint8Array)
+                const encryptedBytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    encryptedBytes[i] = binaryString.charCodeAt(i);
+                }
+                
+                // Decrypt the bytes
+                const decryptedBytes = await decryptBytesAES(encryptedBytes, password);
+                
+                // Create and open the HTML report
+                const decryptedText = new TextDecoder().decode(decryptedBytes);
+                const blob = new Blob([decryptedText], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                window.open(url, '_blank');
+                
+            } catch (e) {
+                console.error('Failed to decrypt report:', e);
+                
+                let msg = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';
+                if (e.name === 'OperationError') {
+                    msg = 'Decryption failed: Check your password or the report data is tampered.';
+                }
+                showCustomMessage('Decryption Error', msg);
             }
         }
+        
+        /* --- UI Rendering and Tooltip Logic --- */
 
-        function renderTable(data) {
-            const renderArea = document.getElementById('table-render-area');
-            let html = '<table><thead><tr><th>Date</th></tr></thead><tbody>';
+        function renderTable(data_map, all_dates) {
+            const table = document.getElementById('dashboard-table');
+            let html = "<thead><tr><th>Test Suite</th>" + all_dates.map(d => `<th>${d.substring(5)}</th>`).join("") + "</tr></thead><tbody>";
 
-            // Generate header row (Dates)
-            let dateRow = '<tr>';
-            data.dates.forEach(date => {
-                dateRow += `<th>${date}</th>`;
-            });
-            dateRow += '</tr>';
-            
-            // Generate rows for each run (ID, Browser, Status, Link)
-            // Assuming all dates have a consistent set of runs (i.e., you are comparing the same test suite daily)
-            // This is a simplified rendering logic. You will need to adapt it to your exact table structure.
-            
-            // This example creates rows based on Run IDs (assuming a standard structure)
-            if (data.runs.length > 0) {
-                // Get all unique run IDs across all dates (A common pattern for comparison tables)
-                // For simplicity, we assume the first date's runs represent the template structure
-                data.runs[0].forEach((run_record, run_index) => {
-                    let runRow = `<tr><td>Run ID: ${run_record.id} - ${run_record.browser}</td>`;
-                    
-                    data.runs.forEach(daily_runs => {
-                        const cell_record = daily_runs[run_index] || { status: 'N/A', status_class: 'status-neutral', html_link: '#' };
+            const projects = Object.keys(data_map).sort();
+
+            for (const project of projects) {
+                const suites = Object.keys(data_map[project]).sort();
+                
+                // Project Header Row
+                html += `<tr><td class='project-header'>${project}</td>` + 
+                        `<td class='project-separator' colspan='${all_dates.length}'></td></tr>`;
+                
+                for (const suite of suites) {
+                    const displayName = suite.replace("Test Suites/", "");
+                    html += `<tr><td class='suite-name'>${displayName}</td>`;
+
+                    for (const date of all_dates) {
+                        const record = data_map[project][suite][date];
                         
-                        runRow += `
-                            <td class="${cell_record.status_class}">
-                                ${cell_record.status} 
-                                <br>
-                                <a href="javascript:void(0)" onclick="openReport('${encodeURIComponent(cell_record.html_link)}')">View Report</a>
-                            </td>
-                        `;
-                    });
-                    runRow += '</tr>';
-                    html += runRow;
-                });
+                        if (record) {
+                            const colorClass = record.status_class;
+                            const passed = record.passed || 0;
+                            const failed = record.failed || 0;
+                            
+                            // NOTE: We pass the project, suite, and date to the click handler
+                            html += `<td class='${colorClass}' 
+                                onmousemove='showTooltip(event, "${project}", "${suite}", "${date}")' 
+                                onmouseleave='hideTooltip()' 
+                                onclick='openReport("${project}", "${suite}", "${date}")'>
+                                ${passed}/${failed}
+                            </td>`;
+                        } else {
+                            // Empty cell for dates where this suite was not run
+                            html += "<td class='status-neutral'>–</td>";
+                        }
+                    }
+                    html += "</tr>";
+                }
             }
-
-            html += '</tbody></table>';
-            renderArea.innerHTML = html;
+            html += "</tbody>";
+            table.innerHTML = html;
         }
 
+        function showTooltip(e, project, suite, date) {
+            const record = dashboardData.data_map[project][suite][date];
+            if (!record) return;
+            
+            const tooltip = document.getElementById('tooltip');
+            
+            const formatDate = (dateString) => {
+                try {
+                    const d = new Date(dateString);
+                    // Check if date is valid
+                    if (isNaN(d.getTime())) return 'N/A'; 
 
-        function checkPasswordAndLoadData() {
+                    const pad = (n) => String(n).padStart(2, '0');
+                    const Y = d.getFullYear().toString().slice(2);
+                    const M = pad(d.getMonth() + 1);
+                    const D = pad(d.getDate());
+                    const h = pad(d.getHours());
+                    const m = pad(d.getMinutes());
+                    const s = pad(d.getSeconds());
+                    return `${Y}/${M}/${D} - ${h}:${m}:${s}`;
+                } catch (error) {
+                    return 'N/A';
+                }
+            };
+            
+            // Calculate duration in M:S format
+            const durationInMin = record.duration || 0;
+            const totalSeconds = Math.floor(durationInMin * 60);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const durationStr = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+
+            tooltip.innerHTML = `
+                <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${record.profile || 'N/A'}</strong></div>
+                <div class='tooltip-row'><span class='tooltip-label'>Status:</span><strong>${record.color.toUpperCase()}</strong></div>
+                <hr style="border-color:#444; margin: 5px 0;">
+                <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${record.test_cases || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${record.passed || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${record.failed || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${record.error || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${record.skipped || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Retry:</span>${record.retry_count || 0}</div>
+                <hr style="border-color:#444; margin: 5px 0;">
+                <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${formatDate(record.start)}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>End:</span>${formatDate(record.end)}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
+            `;
+            
+            tooltip.style.display = 'block';
+            
+            // Position tooltip, adjusting for screen edges
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            let x = e.pageX + 15;
+            let y = e.pageY + 15;
+            
+            if (x + tooltipWidth > windowWidth) {
+                x = e.pageX - tooltipWidth - 15;
+            }
+            if (y + tooltipHeight > windowHeight) {
+                y = windowHeight - tooltipHeight - 15;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        }
+
+        function hideTooltip() { 
+            document.getElementById('tooltip').style.display = 'none'; 
+        }
+
+        function showCustomMessage(title, message) {
+            // Simple custom modal/message box implementation
+            const container = document.getElementById('dashboard-content');
+            let modal = document.getElementById('custom-alert-modal');
+
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'custom-alert-modal';
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                    background: rgba(0,0,0,0.7); display: flex; justify-content: center; 
+                    align-items: center; z-index: 2000;
+                `;
+                modal.innerHTML = `
+                    <div style="background: #2b2b2b; padding: 25px; border-radius: 8px; 
+                         box-shadow: 0 5px 15px rgba(0,0,0,0.5); width: 350px;">
+                        <h3 id="modal-title" style="color: #c62828; margin-top: 0;"></h3>
+                        <p id="modal-message" style="color: #ddd;"></p>
+                        <button onclick="document.getElementById('custom-alert-modal').style.display='none'" 
+                                style="float: right; padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            OK
+                        </button>
+                    </div>
+                `;
+                container.appendChild(modal);
+            }
+            
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            modal.style.display = 'flex';
+        }
+
+        /* --- Initialization --- */
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedPassword = sessionStorage.getItem(SESSION_PASSWORD_KEY);
             const input = document.getElementById('password-input');
-            const password = input.value;
-
-            if (password) {
-                // In a real scenario, you'd test the password against a dummy/test encrypted file first
-                REPORT_PASSWORD = password;
-                localStorage.setItem(PASSWORD_KEY, password);
-                fetchAndRenderDashboard();
+            
+            if (PASSWORD_HASH && savedPassword) {
+                // Attempt silent login if hash is present and password is saved
+                hashPassword(savedPassword).then(hash => {
+                    if (hash === PASSWORD_HASH) {
+                        input.value = savedPassword; // Pre-fill for user visibility
+                        loadDashboard();
+                    } else {
+                        // Saved password hash mismatch
+                        document.getElementById('loading-indicator').style.display = 'none';
+                    }
+                });
+            } else if (!PASSWORD_HASH) {
+                // If no password is required, load immediately
+                loadDashboard();
             } else {
-                alert('Please enter a password.');
+                // Password required but not saved/incorrect
+                document.getElementById('loading-indicator').style.display = 'none';
             }
-        }
 
-        // Check for password on load
-        window.onload = function() {
-            const storedPassword = localStorage.getItem(PASSWORD_KEY);
-            if (storedPassword) {
-                document.getElementById('password-input').value = storedPassword;
-                REPORT_PASSWORD = storedPassword;
-                fetchAndRenderDashboard();
-            }
-        };
-
-        // Inject your existing decryption and supporting functions here (critical)
-        // You MUST copy and paste your actual 'decryptBytesAES', 'getEncryptionKey', etc. here.
-        // The console logging fix you just implemented should be included.
+            // Bind Enter key to login button
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPasswordAndLoad();
+                }
+            });
+        });
 
     </script>
 </body>
