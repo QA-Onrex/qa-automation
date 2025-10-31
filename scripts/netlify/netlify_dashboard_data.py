@@ -2,6 +2,8 @@
 import json
 import os
 import sys
+from datetime import datetime
+from collections import defaultdict
 
 # Define file paths based on standard project structure
 RESULTS_FILE = "data/netlify_results.json"
@@ -9,141 +11,137 @@ OUTPUT_FILE = "docs/dashboard_data.json"
 OUTPUT_DIR = os.path.dirname(OUTPUT_FILE)
 
 # --- Utility Functions ---
-def get_color_class(status):
-    """Maps status text to a CSS class for coloring."""
-    if status == "Failed":
+def get_status_color(record):
+    """Determines the color (status) based on test results."""
+    total = record.get("test_cases", 0) or 0
+    passed = record.get("passed", 0) or 0
+    failed = record.get("failed", 0) or 0
+    errored = record.get("error", 0) or 0
+    incomplete = record.get("incomplete", 0) or 0
+    skipped = record.get("skipped", 0) or 0
+    retry = record.get("retry_count", 0) or 0
+
+    total_calc = passed + failed + errored + incomplete + skipped
+    # Safety check: if reported total doesn't match sum of results, flag as error (red)
+    if total_calc != total:
+        return "red"
+
+    # Priority 1: All passed
+    if passed == total and total > 0:
+        # Check for retries which usually means yellow status
+        return "yellow" if retry > 0 else "green"
+
+    # Priority 2: Any failures/errors/incompletes
+    if failed > 0 or errored > 0 or incomplete > 0:
+        return "red"
+        
+    # Default for all others (e.g., all skipped, or zero total cases)
+    return "neutral" # Use neutral status if no clear fail or success.
+
+def get_color_class(color):
+    """Maps color text to a CSS class for coloring."""
+    if color == "red":
         return "status-failed"
-    elif status == "Passed":
+    elif color == "green":
         return "status-passed"
-    elif status == "No Run" or status == "N/A":
-        return "status-neutral"
-    elif status == "Skipped":
-        return "status-skipped"
+    elif color == "yellow":
+        return "status-retried"
     return "status-neutral"
 
-def prepare_data_for_frontend(results_data):
+def load_results():
+    """Loads and validates the raw results file."""
+    if not os.path.exists(RESULTS_FILE):
+        print(f"::error::Input file not found: {RESULTS_FILE}")
+        return []
+    try:
+        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        print(f"::error::Failed to decode JSON from {RESULTS_FILE}")
+        return []
+
+def prepare_matrix_data(results):
     """
-    Transforms a list of individual report records into the date-matrix format 
-    required for the frontend dashboard.
+    Transforms the flat list of results into the required data matrix 
+    (Project -> Suite -> Date -> Latest Record) for the comparison dashboard.
     """
-    # 1. Normalize input: Ensure 'records' is a list of dictionaries
-    records = []
-    if isinstance(results_data, list):
-        # Case 1: The correct historical format (list of all reports)
-        records = results_data
-    elif isinstance(results_data, dict):
-        # Case 2: The single report dictionary (treat as a list of one report)
-        records = [results_data]
-    else:
-        print(f"::error::Results data is an unknown format ({type(results_data)}). Returning empty dashboard.")
-        return {"dates": [], "runs": [], "run_identifiers": []}
-        
-    # --- Aggregation Step ---
-    # Target structure: { "YYYY-MM-DD": { "Run_ID": {report data} } }
-    aggregated_data = {}
-    
-    for record in records:
-        # Check if the record is a string and try to parse it (resilience check)
-        if isinstance(record, str):
+    # Group data by Project -> Test Suite ID -> Date
+    data = defaultdict(lambda: defaultdict(dict))
+
+    for r in results:
+        # Resilience check for string-wrapped records
+        if isinstance(r, str):
             try:
-                record = json.loads(record)
+                r = json.loads(r)
             except json.JSONDecodeError:
-                print(f"::warning::Skipping unparsable JSON string record.")
                 continue
 
-        if not isinstance(record, dict):
-             print(f"::warning::Skipping non-dictionary record.")
+        if not isinstance(r, dict):
              continue
 
-        # Extract date and create a unique identifier for the run slot
+        project = r.get("project", "Unknown")
+        # Ensure test_suite_id is present and clean it up for the key
+        suite = r.get("test_suite_id")
+        if not suite:
+            continue
+            
+        start = r.get("start") or r.get("end")
+        if not start:
+            continue
+            
+        # Robust date parsing (handles different ISO 8601 formats)
         try:
-            start_datetime = record.get("start")
-            if not start_datetime: continue
+            start_str = start.replace("Z", "+00:00")
+            # Try parsing with milliseconds first, then without
+            try:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+            except ValueError:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
 
-            # Get YYYY-MM-DD
-            date = start_datetime.split('T')[0] 
-            
-            # Create a comprehensive unique identifier for the test suite slot
-            # The client needs this to build columns consistently.
-            run_id = f"{record.get('project', 'Unknown')} - {record.get('test_suite_id', 'UnknownSuite')} - {record.get('profile', 'UnknownProfile')}"
-            
-        except (KeyError, IndexError, AttributeError):
-            print(f"::warning::Skipping record due to missing or malformed 'start' or identifier fields.")
+            date = dt_obj.strftime("%Y.%m.%d")
+        except ValueError:
+            # Skip record if date cannot be parsed
             continue
 
-        if date not in aggregated_data:
-            aggregated_data[date] = {}
-        
-        # Determine Status and Class
-        status = "Passed" if record.get("failed", 0) == 0 else "Failed"
-        
-        # Store the simplified record
-        aggregated_data[date][run_id] = {
-            "status": status,
-            "status_class": get_color_class(status),
-            "timestamp": start_datetime,
-            "html_file": record.get("html_filename", "N/A"),
-            # Ensure the link is relative to the Netlify reports directory
-            "html_link": f"/reports/{record.get('html_filename')}" if record.get('html_filename') else "#",
-            "browser": record.get("profile", "N/A"), # Using 'profile' as browser/env for display
-        }
+        # Keep only the latest record for that (Project, Suite, Date) combination
+        current_record = data[project][suite].get(date)
+        if current_record is None or r.get("end", "") > current_record.get("end", ""):
+            r["color"] = get_status_color(r)
+            r["status_class"] = get_color_class(r["color"])
+            data[project][suite][date] = r
 
-    # 2. Final preparation for the client: extract dates and run lists
-    dates = sorted(aggregated_data.keys(), reverse=True) # Sort dates newest first
-
-    # Create a list of all unique run identifiers to establish consistent column order
-    all_run_ids = sorted(list(set(run_id for date_data in aggregated_data.values() for run_id in date_data.keys())))
+    # Collect all unique dates across all projects/suites (latest first, max 1 year)
+    all_dates = sorted(
+        {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
+        reverse=True
+    )[:365]
     
-    # Structure the run data row by row (one element per date)
-    run_data_list = []
-    
-    for date in dates:
-        date_runs = []
-        for run_id in all_run_ids:
-            # Find the run record for this specific date and run_id, or use a placeholder
-            record = aggregated_data[date].get(run_id, {
-                "status": "No Run",
-                "status_class": "status-neutral",
-                "timestamp": "N/A",
-                "html_file": "N/A",
-                "html_link": "#",
-                "browser": "N/A"
-            })
-            date_runs.append(record)
-        run_data_list.append(date_runs)
-
-
-    return {
-        "dates": dates,
-        "runs": run_data_list,
-        "run_identifiers": all_run_ids # New key to help client draw headers
-    }
+    return data, all_dates
 
 # --- Main Execution ---
 def main():
-    if not os.path.exists(RESULTS_FILE):
-        print(f"::error::Input file not found: {RESULTS_FILE}")
+    results_data = load_results()
+    if not results_data:
         sys.exit(1)
 
-    try:
-        # Load the data. This will load the list or dictionary at the root level.
-        with open(RESULTS_FILE, 'r', encoding='utf-8') as f:
-            results_data = json.load(f)
-    except json.JSONDecodeError:
-        print(f"::error::Failed to decode JSON from {RESULTS_FILE}")
-        sys.exit(1)
-
-    # 1. Prepare the data structure
-    dashboard_data = prepare_data_for_frontend(results_data)
+    # 1. Prepare the matrix structure
+    data_map, all_dates = prepare_matrix_data(results_data)
+    
+    # Final data structure for the frontend
+    dashboard_data = {
+        "data_map": data_map,
+        "all_dates": all_dates
+    }
 
     # 2. Ensure output directory exists
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    # 3. Write the simplified JSON file
+    # 3. Write the structured JSON file
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        json.dump(dashboard_data, f, indent=2, ensure_ascii=False)
+        # Use default=str to handle datetime objects if they somehow slipped through
+        json.dump(dashboard_data, f, indent=2, ensure_ascii=False, default=str)
 
-    print(f"✅ Successfully created dynamic dashboard data at {OUTPUT_FILE}")
+    print(f"✅ Successfully created dynamic dashboard data (matrix structure) at {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
