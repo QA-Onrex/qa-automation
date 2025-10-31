@@ -103,7 +103,7 @@ def main():
                 
         # Exit early if no emails found
         if len(uids) == 0:
-            print("::notice::⏭️ Emails processed: 0")
+            print("::notice::⏭️ Emails found: 0")
             mail.logout()
             return
 
