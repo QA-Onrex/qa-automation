@@ -146,11 +146,11 @@ def main():
         
         # Exit early if no report files found
         if report_file_count == 0:
-            print("⏭️ Report files uploaded: 0")
+            print("::notice::⏭️ Report files found: 0")
             return
 
         # Output annotation for found files
-        print(f"📄 Report files found: {report_file_count}")
+        print(f"::notice::📄 Report files found: {report_file_count}")
 
         # Create deployment manifest
         manifest = create_deploy_manifest()
@@ -162,7 +162,7 @@ def main():
         upload_to_netlify(manifest, report_file_count)
         
         # Output annotation for uploaded files
-        print(f"✅ Report files uploaded: {report_file_count}")
+        print(f"::notice::✅ Report files uploaded: {report_file_count}")
 
     except requests.exceptions.HTTPError as e:
         print(f"❌ Netlify HTTP Error: {e.response.status_code} - {e.response.text}")
