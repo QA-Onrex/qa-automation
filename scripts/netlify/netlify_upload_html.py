@@ -59,17 +59,26 @@ def create_deploy_manifest():
 
     return manifest
 
-def upload_to_netlify(manifest):
+def upload_to_netlify(manifest, report_file_count):
     """Initiate draft deploy, upload missing files, and get the deploy URL."""
     headers = {
         "Authorization": f"Bearer {NETLIFY_AUTH_TOKEN}",
         "Content-Type": "application/json"
     }
     
+    # Create deploy message
+    deploy_message = f"Uploaded {report_file_count} report file(s)"
+    if report_file_count == 0:
+        deploy_message = "Configuration update only"
+    
     # 1. Initiate Draft Deploy
     deploy_url = f"https://api.netlify.com/api/v1/sites/{NETLIFY_SITE_ID}/deploys"
-    data = {"files": manifest, "draft": True} # <--- DRAFT deploy is used for staging
-    print("::notice::Initiating Netlify draft deploy...")
+    data = {
+        "files": manifest, 
+        "draft": True,
+        "title": deploy_message  # Add deploy message
+    }
+    print(f"::notice::Initiating Netlify draft deploy: {deploy_message}")
     response = requests.post(deploy_url, headers=headers, json=data)
     response.raise_for_status()
     deploy_data = response.json()
@@ -102,7 +111,8 @@ def upload_to_netlify(manifest):
             with open(local_path, "rb") as f:
                 upload_response = requests.put(upload_path, headers=headers, data=f)
                 upload_response.raise_for_status()
-                print(f"::notice::Uploaded file with SHA: {file_sha}")
+                file_type = "headers" if netlify_path == f"/{HEADERS_FILENAME}" else "report"
+                print(f"::notice::Uploaded {file_type} file with SHA: {file_sha}")
         else:
             print(f"::error::Failed to find local file for SHA: {file_sha}")
             
@@ -124,17 +134,27 @@ def upload_to_netlify(manifest):
         
     print(f"✅ Successfully stored {len(urls)} URLs in {URLS_FILE}")
     print(f"::notice::Deploy finished. Draft URL: {base_url}")
+    print(f"::notice::Deploy message: {deploy_message}")
 
 def main():
     print("::notice::Starting Netlify upload process...")
+    
+    # Check if there are any report files to upload
+    html_files = [f for f in os.listdir(HTML_FOLDER) if f.endswith(".html") and f != HEADERS_FILENAME]
+    report_file_count = len(html_files)
+    
+    if report_file_count == 0:
+        print("::notice::No report files found in data/netlify_html. Skipping upload.")
+        return
+        
     manifest = create_deploy_manifest()
 
     if not manifest:
-        print("::notice::No encrypted HTML files found to upload.")
+        print("::notice::No files found to upload.")
         return
 
     try:
-        upload_to_netlify(manifest)
+        upload_to_netlify(manifest, report_file_count)
     except requests.exceptions.HTTPError as e:
         print(f"::error::Netlify HTTP Error: {e.response.status_code} - {e.response.text}")
         sys.exit(1)
