@@ -100,16 +100,16 @@ def main():
             sys.exit(1)
 
         uids = data[0].split()
-        
-        # Output annotation for found emails
-        print(f"::notice::📧 Emails found: {len(uids)}")
-        
+                
         # Exit early if no emails found
         if len(uids) == 0:
             print("::notice::⏭️ Emails processed: 0")
             mail.logout()
             return
 
+        # Output annotation for found emails
+        print(f"::notice::📧 Emails found: {len(uids)}")
+        
         processed_count = 0
         
         # Process each email
