@@ -80,7 +80,6 @@ def parse_html_from_netlify(html_filename, netlify_url):
     try:
         # Decrypt HTML from local file into memory
         # Uses the decrypt_file_to_bytes function from netlify_encryptor
-        print(f"::notice::Decrypting local file: {local_path}")
         html_bytes = decrypt_file_to_bytes(local_path)
         content = html_bytes.decode("utf-8")
 
@@ -165,7 +164,6 @@ def parse_html_from_netlify(html_filename, netlify_url):
         # --- CRITICAL CHANGE: DELETE LOCAL FILE AFTER SUCCESSFUL PARSING ---
         try:
             os.remove(local_path)
-            print(f"::notice::Successfully deleted local file: {local_path}")
         except Exception as delete_e:
             print(f"::error::Failed to delete local file {local_path}: {delete_e}")
             
@@ -181,7 +179,6 @@ def cleanup_urls_file():
     try:
         if os.path.exists(URLS_FILE):
             os.remove(URLS_FILE)
-            print(f"::notice::Successfully cleaned up {URLS_FILE}")
     except Exception as e:
         print(f"::warning::Failed to clean up {URLS_FILE}: {e}")
 
@@ -199,7 +196,7 @@ def main():
             files_to_process.append((html_filename, netlify_url))
     
     if not files_to_process:
-        print("::notice::No local HTML files found to process. Cleaning up URLs file.")
+        print("::notice::Parse HTML: No local HTML files found to process. Cleaning up URLs file.")
         cleanup_urls_file()
         return
 
@@ -212,7 +209,6 @@ def main():
         if data:
             results.append(data)
             processed_count += 1
-            print(f"::notice::Processed {html_filename} from local disk.")
         else:
             print(f"::warning::Skipping {html_filename} - failed to parse or file missing locally.")
 
@@ -220,7 +216,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    print(f"::notice::Updated {RESULTS_FILE} with {processed_count} new entries.")
+    print(f"::notice::Parse HTML: Updated {RESULTS_FILE} with {processed_count} new entries.")
     
     # Clean up URLs file after successful processing
     cleanup_urls_file()
