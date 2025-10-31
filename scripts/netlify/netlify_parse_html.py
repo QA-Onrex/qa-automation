@@ -35,8 +35,6 @@ def load_urls():
             return {}
     return {}
 
-# REMOVED: fetch_encrypted_html_from_netlify (no longer needed)
-
 def compute_retry_count(test_suite_id, start_time, results, hours=10):
     """Compute retry count using chronological results, stop when older than 10 hours."""
     retry_count = 0
@@ -71,7 +69,6 @@ def compute_retry_count(test_suite_id, start_time, results, hours=10):
 
     return retry_count
 
-# NOTE: The function name is kept for compatibility but its logic has changed.
 def parse_html_from_netlify(html_filename, netlify_url):
     """Decrypt, parse embedded JSON from local HTML file, and delete the file."""
     local_path = os.path.join(HTML_FOLDER, html_filename)
@@ -179,17 +176,37 @@ def parse_html_from_netlify(html_filename, netlify_url):
         # Ensure file is NOT deleted if parsing fails
         return None
 
+def cleanup_urls_file():
+    """Clean up the URLs file after successful processing."""
+    try:
+        if os.path.exists(URLS_FILE):
+            os.remove(URLS_FILE)
+            print(f"::notice::Successfully cleaned up {URLS_FILE}")
+    except Exception as e:
+        print(f"::warning::Failed to clean up {URLS_FILE}: {e}")
+
 def main():
     urls = load_urls()
     if not urls:
         print("::notice::No Netlify URLs found to process (waiting for upload step).")
         return
 
+    # Check if there are any local files to process
+    files_to_process = []
+    for html_filename, netlify_url in urls.items():
+        local_path = os.path.join(HTML_FOLDER, html_filename)
+        if os.path.exists(local_path):
+            files_to_process.append((html_filename, netlify_url))
+    
+    if not files_to_process:
+        print("::notice::No local HTML files found to process. Cleaning up URLs file.")
+        cleanup_urls_file()
+        return
+
     processed_count = 0
     
-    # Iterate through the URLs mapping (which gives us the filename and the dashboard link)
-    for html_filename, netlify_url in urls.items():
-        # netlify_url is passed so it can be stored as the final report link in results.json
+    # Iterate through the files that actually exist locally
+    for html_filename, netlify_url in files_to_process:
         data = parse_html_from_netlify(html_filename, netlify_url)
         
         if data:
@@ -204,6 +221,9 @@ def main():
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(f"::notice::Updated {RESULTS_FILE} with {processed_count} new entries.")
+    
+    # Clean up URLs file after successful processing
+    cleanup_urls_file()
 
 if __name__ == "__main__":
     main()
