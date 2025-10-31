@@ -4,10 +4,11 @@ import email
 import os
 import traceback
 import sys
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from netlify_encryptor import encrypt_bytes_to_file  # 🔒 in-memory encryption
 
-# --- Config ---
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from netlify_encryptor import encrypt_bytes_to_file
+
+# Configuration
 zoho_user = os.getenv("ZOHO_EMAIL")
 zoho_pass = os.getenv("ZOHO_APP_PASSWORD")
 encrypt_password = os.getenv("REPORT_PASSWORD")
@@ -15,38 +16,35 @@ encrypt_password = os.getenv("REPORT_PASSWORD")
 IMAP_SERVER = "imap.zoho.eu"
 SOURCE_FOLDER = "Automation"
 PROCESSED_FOLDER = "Automation/Processed"
-
 ATTACHMENTS_FOLDER = "data/netlify_attachments"
+
 os.makedirs(ATTACHMENTS_FOLDER, exist_ok=True)
 
 
 def move_message(mail, msg_uid):
-    """Safely move a message to another folder."""
+    """Move email to processed folder using MOVE command with COPY fallback"""
     try:
         resp = mail.uid("MOVE", msg_uid, PROCESSED_FOLDER)
         if resp[0] == "OK":
-            print(f"::notice::Moved email UID {msg_uid.decode()} via MOVE.")
+            print(f"Moved email UID {msg_uid.decode()} via MOVE")
             return True
         else:
             copy_resp = mail.uid("COPY", msg_uid, PROCESSED_FOLDER)
             if copy_resp[0] != "OK":
-                print(f"::error::Failed to copy UID {msg_uid.decode()}. Skipping delete.")
+                print(f"Failed to copy UID {msg_uid.decode()} - skipping delete")
                 return False
             mail.uid("STORE", msg_uid, "+FLAGS", "(\Deleted)")
             return True
     except Exception as e:
-        print(f"::error::Error moving message UID {msg_uid.decode()}: {e}")
+        print(f"Error moving message UID {msg_uid.decode()}: {e}")
         traceback.print_exc()
         return False
 
 
 def save_attachments(msg):
-    """
-    Save all ZIP attachments from a single email, encrypting them in memory.
-    No plaintext ZIP files are ever written to disk.
-    """
+    """Extract and encrypt ZIP attachments from email message"""
     if not encrypt_password:
-        print("::error::REPORT_PASSWORD not set — cannot encrypt attachments.")
+        print("REPORT_PASSWORD not set - cannot encrypt attachments")
         return []
 
     saved_files = []
@@ -54,79 +52,112 @@ def save_attachments(msg):
         content_disposition = part.get("Content-Disposition", "")
         filename = part.get_filename()
 
+        # Process only ZIP attachments
         if filename and filename.lower().endswith(".zip") and "attachment" in content_disposition:
             try:
                 content_bytes = part.get_payload(decode=True)
                 if not content_bytes:
-                    print(f"::warning::Empty ZIP attachment {filename}")
+                    print(f"Empty ZIP attachment {filename}")
                     continue
 
-                encrypted_name = filename
-                encrypted_path = os.path.join(ATTACHMENTS_FOLDER, encrypted_name)
-
-                # 🔒 Encrypt directly from memory, never saving plaintext ZIP
+                encrypted_path = os.path.join(ATTACHMENTS_FOLDER, filename)
+                
+                # Encrypt attachment directly from memory
                 encrypt_bytes_to_file(content_bytes, encrypted_path)
-
-                saved_files.append(encrypted_name)
-                print(f"::notice::Encrypted and saved {encrypted_name}")
+                saved_files.append(filename)
+                print(f"Encrypted and saved attachment: {filename}")
 
             except Exception as e:
-                print(f"::error::Failed to encrypt attachment {filename}: {e}")
+                print(f"Failed to encrypt attachment {filename}: {e}")
                 traceback.print_exc()
 
     return saved_files
 
 
 def main():
-    print(f"Connecting to Zoho IMAP as {zoho_user}...")
-    mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-    mail.login(zoho_user, zoho_pass)
+    # Validate required environment variables
+    if not all([zoho_user, zoho_pass, encrypt_password]):
+        print("❌ Missing required environment variables")
+        sys.exit(1)
 
-    status, _ = mail.select(SOURCE_FOLDER)
-    if status != "OK":
-        print(f"::error::Failed to select folder: {SOURCE_FOLDER}")
-        return
+    try:
+        # Connect to IMAP server
+        print("Connecting to Zoho IMAP server...")
+        mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+        mail.login(zoho_user, zoho_pass)
+        print(f"Connected as {zoho_user}")
 
-    status, data = mail.uid("search", None, "ALL")
-    if status != "OK":
-        print("::error::Failed to search emails.")
-        return
+        # Select source folder
+        status, _ = mail.select(SOURCE_FOLDER)
+        if status != "OK":
+            print(f"Failed to select folder: {SOURCE_FOLDER}")
+            sys.exit(1)
 
-    uids = data[0].split()
-    print(f"::notice::Fetch Emails: Found {len(uids)} emails in '{SOURCE_FOLDER}'.")
+        # Search for all emails
+        status, data = mail.uid("search", None, "ALL")
+        if status != "OK":
+            print("Failed to search emails")
+            sys.exit(1)
 
-    processed_count = 0
-    for uid in uids:
-        try:
-            typ, msg_data = mail.uid("fetch", uid, "(RFC822)")
-            if typ != "OK" or not msg_data or not msg_data[0]:
-                print(f"::warning::Failed to fetch email UID {uid.decode()}")
-                continue
+        uids = data[0].split()
+        
+        # Output annotation for found emails
+        print(f"::notice::📧 Emails found: {len(uids)}")
+        
+        # Exit early if no emails found
+        if len(uids) == 0:
+            print("::notice::⏭️ Emails processed: 0")
+            mail.logout()
+            return
 
-            raw_email = msg_data[0][1]
-            if not raw_email:
-                print(f"::warning::Empty email UID {uid.decode()}")
-                continue
+        processed_count = 0
+        
+        # Process each email
+        for uid in uids:
+            uid_str = uid.decode()
+            try:
+                # Fetch email content
+                typ, msg_data = mail.uid("fetch", uid, "(RFC822)")
+                if typ != "OK" or not msg_data or not msg_data[0]:
+                    print(f"Failed to fetch email UID {uid_str}")
+                    continue
 
-            msg = email.message_from_bytes(raw_email)
-            subject = msg.get("subject", "(no subject)")
-            print(f"::notice::Processing email: {subject}")
+                raw_email = msg_data[0][1]
+                if not raw_email:
+                    print(f"Empty email UID {uid_str}")
+                    continue
 
-            saved_files = save_attachments(msg)
-            if not saved_files:
-                print(f"::warning::No ZIP attachments found for UID {uid.decode()}")
-                continue
+                # Parse email and extract subject
+                msg = email.message_from_bytes(raw_email)
+                subject = msg.get("subject", "(no subject)")
+                print(f"Processing email: {subject}")
 
-            if move_message(mail, uid):
-                processed_count += 1
+                # Save and encrypt attachments
+                saved_files = save_attachments(msg)
+                if not saved_files:
+                    print(f"No ZIP attachments found for UID {uid_str}")
+                    continue
 
-        except Exception as e:
-            print(f"::error::Error processing email UID {uid.decode()}: {e}")
-            traceback.print_exc()
+                # Move email to processed folder
+                if move_message(mail, uid):
+                    processed_count += 1
+                    print(f"Successfully processed email: {subject}")
 
-    mail.expunge()
-    mail.logout()
-    print(f"::notice::Fetch Emails: Processed {processed_count} emails and saved encrypted attachments.")
+            except Exception as e:
+                print(f"Error processing email UID {uid_str}: {e}")
+                traceback.print_exc()
+
+        # Cleanup and output results
+        mail.expunge()
+        mail.logout()
+        
+        # Output annotation for processed emails
+        print(f"::notice::✅ Emails processed: {processed_count}")
+
+    except Exception as e:
+        print(f"❌ Fatal error: {e}")
+        traceback.print_exc()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
