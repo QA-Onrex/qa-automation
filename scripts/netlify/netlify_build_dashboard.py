@@ -1,166 +1,332 @@
 # scripts/netlify/netlify_build_dashboard.py
-import os
 import json
+import os
 import hashlib
-import requests
-import sys
-# Make sure the path to netlify_encryptor.py is correct
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from netlify_encryptor import decrypt_file_to_bytes # Kept for the file check only
+from datetime import datetime
+from collections import defaultdict
 
-# --- Configuration ---
-NETLIFY_SITE_ID = os.getenv("NETLIFY_SITE_ID")
-NETLIFY_AUTH_TOKEN = os.getenv("NETLIFY_AUTH_TOKEN")
-HTML_FOLDER = "data/netlify_html"
-URLS_FILE = "data/netlify_urls.json"
-HEADERS_FILENAME = "_headers" # New configuration variable
+RESULTS_FILE = "data/netlify_results.json"
+OUTPUT_FILE = "docs/index.html"
 
-if not NETLIFY_SITE_ID or not NETLIFY_AUTH_TOKEN:
-    print("::error::NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN not set.")
-    sys.exit(1)
+def load_results():
+    if not os.path.exists(RESULTS_FILE):
+        print(f"Error: {RESULTS_FILE} not found.")
+        return []
+    with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-# Helper function to compute SHA-1 hash
-def sha1_file(filepath):
-    """Compute SHA-1 hash for a file."""
-    hasher = hashlib.sha1()
-    with open(filepath, 'rb') as f:
-        buf = f.read(65536)
-        while len(buf) > 0:
-            hasher.update(buf)
-            buf = f.read(65536)
-    return hasher.hexdigest()
+def get_color(record):
+    total = record.get("test_cases", 0) or 0
+    passed = record.get("passed", 0) or 0
+    failed = record.get("failed", 0) or 0
+    errored = record.get("error", 0) or 0
+    incomplete = record.get("incomplete", 0) or 0
+    skipped = record.get("skipped", 0) or 0
+    retry = record.get("retry_count", 0) or 0
 
-def create_deploy_manifest():
-    """Create a dictionary of {path: sha1} for all encrypted files and the headers file."""
-    manifest = {}
-    
-    # 1. Include all Encrypted HTML files
-    html_files = [f for f in os.listdir(HTML_FOLDER) if f.endswith(".html")]
-    
-    for filename in html_files:
-        local_path = os.path.join(HTML_FOLDER, filename)
-        if os.path.getsize(local_path) > 0:
-            # Netlify path: "reports/filename"
-            netlify_path = f"reports/{filename}"
-            manifest[netlify_path] = sha1_file(local_path)
-        else:
-            print(f"::warning::Skipping empty file: {filename}")
-            
-    # 2. CRITICAL FIX: Include the _headers file in the manifest
-    headers_local_path = os.path.join(HTML_FOLDER, HEADERS_FILENAME)
-    
-    if os.path.exists(headers_local_path):
-        # Map to the root path (/_headers) so Netlify processes it as a configuration file
-        netlify_headers_path = f"/{HEADERS_FILENAME}" 
-        manifest[netlify_headers_path] = sha1_file(headers_local_path)
-        print(f"::notice::Included deployment configuration file: {HEADERS_FILENAME}")
-    else:
-        print(f"::error::Missing required configuration file: {headers_local_path}. CORS will likely fail.")
+    total_calc = passed + failed + errored + incomplete + skipped
+    if total_calc != total:
+        return "red"
 
-    return manifest
+    if passed == total:
+        return "yellow" if retry > 0 else "green"
 
-def upload_to_netlify(manifest, report_file_count):
-    """Initiate draft deploy, upload missing files, and get the deploy URL."""
-    headers = {
-        "Authorization": f"Bearer {NETLIFY_AUTH_TOKEN}",
-        "Content-Type": "application/json"
-    }
-    
-    # Create deploy message
-    deploy_message = f"Uploaded {report_file_count} report file(s)"
-    if report_file_count == 0:
-        deploy_message = "Configuration update only"
-    
-    # 1. Initiate Draft Deploy
-    deploy_url = f"https://api.netlify.com/api/v1/sites/{NETLIFY_SITE_ID}/deploys"
-    data = {
-        "files": manifest, 
-        "draft": True,
-        "title": deploy_message  # Add deploy message
-    }
-    print(f"::notice::Initiating Netlify draft deploy: {deploy_message}")
-    response = requests.post(deploy_url, headers=headers, json=data)
-    response.raise_for_status()
-    deploy_data = response.json()
-    
-    deploy_id = deploy_data.get("id")
-    required_files = deploy_data.get("required", [])
-    # IMPORTANT: The deploy_ssl_url gives us the specific draft URL (e.g., https://<hash>--<site>.netlify.app)
-    deploy_draft_url = deploy_data.get("deploy_ssl_url") 
-    
-    print(f"::notice::Deploy ID: {deploy_id}. Files to upload: {len(required_files)}")
+    return "red"
 
-    # 2. Upload Required Files (Handles both HTML and _headers file)
-    for file_sha in required_files:
-        # We need to find the local path for the file based on its SHA
-        local_path = None
-        for netlify_path, sha in manifest.items():
-            if sha == file_sha:
-                # The local file is always inside HTML_FOLDER, and the file name is the last component
-                filename = os.path.basename(netlify_path)
-                # If it's the _headers file, use the actual filename
-                if netlify_path == f"/{HEADERS_FILENAME}":
-                     local_path = os.path.join(HTML_FOLDER, HEADERS_FILENAME)
-                # Otherwise, it's an HTML file
-                elif netlify_path.startswith("reports/"):
-                    local_path = os.path.join(HTML_FOLDER, filename)
-                break
-
-        if local_path and os.path.exists(local_path):
-            upload_path = f"https://api.netlify.com/api/v1/deploys/{deploy_id}/files/{file_sha}"
-            with open(local_path, "rb") as f:
-                upload_response = requests.put(upload_path, headers=headers, data=f)
-                upload_response.raise_for_status()
-                file_type = "headers" if netlify_path == f"/{HEADERS_FILENAME}" else "report"
-                print(f"::notice::Uploaded {file_type} file with SHA: {file_sha}")
-        else:
-            print(f"::error::Failed to find local file for SHA: {file_sha}")
-            
-    # 3. Store Netlify URLs
-    # Base URL is derived from the draft URL
-    base_url = f"{deploy_draft_url.split('/deploy/')[0]}"
-    
-    urls = {}
-    for netlify_path, sha in manifest.items():
-        # Only process URLs for the report files, not the _headers file
-        if netlify_path.startswith("reports/"):
-            full_url = f"{base_url}/{netlify_path}"
-            filename = os.path.basename(netlify_path)
-            urls[filename] = full_url
-
-    # Save URLs to file for the next script
-    with open(URLS_FILE, "w", encoding="utf-8") as f:
-        json.dump(urls, f, indent=2, ensure_ascii=False)
-        
-    print(f"✅ Successfully stored {len(urls)} URLs in {URLS_FILE}")
-    print(f"::notice::Deploy finished. Draft URL: {base_url}")
-    print(f"::notice::Deploy message: {deploy_message}")
-
-def main():
-    print("::notice::Starting Netlify upload process...")
-    
-    # Check if there are any report files to upload
-    html_files = [f for f in os.listdir(HTML_FOLDER) if f.endswith(".html") and f != HEADERS_FILENAME]
-    report_file_count = len(html_files)
-    
-    if report_file_count == 0:
-        print("::notice::No report files found in data/netlify_html. Skipping upload.")
-        return
-        
-    manifest = create_deploy_manifest()
-
-    if not manifest:
-        print("::notice::No files found to upload.")
+def build_dashboard():
+    results = load_results()
+    if not results:
+        print("No results found.")
         return
 
-    try:
-        upload_to_netlify(manifest, report_file_count)
-    except requests.exceptions.HTTPError as e:
-        print(f"::error::Netlify HTTP Error: {e.response.status_code} - {e.response.text}")
-        sys.exit(1)
-    except Exception as e:
-        print(f"::error::An unexpected error occurred during Netlify upload: {e}")
-        sys.exit(1)
-        
+    # Get password hash from environment
+    password = os.getenv("REPORT_PASSWORD", "")
+    password_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
+    
+    if not password:
+        print("::warning::REPORT_PASSWORD not set. Dashboard will have no authentication.")
+
+    # Group data by Project → Test Suite ID → Date
+    data = defaultdict(lambda: defaultdict(dict))
+
+    for r in results:
+        project = r.get("project", "Unknown")
+        suite = r.get("test_suite_id", "Unknown")
+        start = r.get("start") or r.get("end")
+        if not start:
+            continue
+        # Use strptime for robust ISO 8601 parsing with timezone info
+        try:
+            start_str = start.replace("Z", "+00:00")
+            if "." in start_str:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+            else:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
+
+            date = dt_obj.strftime("%Y.%m.%d")
+        except ValueError:
+            continue
+
+        # Keep only latest record for the date
+        if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
+            r["color"] = get_color(r)
+            data[project][suite][date] = r
+
+    # Calculate maximum suite name length for adaptive column width
+    max_length = 0
+    for project in data:
+        for suite in data[project]:
+            name = suite.replace("Test Suites/", "")
+            if len(name) > max_length:
+                max_length = len(name)
+    left_col_width = max_length * 9 + 16  # approximate pixel width
+
+    # Collect all dates (latest first)
+    all_dates = sorted(
+        {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
+        reverse=True
+    )[:365]
+
+    # Build HTML
+    html = [
+        "<html><head><meta charset='utf-8'><title>QA Automation Report</title>",
+        "<style>",
+        "body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }",
+        "h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }",
+        "#login-container { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; }",
+        "#login-box { background-color: #2b2b2b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }",
+        "#login-box h2 { margin-top: 0; color: #fff; }",
+        "#password-input { width: 250px; padding: 10px; margin: 10px 0; background-color: #1e1e1e; border: 1px solid #444; color: #ddd; border-radius: 4px; }",
+        "#login-button { padding: 10px 20px; background-color: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }",
+        "#login-button:hover { background-color: #1b5e20; }",
+        "#error-message { color: #c62828; margin-top: 10px; display: none; }",
+        "#dashboard-content { display: none; }",
+        "table { border-collapse: collapse; }",
+        "th, td { border: 1px solid #444; text-align: center; padding: 6px; }",
+        "th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }",
+        "th::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background-color: #2b2b2b; }",
+        "th:first-child { position: sticky; left: 0; z-index: 4; background-color: #2b2b2b; text-align: left; padding-left: 8px; border-right: 2px solid #444; }",
+        "th:first-child::before { content: ''; position: absolute; top: -1px; left: -1px; width: calc(100% + 1px); height: calc(100% + 1px); background-color: #2b2b2b; z-index: -1; }",
+        "td.green { background-color: #2e7d32; color: #fff; cursor: pointer; }",
+        "td.yellow { background-color: #f9a825; color: #000; cursor: pointer; }",
+        "td.red { background-color: #c62828; color: #fff; cursor: pointer; }",
+        "td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }",
+        "td.empty { background-color: #2b2b2b; color: #666; }",
+        "td.project-separator { background-color: #1e1e1e; }",
+        f".suite-name {{ position: sticky; left: 0; background-color: #1e1e1e; width: {left_col_width}px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }}",
+        ".suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }",
+        ".project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }",
+        ".project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }",
+        ".table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }",
+        ".tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }",
+        ".tooltip-row { margin: 3px 0; }",
+        ".tooltip-label { font-weight: bold; display: inline-block; width: 100px; }",
+        "</style>",
+        "<script>",
+        f"const PASSWORD_HASH = '{password_hash}';",
+        "const data = " + json.dumps(data, default=str) + ";",
+        "",
+        "async function hashPassword(password) {",
+        "  const msgBuffer = new TextEncoder().encode(password);",
+        "  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);",
+        "  const hashArray = Array.from(new Uint8Array(hashBuffer));",
+        "  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');",
+        "}",
+        "",
+        "async function checkPassword() {",
+        "  const password = document.getElementById('password-input').value;",
+        "  const hash = await hashPassword(password);",
+        "  if (hash === PASSWORD_HASH) {",
+        "    sessionStorage.setItem('reportPassword', password);",
+        "    document.getElementById('login-container').style.display = 'none';",
+        "    document.getElementById('dashboard-content').style.display = 'block';",
+        "  } else {",
+        "    document.getElementById('error-message').style.display = 'block';",
+        "  }",
+        "}",
+        "",
+        "document.addEventListener('DOMContentLoaded', function() {",
+        "  const savedPassword = sessionStorage.getItem('reportPassword');",
+        "  if (PASSWORD_HASH && savedPassword) {",
+        "    hashPassword(savedPassword).then(hash => {",
+        "      if (hash === PASSWORD_HASH) {",
+        "        document.getElementById('login-container').style.display = 'none';",
+        "        document.getElementById('dashboard-content').style.display = 'block';",
+        "      }",
+        "    });",
+        "  } else if (!PASSWORD_HASH) {",
+        "    document.getElementById('login-container').style.display = 'none';",
+        "    document.getElementById('dashboard-content').style.display = 'block';",
+        "  }",
+        "  document.getElementById('password-input').addEventListener('keypress', function(e) {",
+        "    if (e.key === 'Enter') checkPassword();",
+        "  });",
+        "});",
+        "",
+        "// AES-256-GCM decryption with extensive logging for debugging",
+        "async function decryptBytesAES(encryptedBytes, password) {",
+        "  // Check for minimum length (Salt 16 + Nonce 12 = 28 bytes)",
+        "  if (encryptedBytes.length < 28) {",
+        "      throw new Error('Invalid encrypted data length. Data is too short.');",
+        "  }",
+        "  const salt = encryptedBytes.slice(0, 16);",
+        "  const nonce = encryptedBytes.slice(16, 28);",
+        "  const ciphertext = encryptedBytes.slice(28);",
+        "  ",
+        "  // --- TROUBLESHOOTING LOGGING (Key Components) ---",
+        "  console.log('[DECRYPTOR:PARAMS] Salt (First 10 bytes HEX):', Array.from(salt.slice(0, 10)).map(b => b.toString(16).padStart(2, '0')).join(''));",
+        "  console.log('[DECRYPTOR:PARAMS] Nonce (HEX):', Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join(''));",
+        "  // ---",
+        "  ",
+        "  const enc = new TextEncoder();",
+        "  const keyMaterial = await crypto.subtle.importKey(",
+        "    'raw',",
+        "    enc.encode(password),",
+        "    { name: 'PBKDF2' },",
+        "    false,",
+        "    ['deriveKey']",
+        "  );",
+        "  ",
+        "  const key = await crypto.subtle.deriveKey(",
+        "    { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },",
+        "    keyMaterial,",
+        "    { name: 'AES-GCM', length: 256 },",
+        "    false,",
+        "    ['decrypt']",
+        "  );",
+        "  ",
+        "  const decrypted = await crypto.subtle.decrypt({",
+        "    name: 'AES-GCM',",
+        "    iv: nonce",
+        "  }, key, ciphertext);",
+        "  ",
+        "  return new Uint8Array(decrypted);",
+        "}",
+        "",
+        "// openReport using STANDARD Base64 (atob) decoding",
+        "async function openReport(project, suite, date) {",
+        "  const record = data[project][suite][date];",
+        "  if (!record || !record.html_file) return;",
+        "  ",
+        "  const password = sessionStorage.getItem('reportPassword');",
+        "  if (!password) return alert('Password missing!');",
+        "  ",
+        "  try {",
+        "    // Fetch the encrypted file (STANDARD Base64 encoded)",
+        "    const resp = await fetch(record.html_file);", 
+        "    if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);",
+        "    const base64Data = await resp.text();",
+        "    ",
+        "    // --- TROUBLESHOOTING LOGGING (Received Data) ---",
+        "    console.log('[FETCH:OUTPUT] Base64 Data Length:', base64Data.length);",
+        "    console.log('[FETCH:OUTPUT] Base64 Data Start:', base64Data.substring(0, 50));",
+        "    // ---",
+        "    ",
+        "    // Decode STANDARD base64 to get raw binary string",
+        "    const binaryString = atob(base64Data);",
+        "    ",
+        "    // Convert binary string to encrypted bytes (Uint8Array)",
+        "    const encryptedBytes = new Uint8Array(binaryString.length);",
+        "    for (let i = 0; i < binaryString.length; i++) {",
+        "      encryptedBytes[i] = binaryString.charCodeAt(i);",
+        "    }",
+        "    ",
+        "    // Decrypt the bytes",
+        "    const decryptedBytes = await decryptBytesAES(encryptedBytes, password);",
+        "    ",
+        "    // Create and open the HTML report",
+        "    const decryptedText = new TextDecoder().decode(decryptedBytes);",
+        "    const blob = new Blob([decryptedText], { type: 'text/html' });",
+        "    const url = URL.createObjectURL(blob);",
+        "    window.open(url, '_blank');",
+        "  } catch (e) {",
+        "    console.error('Failed to decrypt report:', e);",
+        "    ",
+        "    let msg = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';",
+        "    if (e.name === 'OperationError') {",
+        "        msg = 'Decryption failed: Check your password or the report data is tampered.';",
+        "    }",
+        "    alert(msg + ' Check the browser console for details (F12).');",
+        "  }",
+        "}",
+        "",
+        "function showTooltip(e, project, suite, date) {",
+        "  const record = data[project][suite][date];",
+        "  if (!record) return;",
+        "  const tooltip = document.getElementById('tooltip');",
+        "  const start = new Date(record.start);",
+        "  const end = new Date(record.end);",
+        "  const formatDate = (d) => d.getFullYear().toString().slice(2) + '/' + ",
+        "    String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0') + ' - ' +",
+        "    String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');",
+        "  const totalSeconds = Math.floor(record.duration * 60);",
+        "  const minutes = Math.floor(totalSeconds / 60);",
+        "  const seconds = totalSeconds % 60;",
+        "  const durationStr = String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');",
+        "  tooltip.innerHTML = `",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${record.profile || 'N/A'}</strong></div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${record.test_cases || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${record.passed || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${record.failed || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${record.error || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Incomplete:</span>${record.incomplete || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${record.skipped || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Retry:</span>${record.retry_count || 0}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${formatDate(start)}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>End:</span>${formatDate(end)}</div>",
+        "    <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>",
+        "  `;",
+        "  tooltip.style.display = 'block';",
+        "  tooltip.style.left = (e.pageX + 10) + 'px';",
+        "  tooltip.style.top = (e.pageY + 10) + 'px';",
+        "}",
+        "function hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }",
+        "</script>",
+        "</head><body>",
+        "<div id='login-container'>",
+        "  <div id='login-box'>",
+        "    <h2>QA Automation Report</h2>",
+        "    <div><input type='password' id='password-input' placeholder='Enter password' autofocus></div>",
+        "    <div><button id='login-button' onclick='checkPassword()'>Login</button></div>",
+        "    <div id='error-message'>Incorrect password. Please try again.</div>",
+        "  </div>",
+        "</div>",
+        "<div id='dashboard-content'>",
+        "<div id='tooltip' class='tooltip'></div>",
+        "<h1>QA Automation Report</h1>",
+        "<div class='table-container'>",
+        "<table>",
+        "<tr><th>Test Suite</th>" + "".join(f"<th>{d[5:]}</th>" for d in all_dates) + "</tr>"
+    ]
+
+    # Flatten all projects and suites into single table
+    for project in sorted(data.keys()):
+        html.append(f"<tr><td class='project-header'>{project}</td>" + "<td class='project-separator'></td>" * len(all_dates) + "</tr>")
+        for suite in sorted(data[project].keys()):
+            display_name = suite.replace("Test Suites/", "")
+            html.append(f"<tr><td class='suite-name'>{display_name}</td>")
+            for date in all_dates:
+                if date in data[project][suite]:
+                    record = data[project][suite][date]
+                    color = record["color"]
+                    passed = record.get("passed", 0)
+                    total = record.get("test_cases", 0)
+                    failed = total - passed if total else 0
+                    html.append(f"<td class='{color}' onmousemove='showTooltip(event, \"{project}\", \"{suite}\", \"{date}\")' onmouseleave='hideTooltip()' onclick='openReport(\"{project}\", \"{suite}\", \"{date}\")'>{passed}/{failed}</td>")
+                else:
+                    html.append("<td class='empty'>–</td>")
+            html.append("</tr>")
+
+    html.append("</table>")
+    html.append("</div>")  # close table-container
+    html.append("</div>")  # close dashboard-content
+    html.append("</body></html>")
+
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write("\n".join(html))
+
+    print(f"✅ Dashboard built successfully: {OUTPUT_FILE}")
+
 if __name__ == "__main__":
-    main()
+    build_dashboard()
