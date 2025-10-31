@@ -49,7 +49,7 @@ def extract_html_from_encrypted_zip(encrypted_zip_path, html_folder):
 def main():
     encrypted_zip_files = [f for f in os.listdir(ATTACHMENTS_FOLDER) if f.lower().endswith(".zip")]
     if not encrypted_zip_files:
-        print("::notice::No encrypted ZIP files to process.")
+        print("::notice::Extract HTML: No encrypted ZIP files to process.")
         return
 
     password = os.getenv("REPORT_PASSWORD")
@@ -67,7 +67,7 @@ def main():
             processed_count += 1
             print(f"::notice::Deleted {zip_file} after successful extraction")
 
-    print(f"::notice::Extracted {processed_count} HTML files from ZIP attachments.")
+    print(f"::notice::Extract HTML: Extracted {processed_count} HTML files from ZIP attachments.")
 
 if __name__ == "__main__":
     main()
