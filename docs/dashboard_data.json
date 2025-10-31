@@ -81,6 +81,25 @@
           "retry_count": 0,
           "sum_check": true,
           "color": "green"
+        },
+        "2025.09.23": {
+          "html_file": "https://690530b310154bab610cb85a--qa-onrex.netlify.app/reports/20250923_134647_1758628907846.html",
+          "html_filename": "20250923_134647_1758628907846.html",
+          "project": "DYNAREX V2",
+          "test_suite_id": "Test Suites/Test Suites/Settings/Users - Cleanup",
+          "profile": "default",
+          "test_cases": 2,
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start": "2025-09-23T14:00:41.380+02:00",
+          "end": "2025-09-23T14:01:47.637+02:00",
+          "duration": 1.1042833333333335,
+          "retry_count": 1,
+          "sum_check": true,
+          "color": "yellow"
         }
       },
       "Test Suites/Test Suites/login-logout": {
@@ -166,6 +185,27 @@
           "sum_check": true,
           "color": "green"
         }
+      },
+      "Test Suites/Test Suites/Settings/Users - General": {
+        "2025.09.23": {
+          "html_file": "https://690530b310154bab610cb85a--qa-onrex.netlify.app/reports/20250923_150102_1758632934947.html",
+          "html_filename": "20250923_150102_1758632934947.html",
+          "project": "DYNAREX V2",
+          "test_suite_id": "Test Suites/Test Suites/Settings/Users - General",
+          "profile": "default",
+          "test_cases": 8,
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start": "2025-09-23T15:01:20.080+02:00",
+          "end": "2025-09-23T15:08:54.083+02:00",
+          "duration": 7.566716666666666,
+          "retry_count": 0,
+          "sum_check": true,
+          "color": "green"
+        }
       }
     },
     "DYNAREX": {
@@ -189,6 +229,27 @@
           "sum_check": true,
           "color": "green"
         }
+      },
+      "Test Suites/settings/invoice settings": {
+        "2025.09.30": {
+          "html_file": "https://690530b310154bab610cb85a--qa-onrex.netlify.app/reports/20250930_015537_1759200757957.html",
+          "html_filename": "20250930_015537_1759200757957.html",
+          "project": "DYNAREX",
+          "test_suite_id": "Test Suites/settings/invoice settings",
+          "profile": "default DYNAREX intdev",
+          "test_cases": 9,
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start": "2025-09-30T04:43:28.671+02:00",
+          "end": "2025-09-30T04:52:37.146+02:00",
+          "duration": 9.141250000000001,
+          "retry_count": 0,
+          "sum_check": true,
+          "color": "green"
+        }
       }
     }
   },
@@ -196,7 +257,9 @@
     "2025.10.21",
     "2025.10.13",
     "2025.10.10",
-    "2025.10.09"
+    "2025.10.09",
+    "2025.09.30",
+    "2025.09.23"
   ],
-  "last_updated": "2025-10-31T21:54:46.628001"
+  "last_updated": "2025-10-31T21:57:09.136255"
 }
