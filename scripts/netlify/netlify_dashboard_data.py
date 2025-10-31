@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_dashboard_data.py
+# scripts/netlify/prepare_dashboard_data.py
 import json
 import os
 import sys
@@ -23,13 +23,21 @@ def prepare_data_for_frontend(results_data):
     """
     Transforms the structured results data into a flat, client-ready format.
     
-    The keys (dates) and values (run data) from the original JSON are converted 
-    into two separate lists for easy client-side rendering.
+    Handles the case where the JSON data is erroneously wrapped in a list.
     """
+    # FIX: If the data is a list containing a single dictionary, unwrap it.
+    if isinstance(results_data, list):
+        if len(results_data) == 1 and isinstance(results_data[0], dict):
+            print("::warning::Detected data incorrectly wrapped in a list; unwrapping...")
+            results_data = results_data[0]
+        else:
+            print("::error::Results data is a list with unexpected content. Cannot proceed.")
+            return {"dates": [], "runs": []}
+
     dates = []
     run_data = []
 
-    # Iterate through the chronological data from newest to oldest (as Python dicts are ordered)
+    # Now we can safely iterate through the dictionary items
     for date, runs in results_data.items():
         dates.append(date)
         
