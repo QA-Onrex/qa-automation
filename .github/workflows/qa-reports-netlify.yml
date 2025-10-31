@@ -57,6 +57,9 @@ jobs:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         run: python scripts/netlify/netlify_parse_html.py
 
+      - name: Generate Dynamic Dashboard Data (JSON)
+        run: python scripts/netlify/netlify_dashboard_data.py
+        
       - name: Build Dashboard
         env:
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
