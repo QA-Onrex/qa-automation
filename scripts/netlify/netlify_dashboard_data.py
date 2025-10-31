@@ -51,6 +51,7 @@ def generate_dashboard_data():
         # Group data by Project → Test Suite ID → Date
         data = defaultdict(lambda: defaultdict(dict))
         all_dates_set = set()
+        total_reports_count = 0
 
         print("Processing test results...")
         
@@ -79,6 +80,7 @@ def generate_dashboard_data():
             if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
                 r["color"] = get_color(r)
                 data[project][suite][date] = r
+                total_reports_count += 1
 
         # Convert defaultdict to regular dict for JSON serialization
         data_dict = {}
@@ -101,9 +103,10 @@ def generate_dashboard_data():
         with open(DASHBOARD_DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(dashboard_data, f, indent=2, default=str)
 
-        # Output annotations
-        print(f"::notice::📊 Reports processed: {len(data_dict)}")
+        # Output annotations - now showing actual report count
+        print(f"::notice::📊 Reports processed: {total_reports_count}")
         print(f"Dashboard data updated: {DASHBOARD_DATA_FILE}")
+        print(f"Projects: {len(data_dict)}")
         print(f"Last updated: {dashboard_data['last_updated']}")
 
     except Exception as e:
