@@ -194,7 +194,7 @@ def main():
         # Load URLs from upload step
         urls = load_urls()
         if not urls:
-            print("No Netlify URLs found to process")
+            print("::notice::⏭️No Netlify URLs found to process")
             return
 
         # Find local files that match URLs
