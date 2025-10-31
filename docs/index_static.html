@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic QA Automation Dashboard</title>
+    <style>
+        /* Define your status classes here */
+        .status-failed { background-color: #ffcccc; }
+        .status-passed { background-color: #ccffcc; }
+        .status-skipped { background-color: #ffffcc; }
+        .status-neutral { background-color: #f0f0f0; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        /* Add other styles as needed */
+    </style>
+</head>
+<body>
+    <div id="auth-container">
+        <h1>QA Report Dashboard (Dynamic)</h1>
+        <p>Please enter the decryption password:</p>
+        <input type="password" id="password-input" placeholder="Enter password" autofocus>
+        <button onclick="checkPasswordAndLoadData()">Load Dashboard</button>
+    </div>
+
+    <div id="dashboard-container" style="display: none;">
+        <h2>Decrypted Reports</h2>
+        <div id="table-render-area">
+            </div>
+        <p>
+            <button onclick="clearPassword()">Clear Password and Logout</button>
+        </p>
+    </div>
+
+    <script>
+        // --- Configuration & Utility ---
+        const DATA_FILE = 'dashboard_data.json';
+        const PASSWORD_KEY = 'qa_password'; // Key for localStorage
+        let REPORT_PASSWORD = '';
+
+        // Placeholder for your existing decryption logic
+        // You MUST inject your existing 'decryptBytesAES' and related functions here.
+        // For now, we'll use a placeholder function.
+        async function decryptBytesAES(encryptedBytes, password) {
+            // Your existing decryption logic goes here.
+            // Placeholder: Simulate failure if password is wrong, otherwise return empty array
+            if (password !== 'correct_password_placeholder') {
+                 throw new Error("Simulated decryption failure.");
+            }
+            return new Uint8Array(0); // Return empty array after successful decryption
+        }
+
+        // Your existing openReport logic goes here, updated to use REPORT_PASSWORD
+        async function openReport(encoded_url) {
+            const url = decodeURIComponent(encoded_url);
+            console.log("Attempting to fetch and decrypt report from:", url);
+            
+            // Your existing fetch and decryption code (using REPORT_PASSWORD)
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const encryptedBytes = new Uint8Array(await response.arrayBuffer());
+                
+                // --- Your decryption code using REPORT_PASSWORD goes here ---
+                const decryptedBytes = await decryptBytesAES(encryptedBytes, REPORT_PASSWORD);
+
+                // Assuming successful decryption, render the report
+                const htmlContent = new TextDecoder().decode(decryptedBytes);
+                const newWindow = window.open();
+                newWindow.document.write(htmlContent);
+                newWindow.document.close();
+                // --- End of existing logic ---
+                
+            } catch (error) {
+                console.error(`Failed to fetch or decrypt report: ${error.message}`);
+                alert("Failed to decrypt report. The password may be incorrect or the data is corrupt.");
+            }
+        }
+        
+        function clearPassword() {
+            localStorage.removeItem(PASSWORD_KEY);
+            document.getElementById('auth-container').style.display = 'block';
+            document.getElementById('dashboard-container').style.display = 'none';
+            document.getElementById('password-input').value = '';
+            REPORT_PASSWORD = '';
+        }
+
+        // --- Core Dynamic Loading Functions ---
+
+        async function fetchAndRenderDashboard() {
+            try {
+                // Fetch the small JSON data file
+                const response = await fetch(DATA_FILE);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+
+                // Build and display the table
+                renderTable(data);
+                
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('dashboard-container').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                alert('Failed to load dashboard data. Check console.');
+                clearPassword();
+            }
+        }
+
+        function renderTable(data) {
+            const renderArea = document.getElementById('table-render-area');
+            let html = '<table><thead><tr><th>Date</th></tr></thead><tbody>';
+
+            // Generate header row (Dates)
+            let dateRow = '<tr>';
+            data.dates.forEach(date => {
+                dateRow += `<th>${date}</th>`;
+            });
+            dateRow += '</tr>';
+            
+            // Generate rows for each run (ID, Browser, Status, Link)
+            // Assuming all dates have a consistent set of runs (i.e., you are comparing the same test suite daily)
+            // This is a simplified rendering logic. You will need to adapt it to your exact table structure.
+            
+            // This example creates rows based on Run IDs (assuming a standard structure)
+            if (data.runs.length > 0) {
+                // Get all unique run IDs across all dates (A common pattern for comparison tables)
+                // For simplicity, we assume the first date's runs represent the template structure
+                data.runs[0].forEach((run_record, run_index) => {
+                    let runRow = `<tr><td>Run ID: ${run_record.id} - ${run_record.browser}</td>`;
+                    
+                    data.runs.forEach(daily_runs => {
+                        const cell_record = daily_runs[run_index] || { status: 'N/A', status_class: 'status-neutral', html_link: '#' };
+                        
+                        runRow += `
+                            <td class="${cell_record.status_class}">
+                                ${cell_record.status} 
+                                <br>
+                                <a href="javascript:void(0)" onclick="openReport('${encodeURIComponent(cell_record.html_link)}')">View Report</a>
+                            </td>
+                        `;
+                    });
+                    runRow += '</tr>';
+                    html += runRow;
+                });
+            }
+
+            html += '</tbody></table>';
+            renderArea.innerHTML = html;
+        }
+
+
+        function checkPasswordAndLoadData() {
+            const input = document.getElementById('password-input');
+            const password = input.value;
+
+            if (password) {
+                // In a real scenario, you'd test the password against a dummy/test encrypted file first
+                REPORT_PASSWORD = password;
+                localStorage.setItem(PASSWORD_KEY, password);
+                fetchAndRenderDashboard();
+            } else {
+                alert('Please enter a password.');
+            }
+        }
+
+        // Check for password on load
+        window.onload = function() {
+            const storedPassword = localStorage.getItem(PASSWORD_KEY);
+            if (storedPassword) {
+                document.getElementById('password-input').value = storedPassword;
+                REPORT_PASSWORD = storedPassword;
+                fetchAndRenderDashboard();
+            }
+        };
+
+        // Inject your existing decryption and supporting functions here (critical)
+        // You MUST copy and paste your actual 'decryptBytesAES', 'getEncryptionKey', etc. here.
+        // The console logging fix you just implemented should be included.
+
+    </script>
+</body>
+</html>
