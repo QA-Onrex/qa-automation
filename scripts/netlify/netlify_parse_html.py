@@ -206,7 +206,7 @@ def main():
         
         # Exit early if no files to process
         if not files_to_process:
-            print("⏭️ HTML files found: 0")
+            print("::notice::⏭️ HTML files found: 0")
             cleanup_urls_file()
             return
 
