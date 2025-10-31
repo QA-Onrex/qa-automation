@@ -137,8 +137,6 @@ def upload_to_netlify(manifest, report_file_count):
     print(f"::notice::Deploy message: {deploy_message}")
 
 def main():
-    print("::notice::Starting Netlify upload process...")
-    
     # Check if there are any report files to upload
     html_files = [f for f in os.listdir(HTML_FOLDER) if f.endswith(".html") and f != HEADERS_FILENAME]
     report_file_count = len(html_files)
