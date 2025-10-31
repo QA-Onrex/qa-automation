@@ -23,9 +23,10 @@ def prepare_data_for_frontend(results_data):
     """
     Transforms the structured results data into a flat, client-ready format.
     
-    Handles the case where the JSON data is erroneously wrapped in a list.
+    Handles the case where the JSON data is erroneously wrapped in a list
+    and where nested dictionaries are stored as strings.
     """
-    # FIX: If the data is a list containing a single dictionary, unwrap it.
+    # FIX 1: Handle data incorrectly wrapped in a list (outer layer)
     if isinstance(results_data, list):
         if len(results_data) == 1 and isinstance(results_data[0], dict):
             print("::warning::Detected data incorrectly wrapped in a list; unwrapping...")
@@ -37,8 +38,22 @@ def prepare_data_for_frontend(results_data):
     dates = []
     run_data = []
 
-    # Now we can safely iterate through the dictionary items
     for date, runs in results_data.items():
+        # FIX 2: Handle data incorrectly stored as a string (inner layer)
+        if isinstance(runs, str):
+            try:
+                # Attempt to parse the string back into a dictionary
+                runs = json.loads(runs)
+                print(f"::warning::Parsed JSON string for date {date}.")
+            except json.JSONDecodeError:
+                print(f"::error::Could not decode JSON string for date {date}. Skipping this entry.")
+                continue
+        
+        # Ensure 'runs' is now a dictionary before proceeding
+        if not isinstance(runs, dict):
+             print(f"::error::Runs data for date {date} is neither a dict nor a parsable string. Skipping.")
+             continue
+
         dates.append(date)
         
         # Prepare the list of runs for this date
