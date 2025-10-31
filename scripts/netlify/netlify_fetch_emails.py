@@ -93,7 +93,7 @@ def main():
         return
 
     uids = data[0].split()
-    print(f"::notice::Found {len(uids)} emails in '{SOURCE_FOLDER}'.")
+    print(f"::notice::Fetch Emails: Found {len(uids)} emails in '{SOURCE_FOLDER}'.")
 
     processed_count = 0
     for uid in uids:
@@ -126,7 +126,7 @@ def main():
 
     mail.expunge()
     mail.logout()
-    print(f"::notice::Processed {processed_count} emails and saved encrypted attachments.")
+    print(f"::notice::Fetch Emails: Processed {processed_count} emails and saved encrypted attachments.")
 
 
 if __name__ == "__main__":
