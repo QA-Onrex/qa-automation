@@ -1,18 +1,21 @@
-# scripts/netlify/prepare_dashboard_data.py
+# scripts/netlify/netlify_dashboard_data.py
 import json
 import os
-import sys
+import hashlib
 from datetime import datetime
 from collections import defaultdict
 
-# Define file paths based on standard project structure
 RESULTS_FILE = "data/netlify_results.json"
-OUTPUT_FILE = "docs/dashboard_data.json"
-OUTPUT_DIR = os.path.dirname(OUTPUT_FILE)
+DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
 
-# --- Utility Functions ---
-def get_status_color(record):
-    """Determines the color (status) based on test results."""
+def load_results():
+    if not os.path.exists(RESULTS_FILE):
+        print(f"Error: {RESULTS_FILE} not found.")
+        return []
+    with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def get_color(record):
     total = record.get("test_cases", 0) or 0
     passed = record.get("passed", 0) or 0
     failed = record.get("failed", 0) or 0
@@ -22,126 +25,72 @@ def get_status_color(record):
     retry = record.get("retry_count", 0) or 0
 
     total_calc = passed + failed + errored + incomplete + skipped
-    # Safety check: if reported total doesn't match sum of results, flag as error (red)
     if total_calc != total:
         return "red"
 
-    # Priority 1: All passed
-    if passed == total and total > 0:
-        # Check for retries which usually means yellow status
+    if passed == total:
         return "yellow" if retry > 0 else "green"
 
-    # Priority 2: Any failures/errors/incompletes
-    if failed > 0 or errored > 0 or incomplete > 0:
-        return "red"
-        
-    # Default for all others (e.g., all skipped, or zero total cases)
-    return "neutral" # Use neutral status if no clear fail or success.
+    return "red"
 
-def get_color_class(color):
-    """Maps color text to a CSS class for coloring."""
-    if color == "red":
-        return "status-failed"
-    elif color == "green":
-        return "status-passed"
-    elif color == "yellow":
-        return "status-retried"
-    return "status-neutral"
+def generate_dashboard_data():
+    results = load_results()
+    if not results:
+        print("No results found.")
+        return
 
-def load_results():
-    """Loads and validates the raw results file."""
-    if not os.path.exists(RESULTS_FILE):
-        print(f"::error::Input file not found: {RESULTS_FILE}")
-        return []
-    try:
-        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except json.JSONDecodeError:
-        print(f"::error::Failed to decode JSON from {RESULTS_FILE}")
-        return []
-
-def prepare_matrix_data(results):
-    """
-    Transforms the flat list of results into the required data matrix 
-    (Project -> Suite -> Date -> Latest Record) for the comparison dashboard.
-    """
-    # Group data by Project -> Test Suite ID -> Date
+    # Group data by Project → Test Suite ID → Date
     data = defaultdict(lambda: defaultdict(dict))
+    all_dates_set = set()
 
     for r in results:
-        # Resilience check for string-wrapped records
-        if isinstance(r, str):
-            try:
-                r = json.loads(r)
-            except json.JSONDecodeError:
-                continue
-
-        if not isinstance(r, dict):
-             continue
-
         project = r.get("project", "Unknown")
-        # Ensure test_suite_id is present and clean it up for the key
-        suite = r.get("test_suite_id")
-        if not suite:
-            continue
-            
+        suite = r.get("test_suite_id", "Unknown")
         start = r.get("start") or r.get("end")
         if not start:
             continue
             
-        # Robust date parsing (handles different ISO 8601 formats)
+        # Use strptime for robust ISO 8601 parsing with timezone info
         try:
             start_str = start.replace("Z", "+00:00")
-            # Try parsing with milliseconds first, then without
-            try:
+            if "." in start_str:
                 dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
-            except ValueError:
+            else:
                 dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
 
             date = dt_obj.strftime("%Y.%m.%d")
+            all_dates_set.add(date)
         except ValueError:
-            # Skip record if date cannot be parsed
             continue
 
-        # Keep only the latest record for that (Project, Suite, Date) combination
-        current_record = data[project][suite].get(date)
-        if current_record is None or r.get("end", "") > current_record.get("end", ""):
-            r["color"] = get_status_color(r)
-            r["status_class"] = get_color_class(r["color"])
+        # Keep only latest record for the date
+        if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
+            r["color"] = get_color(r)
             data[project][suite][date] = r
 
-    # Collect all unique dates across all projects/suites (latest first, max 1 year)
-    all_dates = sorted(
-        {d for proj in data.values() for suite in proj.values() for d in suite.keys()},
-        reverse=True
-    )[:365]
-    
-    return data, all_dates
+    # Convert defaultdict to regular dict for JSON serialization
+    data_dict = {}
+    for project in data:
+        data_dict[project] = {}
+        for suite in data[project]:
+            data_dict[project][suite] = dict(data[project][suite])
 
-# --- Main Execution ---
-def main():
-    results_data = load_results()
-    if not results_data:
-        sys.exit(1)
-
-    # 1. Prepare the matrix structure
-    data_map, all_dates = prepare_matrix_data(results_data)
-    
-    # Final data structure for the frontend
+    # Prepare dashboard data
     dashboard_data = {
-        "data_map": data_map,
-        "all_dates": all_dates
+        "data": data_dict,
+        "dates": sorted(all_dates_set, reverse=True)[:365],
+        "last_updated": datetime.now().isoformat()
     }
 
-    # 2. Ensure output directory exists
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    # Write to dashboard data file
+    os.makedirs(os.path.dirname(DASHBOARD_DATA_FILE), exist_ok=True)
+    with open(DASHBOARD_DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(dashboard_data, f, indent=2, default=str)
 
-    # 3. Write the structured JSON file
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        # Use default=str to handle datetime objects if they somehow slipped through
-        json.dump(dashboard_data, f, indent=2, ensure_ascii=False, default=str)
-
-    print(f"✅ Successfully created dynamic dashboard data (matrix structure) at {OUTPUT_FILE}")
+    print(f"✅ Dashboard data updated successfully: {DASHBOARD_DATA_FILE}")
+    print(f"   - Projects: {len(data_dict)}")
+    print(f"   - Dates range: {len(dashboard_data['dates'])} days")
+    print(f"   - Last updated: {dashboard_data['last_updated']}")
 
 if __name__ == "__main__":
-    main()
+    generate_dashboard_data()
