@@ -209,7 +209,12 @@ function showSessionModal(project, suite, date) {
         sessionItem.onclick = () => openReport(project, suite, date, session);
         
         const startTime = new Date(session.start);
-        const timeString = startTime.toLocaleTimeString();
+        const timeString = startTime.toLocaleTimeString('en-GB', { 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit',
+            hour12: false 
+        });
         const passed = session.passed || 0;
         const total = session.test_cases || 0;
         const failed = total - passed;
