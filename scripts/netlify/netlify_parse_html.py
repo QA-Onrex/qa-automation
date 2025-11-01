@@ -139,7 +139,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
                 duration = None
                 
         # Calculate retry count from previous runs
-        retry_count = compute_retry_count(test_suite_id, start, results)
+        retry_count = compute_retry_count(test_suite_id, profile, start, results)
 
         # Validate test case counts
         sum_check = True
