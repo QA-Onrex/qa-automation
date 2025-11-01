@@ -18,8 +18,10 @@
     <div id="login-container">
         <div id="login-box">
             <h2>QA Automation Report</h2>
-            <div><input type="password" id="password-input" placeholder="Enter password" autofocus></div>
-            <div><button id="login-button">Login</button></div>
+            <form onsubmit="return false;">
+                <div><input type="password" id="password-input" placeholder="Enter password" autofocus></div>
+                <div><button id="login-button">Login</button></div>
+            </form>
             <div id="error-message">Incorrect password. Please try again.</div>
         </div>
     </div>
