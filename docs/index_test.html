@@ -177,21 +177,55 @@
             const durationStr = String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');
             
             tooltip.innerHTML = `
-                <div class="tooltip-row"><span class="tooltip-label">Profile:</span><strong>${record.profile || 'N/A'}</strong></div>
-                <div class="tooltip-row"><span class="tooltip-label">Test Cases:</span>${record.test_cases || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Passed:</span>${record.passed || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Failed:</span>${record.failed || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Error:</span>${record.error || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Incomplete:</span>${record.incomplete || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Skipped:</span>${record.skipped || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Retry:</span>${record.retry_count || 0}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Start:</span>${formatDate(start)}</div>
-                <div class="tooltip-row"><span class="tooltip-label">End:</span>${formatDate(end)}</div>
-                <div class="tooltip-row"><span class="tooltip-label">Duration:</span>${durationStr}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${record.profile || 'N/A'}</strong></div>
+                <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${record.test_cases || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${record.passed || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${record.failed || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${record.error || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Incomplete:</span>${record.incomplete || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${record.skipped || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Retry:</span>${record.retry_count || 0}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${formatDate(start)}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>End:</span>${formatDate(end)}</div>
+                <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
             `;
+            
             tooltip.style.display = 'block';
-            tooltip.style.left = (e.pageX + 10) + 'px';
-            tooltip.style.top = (e.pageY + 10) + 'px';
+            
+            // Get tooltip dimensions
+            const tooltipHeight = tooltip.offsetHeight;
+            const tooltipWidth = tooltip.offsetWidth;
+            
+            // Get viewport dimensions
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            
+            // Default position (below and to the right of cursor)
+            let top = e.pageY + 10;
+            let left = e.pageX + 10;
+            
+            // Check if tooltip would go off bottom of screen
+            if (top + tooltipHeight > viewportHeight) {
+                top = e.pageY - tooltipHeight - 10; // Position above cursor
+            }
+            
+            // Check if tooltip would go off right of screen
+            if (left + tooltipWidth > viewportWidth) {
+                left = e.pageX - tooltipWidth - 10; // Position to the left of cursor
+            }
+            
+            // Ensure tooltip doesn't go off top of screen
+            if (top < 0) {
+                top = 10;
+            }
+            
+            // Ensure tooltip doesn't go off left of screen
+            if (left < 0) {
+                left = 10;
+            }
+            
+            tooltip.style.top = top + 'px';
+            tooltip.style.left = left + 'px';
         }
 
         function hideTooltip() {
