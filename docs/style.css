@@ -88,12 +88,30 @@ td.project-separator { background-color: #1e1e1e; }
     font-size: 12px;
 }
 
-.session-status {
-    padding: 2px 8px;
-    border-radius: 3px;
+/* New Pass/Fail Styling */
+.pass-fail {
+    padding: 4px 12px;
+    border-radius: 4px;
     font-weight: bold;
+    color: white;
+    min-width: 50px;
+    text-align: center;
 }
 
-.status-green { background-color: #2e7d32; color: #fff; }
-.status-yellow { background-color: #f9a825; color: #000; }
-.status-red { background-color: #c62828; color: #fff; }
+.pass-fail.green {
+    background-color: #2e7d32;
+}
+
+.pass-fail.yellow {
+    background-color: #f9a825;
+    color: #000;
+}
+
+.pass-fail.red {
+    background-color: #c62828;
+}
+
+/* Remove old session-status styles since we're using pass-fail instead */
+.session-status {
+    display: none;
+}
