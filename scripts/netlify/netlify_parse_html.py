@@ -36,25 +36,31 @@ def load_urls():
             return {}
     return {}
 
-
-def compute_retry_count(test_suite_id, start_time, results, hours=10):
-    """Calculate retry count for test suite within specified time window"""
+def compute_retry_count(test_suite_id, profile, start_time, results, hours=10):
+    """
+    Calculate retry count for a test suite within a specified time window,
+    only counting previous runs that used the EXACT SAME PROFILE.
+    """
+    # Initialize count. We start at 0 because the current run is not a retry of itself.
     retry_count = 0
-    if not test_suite_id or not start_time:
+    if not test_suite_id or not start_time or profile is None:
         return 0
         
     try:
-        # Parse current test run start time
+        # 1. Parse current test run start time
+        # Replace 'Z' with '+0000' for consistent datetime parsing across formats
         start_dt = datetime.strptime(start_time.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S.%f%z")
         time_threshold = start_dt - timedelta(hours=hours)
 
-        # Check previous runs in reverse chronological order
+        # 2. Check previous runs in reverse chronological order
         for rec in reversed(results):
             rec_start = rec.get("start")
+            
+            # Skip records without a start time
             if not rec_start:
                 continue
                 
-            # Handle different datetime formats
+            # Handle different datetime formats for previous records
             fmt = "%Y-%m-%dT%H:%M:%S.%f%z" if '+' in rec_start or '-' in rec_start else "%Y-%m-%dT%H:%M:%S.%fZ"
             rec_dt = datetime.strptime(rec_start.replace('Z', '+0000'), fmt)
 
@@ -62,15 +68,19 @@ def compute_retry_count(test_suite_id, start_time, results, hours=10):
             if rec_dt < time_threshold:
                 break
 
-            # Count previous runs of the same test suite
-            if rec.get("test_suite_id") == test_suite_id:
+            # 3. COUNTING CONDITION (The critical modification)
+            # Count previous runs ONLY if they match BOTH the Test Suite ID AND the Profile.
+            is_same_suite = rec.get("test_suite_id") == test_suite_id
+            is_same_profile = rec.get("profile") == profile
+            
+            if is_same_suite and is_same_profile:
                 retry_count += 1
 
     except Exception:
+        # In a real-world scenario, you might want to log the exception here
         pass
 
     return retry_count
-
 
 def parse_html_from_netlify(html_filename, netlify_url):
     """Parse encrypted HTML file to extract test results and metadata"""
