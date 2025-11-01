@@ -45,17 +45,17 @@ def generate_dashboard_data():
         # Load and validate results
         results = load_results()
         if not results:
-            print("::notice::⏭️ Reports processed: 0")
+            print("⏭️ Reports processed: 0")
             return
 
         # Group data by Project → Test Suite ID → Date
-        data = defaultdict(lambda: defaultdict(dict))
+        data = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
         all_dates_set = set()
         total_reports_count = 0
 
         print("Processing test results...")
         
-        # Process each test result record
+        # Process each test result record - store ALL sessions
         for r in results:
             project = r.get("project", "Unknown")
             suite = r.get("test_suite_id", "Unknown")
@@ -76,18 +76,26 @@ def generate_dashboard_data():
             except ValueError:
                 continue
 
-            # Keep only latest record for each date
-            if date not in data[project][suite] or r.get("end", "") > data[project][suite][date].get("end", ""):
-                r["color"] = get_color(r)
-                data[project][suite][date] = r
-                total_reports_count += 1
+            # Store ALL sessions for this date
+            r["color"] = get_color(r)
+            data[project][suite][date].append(r)
+            total_reports_count += 1
+            
+            # Sort sessions by time (newest first)
+            data[project][suite][date].sort(key=lambda x: x.get("end", ""), reverse=True)
 
-        # Convert defaultdict to regular dict for JSON serialization
+        # Convert to the format expected by frontend
         data_dict = {}
         for project in data:
             data_dict[project] = {}
             for suite in data[project]:
-                data_dict[project][suite] = dict(data[project][suite])
+                data_dict[project][suite] = {}
+                for date in data[project][suite]:
+                    sessions = data[project][suite][date]
+                    data_dict[project][suite][date] = {
+                        "sessions": sessions,
+                        "latest": sessions[0]  # Most recent session
+                    }
 
         # Prepare final dashboard data structure
         dashboard_data = {
@@ -104,7 +112,7 @@ def generate_dashboard_data():
             json.dump(dashboard_data, f, indent=2, default=str)
 
         # Output annotations - now showing actual report count
-        print(f"::notice::📊 Reports processed: {total_reports_count}")
+        print(f"📊 Reports processed: {total_reports_count}")
         print(f"Dashboard data updated: {DASHBOARD_DATA_FILE}")
         print(f"Projects: {len(data_dict)}")
         print(f"Last updated: {dashboard_data['last_updated']}")
