@@ -1,1 +1,99 @@
+body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }
+h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
+#login-container { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; }
+#login-box { background-color: #2b2b2b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+#login-box h2 { margin-top: 0; color: #fff; }
+#password-input { width: 250px; padding: 10px; margin: 10px 0; background-color: #1e1e1e; border: 1px solid #444; color: #ddd; border-radius: 4px; }
+#login-button { padding: 10px 20px; background-color: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+#login-button:hover { background-color: #1b5e20; }
+#error-message { color: #c62828; margin-top: 10px; display: none; }
+#dashboard-content { display: none; }
+#loading-message { text-align: center; padding: 20px; color: #ddd; }
+#last-updated { text-align: right; padding: 5px 16px; color: #888; font-size: 12px; }
+table { border-collapse: collapse; }
+th, td { border: 1px solid #444; text-align: center; padding: 6px; }
+th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }
+th::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background-color: #2b2b2b; }
+th:first-child { position: sticky; left: 0; z-index: 4; background-color: #2b2b2b; text-align: left; padding-left: 8px; border-right: 2px solid #444; }
+th:first-child::before { content: ''; position: absolute; top: -1px; left: -1px; width: calc(100% + 1px); height: calc(100% + 1px); background-color: #2b2b2b; z-index: -1; }
+td.green { background-color: #2e7d32; color: #fff; cursor: pointer; }
+td.yellow { background-color: #f9a825; color: #000; cursor: pointer; }
+td.red { background-color: #c62828; color: #fff; cursor: pointer; }
+td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
+td.empty { background-color: #2b2b2b; color: #666; }
+td.project-separator { background-color: #1e1e1e; }
+.suite-name { position: sticky; left: 0; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
+.suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
+.project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
+.project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
+.table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }
+.tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }
+.tooltip-row { margin: 3px 0; }
+.tooltip-label { font-weight: bold; display: inline-block; width: 100px; }
 
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+}
+
+.modal-content {
+    background-color: #2b2b2b;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #444;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close {
+    color: #ddd;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #fff;
+}
+
+.session-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.session-item:hover {
+    background-color: #2b2b2b;
+}
+
+.session-time {
+    color: #888;
+    font-size: 12px;
+}
+
+.session-status {
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.status-green { background-color: #2e7d32; color: #fff; }
+.status-yellow { background-color: #f9a825; color: #000; }
+.status-red { background-color: #c62828; color: #fff; }
