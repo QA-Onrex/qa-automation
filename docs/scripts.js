@@ -194,6 +194,13 @@ function showSessionModal(project, suite, date) {
     const modal = document.getElementById('session-modal');
     const sessionList = document.getElementById('session-list');
     
+    // Get the display name for the test suite
+    const displayName = suite.replace("Test Suites/", "");
+    
+    // Update modal title with test suite name
+    const modalTitle = modal.querySelector('h3');
+    modalTitle.textContent = displayName;
+    
     sessionList.innerHTML = '';
     
     currentSessions.forEach((session, index) => {
@@ -206,7 +213,9 @@ function showSessionModal(project, suite, date) {
         const passed = session.passed || 0;
         const total = session.test_cases || 0;
         const failed = total - passed;
-        const statusClass = `status-${session.color.toLowerCase()}`;
+        
+        // Determine color class based on session color
+        const colorClass = session.color.toLowerCase();
         
         sessionItem.innerHTML = `
             <div>
@@ -214,8 +223,7 @@ function showSessionModal(project, suite, date) {
                 <div class="session-time">${timeString}</div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span>${passed}/${failed}</span>
-                <span class="session-status ${statusClass}">${session.color}</span>
+                <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
             </div>
         `;
         
