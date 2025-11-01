@@ -110,9 +110,8 @@
             
             // Update last updated timestamp
             if (last_updated) {
-                const date = new Date(last_updated);
                 document.getElementById('last-updated').textContent = 
-                    `Last updated: ${date.toLocaleString()}`;
+                    `Last updated: ${last_updated}`;
             }
 
             // Build table header
