@@ -1,7 +1,7 @@
 # scripts/netlify/netlify_dashboard_data.py
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import defaultdict
 
 RESULTS_FILE = "data/netlify_results.json"
@@ -93,7 +93,7 @@ def generate_dashboard_data():
         dashboard_data = {
             "data": data_dict,
             "dates": sorted(all_dates_set, reverse=True)[:365],
-            "last_updated": datetime.now().isoformat()
+            "last_updated": (datetime.now() + timedelta(hours=1)).strftime("%d/%m/%Y, %H:%M:%S (GMT+1)")
         }
 
         # Ensure output directory exists
