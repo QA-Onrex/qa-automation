@@ -1,106 +1,121 @@
-// Password hash - this should be set during deployment/build process
-const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
+// Configuration constants
+const CONFIG = {
+    PASSWORD_HASH: '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32',
+    DASHBOARD_DATA_URL: 'dashboard_data.json',
+    MAX_TOOLTIP_OFFSET: 10,
+    TOOLTIP_PADDING: 10
+};
 
-let dashboardData = null;
-let currentSessions = [];
+// Auth Manager
+class AuthManager {
+    async hashPassword(password) {
+        const msgBuffer = new TextEncoder().encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-// Authentication Functions
-async function hashPassword(password) {
-    const msgBuffer = new TextEncoder().encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
+    async authenticate(password) {
+        const hash = await this.hashPassword(password);
+        return hash === CONFIG.PASSWORD_HASH;
+    }
 
-async function checkPassword() {
-    const password = document.getElementById('password-input').value;
-    const hash = await hashPassword(password);
-    
-    if (hash === PASSWORD_HASH) {
-        sessionStorage.setItem('reportPassword', password);
-        document.getElementById('login-container').style.display = 'none';
-        document.getElementById('dashboard-content').style.display = 'block';
-        loadDashboardData();
-    } else {
-        document.getElementById('error-message').style.display = 'block';
+    hasValidSession() {
+        const savedPassword = sessionStorage.getItem('reportPassword');
+        return savedPassword && CONFIG.PASSWORD_HASH;
     }
 }
 
-// Dashboard Data Functions
-async function loadDashboardData() {
-    try {
-        const response = await fetch('dashboard_data.json');
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        dashboardData = await response.json();
-        renderDashboard();
-    } catch (error) {
-        console.error('Failed to load dashboard data:', error);
-        document.getElementById('loading-message').innerHTML = 
-            'Error loading dashboard data. Please try refreshing the page.';
-    }
-}
-
-function renderDashboard() {
-    if (!dashboardData) return;
-
-    const { data, dates, last_updated } = dashboardData;
-    
-    // Update last updated timestamp
-    if (last_updated) {
-        document.getElementById('last-updated').textContent = 
-            `Last updated: ${last_updated}`;
+// Dashboard Manager
+class DashboardManager {
+    constructor() {
+        this.data = null;
     }
 
-    // Build table header
-    const headerHTML = ['<tr><th>Test Suite</th>' + dates.map(d => `<th>${d.slice(5)}</th>`).join('') + '</tr>'];
-    document.getElementById('table-header').innerHTML = headerHTML.join('');
-
-    // Build table body
-    const bodyHTML = [];
-    const projects = Object.keys(data).sort();
-
-    for (const project of projects) {
-        bodyHTML.push(`<tr><td class="project-header">${project}</td>` + 
-            '<td class="project-separator"></td>'.repeat(dates.length) + '</tr>');
-        
-        const suites = Object.keys(data[project]).sort();
-        for (const suite of suites) {
-            const displayName = suite.replace("Test Suites/", "");
-            bodyHTML.push(`<tr><td class="suite-name">${displayName}</td>`);
-            
-            for (const date of dates) {
-                if (date in data[project][suite]) {
-                    const record = data[project][suite][date];
-                    const color = record.latest.color;
-                    const passed = record.latest.passed || 0;
-                    const total = record.latest.test_cases || 0;
-                    const failed = total - passed;
-                    
-                    bodyHTML.push(
-                        `<td class="${color}" ` +
-                        `onmousemove="showTooltip(event, '${project}', '${suite}', '${date}')" ` +
-                        `onmouseleave="hideTooltip()" ` +
-                        `onclick="showSessionModal('${project}', '${suite}', '${date}')">` +
-                        `${passed}/${failed}</td>`
-                    );
-                } else {
-                    bodyHTML.push('<td class="empty">–</td>');
-                }
-            }
-            bodyHTML.push('</tr>');
+    async loadData() {
+        try {
+            const response = await fetch(CONFIG.DASHBOARD_DATA_URL);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            this.data = await response.json();
+            return this.data;
+        } catch (error) {
+            console.error('Failed to load dashboard data:', error);
+            throw error;
         }
     }
 
-    document.getElementById('table-body').innerHTML = bodyHTML.join('');
-    document.getElementById('loading-message').style.display = 'none';
-    document.getElementById('table-container').style.display = 'block';
+    render() {
+        if (!this.data) return;
+
+        const { data, dates, last_updated } = this.data;
+        
+        // Update last updated timestamp
+        if (last_updated) {
+            document.getElementById('last-updated').textContent = `Last updated: ${last_updated}`;
+        }
+
+        this.renderTable(data, dates);
+        this.showDashboard();
+    }
+
+    renderTable(data, dates) {
+        const headerHTML = ['<tr><th>Test Suite</th>' + dates.map(d => `<th>${d.slice(5)}</th>`).join('') + '</tr>'];
+        document.getElementById('table-header').innerHTML = headerHTML.join('');
+
+        const bodyHTML = [];
+        const projects = Object.keys(data).sort();
+
+        for (const project of projects) {
+            bodyHTML.push(`<tr><td class="project-header">${project}</td>` + 
+                '<td class="project-separator"></td>'.repeat(dates.length) + '</tr>');
+            
+            const suites = Object.keys(data[project]).sort();
+            for (const suite of suites) {
+                const displayName = suite.replace("Test Suites/", "");
+                bodyHTML.push(`<tr><td class="suite-name">${displayName}</td>`);
+                
+                for (const date of dates) {
+                    if (date in data[project][suite]) {
+                        const record = data[project][suite][date];
+                        const color = record.latest.color;
+                        const passed = record.latest.passed || 0;
+                        const total = record.latest.test_cases || 0;
+                        const failed = total - passed;
+                        
+                        bodyHTML.push(
+                            `<td class="${color}" ` +
+                            `onmousemove="showTooltip(event, '${project}', '${suite}', '${date}')" ` +
+                            `onmouseleave="hideTooltip()" ` +
+                            `onclick="showSessionModal('${project}', '${suite}', '${date}')">` +
+                            `${passed}/${failed}</td>`
+                        );
+                    } else {
+                        bodyHTML.push('<td class="empty">–</td>');
+                    }
+                }
+                bodyHTML.push('</tr>');
+            }
+        }
+
+        document.getElementById('table-body').innerHTML = bodyHTML.join('');
+    }
+
+    showDashboard() {
+        document.getElementById('loading-message').style.display = 'none';
+        document.getElementById('table-container').style.display = 'block';
+    }
+
+    showLoading() {
+        document.getElementById('loading-message').style.display = 'block';
+        document.getElementById('table-container').style.display = 'none';
+    }
 }
 
-// Tooltip Functions
+// Tooltip functions
 function showTooltip(e, project, suite, date) {
-    if (!dashboardData) return;
-    const record = dashboardData.data[project]?.[suite]?.[date];
+    if (!window.dashboardManager?.data) return;
+    
+    const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
     if (!record) return;
     
     const tooltip = document.getElementById('tooltip');
@@ -131,38 +146,26 @@ function showTooltip(e, project, suite, date) {
     
     tooltip.style.display = 'block';
     
-    // Get tooltip dimensions
+    // Position tooltip
     const tooltipHeight = tooltip.offsetHeight;
     const tooltipWidth = tooltip.offsetWidth;
-    
-    // Get viewport dimensions
     const viewportHeight = window.innerHeight;
     const viewportWidth = window.innerWidth;
-    
-    // Default position (below and to the right of cursor)
-    let top = e.pageY + 10;
-    let left = e.pageX + 10;
-    
-    // Check if tooltip would go off bottom of screen
+
+    let top = e.pageY + CONFIG.TOOLTIP_PADDING;
+    let left = e.pageX + CONFIG.TOOLTIP_PADDING;
+
     if (top + tooltipHeight > viewportHeight) {
-        top = e.pageY - tooltipHeight - 10; // Position above cursor
+        top = e.pageY - tooltipHeight - CONFIG.TOOLTIP_PADDING;
     }
-    
-    // Check if tooltip would go off right of screen
+
     if (left + tooltipWidth > viewportWidth) {
-        left = e.pageX - tooltipWidth - 10; // Position to the left of cursor
+        left = e.pageX - tooltipWidth - CONFIG.TOOLTIP_PADDING;
     }
-    
-    // Ensure tooltip doesn't go off top of screen
-    if (top < 0) {
-        top = 10;
-    }
-    
-    // Ensure tooltip doesn't go off left of screen
-    if (left < 0) {
-        left = 10;
-    }
-    
+
+    top = Math.max(CONFIG.TOOLTIP_PADDING, top);
+    left = Math.max(CONFIG.TOOLTIP_PADDING, left);
+
     tooltip.style.top = top + 'px';
     tooltip.style.left = left + 'px';
 }
@@ -171,9 +174,13 @@ function hideTooltip() {
     document.getElementById('tooltip').style.display = 'none';
 }
 
-// Session Modal Functions
+// Modal functions
+let currentSessions = [];
+
 function showSessionModal(project, suite, date) {
-    const record = dashboardData.data[project]?.[suite]?.[date];
+    if (!window.dashboardManager?.data) return;
+    
+    const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
     if (!record || !record.sessions) return;
     
     // Single session - open directly
@@ -218,17 +225,20 @@ function showSessionModal(project, suite, date) {
     modal.style.display = 'block';
 }
 
-// Report Decryption Functions
+// Crypto functions
 async function decryptBytesAES(encryptedBytes, password) {
     if (encryptedBytes.length < 28) {
         throw new Error('Invalid encrypted data length. Data is too short.');
     }
+    
     const salt = encryptedBytes.slice(0, 16);
     const nonce = encryptedBytes.slice(16, 28);
     const ciphertext = encryptedBytes.slice(28);
     
-    console.log('[DECRYPTOR:PARAMS] Salt (First 10 bytes HEX):', Array.from(salt.slice(0, 10)).map(b => b.toString(16).padStart(2, '0')).join(''));
-    console.log('[DECRYPTOR:PARAMS] Nonce (HEX):', Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join(''));
+    console.log('[DECRYPTOR:PARAMS] Salt (First 10 bytes HEX):', 
+        Array.from(salt.slice(0, 10)).map(b => b.toString(16).padStart(2, '0')).join(''));
+    console.log('[DECRYPTOR:PARAMS] Nonce (HEX):', 
+        Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join(''));
 
     const enc = new TextEncoder();
     const keyMaterial = await crypto.subtle.importKey(
@@ -256,59 +266,59 @@ async function decryptBytesAES(encryptedBytes, password) {
 }
 
 async function openReport(project, suite, date, specificSession = null) {
-    const record = dashboardData.data[project]?.[suite]?.[date];
+    if (!window.dashboardManager?.data) return;
+    
+    const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
     if (!record) return;
     
-    // Use specific session if provided, otherwise use latest
     const session = specificSession || record.latest;
     if (!session || !session.html_file) return;
     
     const password = sessionStorage.getItem('reportPassword');
-    if (!password) return alert('Password missing!');
+    if (!password) {
+        alert('Password missing!');
+        return;
+    }
 
     try {
-        // Fetch the encrypted file (STANDARD Base64 encoded)
         const resp = await fetch(session.html_file);
         if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
         const base64Data = await resp.text();
         
         console.log('[FETCH:OUTPUT] Base64 Data Length:', base64Data.length);
-        console.log('[FETCH:OUTPUT] Base64 Data Start:', base64Data.substring(0, 50));
         
-        // Decode STANDARD base64 to get raw binary string
         const binaryString = atob(base64Data);
-        
-        // Convert binary string to encrypted bytes (Uint8Array)
         const encryptedBytes = new Uint8Array(binaryString.length);
         for (let i = 0; i < binaryString.length; i++) {
             encryptedBytes[i] = binaryString.charCodeAt(i);
         }
         
-        // Decrypt the bytes
         const decryptedBytes = await decryptBytesAES(encryptedBytes, password);
-        
-        // Create and open the HTML report
         const decryptedText = new TextDecoder().decode(decryptedBytes);
         const blob = new Blob([decryptedText], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         window.open(url, '_blank');
-    } catch (e) {
-        console.error('Failed to decrypt report:', e);
         
-        let msg = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';
-        if (e.name === 'OperationError') {
-            msg = 'Decryption failed: Check your password or the report data is tampered.';
+    } catch (error) {
+        console.error('Failed to decrypt report:', error);
+        let message = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';
+        if (error.name === 'OperationError') {
+            message = 'Decryption failed: Check your password or the report data is tampered.';
         }
-        alert(msg + ' Check the browser console for details (F12).');
+        alert(message + ' Check the browser console for details (F12).');
     }
 }
 
-// Initialize the page
+// Main application
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize managers
+    window.authManager = new AuthManager();
+    window.dashboardManager = new DashboardManager();
+
     // Set up event listeners
-    document.getElementById('login-button').addEventListener('click', checkPassword);
+    document.getElementById('login-button').addEventListener('click', handleLogin);
     document.getElementById('password-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') checkPassword();
+        if (e.key === 'Enter') handleLogin();
     });
     
     // Modal close handlers
@@ -324,22 +334,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Check for saved password
-    const savedPassword = sessionStorage.getItem('reportPassword');
-    
-    if (PASSWORD_HASH && savedPassword) {
-        hashPassword(savedPassword).then(hash => {
-            if (hash === PASSWORD_HASH) {
-                document.getElementById('login-container').style.display = 'none';
-                document.getElementById('dashboard-content').style.display = 'block';
-                loadDashboardData();
-            } else {
-                sessionStorage.removeItem('reportPassword');
-            }
-        });
-    } else if (!PASSWORD_HASH) {
-        document.getElementById('login-container').style.display = 'none';
-        document.getElementById('dashboard-content').style.display = 'block';
-        loadDashboardData();
-    }
+    // Check for existing session
+    checkExistingSession();
 });
+
+async function handleLogin() {
+    const password = document.getElementById('password-input').value;
+    
+    if (await window.authManager.authenticate(password)) {
+        sessionStorage.setItem('reportPassword', password);
+        showDashboard();
+        await loadDashboardData();
+    } else {
+        document.getElementById('error-message').style.display = 'block';
+    }
+}
+
+async function checkExistingSession() {
+    if (window.authManager.hasValidSession()) {
+        showDashboard();
+        await loadDashboardData();
+    } else if (!CONFIG.PASSWORD_HASH) {
+        showDashboard();
+        await loadDashboardData();
+    }
+}
+
+async function loadDashboardData() {
+    try {
+        window.dashboardManager.showLoading();
+        await window.dashboardManager.loadData();
+        window.dashboardManager.render();
+    } catch (error) {
+        document.getElementById('loading-message').innerHTML = 
+            'Error loading dashboard data. Please try refreshing the page.';
+    }
+}
+
+function showDashboard() {
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
+}
