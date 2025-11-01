@@ -220,12 +220,14 @@ function showSessionModal(project, suite, date) {
         const failed = total - passed;
         
         // Determine color class based on session color
-        const colorClass = session.color.toLowerCase();
+        let colorClass = session.color.toLowerCase();
+        if (colorClass === 'yellow') {
+            colorClass = 'green';
+        }
         
         // Get the profile name, defaulting to 'N/A' if missing
         const profileName = session.profile || 'N/A';
         
-        // --- MODIFICATION START ---
         // Display the Profile name above the large time
         sessionItem.innerHTML = `
             <div>
@@ -236,7 +238,6 @@ function showSessionModal(project, suite, date) {
                 <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
             </div>
         `;
-        // --- MODIFICATION END ---
         
         sessionList.appendChild(sessionItem);
     });
