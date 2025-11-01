@@ -224,8 +224,7 @@ function showSessionModal(project, suite, date) {
         
         sessionItem.innerHTML = `
             <div>
-                <div>Session ${index + 1}</div>
-                <div class="session-time">${timeString}</div>
+                <div class="session-time-large">${timeString}</div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
                 <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
