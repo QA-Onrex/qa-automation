@@ -6,6 +6,8 @@ const CONFIG = {
     TOOLTIP_PADDING: 10
 };
 
+console.log('Script loaded');
+
 // Auth Manager
 class AuthManager {
     async hashPassword(password) {
@@ -34,9 +36,11 @@ class DashboardManager {
 
     async loadData() {
         try {
+            console.log('Loading dashboard data from:', CONFIG.DASHBOARD_DATA_URL);
             const response = await fetch(CONFIG.DASHBOARD_DATA_URL);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             this.data = await response.json();
+            console.log('Dashboard data loaded successfully');
             return this.data;
         } catch (error) {
             console.error('Failed to load dashboard data:', error);
@@ -311,21 +315,50 @@ async function openReport(project, suite, date, specificSession = null) {
 
 // Main application
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing application');
+    
     // Initialize managers
     window.authManager = new AuthManager();
     window.dashboardManager = new DashboardManager();
 
-    // Set up event listeners
-    document.getElementById('login-button').addEventListener('click', handleLogin);
-    document.getElementById('password-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') handleLogin();
-    });
+    // Debug: Check if elements exist
+    const loginButton = document.getElementById('login-button');
+    const passwordInput = document.getElementById('password-input');
+    const closeButton = document.querySelector('.close');
+    const modal = document.getElementById('session-modal');
     
+    console.log('Login button found:', !!loginButton);
+    console.log('Password input found:', !!passwordInput);
+    console.log('Close button found:', !!closeButton);
+    console.log('Modal found:', !!modal);
+
+    // Set up event listeners
+    if (loginButton) {
+        loginButton.addEventListener('click', handleLogin);
+        console.log('Login event listener added');
+    } else {
+        console.error('Login button not found!');
+    }
+    
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', function(e) {
+            console.log('Key pressed in password field:', e.key);
+            if (e.key === 'Enter') {
+                console.log('Enter key pressed - triggering login');
+                handleLogin();
+            }
+        });
+        console.log('Password event listener added');
+    }
+
     // Modal close handlers
-    document.querySelector('.close').addEventListener('click', function() {
-        document.getElementById('session-modal').style.display = 'none';
-        currentSessions = [];
-    });
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            document.getElementById('session-modal').style.display = 'none';
+            currentSessions = [];
+        });
+        console.log('Close button event listener added');
+    }
     
     window.addEventListener('click', function(event) {
         if (event.target === document.getElementById('session-modal')) {
@@ -335,43 +368,71 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Check for existing session
+    console.log('Checking for existing session...');
     checkExistingSession();
 });
 
 async function handleLogin() {
+    console.log('Login button clicked - starting authentication');
     const password = document.getElementById('password-input').value;
+    console.log('Password entered:', password ? 'Yes (length: ' + password.length + ')' : 'No');
     
-    if (await window.authManager.authenticate(password)) {
-        sessionStorage.setItem('reportPassword', password);
-        showDashboard();
-        await loadDashboardData();
-    } else {
+    if (!password) {
+        console.log('No password entered');
+        document.getElementById('error-message').style.display = 'block';
+        return;
+    }
+    
+    try {
+        const isAuthenticated = await window.authManager.authenticate(password);
+        console.log('Authentication result:', isAuthenticated);
+        
+        if (isAuthenticated) {
+            console.log('Authentication successful');
+            sessionStorage.setItem('reportPassword', password);
+            showDashboard();
+            await loadDashboardData();
+        } else {
+            console.log('Authentication failed');
+            document.getElementById('error-message').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Authentication error:', error);
         document.getElementById('error-message').style.display = 'block';
     }
 }
 
 async function checkExistingSession() {
+    console.log('Checking for valid session...');
     if (window.authManager.hasValidSession()) {
+        console.log('Valid session found');
         showDashboard();
         await loadDashboardData();
     } else if (!CONFIG.PASSWORD_HASH) {
+        console.log('No password protection required');
         showDashboard();
         await loadDashboardData();
+    } else {
+        console.log('No valid session found');
     }
 }
 
 async function loadDashboardData() {
+    console.log('Loading dashboard data...');
     try {
         window.dashboardManager.showLoading();
         await window.dashboardManager.loadData();
         window.dashboardManager.render();
+        console.log('Dashboard data loaded and rendered successfully');
     } catch (error) {
+        console.error('Failed to load dashboard data:', error);
         document.getElementById('loading-message').innerHTML = 
             'Error loading dashboard data. Please try refreshing the page.';
     }
 }
 
 function showDashboard() {
+    console.log('Showing dashboard');
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('dashboard-content').style.display = 'block';
 }
