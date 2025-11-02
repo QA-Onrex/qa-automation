@@ -2,6 +2,8 @@
 const CONFIG = {
     PASSWORD_HASH: '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32',
     DASHBOARD_DATA_URL: 'dashboard_data.json',
+    ARCHIVE_INDEX_URL: 'archive/archive_index.json',
+    ARCHIVE_BASE_URL: 'archive/',
     MAX_TOOLTIP_OFFSET: 10,
     TOOLTIP_PADDING: 10
 };
@@ -22,7 +24,64 @@ class AuthManager {
 
     hasValidSession() {
         const savedPassword = sessionStorage.getItem('reportPassword');
-        return savedPassword && CONFIG.PASSWORD_HASH;
+        return !!savedPassword;
+    }
+}
+
+// Archive Manager
+class ArchiveManager {
+    constructor() {
+        this.archives = [];
+        this.currentArchive = 'current';
+        this.currentYear = new Date().getFullYear();
+    }
+
+    async loadArchiveIndex() {
+        try {
+            const response = await fetch(CONFIG.ARCHIVE_INDEX_URL);
+            if (!response.ok) throw new Error('Failed to load archive index');
+            this.archives = await response.json();
+            return this.archives;
+        } catch (error) {
+            console.error('Error loading archive index:', error);
+            this.archives = [];
+            return [];
+        }
+    }
+
+    formatArchiveDisplayName(archiveId) {
+        if (archiveId === 'current') return 'Current (Live)';
+        
+        const [year, month] = archiveId.split('_');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return `${monthNames[parseInt(month) - 1]} ${year}`;
+    }
+
+    getArchiveFileName(archiveId) {
+        if (archiveId === 'current') return CONFIG.DASHBOARD_DATA_URL;
+        return `${CONFIG.ARCHIVE_BASE_URL}${archiveId}_dashboard_data.json`;
+    }
+
+    getAvailableMonthsForYear(year) {
+        const months = [];
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        for (let i = 0; i < 12; i++) {
+            const archiveId = `${year}_${String(i + 1).padStart(2, '0')}`;
+            const hasData = this.archives.includes(archiveId);
+            
+            months.push({
+                id: archiveId,
+                name: monthNames[i],
+                year: year,
+                hasData: hasData,
+                isCurrent: archiveId === this.currentArchive
+            });
+        }
+        
+        return months;
     }
 }
 
@@ -32,9 +91,10 @@ class DashboardManager {
         this.data = null;
     }
 
-    async loadData() {
+    async loadData(customUrl = null) {
         try {
-            const response = await fetch(CONFIG.DASHBOARD_DATA_URL);
+            const url = customUrl || CONFIG.DASHBOARD_DATA_URL;
+            const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             this.data = await response.json();
             return this.data;
@@ -183,13 +243,13 @@ function showSessionModal(project, suite, date) {
     const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
     if (!record || !record.sessions) return;
     
-    // Single session - open directly
-    if (record.sessions.length === 1) {
+    // Single session - open directly (only for current data)
+    if (record.sessions.length === 1 && window.archiveManager.currentArchive === 'current') {
         openReport(project, suite, date, record.sessions[0]);
         return;
     }
 
-    // Multiple sessions - show modal
+    // Multiple sessions or archive data - show modal
     currentSessions = record.sessions;
     const modal = document.getElementById('session-modal');
     const sessionList = document.getElementById('session-list');
@@ -206,7 +266,15 @@ function showSessionModal(project, suite, date) {
     currentSessions.forEach((session, index) => {
         const sessionItem = document.createElement('div');
         sessionItem.className = 'session-item';
-        sessionItem.onclick = () => openReport(project, suite, date, session);
+        
+        // Only make clickable for current data
+        if (window.archiveManager.currentArchive === 'current') {
+            sessionItem.onclick = () => openReport(project, suite, date, session);
+            sessionItem.style.cursor = 'pointer';
+        } else {
+            sessionItem.style.cursor = 'default';
+            sessionItem.style.opacity = '0.8';
+        }
         
         const startTime = new Date(session.start);
         const timeString = startTime.toLocaleTimeString('en-GB', { 
@@ -286,6 +354,12 @@ async function decryptBytesAES(encryptedBytes, password) {
 }
 
 async function openReport(project, suite, date, specificSession = null) {
+    // Disable report opening for archives
+    if (window.archiveManager.currentArchive !== 'current') {
+        alert('Detailed reports are only available for current data. Please switch to "Current (Live)" view to access detailed reports.');
+        return;
+    }
+    
     if (!window.dashboardManager?.data) return;
     
     const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
@@ -329,17 +403,125 @@ async function openReport(project, suite, date, specificSession = null) {
     }
 }
 
+// Archive functions
+async function initializeArchiveSelectors() {
+    await window.archiveManager.loadArchiveIndex();
+    populateDropdownSelector();
+    populateTimelineSelector();
+}
+
+function populateDropdownSelector() {
+    const dropdown = document.getElementById('archive-dropdown');
+    dropdown.innerHTML = '<option value="current">Current (Live)</option>';
+    
+    window.archiveManager.archives.forEach(archiveId => {
+        const option = document.createElement('option');
+        option.value = archiveId;
+        option.textContent = window.archiveManager.formatArchiveDisplayName(archiveId);
+        dropdown.appendChild(option);
+    });
+}
+
+function populateTimelineSelector() {
+    const monthsContainer = document.getElementById('timeline-months');
+    const yearElement = document.getElementById('timeline-year');
+    
+    yearElement.textContent = window.archiveManager.currentYear;
+    const months = window.archiveManager.getAvailableMonthsForYear(window.archiveManager.currentYear);
+    
+    monthsContainer.innerHTML = '';
+    
+    months.forEach(month => {
+        const monthElement = document.createElement('div');
+        monthElement.className = `timeline-month ${month.hasData ? 'archive has-data' : 'empty'} ${month.isCurrent ? 'current' : ''}`;
+        monthElement.textContent = month.name;
+        monthElement.title = month.hasData ? `View ${month.name} ${month.year} archive` : 'No data available';
+        
+        if (month.hasData) {
+            monthElement.addEventListener('click', () => selectArchive(month.id));
+        }
+        
+        monthsContainer.appendChild(monthElement);
+    });
+    
+    // Update navigation buttons
+    document.getElementById('timeline-prev').disabled = window.archiveManager.currentYear <= 2020;
+    document.getElementById('timeline-next').disabled = window.archiveManager.currentYear >= new Date().getFullYear();
+}
+
+function navigateTimeline(direction) {
+    window.archiveManager.currentYear += direction;
+    populateTimelineSelector();
+}
+
+async function handleArchiveChange(event) {
+    const archiveId = event.target.value;
+    await selectArchive(archiveId);
+}
+
+async function selectArchive(archiveId) {
+    window.archiveManager.currentArchive = archiveId;
+    
+    // Update UI states
+    updateSelectorStates(archiveId);
+    
+    // Load and display archive data
+    await loadArchiveData(archiveId);
+}
+
+function updateSelectorStates(archiveId) {
+    // Update dropdown
+    document.getElementById('archive-dropdown').value = archiveId;
+    
+    // Update timeline
+    const months = window.archiveManager.getAvailableMonthsForYear(window.archiveManager.currentYear);
+    const monthElements = document.querySelectorAll('.timeline-month');
+    
+    monthElements.forEach((element, index) => {
+        element.classList.remove('current');
+        if (months[index] && months[index].id === archiveId) {
+            element.classList.add('current');
+        }
+    });
+}
+
+async function loadArchiveData(archiveId) {
+    try {
+        window.dashboardManager.showLoading();
+        
+        const dataUrl = window.archiveManager.getArchiveFileName(archiveId);
+        await window.dashboardManager.loadData(dataUrl);
+        window.dashboardManager.render();
+        
+    } catch (error) {
+        console.error(`Error loading archive ${archiveId}:`, error);
+        document.getElementById('loading-message').innerHTML = 
+            `Error loading archive data. Please try selecting a different archive.`;
+        
+        // Fall back to current data
+        if (archiveId !== 'current') {
+            setTimeout(() => selectArchive('current'), 2000);
+        }
+    }
+}
+
 // Main application
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize managers
     window.authManager = new AuthManager();
     window.dashboardManager = new DashboardManager();
+    window.archiveManager = new ArchiveManager();
 
     // Set up event listeners
     document.getElementById('login-button').addEventListener('click', handleLogin);
     document.getElementById('password-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') handleLogin();
     });
+    
+    // Archive selector events
+    document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
+    document.getElementById('timeline-prev').addEventListener('click', () => navigateTimeline(-1));
+    document.getElementById('timeline-next').addEventListener('click', () => navigateTimeline(1));
     
     // Modal close handlers
     document.querySelector('.close').addEventListener('click', function() {
@@ -364,6 +546,7 @@ async function handleLogin() {
     if (await window.authManager.authenticate(password)) {
         sessionStorage.setItem('reportPassword', password);
         showDashboard();
+        await initializeArchiveSelectors();
         await loadDashboardData();
     } else {
         document.getElementById('error-message').style.display = 'block';
@@ -373,9 +556,11 @@ async function handleLogin() {
 async function checkExistingSession() {
     if (window.authManager.hasValidSession()) {
         showDashboard();
+        await initializeArchiveSelectors();
         await loadDashboardData();
     } else if (!CONFIG.PASSWORD_HASH) {
         showDashboard();
+        await initializeArchiveSelectors();
         await loadDashboardData();
     }
 }
