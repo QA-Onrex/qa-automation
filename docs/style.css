@@ -11,41 +11,40 @@ h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
 #loading-message { text-align: center; padding: 20px; color: #ddd; }
 #last-updated { text-align: right; padding: 5px 16px; color: #888; font-size: 12px; }
 
-/* Archive Selector Container */
-#archive-selector-container {
-    position: absolute;
-    top: 10px;
-    right: 16px;
-    z-index: 10;
-    background: #2b2b2b;
-    padding: 12px 15px;
-    border-radius: 6px;
-    border: 1px solid #444;
-    min-width: 280px;
+#last-updated { 
+    text-align: left; 
+    padding: 5px 0; 
+    color: #888; 
+    font-size: 12px; 
 }
 
-.filters-header {
-    color: #fff;
-    font-weight: bold;
-    font-size: 14px;
+/* Controls Container */
+#controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 16px;
     margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #444;
-    text-align: center;
+}
+
+/* View Selector Container */
+#view-selector-container {
+    background: #2b2b2b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #444;
 }
 
 .filters-group {
     display: flex;
     gap: 15px;
     align-items: center;
-    justify-content: space-between;
 }
 
 .filter-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 1;
 }
 
 .filter-icon {
@@ -60,9 +59,8 @@ h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
     color: #ddd;
     border: 1px solid #444;
     border-radius: 3px;
-    padding: 6px 8px;
-    flex: 1;
-    min-width: 0;
+    padding: 4px 8px;
+    min-width: 140px;
 }
 
 #archive-dropdown:focus, #env-filter:focus {
@@ -148,7 +146,6 @@ td.project-separator { background-color: #1e1e1e; }
     font-size: 12px;
 }
 
-/* New Pass/Fail Styling */
 .pass-fail {
     padding: 4px 12px;
     border-radius: 4px;
@@ -171,7 +168,6 @@ td.project-separator { background-color: #1e1e1e; }
     background-color: #c62828;
 }
 
-/* Remove old session-status styles since we're using pass-fail instead */
 .session-status {
     display: none;
 }
