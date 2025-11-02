@@ -11,45 +11,33 @@ h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
 #loading-message { text-align: center; padding: 20px; color: #ddd; }
 #last-updated { text-align: right; padding: 5px 16px; color: #888; font-size: 12px; }
 
-#last-updated { 
-    text-align: left; 
-    padding: 5px 0; 
-    color: #888; 
-    font-size: 12px; 
-}
-
-/* Controls Container */
-#controls-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 16px;
-    margin-bottom: 10px;
-}
-
 /* View Selector Container */
 #view-selector-container {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    z-index: 10;
     background: #2b2b2b;
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid #444;
 }
 
 .filters-group {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     align-items: center;
 }
 
 .filter-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .filter-icon {
-    font-size: 16px;
-    width: 20px;
+    font-size: 14px;
+    width: 18px;
     text-align: center;
     flex-shrink: 0;
 }
@@ -59,8 +47,9 @@ h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
     color: #ddd;
     border: 1px solid #444;
     border-radius: 3px;
-    padding: 4px 8px;
-    min-width: 140px;
+    padding: 4px 6px;
+    font-size: 12px;
+    min-width: 120px;
 }
 
 #archive-dropdown:focus, #env-filter:focus {
@@ -146,6 +135,7 @@ td.project-separator { background-color: #1e1e1e; }
     font-size: 12px;
 }
 
+/* New Pass/Fail Styling */
 .pass-fail {
     padding: 4px 12px;
     border-radius: 4px;
