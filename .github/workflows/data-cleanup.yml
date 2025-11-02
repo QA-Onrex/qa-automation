@@ -1,0 +1,24 @@
+name: Daily Data Cleanup
+
+on:
+  workflow_dispatch:  # This enables manual triggering
+
+jobs:
+  data-cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies (if needed)
+        run: |
+          pip install -r requirements.txt
+          # Or install specific dependencies if needed
+
+      - name: Run Data Cleanup (35-day retention)
+        run: python scripts/netlify/netlify_data_cleanup.py
