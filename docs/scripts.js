@@ -6,6 +6,7 @@ const CONFIG = {
     ARCHIVE_BASE_URL: 'archive/',
     MAX_TOOLTIP_OFFSET: 10,
     TOOLTIP_PADDING: 10
+    AUTO_REFRESH_INTERVAL: 30000 // 30 seconds
 };
 
 // Auth Manager
@@ -67,6 +68,8 @@ class ArchiveManager {
 class DashboardManager {
     constructor() {
         this.data = null;
+        this.lastUpdate = null;
+        this.refreshInterval = null;
     }
 
     async loadData(customUrl = null) {
@@ -146,6 +149,61 @@ class DashboardManager {
     showLoading() {
         document.getElementById('loading-message').style.display = 'block';
         document.getElementById('table-container').style.display = 'none';
+    }
+    
+    startAutoRefresh() {
+        if (!CONFIG.AUTO_REFRESH_INTERVAL) return;
+        
+        this.stopAutoRefresh();
+        
+        this.refreshInterval = setInterval(async () => {
+            await this.checkForUpdates();
+        }, CONFIG.AUTO_REFRESH_INTERVAL);
+    }
+
+    stopAutoRefresh() {
+        if (this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+            this.refreshInterval = null;
+        }
+    }
+
+    async checkForUpdates() {
+        // Only check current data, not archives
+        if (window.archiveManager.currentArchive !== 'current') return;
+
+        try {
+            const response = await fetch(CONFIG.DASHBOARD_DATA_URL + '?t=' + Date.now());
+            if (!response.ok) return;
+            
+            const newData = await response.json();
+            
+            // If last_updated changed, refresh
+            if (this.lastUpdate && newData.last_updated !== this.lastUpdate) {
+                await this.loadData();
+                this.render();
+            }
+            
+            this.lastUpdate = newData.last_updated;
+            
+        } catch (error) {
+            console.log('Auto-refresh check failed:', error);
+        }
+    }
+
+    // Update loadData to store last_update
+    async loadData(customUrl = null) {
+        try {
+            const url = customUrl || CONFIG.DASHBOARD_DATA_URL;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            this.data = await response.json();
+            this.lastUpdate = this.data.last_updated;
+            return this.data;
+        } catch (error) {
+            console.error('Failed to load dashboard data:', error);
+            throw error;
+        }
     }
 }
 
