@@ -7,6 +7,9 @@ DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
 ARCHIVE_FOLDER = "docs/archive"
 ARCHIVE_INDEX_FILE = os.path.join(ARCHIVE_FOLDER, "archive_index.json")
 
+# Set this to force a specific month (e.g., "2025_09") or leave empty for previous month
+FORCE_MONTH = "2025_08"  # "2025_09"
+
 
 def load_dashboard_data():
     """Load current dashboard data"""
@@ -142,13 +145,43 @@ def get_previous_month():
     return previous_month.strftime("%Y_%m")
 
 
+def get_target_month():
+    """Get the target month for archiving"""
+    if FORCE_MONTH and FORCE_MONTH.strip():
+        forced_month = FORCE_MONTH.strip()
+        print(f"🚨 FORCE MODE: Creating archive for {forced_month}")
+        return forced_month
+    else:
+        previous_month = get_previous_month()
+        print(f"📅 Auto mode: Creating archive for previous month {previous_month}")
+        return previous_month
+
+
+def validate_month_format(month_str):
+    """Validate that the month string is in YYYY_MM format"""
+    try:
+        if len(month_str) != 7 or month_str[4] != '_':
+            return False
+        year = int(month_str[:4])
+        month = int(month_str[5:7])
+        return 1 <= month <= 12
+    except ValueError:
+        return False
+
+
 def create_monthly_archive():
-    """Create monthly archive of dashboard data for previous month"""
+    """Create monthly archive of dashboard data"""
     try:
         print("📁 Starting monthly archive creation...")
         
-        # Always create archive for previous month regardless of current date
-        archive_date = get_previous_month()
+        # Get target month (either forced or previous month)
+        archive_date = get_target_month()
+        
+        # Validate month format
+        if not validate_month_format(archive_date):
+            print(f"❌ Invalid month format: {archive_date}. Use YYYY_MM format (e.g., 2025_10)")
+            return
+        
         archive_file = os.path.join(ARCHIVE_FOLDER, f"{archive_date}_dashboard_data.json")
         
         # Check if archive already exists
@@ -156,7 +189,7 @@ def create_monthly_archive():
             print(f"⏭️ Archive for {archive_date} already exists - skipping")
             return
         
-        print(f"📅 Creating archive for previous month: {archive_date}")
+        print(f"📅 Creating archive for: {archive_date}")
         
         # Load current dashboard data
         dashboard_data = load_dashboard_data()
