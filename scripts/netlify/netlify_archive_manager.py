@@ -8,7 +8,7 @@ ARCHIVE_FOLDER = "docs/archive"
 ARCHIVE_INDEX_FILE = os.path.join(ARCHIVE_FOLDER, "archive_index.json")
 
 # Set this to force a specific month (e.g., "2025_09") or leave empty for previous month
-FORCE_MONTH = "2025_09"  # "2025_09"
+FORCE_MONTH = ""  # "2025_09"
 
 
 def load_dashboard_data():
