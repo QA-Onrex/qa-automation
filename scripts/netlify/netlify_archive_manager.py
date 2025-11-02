@@ -24,6 +24,44 @@ def load_dashboard_data():
         return None
 
 
+def filter_data_by_month(dashboard_data, target_month):
+    """Filter dashboard data to only include records from the target month"""
+    try:
+        filtered_data = {"data": {}, "dates": [], "last_updated": dashboard_data.get("last_updated", "")}
+        target_year_month = target_month.replace("_", ".")  # Convert "2025_10" to "2025.10"
+        
+        records_kept = 0
+        records_removed = 0
+        
+        # Filter data by project and suite
+        for project, suites in dashboard_data.get("data", {}).items():
+            filtered_data["data"][project] = {}
+            
+            for suite, dates in suites.items():
+                filtered_data["data"][project][suite] = {}
+                
+                for date_str, record_data in dates.items():
+                    # Check if date belongs to target month
+                    if date_str.startswith(target_year_month):
+                        filtered_data["data"][project][suite][date_str] = record_data
+                        records_kept += len(record_data.get("sessions", []))
+                    else:
+                        records_removed += len(record_data.get("sessions", []))
+        
+        # Filter dates list
+        filtered_data["dates"] = [date for date in dashboard_data.get("dates", []) 
+                                 if date.startswith(target_year_month)]
+        
+        print(f"📊 Data filtering: {records_kept} sessions kept, {records_removed} sessions removed")
+        print(f"📅 Dates in archive: {len(filtered_data['dates'])} days from {target_year_month}")
+        
+        return filtered_data
+        
+    except Exception as e:
+        print(f"❌ Error filtering data by month: {e}")
+        return None
+
+
 def validate_dashboard_data(dashboard_data):
     """Validate dashboard data structure"""
     try:
@@ -126,9 +164,18 @@ def create_monthly_archive():
             print("❌ No dashboard data to archive")
             return
         
+        # Filter data to only include records from the target month
+        filtered_data = filter_data_by_month(dashboard_data, archive_date)
+        if not filtered_data:
+            print("❌ No data found for the target month")
+            return
+        
+        # Update last_updated to reflect archive creation time
+        filtered_data["last_updated"] = f"Archived on {(datetime.now() + timedelta(hours=1)).strftime('%d/%m/%Y, %H:%M:%S (GMT+1)')}"
+        
         # Validate data before archiving
-        if not validate_dashboard_data(dashboard_data):
-            print("❌ Dashboard data validation failed - skipping archive")
+        if not validate_dashboard_data(filtered_data):
+            print("❌ Archive data validation failed - skipping archive")
             return
         
         # Ensure archive folder exists
@@ -136,7 +183,7 @@ def create_monthly_archive():
         
         # Save archive
         with open(archive_file, "w", encoding="utf-8") as f:
-            json.dump(dashboard_data, f, indent=2, default=str)
+            json.dump(filtered_data, f, indent=2, default=str)
         
         print(f"💾 Archive saved: {archive_file}")
         
@@ -149,24 +196,6 @@ def create_monthly_archive():
         print(f"❌ Archive creation error: {e}")
         raise
 
-
-def list_archives():
-    """List all available archives (for testing)"""
-    try:
-        index = load_archive_index()
-        print(f"📊 Available archives: {len(index)}")
-        for archive in index:
-            archive_file = os.path.join(ARCHIVE_FOLDER, f"{archive}_dashboard_data.json")
-            if os.path.exists(archive_file):
-                file_size = os.path.getsize(archive_file)
-                status = f"✅ ({file_size} bytes)"
-            else:
-                status = "❌ MISSING FILE"
-            print(f"  {status} {archive}")
-        return index
-    except Exception as e:
-        print(f"❌ Error listing archives: {e}")
-        return []
 
 if __name__ == "__main__":
     create_monthly_archive()
