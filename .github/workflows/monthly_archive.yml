@@ -1,0 +1,43 @@
+# .github/workflows/monthly_archive.yml
+name: Monthly Archive Creation
+
+on:
+  schedule:
+    # Run on 1st of every month at 20:00 (8 PM) UTC
+    - cron: "0 20 1 * *"
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  create-monthly-archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: Create Monthly Archive
+        run: python scripts/netlify/netlify_archive_manager.py
+
+      - name: Commit and Push Archive
+        run: |
+          echo "=== COMMITTING ARCHIVE ==="
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          
+          # Add the archive files
+          git add docs/archive/
+          
+          git commit -m "Monthly archive: $(date +'%Y_%m')" || echo "No changes to commit"
+          git push || echo "Push failed or no changes"
