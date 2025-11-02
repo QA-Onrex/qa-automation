@@ -461,6 +461,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Archive selector events
     document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
     
+    // Environment filter event (placeholder for future implementation)
+    document.getElementById('env-filter').addEventListener('change', function(e) {
+        console.log('Environment filter changed to:', e.target.value);
+        // Filtering logic will be implemented later
+    });
+    
     // Modal close handlers
     document.querySelector('.close').addEventListener('click', function() {
         document.getElementById('session-modal').style.display = 'none';
