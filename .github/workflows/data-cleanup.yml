@@ -3,6 +3,9 @@ name: Daily Data Cleanup
 on:
   workflow_dispatch:  # This enables manual triggering
 
+permissions:
+  contents: write
+
 jobs:
   data-cleanup:
     runs-on: ubuntu-latest
