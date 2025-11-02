@@ -33,7 +33,6 @@ class ArchiveManager {
     constructor() {
         this.archives = [];
         this.currentArchive = 'current';
-        this.currentYear = new Date().getFullYear();
     }
 
     async loadArchiveIndex() {
@@ -61,27 +60,6 @@ class ArchiveManager {
     getArchiveFileName(archiveId) {
         if (archiveId === 'current') return CONFIG.DASHBOARD_DATA_URL;
         return `${CONFIG.ARCHIVE_BASE_URL}${archiveId}_dashboard_data.json`;
-    }
-
-    getAvailableMonthsForYear(year) {
-        const months = [];
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        
-        for (let i = 0; i < 12; i++) {
-            const archiveId = `${year}_${String(i + 1).padStart(2, '0')}`;
-            const hasData = this.archives.includes(archiveId);
-            
-            months.push({
-                id: archiveId,
-                name: monthNames[i],
-                year: year,
-                hasData: hasData,
-                isCurrent: archiveId === this.currentArchive
-            });
-        }
-        
-        return months;
     }
 }
 
@@ -146,7 +124,7 @@ class DashboardManager {
                             `<td class="${color}" ` +
                             `onmousemove="showTooltip(event, '${project}', '${suite}', '${date}')" ` +
                             `onmouseleave="hideTooltip()" ` +
-                            `onclick="showSessionModal('${project}', '${suite}', '${date}')">` +
+                            `onclick="handleCellClick('${project}', '${suite}', '${date}')">` +
                             `${passed}/${failed}</td>`
                         );
                     } else {
@@ -234,6 +212,27 @@ function hideTooltip() {
     document.getElementById('tooltip').style.display = 'none';
 }
 
+// Cell click handler
+function handleCellClick(project, suite, date) {
+    if (!window.dashboardManager?.data) return;
+    
+    const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
+    if (!record || !record.sessions) return;
+    
+    // Only show modal for multiple sessions
+    if (record.sessions.length > 1) {
+        showSessionModal(project, suite, date);
+    }
+    // For single sessions in current data, open report directly
+    else if (record.sessions.length === 1 && window.archiveManager.currentArchive === 'current') {
+        openReport(project, suite, date, record.sessions[0]);
+    }
+    // For single sessions in archive data, do nothing
+    else {
+        // No action for single sessions in archives
+    }
+}
+
 // Modal functions
 let currentSessions = [];
 
@@ -243,13 +242,6 @@ function showSessionModal(project, suite, date) {
     const record = window.dashboardManager.data.data[project]?.[suite]?.[date];
     if (!record || !record.sessions) return;
     
-    // Single session - open directly (only for current data)
-    if (record.sessions.length === 1 && window.archiveManager.currentArchive === 'current') {
-        openReport(project, suite, date, record.sessions[0]);
-        return;
-    }
-
-    // Multiple sessions or archive data - show modal
     currentSessions = record.sessions;
     const modal = document.getElementById('session-modal');
     const sessionList = document.getElementById('session-list');
@@ -404,10 +396,9 @@ async function openReport(project, suite, date, specificSession = null) {
 }
 
 // Archive functions
-async function initializeArchiveSelectors() {
+async function initializeArchiveSelector() {
     await window.archiveManager.loadArchiveIndex();
     populateDropdownSelector();
-    populateTimelineSelector();
 }
 
 function populateDropdownSelector() {
@@ -422,38 +413,6 @@ function populateDropdownSelector() {
     });
 }
 
-function populateTimelineSelector() {
-    const monthsContainer = document.getElementById('timeline-months');
-    const yearElement = document.getElementById('timeline-year');
-    
-    yearElement.textContent = window.archiveManager.currentYear;
-    const months = window.archiveManager.getAvailableMonthsForYear(window.archiveManager.currentYear);
-    
-    monthsContainer.innerHTML = '';
-    
-    months.forEach(month => {
-        const monthElement = document.createElement('div');
-        monthElement.className = `timeline-month ${month.hasData ? 'archive has-data' : 'empty'} ${month.isCurrent ? 'current' : ''}`;
-        monthElement.textContent = month.name;
-        monthElement.title = month.hasData ? `View ${month.name} ${month.year} archive` : 'No data available';
-        
-        if (month.hasData) {
-            monthElement.addEventListener('click', () => selectArchive(month.id));
-        }
-        
-        monthsContainer.appendChild(monthElement);
-    });
-    
-    // Update navigation buttons
-    document.getElementById('timeline-prev').disabled = window.archiveManager.currentYear <= 2020;
-    document.getElementById('timeline-next').disabled = window.archiveManager.currentYear >= new Date().getFullYear();
-}
-
-function navigateTimeline(direction) {
-    window.archiveManager.currentYear += direction;
-    populateTimelineSelector();
-}
-
 async function handleArchiveChange(event) {
     const archiveId = event.target.value;
     await selectArchive(archiveId);
@@ -462,27 +421,8 @@ async function handleArchiveChange(event) {
 async function selectArchive(archiveId) {
     window.archiveManager.currentArchive = archiveId;
     
-    // Update UI states
-    updateSelectorStates(archiveId);
-    
     // Load and display archive data
     await loadArchiveData(archiveId);
-}
-
-function updateSelectorStates(archiveId) {
-    // Update dropdown
-    document.getElementById('archive-dropdown').value = archiveId;
-    
-    // Update timeline
-    const months = window.archiveManager.getAvailableMonthsForYear(window.archiveManager.currentYear);
-    const monthElements = document.querySelectorAll('.timeline-month');
-    
-    monthElements.forEach((element, index) => {
-        element.classList.remove('current');
-        if (months[index] && months[index].id === archiveId) {
-            element.classList.add('current');
-        }
-    });
 }
 
 async function loadArchiveData(archiveId) {
@@ -520,8 +460,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Archive selector events
     document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
-    document.getElementById('timeline-prev').addEventListener('click', () => navigateTimeline(-1));
-    document.getElementById('timeline-next').addEventListener('click', () => navigateTimeline(1));
     
     // Modal close handlers
     document.querySelector('.close').addEventListener('click', function() {
@@ -546,7 +484,7 @@ async function handleLogin() {
     if (await window.authManager.authenticate(password)) {
         sessionStorage.setItem('reportPassword', password);
         showDashboard();
-        await initializeArchiveSelectors();
+        await initializeArchiveSelector();
         await loadDashboardData();
     } else {
         document.getElementById('error-message').style.display = 'block';
@@ -556,11 +494,11 @@ async function handleLogin() {
 async function checkExistingSession() {
     if (window.authManager.hasValidSession()) {
         showDashboard();
-        await initializeArchiveSelectors();
+        await initializeArchiveSelector();
         await loadDashboardData();
     } else if (!CONFIG.PASSWORD_HASH) {
         showDashboard();
-        await initializeArchiveSelectors();
+        await initializeArchiveSelector();
         await loadDashboardData();
     }
 }
