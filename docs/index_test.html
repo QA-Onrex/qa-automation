@@ -31,10 +31,23 @@
         
         <!-- Archive Selector Container -->
         <div id="archive-selector-container">
-            <label for="archive-dropdown">View: </label>
-            <select id="archive-dropdown">
-                <option value="current">Current (Live)</option>
-            </select>
+            <div class="filters-header">Filters</div>
+            <div class="filters-group">
+                <div class="filter-item">
+                    <span class="filter-icon">📅</span>
+                    <select id="archive-dropdown">
+                        <option value="current">Current (Live)</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <span class="filter-icon">🔧</span>
+                    <select id="env-filter">
+                        <option value="all">All</option>
+                        <option value="intdev">intdev</option>
+                        <option value="intacc">intacc</option>
+                    </select>
+                </div>
+            </div>
         </div>
         
         <div id="loading-message">Loading dashboard data...</div>
