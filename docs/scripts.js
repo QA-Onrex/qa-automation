@@ -572,6 +572,7 @@ async function loadDashboardData() {
         window.dashboardManager.showLoading();
         await window.dashboardManager.loadData();
         window.dashboardManager.render();
+        window.dashboardManager.startAutoRefresh(); // Start auto-refresh
     } catch (error) {
         document.getElementById('loading-message').innerHTML = 
             'Error loading dashboard data. Please try refreshing the page.';
