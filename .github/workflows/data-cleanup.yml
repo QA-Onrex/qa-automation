@@ -22,3 +22,15 @@ jobs:
 
       - name: Run Data Cleanup (35-day retention)
         run: python scripts/netlify/netlify_data_cleanup.py
+
+      - name: Commit Updated Data and Dashboard
+        run: |
+          echo "=== COMMITTING RESULTS ==="
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          
+          # Add the generated files
+          git add data/
+          
+          git commit -m "Update results" || echo "No changes"
+          git push || echo "Push failed or no changes"
