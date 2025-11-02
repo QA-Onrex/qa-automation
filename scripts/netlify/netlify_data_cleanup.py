@@ -4,7 +4,8 @@ import os
 from datetime import datetime, timedelta
 
 RESULTS_FILE = "data/netlify_results.json"
-
+DATA_RETENTION = 35
+EMAIL_RETENTION = 10
 
 def load_results():
     """Load test results from JSON file"""
@@ -21,7 +22,7 @@ def save_results(results):
         json.dump(results, f, indent=2, ensure_ascii=False)
 
 
-def filter_old_records(results, days=35):
+def filter_old_records(results, days=DATA_RETENTION):
     """Filter out records older than specified days"""
     cutoff_date = datetime.now() - timedelta(days=days)
     filtered_results = []
