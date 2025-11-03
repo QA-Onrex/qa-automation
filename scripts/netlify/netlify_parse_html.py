@@ -86,11 +86,9 @@ def compute_retry_count(test_suite_id, profile, start_time, results, hours=10):
 def extract_environment_from_content(content):
     """Searches the full decrypted HTML content for the environment URL log entry."""
     
-    # Regex breakdown:
-    # 1. 'Browser is opened with url:\s*['\"]?' - Match prefix and optional quotes/whitespace.
-    # 2. (https?:\/\/\w+\.onrex\.de\/) - CAPTURE GROUP: Matches http/https://, followed by one or more word chars (e.g., intdev01, intacc01), followed by .onrex.de/, ensuring the trailing slash.
-    # 3. .* - Match any remaining characters on the line (like 'auth', or a closing quote) non-greedily.
-    m = re.search(r"Browser is opened with url:\s*['\"]?(https?:\/\/\w+\.onrex\.de\/).*", content)
+    # Regex to capture the full base URL (e.g., https://intdev01.onrex.de/)
+    # It handles optional surrounding delimiters like single/double quotes or \u0027 (escaped single quote)
+    m = re.search(r"Browser is opened with url:\s*(?:['\"]|\u0027)?(https?:\/\/\w+\.onrex\.de\/).*", content)
     
     if m:
         # Return the captured URL from group 1.
@@ -112,17 +110,32 @@ def parse_html_from_netlify(html_filename, netlify_url):
         content = html_bytes.decode("utf-8")
         print(f"Decrypting HTML file: {html_filename}")
 
-        # FIX: Extract environment directly from the full content string
+        # FIX: Extract environment directly from the full content string using the robust regex
         environment = extract_environment_from_content(content)
 
         # Extract JSON data from HTML content (used for all other metadata)
+        # Note: Keeping the search on 'main' as that is usually the largest, canonical data block.
         match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
         if not match:
-            print(f"No embedded JSON found in {html_filename}")
-            return None
+            # Fallback for when the main data block is named '0' or something else
+            match = re.search(r"loadExecutionData\('0',\s*(\{.*?\})\s*\)", content, re.DOTALL)
+            if not match:
+                print(f"No embedded JSON found in {html_filename}")
+                return None
 
-        # Parse test execution data from JSON
-        data_json = json.loads(match.group(1))
+        # Determine which group contains the JSON payload (it's group 1 if only one group, group 2 if the ID is also captured)
+        json_match_group = 1
+        if len(match.groups()) > 1:
+            # Re-run a simple regex to be sure of the group index
+            simple_match = re.search(r"(\{.*?\})", match.group(0), re.DOTALL)
+            if simple_match:
+                data_json = json.loads(simple_match.group(1))
+            else:
+                print(f"Failed to isolate JSON from loadExecutionData in {html_filename}")
+                return None
+        else:
+            data_json = json.loads(match.group(1))
+
         entity = data_json.get("entity", {})
 
         # Extract basic test information
