@@ -82,14 +82,19 @@ def compute_retry_count(test_suite_id, profile, start_time, results, hours=10):
 
     return retry_count
 
-# NEW: Simple, direct search for the environment URL in the full HTML content string
+# FIX: Robust, direct search for the environment URL in the full HTML content string
 def extract_environment_from_content(content):
     """Searches the full decrypted HTML content for the environment URL log entry."""
-    # Regex to find "Browser is opened with url: 'URL'" or similar.
-    # It captures the URL group (https?://\S+), accounting for optional surrounding quotes.
-    m = re.search(r"Browser is opened with url: ['\"]?(https?:\/\/\S+)['\"]?", content)
+    
+    # Regex breakdown:
+    # 1. 'Browser is opened with url:' - Fixed text prefix.
+    # 2. \s*['\"]? - Optional whitespace and optional leading quote.
+    # 3. (https?:\/\/.+?) - Capture the URL (http or https), non-greedy match of any character until...
+    # 4. (?:['\"]|\s|<|$) - ...it hits a non-capturing group: a closing quote, whitespace, or end of string.
+    m = re.search(r"Browser is opened with url:\s*['\"]?(https?:\/\/.+?)(?:['\"]|\s|<|$)", content)
+    
     if m:
-        # Return the captured URL, stripping any trailing quote the regex might have missed
+        # Return the captured URL from group 1.
         return m.group(1).rstrip("'\"")
     return None
 
@@ -108,7 +113,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
         content = html_bytes.decode("utf-8")
         print(f"Decrypting HTML file: {html_filename}")
 
-        # NEW FIX: Extract environment directly from the full content string
+        # FIX: Extract environment directly from the full content string
         environment = extract_environment_from_content(content)
 
         # Extract JSON data from HTML content (used for all other metadata)
@@ -173,7 +178,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
         result = {
             "html_file": netlify_url,
             "html_filename": html_filename,
-            "environment": environment,
+            "environment": environment, # Populated by direct content search
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
