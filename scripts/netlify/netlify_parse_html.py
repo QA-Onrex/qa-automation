@@ -106,6 +106,30 @@ def parse_html_from_netlify(html_filename, netlify_url):
         data_json = json.loads(match.group(1))
         entity = data_json.get("entity", {})
 
+        # Extract environment information from listener
+        environment = None
+        try:
+            def find_listener(node):
+                if isinstance(node, dict):
+                    if node.get("name") == "BeforeTestSuite":
+                        return node
+                    for k in ("listeners", "children"):
+                        for c in node.get(k, []):
+                            found = find_listener(c)
+                            if found: return found
+                return None
+        
+            listener = find_listener(entity)
+            if listener:
+                for step in listener.get("children", []) + listener.get("steps", []):
+                    msg = step.get("message", "")
+                    m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", msg)
+                    if m:
+                        environment = m.group(1)
+                        break
+        except Exception:
+            pass
+        
         # Extract basic test information
         project_name = data_json.get("project", {}).get("name")
         test_suite_id = entity.get("entityId")
@@ -156,6 +180,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
 
         # Build result record
         result = {
+            "environment": environment,
             "html_file": netlify_url,
             "html_filename": html_filename,
             "project": project_name,
