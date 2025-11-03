@@ -82,6 +82,18 @@ def compute_retry_count(test_suite_id, profile, start_time, results, hours=10):
 
     return retry_count
 
+# NEW: Simple, direct search for the environment URL in the full HTML content string
+def extract_environment_from_content(content):
+    """Searches the full decrypted HTML content for the environment URL log entry."""
+    # Regex to find "Browser is opened with url: 'URL'" or similar.
+    # It captures the URL group (https?://\S+), accounting for optional surrounding quotes.
+    m = re.search(r"Browser is opened with url: ['\"]?(https?:\/\/\S+)['\"]?", content)
+    if m:
+        # Return the captured URL, stripping any trailing quote the regex might have missed
+        return m.group(1).rstrip("'\"")
+    return None
+
+
 def parse_html_from_netlify(html_filename, netlify_url):
     """Parse encrypted HTML file to extract test results and metadata"""
     local_path = os.path.join(HTML_FOLDER, html_filename)
@@ -96,7 +108,10 @@ def parse_html_from_netlify(html_filename, netlify_url):
         content = html_bytes.decode("utf-8")
         print(f"Decrypting HTML file: {html_filename}")
 
-        # Extract JSON data from HTML content
+        # NEW FIX: Extract environment directly from the full content string
+        environment = extract_environment_from_content(content)
+
+        # Extract JSON data from HTML content (used for all other metadata)
         match = re.search(r"loadExecutionData\('main',\s*(\{.*?\})\s*\)", content, re.DOTALL)
         if not match:
             print(f"No embedded JSON found in {html_filename}")
@@ -106,54 +121,6 @@ def parse_html_from_netlify(html_filename, netlify_url):
         data_json = json.loads(match.group(1))
         entity = data_json.get("entity", {})
 
-        # Extract environment information from listener
-        environment = None
-        try:
-            def find_listener(node):
-                if isinstance(node, dict):
-                    if node.get("name") == "BeforeTestSuite":
-                        return node
-                    for k in ("listeners", "children"):
-                        for c in node.get(k, []):
-                            found = find_listener(c)
-                            if found: return found
-                return None
-        
-            listener = find_listener(entity)
-            if listener:
-                # NEW: Check logs directly on the listener entity (BeforeTestSuite)
-                for log_entry in listener.get("logs", []):
-                    log_msg = log_entry.get("message", "")
-                    m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", log_msg)
-                    if m:
-                        environment = m.group(1)
-                        break
-                
-                # Only check steps if the environment was not found in the listener's own logs
-                if not environment:
-                    for step in listener.get("children", []) + listener.get("steps", []):
-                        # 1. Check the main message of the step
-                        msg = step.get("message", "")
-                        m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", msg)
-                        if m:
-                            environment = m.group(1)
-                            break
-    
-                        # 2. Check the logs within the step
-                        for log_entry in step.get("logs", []):
-                            log_msg = log_entry.get("message", "")
-                            m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", log_msg)
-                            if m:
-                                environment = m.group(1)
-                                break
-                        
-                        # If environment was found in the step's logs, break from the outer 'for step in...' loop
-                        if environment:
-                            break
-
-        except Exception:
-            pass
-        
         # Extract basic test information
         project_name = data_json.get("project", {}).get("name")
         test_suite_id = entity.get("entityId")
