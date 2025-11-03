@@ -82,20 +82,19 @@ def compute_retry_count(test_suite_id, profile, start_time, results, hours=10):
 
     return retry_count
 
-# FIX: Robust, direct search for the environment URL in the full HTML content string
+# FIX: Robust search for the specific environment URL pattern
 def extract_environment_from_content(content):
     """Searches the full decrypted HTML content for the environment URL log entry."""
     
     # Regex breakdown:
-    # 1. 'Browser is opened with url:' - Fixed text prefix.
-    # 2. \s*['\"]? - Optional whitespace and optional leading quote.
-    # 3. (https?:\/\/.+?) - Capture the URL (http or https), non-greedy match of any character until...
-    # 4. (?:['\"]|\s|<|$) - ...it hits a non-capturing group: a closing quote, whitespace, or end of string.
-    m = re.search(r"Browser is opened with url:\s*['\"]?(https?:\/\/.+?)(?:['\"]|\s|<|$)", content)
+    # 1. 'Browser is opened with url:\s*['\"]?' - Match prefix and optional quotes/whitespace.
+    # 2. (https?:\/\/\w+\.onrex\.de\/) - CAPTURE GROUP: Matches http/https://, followed by one or more word chars (e.g., intdev01, intacc01), followed by .onrex.de/, ensuring the trailing slash.
+    # 3. .* - Match any remaining characters on the line (like 'auth', or a closing quote) non-greedily.
+    m = re.search(r"Browser is opened with url:\s*['\"]?(https?:\/\/\w+\.onrex\.de\/).*", content)
     
     if m:
         # Return the captured URL from group 1.
-        return m.group(1).rstrip("'\"")
+        return m.group(1)
     return None
 
 
@@ -178,7 +177,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
         result = {
             "html_file": netlify_url,
             "html_filename": html_filename,
-            "environment": environment, # Populated by direct content search
+            "environment": environment, # Populated by the direct content search
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
