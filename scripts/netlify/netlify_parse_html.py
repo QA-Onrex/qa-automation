@@ -180,9 +180,9 @@ def parse_html_from_netlify(html_filename, netlify_url):
 
         # Build result record
         result = {
-            "environment": environment,
             "html_file": netlify_url,
             "html_filename": html_filename,
+            "environment": environment,
             "project": project_name,
             "test_suite_id": test_suite_id,
             "profile": profile,
