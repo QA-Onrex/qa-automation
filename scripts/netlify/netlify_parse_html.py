@@ -121,25 +121,35 @@ def parse_html_from_netlify(html_filename, netlify_url):
         
             listener = find_listener(entity)
             if listener:
-                for step in listener.get("children", []) + listener.get("steps", []):
-                    # 1. Check the main message of the step (Original logic)
-                    msg = step.get("message", "")
-                    m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", msg)
+                # NEW: Check logs directly on the listener entity (BeforeTestSuite)
+                for log_entry in listener.get("logs", []):
+                    log_msg = log_entry.get("message", "")
+                    m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", log_msg)
                     if m:
                         environment = m.group(1)
                         break
-
-                    # 2. Check the logs within the step (NEW FIX)
-                    for log_entry in step.get("logs", []):
-                        log_msg = log_entry.get("message", "")
-                        m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", log_msg)
+                
+                # Only check steps if the environment was not found in the listener's own logs
+                if not environment:
+                    for step in listener.get("children", []) + listener.get("steps", []):
+                        # 1. Check the main message of the step
+                        msg = step.get("message", "")
+                        m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", msg)
                         if m:
                             environment = m.group(1)
                             break
-                    
-                    # If environment was found in the logs, break from the outer 'for step in...' loop
-                    if environment:
-                        break
+    
+                        # 2. Check the logs within the step
+                        for log_entry in step.get("logs", []):
+                            log_msg = log_entry.get("message", "")
+                            m = re.search(r"Browser is opened with url: ['\"](https?://[^'\"]+)['\"]", log_msg)
+                            if m:
+                                environment = m.group(1)
+                                break
+                        
+                        # If environment was found in the step's logs, break from the outer 'for step in...' loop
+                        if environment:
+                            break
 
         except Exception:
             pass
