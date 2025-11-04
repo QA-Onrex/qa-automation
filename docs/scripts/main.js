@@ -20,8 +20,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (e.key === 'Enter') handleLogin();
     });
 
-    // Archive selector
+    // Dropdowns
     document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
+    document.getElementById('env-dropdown').addEventListener('change', handleEnvChange);
 
     // Auto-login if session already exists
     if (window.authManager.hasValidSession()) {
@@ -46,19 +47,24 @@ async function showDashboardFlow() {
     // Switch to dashboard view
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('dashboard-content').style.display = 'block';
-
-    // Initial state
     window.dashboardManager.showLoading();
 
-    // Load archives and dashboard data
+    // Load archives and populate dropdown
     await window.archiveManager.loadArchiveIndex();
-    window.archiveManager.populateDropdownSelector(); 
+    window.archiveManager.populateDropdownSelector();
+
+    // Load dashboard data
     await loadDashboardData('current');
 }
 
 async function handleArchiveChange(event) {
-    const archiveId = event.target.value;
-    await loadDashboardData(archiveId);
+    await loadDashboardData(event.target.value);
+}
+
+async function handleEnvChange(event) {
+    const env = event.target.value;
+    // For now just log, we’ll use it in filtering next step
+    console.log(`Environment filter selected: ${env}`);
 }
 
 async function loadDashboardData(archiveId = 'current') {
@@ -71,7 +77,7 @@ async function loadDashboardData(archiveId = 'current') {
         window.dashboardManager.render();
     } catch (error) {
         console.error('Error loading dashboard data:', error);
-        const msg = document.getElementById('loading-message');
-        msg.textContent = 'Error loading dashboard data. Please refresh or select another archive.';
+        document.getElementById('loading-message').textContent =
+            'Error loading dashboard data. Please refresh or select another archive.';
     }
 }
