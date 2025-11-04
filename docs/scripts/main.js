@@ -52,6 +52,7 @@ async function showDashboardFlow() {
 
     // Load archives and dashboard data
     await window.archiveManager.loadArchiveIndex();
+    window.archiveManager.populateDropdownSelector(); 
     await loadDashboardData('current');
 }
 
