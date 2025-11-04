@@ -38,10 +38,8 @@ async function decryptAES(encryptedBytes, password) {
 }
 
 /**
- * Open a report (session) - fetches base64 content from netlify_url,
- * decodes base64 -> Uint8Array, decrypts using stored password and opens a new tab.
- *
- * session: object must contain .netlify_url (string)
+ * Open a report session: fetch base64 from netlify_url, convert to bytes, decrypt and open.
+ * Expects session.netlify_url to be present.
  */
 export async function openReport(session) {
   if (!session || !session.netlify_url) {
@@ -64,7 +62,6 @@ export async function openReport(session) {
     const resp = await fetch(session.netlify_url);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const base64Text = await resp.text();
-    // base64Text might contain whitespace/newlines — atob handles that
     const binary = atob(base64Text);
     const bytes = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
@@ -79,3 +76,8 @@ export async function openReport(session) {
     alert('Failed to open report — check console for details.');
   }
 }
+
+// expose for legacy/on-demand uses
+window.openReport = openReport;
+
+export default { openReport };
