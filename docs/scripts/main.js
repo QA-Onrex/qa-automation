@@ -6,25 +6,20 @@ import { setupModalCloseHandlers } from './ui_modal.js';
 import { CONFIG } from './config.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // Initialize managers
     window.authManager = new AuthManager();
     window.dashboardManager = new DashboardManager();
     window.archiveManager = new ArchiveManager();
 
-    // Modal close events
     setupModalCloseHandlers();
 
-    // Login events
     document.getElementById('login-button').addEventListener('click', handleLogin);
     document.getElementById('password-input').addEventListener('keypress', e => {
         if (e.key === 'Enter') handleLogin();
     });
 
-    // Dropdowns
     document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
     document.getElementById('env-dropdown').addEventListener('change', handleEnvChange);
 
-    // Auto-login if session already exists
     if (window.authManager.hasValidSession()) {
         await showDashboardFlow();
     }
@@ -44,27 +39,26 @@ async function handleLogin() {
 }
 
 async function showDashboardFlow() {
-    // Switch to dashboard view
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('dashboard-content').style.display = 'block';
     window.dashboardManager.showLoading();
 
-    // Load archives and populate dropdown
     await window.archiveManager.loadArchiveIndex();
     window.archiveManager.populateDropdownSelector();
 
-    // Load dashboard data
+    // Populate fixed environment options
+    window.dashboardManager.populateEnvDropdown();
+
     await loadDashboardData('current');
 }
 
 async function handleArchiveChange(event) {
-    await loadDashboardData(event.target.value);
+    const archiveId = event.target.value;
+    await loadDashboardData(archiveId);
 }
 
-async function handleEnvChange(event) {
-    const env = event.target.value;
-    // For now just log, we’ll use it in filtering next step
-    console.log(`Environment filter selected: ${env}`);
+async function handleEnvChange() {
+    window.dashboardManager.render(); // Re-render table with new filter
 }
 
 async function loadDashboardData(archiveId = 'current') {
@@ -74,6 +68,7 @@ async function loadDashboardData(archiveId = 'current') {
 
         const url = window.archiveManager.getArchiveFileName(archiveId);
         await window.dashboardManager.loadData(url);
+
         window.dashboardManager.render();
     } catch (error) {
         console.error('Error loading dashboard data:', error);
