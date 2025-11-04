@@ -17,36 +17,26 @@ def load_results():
         return json.load(f)
 
 
-def get_color(record):
-    """Determine color based on test results and retry count"""
-    total = record.get("test_cases", 0) or 0
-    passed = record.get("passed", 0) or 0
-    failed = record.get("failed", 0) or 0
-    errored = record.get("error", 0) or 0
-    incomplete = record.get("incomplete", 0) or 0
-    skipped = record.get("skipped", 0) or 0
-    retry = record.get("retry_count", 0) or 0
-
-    # Validate test case counts
-    total_calc = passed + failed + errored + incomplete + skipped
-    if total_calc != total:
-        return "red"
-
-    # Determine color based on results
-    if passed == total:
-        return "yellow" if retry > 0 else "green"
-
-    return "red"
+def deduplicate_results(results):
+    """Remove duplicate entries by html_filename or netlify_url (keep latest)."""
+    seen = {}
+    for r in results:
+        key = r.get("html_filename") or r.get("netlify_url")
+        if key:
+            seen[key] = r
+    return list(seen.values())
 
 
 def generate_dashboard_data():
-    """Generate dashboard data from test results"""
+    """Generate clean dashboard data from test results"""
     try:
-        # Load and validate results
         results = load_results()
         if not results:
             print("⏭️ Reports processed: 0")
             return
+
+        # Deduplicate before processing
+        results = deduplicate_results(results)
 
         # Group data by Project → Test Suite ID → Date
         data = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
@@ -54,64 +44,57 @@ def generate_dashboard_data():
         total_reports_count = 0
 
         print("Processing test results...")
-        
-        # Process each test result record - store ALL sessions
+
         for r in results:
             project = r.get("project", "Unknown")
             suite = r.get("test_suite_id", "Unknown")
             start = r.get("start") or r.get("end")
             if not start:
                 continue
-                
-            # Parse and format date from start time
+
+            # Parse date safely
             try:
                 start_str = start.replace("Z", "+00:00")
                 if "." in start_str:
                     dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
                 else:
                     dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
-
                 date = dt_obj.strftime("%Y.%m.%d")
                 all_dates_set.add(date)
             except ValueError:
                 continue
 
-            # Store ALL sessions for this date
-            r["color"] = get_color(r)
+            # Store session
             data[project][suite][date].append(r)
             total_reports_count += 1
-            
-            # Sort sessions by time (newest first)
+
+            # Sort newest first
             data[project][suite][date].sort(key=lambda x: x.get("end", ""), reverse=True)
 
-        # Convert to the format expected by frontend
+        # Build frontend-friendly data
         data_dict = {}
         for project in data:
             data_dict[project] = {}
             for suite in data[project]:
                 data_dict[project][suite] = {}
-                for date in data[project][suite]:
-                    sessions = data[project][suite][date]
+                for date, sessions in data[project][suite].items():
                     data_dict[project][suite][date] = {
                         "sessions": sessions,
-                        "latest": sessions[0]  # Most recent session
+                        "latest": sessions[0]
                     }
 
-        # Prepare final dashboard data structure
         dashboard_data = {
             "data": data_dict,
             "dates": sorted(all_dates_set, reverse=True)[:365],
             "last_updated": (datetime.now() + timedelta(hours=1)).strftime("%d/%m/%Y, %H:%M:%S (GMT+1)")
         }
 
-        # Ensure output directory exists
+        # Ensure output folder exists
         os.makedirs(os.path.dirname(DASHBOARD_DATA_FILE), exist_ok=True)
-        
-        # Write dashboard data to file
+
         with open(DASHBOARD_DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(dashboard_data, f, indent=2, default=str)
 
-        # Output annotations - now showing actual report count
         print(f"📊 Reports processed: {total_reports_count}")
         print(f"Dashboard data updated: {DASHBOARD_DATA_FILE}")
         print(f"Projects: {len(data_dict)}")
