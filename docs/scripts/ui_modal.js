@@ -3,22 +3,6 @@ import { openReport } from './decryptor.js';
 
 let currentSessions = [];
 
-export function handleCellClick(project, suite, date) {
-  const dashboard = window.dashboardManager?.data;
-  if (!dashboard) return;
-  const record = dashboard.data?.[project]?.[suite]?.[date];
-  if (!record || !record.sessions) return;
-
-  const sessions = record.sessions;
-  if (sessions.length > 1) {
-    showSessionModal(project, suite, date, sessions);
-  } else if (sessions.length === 1 && window.archiveManager?.currentArchive === 'current') {
-    openReport(sessions[0]);
-  } else {
-    // single session in archive, do nothing
-  }
-}
-
 export function showSessionModal(project, suite, date, sessions) {
   const modal = document.getElementById('session-modal');
   const sessionList = document.getElementById('session-list');
@@ -34,15 +18,11 @@ export function showSessionModal(project, suite, date, sessions) {
 
     const startTime = new Date(session.start);
     const timeString = isNaN(startTime.getTime()) ? 'N/A' : startTime.toLocaleTimeString('en-GB', { hour12: false });
-
     const passed = session.passed || 0;
     const total = session.test_cases || 0;
     const failed = total - passed;
-
-    // determine color for display (session-level green/red)
     const sessionIsGreen = (typeof session.test_cases === 'number') && ((session.passed || 0) === (session.test_cases || 0));
     let colorClass = sessionIsGreen ? 'green' : 'red';
-
     const profileName = session.profile || 'N/A';
 
     div.innerHTML = `
@@ -84,3 +64,6 @@ export function setupModalCloseHandlers() {
     }
   });
 }
+
+// expose minimal API for legacy usage
+window.showSessionModal = showSessionModal;
