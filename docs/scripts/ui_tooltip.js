@@ -11,10 +11,6 @@ function formatDate(d) {
     pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds());
 }
 
-/**
- * Compute duration string MM:SS from ISO start and end strings.
- * Returns 'MM:SS' or 'N/A' on error.
- */
 function computeDurationMMSS(startIso, endIso) {
   try {
     const s = new Date(startIso);
@@ -29,23 +25,32 @@ function computeDurationMMSS(startIso, endIso) {
   }
 }
 
-export function showTooltip(event, project, suite, date) {
+/**
+ * Show tooltip for a cell. Signature accepts optional selectedEnv param (kept for compatibility).
+ * Usage: showTooltip(event, project, suite, date)
+ */
+export function showTooltip(event, project, suite, date /*, selectedEnv - ignored */) {
   const dashboard = window.dashboardManager?.data;
   if (!dashboard) return;
-  const record = dashboard.data?.[project]?.[suite]?.[date];
-  if (!record || !record.latest) return;
 
-  const latest = record.latest;
+  const record = dashboard.data?.[project]?.[suite]?.[date];
+  if (!record) return;
+
+  // pick latest session (assumed sessions already filtered by env for this cell)
+  const latest = record.latest || record.sessions && record.sessions[0];
+  if (!latest) return;
+
   const tooltip = document.getElementById('tooltip');
+  if (!tooltip) return;
+
   const startIso = latest.start || '';
   const endIso = latest.end || '';
   const start = startIso ? new Date(startIso) : null;
   const end = endIso ? new Date(endIso) : null;
-
   const durationStr = computeDurationMMSS(startIso, endIso);
 
   tooltip.innerHTML = `
-    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${latest.profile || 'N/A'}</strong></div>
+    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${(latest.profile) || 'N/A'}</strong></div>
     <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${latest.test_cases || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${latest.passed || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${latest.failed || 0}</div>
@@ -58,25 +63,19 @@ export function showTooltip(event, project, suite, date) {
 
   tooltip.style.display = 'block';
 
-  // Positioning
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-  const padding = CONFIG.TOOLTIP_PADDING || 8;
-
-  // temporarily set to get size
+  // Positioning inside viewport
   tooltip.style.left = '0px';
   tooltip.style.top = '0px';
   const rect = tooltip.getBoundingClientRect();
+  const padding = CONFIG.TOOLTIP_PADDING || 8;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
 
   let top = event.pageY + padding;
   let left = event.pageX + padding;
 
-  if (top + rect.height > viewportHeight) {
-    top = event.pageY - rect.height - padding;
-  }
-  if (left + rect.width > viewportWidth) {
-    left = event.pageX - rect.width - padding;
-  }
+  if (top + rect.height > viewportHeight) top = event.pageY - rect.height - padding;
+  if (left + rect.width > viewportWidth) left = event.pageX - rect.width - padding;
 
   top = Math.max(padding, top);
   left = Math.max(padding, left);
@@ -89,3 +88,7 @@ export function hideTooltip() {
   const tooltip = document.getElementById('tooltip');
   if (tooltip) tooltip.style.display = 'none';
 }
+
+// expose globals for any legacy inline use (safe fallback)
+window.showTooltip = showTooltip;
+window.hideTooltip = hideTooltip;
