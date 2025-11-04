@@ -224,7 +224,7 @@ def parse_html_from_netlify(html_filename, netlify_url):
 
         # Build result record with environment as first key
         result = {
-            "html_file": netlify_url,
+            "netlify_url": netlify_url,
             "html_filename": html_filename,
             "environment": environment,
             "project": project_name,
