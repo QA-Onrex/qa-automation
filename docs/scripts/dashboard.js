@@ -1,76 +1,52 @@
-class Dashboard {
+// docs/scripts/dashboard.js
+import { CONFIG } from './config.js';
+
+export class DashboardManager {
     constructor() {
         this.data = null;
     }
 
-    async loadData() {
-        try {
-            const response = await fetch(CONFIG.DASHBOARD_DATA_URL);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            
-            this.data = await response.json();
-            return this.data;
-        } catch (error) {
-            console.error('Failed to load dashboard data:', error);
-            throw error;
-        }
+    async loadData(url = CONFIG.DASHBOARD_DATA_URL) {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+        this.data = await res.json();
+        return this.data;
     }
 
     render() {
         if (!this.data) return;
-
         const { data, dates, last_updated } = this.data;
-        
-        // Update last updated timestamp
-        if (last_updated) {
-            document.getElementById('last-updated').textContent = 
-                `Last updated: ${last_updated}`;
-        }
-
+        document.getElementById('last-updated').textContent = `Last updated: ${last_updated}`;
         this.renderTable(data, dates);
         this.showDashboard();
     }
 
     renderTable(data, dates) {
-        const headerHTML = ['<tr><th>Test Suite</th>' + dates.map(d => `<th>${d.slice(5)}</th>`).join('') + '</tr>'];
-        document.getElementById('table-header').innerHTML = headerHTML.join('');
+        const header = `<tr><th>Test Suite</th>${dates.map(d => `<th>${d.slice(5)}</th>`).join('')}</tr>`;
+        document.getElementById('table-header').innerHTML = header;
 
-        const bodyHTML = [];
+        const body = [];
         const projects = Object.keys(data).sort();
-
         for (const project of projects) {
-            bodyHTML.push(`<tr><td class="project-header">${project}</td>` + 
-                '<td class="project-separator"></td>'.repeat(dates.length) + '</tr>');
-            
-            const suites = Object.keys(data[project]).sort();
-            for (const suite of suites) {
-                const displayName = suite.replace("Test Suites/", "");
-                bodyHTML.push(`<tr><td class="suite-name">${displayName}</td>`);
-                
+            body.push(`<tr><td class="project-header">${project}</td>${'<td class="project-separator"></td>'.repeat(dates.length)}</tr>`);
+            for (const suite of Object.keys(data[project]).sort()) {
+                body.push(`<tr><td class="suite-name">${suite.replace("Test Suites/", "")}</td>`);
                 for (const date of dates) {
-                    if (date in data[project][suite]) {
-                        const record = data[project][suite][date];
-                        const color = record.latest.color;
-                        const passed = record.latest.passed || 0;
-                        const total = record.latest.test_cases || 0;
+                    const rec = data[project][suite][date];
+                    if (rec) {
+                        const color = rec.latest.color || 'red';
+                        const passed = rec.latest.passed || 0;
+                        const total = rec.latest.test_cases || 0;
                         const failed = total - passed;
-                        
-                        bodyHTML.push(
-                            `<td class="${color}" ` +
-                            `onmousemove="tooltipManager.show(event, '${project}', '${suite}', '${date}')" ` +
-                            `onmouseleave="tooltipManager.hide()" ` +
-                            `onclick="modalManager.showSessions('${project}', '${suite}', '${date}')">` +
-                            `${passed}/${failed}</td>`
+                        body.push(
+                            `<td class="${color}" onclick="handleCellClick('${project}', '${suite}', '${date}')">${passed}/${failed}</td>`
                         );
-                    } else {
-                        bodyHTML.push('<td class="empty">–</td>');
-                    }
+                    } else body.push('<td class="empty">–</td>');
                 }
-                bodyHTML.push('</tr>');
+                body.push('</tr>');
             }
         }
-
-        document.getElementById('table-body').innerHTML = bodyHTML.join('');
+        document.getElementById('table-body').innerHTML = body.join('');
     }
 
     showDashboard() {
