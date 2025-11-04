@@ -39,14 +39,20 @@ export class DashboardManager {
     const selectedEnv = document.getElementById('env-dropdown')?.value || 'All';
     const { data, dates, last_updated } = this.data;
 
-    if (last_updated) document.getElementById('last-updated').textContent = `Last updated: ${last_updated}`;
+    if (last_updated) {
+      document.getElementById('last-updated').textContent = `Last updated: ${last_updated}`;
+    }
 
     this.renderTable(data, dates, selectedEnv);
     this.showDashboard();
   }
 
   renderTable(data, dates, selectedEnv) {
-    const headerHTML = ['<tr><th>Test Suite</th>' + dates.map(d => `<th>${d.slice(5)}</th>`).join('') + '</tr>'];
+    const headerHTML = [
+      '<tr><th>Test Suite</th>' +
+      dates.map(d => `<th>${d.slice(5)}</th>`).join('') +
+      '</tr>'
+    ];
     document.getElementById('table-header').innerHTML = headerHTML.join('');
 
     const body = [];
@@ -68,7 +74,7 @@ export class DashboardManager {
             continue;
           }
 
-          // Filter sessions by env
+          // Filter sessions by environment
           const sessions = record.sessions.filter(s => {
             if (selectedEnv === 'All') return true;
             if (selectedEnv === 'Development') return s.environment?.includes('intdev');
@@ -82,7 +88,6 @@ export class DashboardManager {
             continue;
           }
 
-          // Sessions are sorted newest first (by parser)
           const latestForEnv = sessions[0];
           const passed = latestForEnv.passed || 0;
           const total = latestForEnv.test_cases || 0;
@@ -96,14 +101,24 @@ export class DashboardManager {
             color = hasFail ? 'red' : 'green';
           } else {
             if (allGreen) color = 'green';
-            else if (((latestForEnv.failed || 0) === 0) && ((latestForEnv.error || 0) === 0) && ((latestForEnv.incomplete || 0) === 0)) color = 'yellow';
+            else if (((latestForEnv.failed || 0) === 0) && ((latestForEnv.error || 0) === 0) && ((latestForEnv.incomplete || 0) === 0))
+              color = 'yellow';
             else color = 'red';
           }
 
-          // Store the relevant session inline for the tooltip
+          // Encode session info inline
           const sessionEncoded = encodeURIComponent(JSON.stringify(latestForEnv));
+          const sessionsEncoded = encodeURIComponent(JSON.stringify(sessions));
+
           dateCells.push(
-            `<td class="${color} dashboard-cell" data-project="${encodeURIComponent(project)}" data-suite="${encodeURIComponent(suite)}" data-date="${encodeURIComponent(date)}" data-session='${sessionEncoded}'>${passed}/${failed}</td>`
+            `<td class="${color} dashboard-cell" 
+                  data-project="${encodeURIComponent(project)}" 
+                  data-suite="${encodeURIComponent(suite)}" 
+                  data-date="${encodeURIComponent(date)}" 
+                  data-session='${sessionEncoded}' 
+                  data-sessions='${sessionsEncoded}'>
+                  ${passed}/${failed}
+            </td>`
           );
         }
 
@@ -121,18 +136,25 @@ export class DashboardManager {
 
     document.getElementById('table-body').innerHTML = body.join('');
 
-    // attach event listeners to each visible cell
+    // Attach event listeners to each visible cell
     const cells = document.querySelectorAll('.dashboard-cell');
     cells.forEach(cell => {
       const project = decodeURIComponent(cell.dataset.project);
       const suite = decodeURIComponent(cell.dataset.suite);
       const date = decodeURIComponent(cell.dataset.date);
       const session = JSON.parse(decodeURIComponent(cell.dataset.session));
+      const sessions = JSON.parse(decodeURIComponent(cell.dataset.sessions));
 
-      cell.addEventListener('mousemove', (e) => showTooltip(e, session));
-      cell.addEventListener('mouseleave', () => hideTooltip());
+      cell.addEventListener('mousemove', e => showTooltip(e, session));
+      cell.addEventListener('mouseleave', hideTooltip);
+
       cell.addEventListener('click', () => {
-        if (window.archiveManager.currentArchive === 'current') openReport(session);
+        if (window.archiveManager.currentArchive !== 'current') return;
+        if (sessions.length > 1) {
+          showSessionModal(project, suite, date, sessions);
+        } else if (sessions.length === 1) {
+          openReport(sessions[0]);
+        }
       });
     });
   }
