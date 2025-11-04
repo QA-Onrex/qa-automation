@@ -2,6 +2,8 @@
 import { AuthManager } from './auth.js';
 import { DashboardManager } from './dashboard.js';
 import { ArchiveManager } from './archive.js';
+import { setupModalCloseHandlers } from './ui_modal.js';
+import { CONFIG } from './config.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
     window.authManager = new AuthManager();
