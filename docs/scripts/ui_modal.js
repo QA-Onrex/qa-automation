@@ -4,71 +4,83 @@ import { openReport } from './decryptor.js';
 let currentSessions = [];
 
 export function handleCellClick(project, suite, date) {
-    const record = window.dashboardManager?.data?.data[project]?.[suite]?.[date];
-    if (!record?.sessions) return;
+  const dashboard = window.dashboardManager?.data;
+  if (!dashboard) return;
+  const record = dashboard.data?.[project]?.[suite]?.[date];
+  if (!record || !record.sessions) return;
 
-    // Show modal only if multiple sessions exist
-    if (record.sessions.length > 1) {
-        showSessionModal(project, suite, date, record.sessions);
-    } else if (record.sessions.length === 1 && window.archiveManager.currentArchive === 'current') {
-        openReport(record.sessions[0]);
-    }
+  const sessions = record.sessions;
+  if (sessions.length > 1) {
+    showSessionModal(project, suite, date, sessions);
+  } else if (sessions.length === 1 && window.archiveManager?.currentArchive === 'current') {
+    openReport(sessions[0]);
+  } else {
+    // single session in archive, do nothing
+  }
 }
 
 export function showSessionModal(project, suite, date, sessions) {
-    const modal = document.getElementById('session-modal');
-    const sessionList = document.getElementById('session-list');
-    const displayName = suite.replace("Test Suites/", "");
+  const modal = document.getElementById('session-modal');
+  const sessionList = document.getElementById('session-list');
+  const displayName = suite.replace('Test Suites/', '');
 
-    modal.querySelector('h3').textContent = displayName;
-    sessionList.innerHTML = '';
-    currentSessions = sessions;
+  modal.querySelector('h3').textContent = displayName;
+  sessionList.innerHTML = '';
+  currentSessions = sessions;
 
-    sessions.forEach(session => {
-        const div = document.createElement('div');
-        div.className = 'session-item';
-        const startTime = new Date(session.start);
-        const time = startTime.toLocaleTimeString('en-GB', { hour12: false });
-        const passed = session.passed || 0;
-        const total = session.test_cases || 0;
-        const failed = total - passed;
-        const colorClass = session.color === 'yellow' ? 'green' : (session.color || 'red');
-        const profile = session.profile || 'N/A';
+  sessions.forEach(session => {
+    const div = document.createElement('div');
+    div.className = 'session-item';
 
-        div.innerHTML = `
-            <div>
-                <div class="session-profile-label">Profile: ${profile}</div>
-                <div class="session-time-large">${time}</div>
-            </div>
-            <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
-        `;
+    const startTime = new Date(session.start);
+    const timeString = isNaN(startTime.getTime()) ? 'N/A' : startTime.toLocaleTimeString('en-GB', { hour12: false });
 
-        if (window.archiveManager.currentArchive === 'current') {
-            div.onclick = () => openReport(session);
-        } else {
-            div.style.opacity = '0.7';
-            div.style.cursor = 'default';
-        }
+    const passed = session.passed || 0;
+    const total = session.test_cases || 0;
+    const failed = total - passed;
 
-        sessionList.appendChild(div);
-    });
+    // determine color for display (session-level green/red)
+    const sessionIsGreen = (typeof session.test_cases === 'number') && ((session.passed || 0) === (session.test_cases || 0));
+    let colorClass = sessionIsGreen ? 'green' : 'red';
 
-    modal.style.display = 'block';
+    const profileName = session.profile || 'N/A';
+
+    div.innerHTML = `
+      <div>
+        <div class="session-profile-label">Profile: ${profileName}</div>
+        <div class="session-time-large">${timeString}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
+      </div>
+    `;
+
+    if (window.archiveManager?.currentArchive === 'current') {
+      div.style.cursor = 'pointer';
+      div.addEventListener('click', () => openReport(session));
+    } else {
+      div.style.cursor = 'default';
+      div.style.opacity = '0.8';
+    }
+
+    sessionList.appendChild(div);
+  });
+
+  modal.style.display = 'block';
 }
 
 export function setupModalCloseHandlers() {
-    const modal = document.getElementById('session-modal');
-    const closeBtn = modal.querySelector('.close');
-
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-        currentSessions = [];
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            currentSessions = [];
-        }
-    });
+  const modal = document.getElementById('session-modal');
+  if (!modal) return;
+  const closeBtn = modal.querySelector('.close');
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    currentSessions = [];
+  });
+  window.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      currentSessions = [];
+    }
+  });
 }
