@@ -1,5 +1,4 @@
 // docs/scripts/ui_tooltip.js
-import { CONFIG } from './config.js';
 
 function pad2(n) {
   return String(n).padStart(2, '0');
@@ -26,36 +25,28 @@ function computeDurationMMSS(startIso, endIso) {
 }
 
 /**
- * Show tooltip for a cell. Signature accepts optional selectedEnv param (kept for compatibility).
- * Usage: showTooltip(event, project, suite, date)
+ * Displays tooltip using data from a single session object.
  */
-export function showTooltip(event, project, suite, date /*, selectedEnv - ignored */) {
-  const dashboard = window.dashboardManager?.data;
-  if (!dashboard) return;
-
-  const record = dashboard.data?.[project]?.[suite]?.[date];
-  if (!record) return;
-
-  // pick latest session (assumed sessions already filtered by env for this cell)
-  const latest = record.latest || record.sessions && record.sessions[0];
-  if (!latest) return;
+export function showTooltip(event, session) {
+  if (!session) return;
 
   const tooltip = document.getElementById('tooltip');
   if (!tooltip) return;
 
-  const startIso = latest.start || '';
-  const endIso = latest.end || '';
+  const startIso = session.start || '';
+  const endIso = session.end || '';
   const start = startIso ? new Date(startIso) : null;
   const end = endIso ? new Date(endIso) : null;
   const durationStr = computeDurationMMSS(startIso, endIso);
 
   tooltip.innerHTML = `
-    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${(latest.profile) || 'N/A'}</strong></div>
-    <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${latest.test_cases || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${latest.passed || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${latest.failed || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${latest.error || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${latest.skipped || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${(session.profile) || 'N/A'}</strong></div>
+    <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${session.test_cases || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${session.passed || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${session.failed || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${session.error || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${session.skipped || 0}</div>
+    <div class='tooltip-row'><span class='tooltip-label'>Environment:</span>${session.environment || 'N/A'}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${start ? formatDate(start) : 'N/A'}</div>
     <div class='tooltip-row'><span class='tooltip-label'>End:</span>${end ? formatDate(end) : 'N/A'}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
@@ -63,25 +54,15 @@ export function showTooltip(event, project, suite, date /*, selectedEnv - ignore
 
   tooltip.style.display = 'block';
 
-  // Positioning inside viewport
-  tooltip.style.left = '0px';
-  tooltip.style.top = '0px';
-  const rect = tooltip.getBoundingClientRect();
-  const padding = CONFIG.TOOLTIP_PADDING || 8;
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-
+  // Position near cursor
+  const padding = 8;
   let top = event.pageY + padding;
   let left = event.pageX + padding;
-
-  if (top + rect.height > viewportHeight) top = event.pageY - rect.height - padding;
-  if (left + rect.width > viewportWidth) left = event.pageX - rect.width - padding;
-
-  top = Math.max(padding, top);
-  left = Math.max(padding, left);
-
-  tooltip.style.top = top + 'px';
-  tooltip.style.left = left + 'px';
+  const rect = tooltip.getBoundingClientRect();
+  if (top + rect.height > window.innerHeight) top = event.pageY - rect.height - padding;
+  if (left + rect.width > window.innerWidth) left = event.pageX - rect.width - padding;
+  tooltip.style.top = `${top}px`;
+  tooltip.style.left = `${left}px`;
 }
 
 export function hideTooltip() {
@@ -89,6 +70,5 @@ export function hideTooltip() {
   if (tooltip) tooltip.style.display = 'none';
 }
 
-// expose globals for any legacy inline use (safe fallback)
 window.showTooltip = showTooltip;
 window.hideTooltip = hideTooltip;
