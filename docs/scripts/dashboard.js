@@ -68,6 +68,7 @@ export class DashboardManager {
             continue;
           }
 
+          // Filter sessions by env
           const sessions = record.sessions.filter(s => {
             if (selectedEnv === 'All') return true;
             if (selectedEnv === 'Development') return s.environment?.includes('intdev');
@@ -81,13 +82,13 @@ export class DashboardManager {
             continue;
           }
 
-          // sessions assumed sorted newest-first
-          const latest = sessions[0];
-          const passed = latest.passed || 0;
-          const total = latest.test_cases || 0;
+          // Sessions are sorted newest first (by parser)
+          const latestForEnv = sessions[0];
+          const passed = latestForEnv.passed || 0;
+          const total = latestForEnv.test_cases || 0;
           const failed = total - passed;
 
-          // color rules
+          // Color logic
           const hasFail = sessions.some(s => (s.failed || 0) > 0 || (s.error || 0) > 0 || (s.incomplete || 0) > 0);
           const allGreen = sessions.every(s => ((s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0));
           let color = 'green';
@@ -95,13 +96,14 @@ export class DashboardManager {
             color = hasFail ? 'red' : 'green';
           } else {
             if (allGreen) color = 'green';
-            else if (((latest.failed || 0) === 0) && ((latest.error || 0) === 0) && ((latest.incomplete || 0) === 0)) color = 'yellow';
+            else if (((latestForEnv.failed || 0) === 0) && ((latestForEnv.error || 0) === 0) && ((latestForEnv.incomplete || 0) === 0)) color = 'yellow';
             else color = 'red';
           }
 
-          // produce cell with data- attributes
+          // Store the relevant session inline for the tooltip
+          const sessionEncoded = encodeURIComponent(JSON.stringify(latestForEnv));
           dateCells.push(
-            `<td class="${color} dashboard-cell" data-project="${encodeURIComponent(project)}" data-suite="${encodeURIComponent(suite)}" data-date="${encodeURIComponent(date)}" data-env="${encodeURIComponent(selectedEnv)}">${passed}/${failed}</td>`
+            `<td class="${color} dashboard-cell" data-project="${encodeURIComponent(project)}" data-suite="${encodeURIComponent(suite)}" data-date="${encodeURIComponent(date)}" data-session='${sessionEncoded}'>${passed}/${failed}</td>`
           );
         }
 
@@ -119,34 +121,18 @@ export class DashboardManager {
 
     document.getElementById('table-body').innerHTML = body.join('');
 
-    // attach event listeners
+    // attach event listeners to each visible cell
     const cells = document.querySelectorAll('.dashboard-cell');
     cells.forEach(cell => {
       const project = decodeURIComponent(cell.dataset.project);
       const suite = decodeURIComponent(cell.dataset.suite);
       const date = decodeURIComponent(cell.dataset.date);
-      const env = decodeURIComponent(cell.dataset.env || 'All');
+      const session = JSON.parse(decodeURIComponent(cell.dataset.session));
 
-      cell.addEventListener('mousemove', (e) => showTooltip(e, project, suite, date));
+      cell.addEventListener('mousemove', (e) => showTooltip(e, session));
       cell.addEventListener('mouseleave', () => hideTooltip());
       cell.addEventListener('click', () => {
-        // fetch the filtered sessions for this cell and open modal or report
-        const record = this.data.data?.[project]?.[suite]?.[date];
-        if (!record || !record.sessions) return;
-
-        const sessions = record.sessions.filter(s => {
-          if (env === 'All') return true;
-          if (env === 'Development') return s.environment?.includes('intdev');
-          if (env === 'Acceptance') return s.environment?.includes('intacc');
-          return false;
-        });
-
-        if (sessions.length > 1) {
-          showSessionModal(project, suite, date, sessions);
-        } else if (sessions.length === 1 && window.archiveManager.currentArchive === 'current') {
-          // open the single session report
-          openReport(sessions[0]);
-        }
+        if (window.archiveManager.currentArchive === 'current') openReport(session);
       });
     });
   }
@@ -161,6 +147,3 @@ export class DashboardManager {
     document.getElementById('table-container').style.display = 'none';
   }
 }
-
-// make showSessionModal available globally for any other callers (safe)
-window.showSessionModal = showSessionModal;
