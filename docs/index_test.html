@@ -30,11 +30,24 @@
         <div id="last-updated"></div>
         
         <!-- Archive Selector Container -->
+        <!-- Archive + Environment Selector Container -->
         <div id="archive-selector-container">
-            <label for="archive-dropdown">View: </label>
-            <select id="archive-dropdown">
-                <option value="current">Current (Live)</option>
-            </select>
+            <div class="selector-group">
+                <span class="selector-icon">📂</span>
+                <label for="archive-dropdown">View:</label>
+                <select id="archive-dropdown">
+                    <option value="current">Current (Live)</option>
+                </select>
+            </div>
+            <div class="selector-group">
+                <span class="selector-icon">🌐</span>
+                <label for="env-dropdown">Env:</label>
+                <select id="env-dropdown">
+                    <option value="all">All</option>
+                    <option value="intdev">Development</option>
+                    <option value="intacc">Acceptance</option>
+                </select>
+            </div>
         </div>
         
         <div id="loading-message">Loading dashboard data...</div>
