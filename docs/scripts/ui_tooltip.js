@@ -19,34 +19,27 @@ function computeDurationMMSS(startIso, endIso) {
     const minutes = Math.floor(sec / 60);
     const seconds = sec % 60;
     return `${pad2(minutes)}:${pad2(seconds)}`;
-  } catch (err) {
+  } catch {
     return 'N/A';
   }
 }
 
-/**
- * Displays tooltip using data from a single session object.
- */
 export function showTooltip(event, session) {
   if (!session) return;
-
   const tooltip = document.getElementById('tooltip');
   if (!tooltip) return;
 
-  const startIso = session.start || '';
-  const endIso = session.end || '';
-  const start = startIso ? new Date(startIso) : null;
-  const end = endIso ? new Date(endIso) : null;
-  const durationStr = computeDurationMMSS(startIso, endIso);
+  const durationStr = computeDurationMMSS(session.start, session.end);
+  const start = session.start ? new Date(session.start) : null;
+  const end = session.end ? new Date(session.end) : null;
 
   tooltip.innerHTML = `
-    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${(session.profile) || 'N/A'}</strong></div>
+    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${session.profile || 'N/A'}</strong></div>
     <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${session.test_cases || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${session.passed || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${session.failed || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${session.error || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${session.skipped || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Environment:</span>${session.environment || 'N/A'}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${start ? formatDate(start) : 'N/A'}</div>
     <div class='tooltip-row'><span class='tooltip-label'>End:</span>${end ? formatDate(end) : 'N/A'}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
@@ -54,13 +47,14 @@ export function showTooltip(event, session) {
 
   tooltip.style.display = 'block';
 
-  // Position near cursor
   const padding = 8;
   let top = event.pageY + padding;
   let left = event.pageX + padding;
   const rect = tooltip.getBoundingClientRect();
+
   if (top + rect.height > window.innerHeight) top = event.pageY - rect.height - padding;
   if (left + rect.width > window.innerWidth) left = event.pageX - rect.width - padding;
+
   tooltip.style.top = `${top}px`;
   tooltip.style.left = `${left}px`;
 }
