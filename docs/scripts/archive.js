@@ -9,27 +9,36 @@ export class ArchiveManager {
 
     async loadArchiveIndex() {
         try {
-            const res = await fetch(CONFIG.ARCHIVE_INDEX_URL);
-            if (!res.ok) throw new Error('Failed to load archive index');
-            this.archives = await res.json();
-            return this.archives;
-        } catch (e) {
-            console.error('Archive load error:', e);
+            const response = await fetch(CONFIG.ARCHIVE_INDEX_URL);
+            if (!response.ok) throw new Error('Failed to load archive index');
+            this.archives = await response.json();
+        } catch (error) {
+            console.error('Error loading archive index:', error);
             this.archives = [];
-            return [];
         }
     }
 
-    formatArchiveDisplayName(id) {
-        if (id === 'current') return 'Current (Live)';
-        const [year, month] = id.split('_');
+    populateDropdownSelector() {
+        const dropdown = document.getElementById('archive-dropdown');
+        dropdown.innerHTML = '<option value="current">Current (Live)</option>';
+
+        this.archives.forEach(archiveId => {
+            const option = document.createElement('option');
+            option.value = archiveId;
+            option.textContent = this.formatArchiveDisplayName(archiveId);
+            dropdown.appendChild(option);
+        });
+    }
+
+    formatArchiveDisplayName(archiveId) {
+        if (archiveId === 'current') return 'Current (Live)';
+        const [year, month] = archiveId.split('_');
         const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         return `${monthNames[parseInt(month) - 1]} ${year}`;
     }
 
-    getArchiveFileName(id) {
-        return id === 'current'
-            ? CONFIG.DASHBOARD_DATA_URL
-            : `${CONFIG.ARCHIVE_BASE_URL}${id}_dashboard_data.json`;
+    getArchiveFileName(archiveId) {
+        if (archiveId === 'current') return CONFIG.DASHBOARD_DATA_URL;
+        return `${CONFIG.ARCHIVE_BASE_URL}${archiveId}_dashboard_data.json`;
     }
 }
