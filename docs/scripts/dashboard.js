@@ -1,5 +1,7 @@
 // docs/scripts/dashboard.js
 import { CONFIG } from './config.js';
+import { showTooltip, hideTooltip } from './ui_tooltip.js';
+import { handleCellClick } from './ui_modal.js';
 
 export class DashboardManager {
     constructor() {
