@@ -1,4 +1,4 @@
-name: Daily Data Cleanup
+name: 🧹 Daily Data Cleanup
 
 on:
   workflow_dispatch:  # This enables manual triggering
@@ -24,6 +24,10 @@ jobs:
           # Or install specific dependencies if needed
 
       - name: Run Netlify Draft Cleanup
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          
         run: python scripts/netlify/netlify_cleanup_drafts.py
 
       - name: Run Data Cleanup
