@@ -216,6 +216,13 @@ def main():
         print(f"::notice::✅ HTML files parsed: {processed_count}")
         cleanup_urls_file()
 
+        version_script_path = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "netlify_version_manager.py"
+        )
+        # Execute the version manager script
+        os.system(f"python {version_script_path}")
+
     except Exception as e:
         print(f"❌ Fatal error: {e}")
         sys.exit(1)
