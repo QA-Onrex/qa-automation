@@ -17,7 +17,6 @@ if not NETLIFY_SITE_ID or not NETLIFY_AUTH_TOKEN:
 
 
 def get_draft_deploys():
-    """Fetch all draft deploys from Netlify"""
     headers = {
         "Authorization": f"Bearer {NETLIFY_AUTH_TOKEN}",
         "Content-Type": "application/json"
@@ -28,10 +27,33 @@ def get_draft_deploys():
     response.raise_for_status()
     
     deploys = response.json()
-    draft_deploys = [deploy for deploy in deploys if deploy.get("draft")]
     
-    print(f"📋 Found {len(deploys)} total deploys, {len(draft_deploys)} are drafts")
-    return draft_deploys
+    # DEBUG: Print deploy types
+    for deploy in deploys[:3]:  # First 3 deploys
+        print("🔍 Deploy structure:")
+        print(f"ID: {deploy.get('id')}")
+        print(f"State: {deploy.get('state')}")
+        print(f"Context: {deploy.get('context')}")
+        print(f"Branch: {deploy.get('branch')}")
+        print(f"Draft: {deploy.get('draft')}")
+        print(f"Deploy type: {deploy.get('deploy_type')}")
+        print("---")
+    
+    # Try different filtering strategies
+    preview_deploys = []
+    for deploy in deploys:
+        # Strategy 1: Look for deploy preview context
+        if deploy.get("context") == "deploy-preview":
+            preview_deploys.append(deploy)
+        # Strategy 2: Look for draft flag (your current approach)
+        elif deploy.get("draft"):
+            preview_deploys.append(deploy)
+        # Strategy 3: Look for specific branch pattern
+        elif deploy.get("branch") and "deploy-preview" in deploy.get("branch", ""):
+            preview_deploys.append(deploy)
+    
+    print(f"📋 Found {len(deploys)} total deploys, {len(preview_deploys)} are deploy previews")
+    return preview_deploys
 
 
 def is_older_than_days(deploy, days):
