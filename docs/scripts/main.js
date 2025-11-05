@@ -43,9 +43,11 @@ async function handleLogin() {
     const password = document.getElementById('password-input').value.trim();
     const errorBox = document.getElementById('error-message');
 
+    // Create the exact secret string that matches your GitHub Secret
+    const fullSecretForDecryption = `${username} ${password}`;
+
     if (await window.authManager.authenticate(username, password)) {
         // Store the full combined secret ("username password") for decryption
-        const fullSecretForDecryption = `${username} ${password}`;
         sessionStorage.setItem('reportPassword', fullSecretForDecryption);
         
         errorBox.style.display = 'none';
