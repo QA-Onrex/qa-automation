@@ -1,263 +1,64 @@
-<html><head><meta charset='utf-8'><title>QA Automation Report</title>
-<style>
-body { background-color: #1e1e1e; color: #ddd; font-family: Arial, sans-serif; margin:0; padding:0; }
-h1 { color: #fff; padding: 10px 0 10px 16px; margin:0; }
-#login-container { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; }
-#login-box { background-color: #2b2b2b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-#login-box h2 { margin-top: 0; color: #fff; }
-#password-input { width: 250px; padding: 10px; margin: 10px 0; background-color: #1e1e1e; border: 1px solid #444; color: #ddd; border-radius: 4px; }
-#login-button { padding: 10px 20px; background-color: #2e7d32; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-#login-button:hover { background-color: #1b5e20; }
-#error-message { color: #c62828; margin-top: 10px; display: none; }
-#dashboard-content { display: none; }
-table { border-collapse: collapse; }
-th, td { border: 1px solid #444; text-align: center; padding: 6px; }
-th { background-color: #2b2b2b; font-weight: bold; position: sticky; top: 0; z-index: 2; }
-th::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background-color: #2b2b2b; }
-th:first-child { position: sticky; left: 0; z-index: 4; background-color: #2b2b2b; text-align: left; padding-left: 8px; border-right: 2px solid #444; }
-th:first-child::before { content: ''; position: absolute; top: -1px; left: -1px; width: calc(100% + 1px); height: calc(100% + 1px); background-color: #2b2b2b; z-index: -1; }
-td.green { background-color: #2e7d32; color: #fff; cursor: pointer; }
-td.yellow { background-color: #f9a825; color: #000; cursor: pointer; }
-td.red { background-color: #c62828; color: #fff; cursor: pointer; }
-td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
-td.empty { background-color: #2b2b2b; color: #666; }
-td.project-separator { background-color: #1e1e1e; }
-.suite-name { position: sticky; left: 0; background-color: #1e1e1e; width: 439px; text-align: left; padding-left: 8px; font-weight: normal; z-index:1; border-right: 2px solid #444; }
-.suite-name::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
-.project-header { position: sticky; left: 0; display: table-cell; background-color: #1e1e1e; text-align: left; padding-left: 8px; font-weight: bold; z-index: 1; border-right: 2px solid #444; border-bottom: 2px solid #444; }
-.project-header::before { content: ''; position: absolute; left: -1px; top: 0; width: 1px; bottom: 0; background-color: #1e1e1e; }
-.table-container { overflow-x: auto; overflow-y: auto; max-height: 90vh; }
-.tooltip { position: absolute; display: none; background-color: #2b2b2b; border: 1px solid #444; padding: 10px; border-radius: 4px; z-index: 1000; pointer-events: none; white-space: nowrap; }
-.tooltip-row { margin: 3px 0; }
-.tooltip-label { font-weight: bold; display: inline-block; width: 100px; }
-</style>
-<script>
-const PASSWORD_HASH = '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32';
-const data = {"DYNAREX V2": {"Test Suites/Test Suites/Settings/Permissions - Search": {"2025.11.03": {"netlify_url": "https://6909d6307e16eddf56754d37--qa-onrex.netlify.app/reports/20251103_113254_1762166412064.html", "html_filename": "20251103_113254_1762166412064.html", "environment": "https://intdev01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Search", "profile": "dynarex intdev", "test_cases": 3, "passed": 3, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-03T11:37:55.119+01:00", "end": "2025-11-03T11:40:11.602+01:00", "color": "green"}, "2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_162411_1762270332415.html", "html_filename": "20251104_162411_1762270332415.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Search", "profile": "default", "test_cases": 3, "passed": 3, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T16:29:49.477+01:00", "end": "2025-11-04T16:32:11.828+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_143705_1762350377997.html", "html_filename": "20251105_143705_1762350377997.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Search", "profile": "default", "test_cases": 3, "passed": 2, "failed": 1, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:42:11.796+01:00", "end": "2025-11-05T14:46:17.276+01:00", "color": "red"}}, "Test Suites/Test Suites/Settings/Permissions - Custom roles": {"2025.11.03": {"netlify_url": "https://6909d6307e16eddf56754d37--qa-onrex.netlify.app/reports/20251103_113252_1762166270820.html", "html_filename": "20251103_113252_1762166270820.html", "environment": "https://intdev01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Custom roles", "profile": "dynarex intdev", "test_cases": 10, "passed": 10, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-03T11:34:34.900+01:00", "end": "2025-11-03T11:37:49.963+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_143703_1762350127906.html", "html_filename": "20251105_143703_1762350127906.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Custom roles", "profile": "default", "test_cases": 10, "passed": 10, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:38:45.989+01:00", "end": "2025-11-05T14:42:06.998+01:00", "color": "green"}, "2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_162409_1762270181275.html", "html_filename": "20251104_162409_1762270181275.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Custom roles", "profile": "default", "test_cases": 10, "passed": 10, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T16:26:16.630+01:00", "end": "2025-11-04T16:29:40.771+01:00", "color": "green"}}, "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions": {"2025.11.03": {"netlify_url": "https://6909d6307e16eddf56754d37--qa-onrex.netlify.app/reports/20251103_105324_1762164958514.html", "html_filename": "20251103_105324_1762164958514.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "profile": "default", "test_cases": 6, "passed": 6, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-03T11:00:42.689+01:00", "end": "2025-11-03T11:15:57.701+01:00", "color": "green"}, "2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_162413_1762271305146.html", "html_filename": "20251104_162413_1762271305146.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "profile": "default", "test_cases": 6, "passed": 6, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T16:32:20.666+01:00", "end": "2025-11-04T16:48:24.581+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_143707_1762350920010.html", "html_filename": "20251105_143707_1762350920010.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "profile": "default", "test_cases": 6, "passed": 2, "failed": 4, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:46:22.173+01:00", "end": "2025-11-05T14:55:18.556+01:00", "color": "red"}}, "Test Suites/Test Suites/Settings/Permissions - Standart roles": {"2025.11.03": {"netlify_url": "https://6909d6307e16eddf56754d37--qa-onrex.netlify.app/reports/20251103_113250_1762166070554.html", "html_filename": "20251103_113250_1762166070554.html", "environment": "https://intdev01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Standart roles", "profile": "dynarex intdev", "test_cases": 15, "passed": 15, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-03T11:33:00.579+01:00", "end": "2025-11-03T11:34:28.452+01:00", "color": "green"}, "2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_162407_1762269967538.html", "html_filename": "20251104_162407_1762269967538.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Standart roles", "profile": "default", "test_cases": 15, "passed": 15, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T16:24:22.869+01:00", "end": "2025-11-04T16:26:05.681+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_143701_1762349921716.html", "html_filename": "20251105_143701_1762349921716.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Standart roles", "profile": "default", "test_cases": 15, "passed": 15, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:37:12.092+01:00", "end": "2025-11-05T14:38:39.685+01:00", "color": "green"}}, "Test Suites/Test Suites/login-logout": {"2025.11.05": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251105_111013_1762337492026.html", "html_filename": "20251105_111013_1762337492026.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/login-logout", "profile": "default - Deutsch", "test_cases": 7, "passed": 7, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T11:10:33.904+01:00", "end": "2025-11-05T11:11:31.746+01:00", "color": "green"}}, "Test Suites/Test Suites/Settings/Users - Cleanup": {"2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_172515_1762274608777.html", "html_filename": "20251104_172515_1762274608777.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Cleanup", "profile": "default", "test_cases": 2, "passed": 2, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T17:42:15.535+01:00", "end": "2025-11-04T17:43:28.443+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_144122_1762350167065.html", "html_filename": "20251105_144122_1762350167065.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Cleanup", "profile": "default", "test_cases": 2, "passed": 2, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:41:39.400+01:00", "end": "2025-11-05T14:42:46.506+01:00", "color": "green"}}, "Test Suites/Test Suites/Settings/Users - General": {"2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_144124_1762350602777.html", "html_filename": "20251105_144124_1762350602777.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - General", "profile": "default", "test_cases": 8, "passed": 5, "failed": 3, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:42:55.247+01:00", "end": "2025-11-05T14:49:58.822+01:00", "color": "red"}, "2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_172507_1762274056285.html", "html_filename": "20251104_172507_1762274056285.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - General", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T17:26:45.332+01:00", "end": "2025-11-04T17:34:15.807+01:00", "color": "green"}}, "Test Suites/Test Suites/Settings/Users - User profile": {"2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_144126_1762350785764.html", "html_filename": "20251105_144126_1762350785764.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - User profile", "profile": "default", "test_cases": 4, "passed": 4, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:50:13.733+01:00", "end": "2025-11-05T14:53:05.279+01:00", "color": "green"}, "2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_172509_1762274244302.html", "html_filename": "20251104_172509_1762274244302.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - User profile", "profile": "default", "test_cases": 4, "passed": 4, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T17:34:25.001+01:00", "end": "2025-11-04T17:37:24.147+01:00", "color": "green"}}, "Test Suites/Test Suites/Settings/Users - Filters": {"2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_172513_1762274527384.html", "html_filename": "20251104_172513_1762274527384.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Filters", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T17:41:04.775+01:00", "end": "2025-11-04T17:42:06.948+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_144130_1762351069815.html", "html_filename": "20251105_144130_1762351069815.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Filters", "profile": "default", "test_cases": 8, "passed": 8, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:56:52.924+01:00", "end": "2025-11-05T14:57:49.453+01:00", "color": "green"}}, "Test Suites/Test Suites/Settings/Users - Change Login Email": {"2025.11.04": {"netlify_url": "https://690b36c1d00a2398208c3fd1--qa-onrex.netlify.app/reports/20251104_172511_1762274456605.html", "html_filename": "20251104_172511_1762274456605.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Change Login Email", "profile": "default", "test_cases": 10, "passed": 10, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-04T17:37:32.204+01:00", "end": "2025-11-04T17:40:56.011+01:00", "color": "green"}, "2025.11.05": {"netlify_url": "https://690b5e7c25d9090f9dbd90a7--qa-onrex.netlify.app/reports/20251105_144128_1762351004352.html", "html_filename": "20251105_144128_1762351004352.html", "environment": "https://intacc01.onrex.de/auth/", "project": "DYNAREX V2", "test_suite_id": "Test Suites/Test Suites/Settings/Users - Change Login Email", "profile": "default", "test_cases": 10, "passed": 10, "failed": 0, "error": 0, "incomplete": 0, "skipped": 0, "start": "2025-11-05T14:53:14.738+01:00", "end": "2025-11-05T14:56:43.941+01:00", "color": "green"}}}};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>QA Automation Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login-container">
+        <div id="login-box">
+            <h2>QA Automation Report</h2>
+            <form onsubmit="return false;">
+                <div><input type="text" id="username-input" placeholder="Enter username" autofocus></div>
+                <div><input type="password" id="password-input" placeholder="Enter password"></div>
+                <div><button id="login-button">Login</button></div>
+            </form>
+            <div id="error-message">Incorrect password. Please try again.</div>
+        </div>
+    </div>
 
-async function hashPassword(password) {
-  const msgBuffer = new TextEncoder().encode(password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function checkPassword() {
-  const password = document.getElementById('password-input').value;
-  const hash = await hashPassword(password);
-  if (hash === PASSWORD_HASH) {
-    sessionStorage.setItem('reportPassword', password);
-    document.getElementById('login-container').style.display = 'none';
-    document.getElementById('dashboard-content').style.display = 'block';
-  } else {
-    document.getElementById('error-message').style.display = 'block';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const savedPassword = sessionStorage.getItem('reportPassword');
-  if (PASSWORD_HASH && savedPassword) {
-    hashPassword(savedPassword).then(hash => {
-      if (hash === PASSWORD_HASH) {
-        document.getElementById('login-container').style.display = 'none';
-        document.getElementById('dashboard-content').style.display = 'block';
-      }
-    });
-  } else if (!PASSWORD_HASH) {
-    document.getElementById('login-container').style.display = 'none';
-    document.getElementById('dashboard-content').style.display = 'block';
-  }
-  document.getElementById('password-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') checkPassword();
-  });
-});
-
-// AES-256-GCM decryption with extensive logging for debugging
-async function decryptBytesAES(encryptedBytes, password) {
-  // Check for minimum length (Salt 16 + Nonce 12 = 28 bytes)
-  if (encryptedBytes.length < 28) {
-      throw new Error('Invalid encrypted data length. Data is too short.');
-  }
-  const salt = encryptedBytes.slice(0, 16);
-  const nonce = encryptedBytes.slice(16, 28);
-  const ciphertext = encryptedBytes.slice(28);
-  
-  // --- TROUBLESHOOTING LOGGING (Key Components) ---
-  console.log('[DECRYPTOR:PARAMS] Salt (First 10 bytes HEX):', Array.from(salt.slice(0, 10)).map(b => b.toString(16).padStart(2, '0')).join(''));
-  console.log('[DECRYPTOR:PARAMS] Nonce (HEX):', Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join(''));
-  // ---
-  
-  const enc = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    enc.encode(password),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveKey']
-  );
-  
-  const key = await crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },
-    keyMaterial,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['decrypt']
-  );
-  
-  const decrypted = await crypto.subtle.decrypt({
-    name: 'AES-GCM',
-    iv: nonce
-  }, key, ciphertext);
-  
-  return new Uint8Array(decrypted);
-}
-
-// openReport using STANDARD Base64 (atob) decoding
-async function openReport(project, suite, date) {
-  const record = data[project][suite][date];
-  if (!record || !record.html_file) return;
-  
-  const password = sessionStorage.getItem('reportPassword');
-  if (!password) return alert('Password missing!');
-  
-  try {
-    // Fetch the encrypted file (STANDARD Base64 encoded)
-    const resp = await fetch(record.html_file);
-    if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
-    const base64Data = await resp.text();
-    
-    // --- TROUBLESHOOTING LOGGING (Received Data) ---
-    console.log('[FETCH:OUTPUT] Base64 Data Length:', base64Data.length);
-    console.log('[FETCH:OUTPUT] Base64 Data Start:', base64Data.substring(0, 50));
-    // ---
-    
-    // Decode STANDARD base64 to get raw binary string
-    const binaryString = atob(base64Data);
-    
-    // Convert binary string to encrypted bytes (Uint8Array)
-    const encryptedBytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      encryptedBytes[i] = binaryString.charCodeAt(i);
-    }
-    
-    // Decrypt the bytes
-    const decryptedBytes = await decryptBytesAES(encryptedBytes, password);
-    
-    // Create and open the HTML report
-    const decryptedText = new TextDecoder().decode(decryptedBytes);
-    const blob = new Blob([decryptedText], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
-  } catch (e) {
-    console.error('Failed to decrypt report:', e);
-    
-    let msg = 'Failed to decrypt report. The password may be incorrect or the data is corrupt.';
-    if (e.name === 'OperationError') {
-        msg = 'Decryption failed: Check your password or the report data is tampered.';
-    }
-    alert(msg + ' Check the browser console for details (F12).');
-  }
-}
-
-function showTooltip(e, project, suite, date) {
-  const record = data[project][suite][date];
-  if (!record) return;
-  const tooltip = document.getElementById('tooltip');
-  const start = new Date(record.start);
-  const end = new Date(record.end);
-  const formatDate = (d) => d.getFullYear().toString().slice(2) + '/' + 
-    String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0') + ' - ' +
-    String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
-  const totalSeconds = Math.floor(record.duration * 60);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  const durationStr = String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');
-  tooltip.innerHTML = `
-    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${record.profile || 'N/A'}</strong></div>
-    <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${record.test_cases || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${record.passed || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${record.failed || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${record.error || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Incomplete:</span>${record.incomplete || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${record.skipped || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Retry:</span>${record.retry_count || 0}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${formatDate(start)}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>End:</span>${formatDate(end)}</div>
-    <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
-  `;
-  tooltip.style.display = 'block';
-  tooltip.style.left = (e.pageX + 10) + 'px';
-  tooltip.style.top = (e.pageY + 10) + 'px';
-}
-function hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
-</script>
-</head><body>
-<div id='login-container'>
-  <div id='login-box'>
-    <h2>QA Automation Report</h2>
-    <div><input type='password' id='password-input' placeholder='Enter password' autofocus></div>
-    <div><button id='login-button' onclick='checkPassword()'>Login</button></div>
-    <div id='error-message'>Incorrect password. Please try again.</div>
-  </div>
-</div>
-<div id='dashboard-content'>
-<div id='tooltip' class='tooltip'></div>
-<h1>QA Automation Report</h1>
-<div class='table-container'>
-<table>
-<tr><th>Test Suite</th><th>11.05</th><th>11.04</th><th>11.03</th></tr>
-<tr><td class='project-header'>DYNAREX V2</td><td class='project-separator'></td><td class='project-separator'></td><td class='project-separator'></td></tr>
-<tr><td class='suite-name'>Settings/Permissions - Custom roles</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Custom roles", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Custom roles", "2025.11.05")'>10/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Custom roles", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Custom roles", "2025.11.04")'>10/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Custom roles", "2025.11.03")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Custom roles", "2025.11.03")'>10/0</td>
-</tr>
-<tr><td class='suite-name'>Settings/Permissions - Search</td>
-<td class='red' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Search", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Search", "2025.11.05")'>2/1</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Search", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Search", "2025.11.04")'>3/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Search", "2025.11.03")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Search", "2025.11.03")'>3/0</td>
-</tr>
-<tr><td class='suite-name'>Settings/Permissions - Standart roles</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.11.05")'>15/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.11.04")'>15/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.11.03")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Standart roles", "2025.11.03")'>15/0</td>
-</tr>
-<tr><td class='suite-name'>Settings/Permissions - Verify roles permissions</td>
-<td class='red' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "2025.11.05")'>2/4</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "2025.11.04")'>6/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "2025.11.03")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions", "2025.11.03")'>6/0</td>
-</tr>
-<tr><td class='suite-name'>Settings/Users - Change Login Email</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Change Login Email", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Change Login Email", "2025.11.05")'>10/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Change Login Email", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Change Login Email", "2025.11.04")'>10/0</td>
-<td class='empty'>–</td>
-</tr>
-<tr><td class='suite-name'>Settings/Users - Cleanup</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Cleanup", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Cleanup", "2025.11.05")'>2/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Cleanup", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Cleanup", "2025.11.04")'>2/0</td>
-<td class='empty'>–</td>
-</tr>
-<tr><td class='suite-name'>Settings/Users - Filters</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Filters", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Filters", "2025.11.05")'>8/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Filters", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - Filters", "2025.11.04")'>8/0</td>
-<td class='empty'>–</td>
-</tr>
-<tr><td class='suite-name'>Settings/Users - General</td>
-<td class='red' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - General", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - General", "2025.11.05")'>5/3</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - General", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - General", "2025.11.04")'>8/0</td>
-<td class='empty'>–</td>
-</tr>
-<tr><td class='suite-name'>Settings/Users - User profile</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - User profile", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - User profile", "2025.11.05")'>4/0</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/Settings/Users - User profile", "2025.11.04")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/Settings/Users - User profile", "2025.11.04")'>4/0</td>
-<td class='empty'>–</td>
-</tr>
-<tr><td class='suite-name'>login-logout</td>
-<td class='green' onmousemove='showTooltip(event, "DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.11.05")' onmouseleave='hideTooltip()' onclick='openReport("DYNAREX V2", "Test Suites/Test Suites/login-logout", "2025.11.05")'>7/0</td>
-<td class='empty'>–</td>
-<td class='empty'>–</td>
-</tr>
-</table>
-</div>
-</div>
-</body></html>
+    <div id="dashboard-content">
+        <div id="tooltip" class="tooltip"></div>
+        <div id="session-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Test Sessions</h3>
+                <div id="session-list"></div>
+            </div>
+        </div>
+        <h1>QA Automation Report</h1>
+        <div id="last-updated"></div>
+        
+        <!-- Archive Selector Container -->
+        <!-- Archive + Environment Selector Container -->
+        <div id="archive-selector-container">
+            <div class="selector-group">
+                <span class="selector-icon">📅</span>
+                <label for="archive-dropdown">Dataset:</label>
+                <select id="archive-dropdown">
+                    <option value="current">Current (Live)</option>
+                </select>
+            </div>
+            <div class="selector-group">
+                <span class="selector-icon">⚙️</span>
+                <label for="env-dropdown">Env:</label>
+                <select id="env-dropdown">
+                    <option value="all">All</option>
+                    <option value="intdev">Development</option>
+                    <option value="intacc">Acceptance</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="loading-message">Loading dashboard data...</div>
+        <div class="table-container" id="table-container" style="display: none;">
+            <table id="dashboard-table">
+                <thead id="table-header"></thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <script type="module" src="scripts/main.js"></script>
+</body>
+</html>
