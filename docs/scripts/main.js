@@ -1,4 +1,5 @@
 // docs/scripts/main.js
+
 import { AuthManager } from './auth.js';
 import { DashboardManager } from './dashboard.js';
 import { ArchiveManager } from './archive.js';
@@ -38,16 +39,53 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// --- Version Polling Functions (Kept from your snippets) ---
+
+function startVersionPolling() {
+    if (window.pollingInterval) {
+        clearInterval(window.pollingInterval);
+    }
+    console.log('Started version polling every 30s.');
+    window.pollingInterval = setInterval(checkNewVersion, POLLING_INTERVAL_MS);
+}
+
+async function checkNewVersion() {
+    try {
+        const response = await fetch(CONFIG.VERSION_URL, { cache: 'no-store' });
+        if (!response.ok) return;
+        const versionData = await response.json();
+        
+        // This is a timestamp, so we check if it's newer
+        if (currentDashboardVersion && versionData.version > currentDashboardVersion) {
+            console.log(`New version detected: ${versionData.version}. Refreshing dashboard.`);
+            currentDashboardVersion = versionData.version;
+            await loadDashboardData('current');
+        } else if (!currentDashboardVersion) {
+            // First run, just store the version
+            currentDashboardVersion = versionData.version;
+        }
+    } catch (error) {
+        console.error('Version check failed:', error);
+    }
+}
+
+// --- Login Function (CRITICAL FIX HERE) ---
+
 async function handleLogin() {
+    // Assumes you have inputs: <input id="username-input"> and <input id="password-input">
+    
+    // 1. CRITICAL: Retrieve and trim both inputs.
     const username = document.getElementById('username-input').value.trim();
     const password = document.getElementById('password-input').value.trim();
     const errorBox = document.getElementById('error-message');
 
-    // Create the exact secret string that matches your GitHub Secret
-    const fullSecretForDecryption = `${username} ${password}`;
-
-    if (await window.authManager.authenticate(username, password)) {
-        // Store the full combined secret ("username password") for decryption
+    // 2. Create the combined secret (MUST MATCH THE GITHUB SECRET AND HASH INPUT)
+    const fullSecretForDecryption = `${username} ${password}`; 
+    
+    // 3. Authenticate using the new two-part system
+    if (await window.authManager.authenticate(username, password)) { 
+        
+        // 4. FIX: Store the combined secret for the decryptor to use
         sessionStorage.setItem('reportPassword', fullSecretForDecryption);
         
         errorBox.style.display = 'none';
@@ -57,59 +95,7 @@ async function handleLogin() {
     }
 }
 
-
-// --- NEW POLLING FUNCTIONALITY ---
-
-async function checkNewVersion() {
-    // Only check if viewing the "Current (Live)" dashboard
-    if (window.archiveManager.currentArchive !== 'current') {
-        return;
-    }
-
-    try {
-        const response = await fetch(CONFIG.VERSION_URL, {
-            // Disable browser caching for the version check
-            cache: 'no-store' 
-        });
-        if (!response.ok) {
-            console.warn('Failed to fetch version file. (Possibly first run/no data)');
-            return;
-        }
-
-        const versionData = await response.json();
-        const newVersion = versionData.version;
-
-        if (currentDashboardVersion === null) {
-            // First time check after login/load
-            currentDashboardVersion = newVersion;
-        } else if (newVersion > currentDashboardVersion) {
-            console.log(`New dashboard version detected: ${newVersion}. Reloading data...`);
-            currentDashboardVersion = newVersion;
-            
-            // Reload the data and re-render the dashboard
-            await loadDashboardData('current');
-            // Optionally add a temporary UI notification here: 
-            // document.getElementById('last-updated').textContent = 'Data automatically refreshed!';
-        }
-    } catch (error) {
-        // This can happen if version.json hasn't been created yet
-        console.error('Error during version polling:', error);
-    }
-}
-
-function startVersionPolling() {
-    // Stop any existing polling interval to prevent duplicates
-    if (window.pollingInterval) {
-        clearInterval(window.pollingInterval);
-    }
-    
-    // Start polling the version file
-    window.pollingInterval = setInterval(checkNewVersion, POLLING_INTERVAL_MS);
-    console.log(`Started version polling every ${POLLING_INTERVAL_MS / 1000}s.`);
-}
-
-// --- END NEW POLLING FUNCTIONALITY ---
-
+// --- Dashboard Flow Functions (Kept from your snippets) ---
 
 async function showDashboardFlow() {
     document.getElementById('login-container').style.display = 'none';
