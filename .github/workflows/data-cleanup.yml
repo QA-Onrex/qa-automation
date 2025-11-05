@@ -23,8 +23,11 @@ jobs:
           pip install -r requirements.txt
           # Or install specific dependencies if needed
 
-      - name: Run Data Cleanup (35-day retention)
-        run: python scripts/netlify/netlify_data_cleanup.py
+      - name: Run Netlify Draft Cleanup
+        run: python scripts/netlify/netlify_cleanup_draft.py
+
+      - name: Run Data Cleanup
+        run: python scripts/netlify/netlify_cleanup_data.py
 
       - name: Commit Updated Data and Dashboard
         run: |
