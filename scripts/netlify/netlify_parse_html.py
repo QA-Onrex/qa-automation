@@ -216,6 +216,7 @@ def main():
         print(f"::notice::✅ HTML files parsed: {processed_count}")
         cleanup_urls_file()
 
+        # Call the separate script to update the version file
         version_script_path = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
                 "netlify_version_manager.py"
