@@ -11,7 +11,8 @@ export class DashboardManager {
 
   async loadData(customUrl = null) {
     const url = customUrl || CONFIG.DASHBOARD_DATA_URL;
-    const response = await fetch(url);
+    const options = (url === CONFIG.DASHBOARD_DATA_URL) ? { cache: 'no-store' } : {};
+    const response = await fetch(url, options);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     this.data = await response.json();
     return this.data;
