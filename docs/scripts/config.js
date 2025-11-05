@@ -1,6 +1,6 @@
 // docs/scripts/config.js
 export const CONFIG = {
-    PASSWORD_HASH: '3718db2207be42cabda43cdfedb181ffef206cfda7ad775c7ba9e524104d2a32',
+    FULL_SECRET_HASH: '232f4b3946ca2167f2f00af10db02b4108446bba13a14916cd5efa4a0ff0b756',
     DASHBOARD_DATA_URL: 'dashboard_data.json',
     ARCHIVE_INDEX_URL: 'archive/archive_index.json',
     ARCHIVE_BASE_URL: 'archive/',
