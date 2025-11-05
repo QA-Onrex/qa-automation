@@ -9,7 +9,7 @@ NETLIFY_SITE_ID = os.getenv("NETLIFY_SITE_ID")
 NETLIFY_AUTH_TOKEN = os.getenv("NETLIFY_AUTH_TOKEN")
 
 # ⚙️ CONFIGURATION - Adjust this value as needed
-DAYS_TO_KEEP_DRAFTS = 7  # Delete draft deploys older than 7 days
+DAYS_TO_KEEP_DRAFTS = 2  # Delete draft deploys older than 7 days
 
 if not NETLIFY_SITE_ID or not NETLIFY_AUTH_TOKEN:
     print("❌ NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN not set")
