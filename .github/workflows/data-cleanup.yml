@@ -24,7 +24,7 @@ jobs:
           # Or install specific dependencies if needed
 
       - name: Run Netlify Draft Cleanup
-        run: python scripts/netlify/netlify_cleanup_draft.py
+        run: python scripts/netlify/netlify_cleanup_drafts.py
 
       - name: Run Data Cleanup
         run: python scripts/netlify/netlify_cleanup_data.py
