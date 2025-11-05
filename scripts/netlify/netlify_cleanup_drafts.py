@@ -7,7 +7,7 @@ import sys
 # Configuration
 NETLIFY_SITE_ID = os.getenv("NETLIFY_SITE_ID")
 NETLIFY_AUTH_TOKEN = os.getenv("NETLIFY_AUTH_TOKEN")
-DAYS_TO_KEEP_DRAFTS = 2  # Delete deploy previews older than 2 days
+DAYS_TO_KEEP_DRAFTS = 1  # Delete deploy previews older than X days
 
 if not NETLIFY_SITE_ID or not NETLIFY_AUTH_TOKEN:
     print("❌ NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN not set")
