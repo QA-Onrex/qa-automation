@@ -13,6 +13,16 @@ window.addEventListener('DOMContentLoaded', async () => {
     setupModalCloseHandlers();
 
     document.getElementById('login-button').addEventListener('click', handleLogin);
+    
+    // NEW: Handle 'Enter' key on username input (focuses on next field)
+    document.getElementById('username-input').addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent accidental form submission
+            document.getElementById('password-input').focus();
+        }
+    });
+
+    // UPDATED: Handle 'Enter' key on password input (triggers login)
     document.getElementById('password-input').addEventListener('keypress', e => {
         if (e.key === 'Enter') handleLogin();
     });
@@ -26,11 +36,19 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function handleLogin() {
-    const password = document.getElementById('password-input').value;
+    // NEW: Read username input and trim whitespace
+    const username = document.getElementById('username-input').value.trim();
+    
+    const password = document.getElementById('password-input').value.trim();
     const errorBox = document.getElementById('error-message');
 
-    if (await window.authManager.authenticate(password)) {
-        sessionStorage.setItem('reportPassword', password);
+    // UPDATED: Pass both username and password to the new authentication method
+    if (await window.authManager.authenticate(username, password)) {
+        // REQUIRED: Store the full combined secret ("username password")
+        // This is the key that decryptor.js uses for key derivation and decryption.
+        const fullSecretForDecryption = `${username} ${password}`;
+        sessionStorage.setItem('reportPassword', fullSecretForDecryption);
+        
         errorBox.style.display = 'none';
         await showDashboardFlow();
     } else {
