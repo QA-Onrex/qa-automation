@@ -1,1 +1,79 @@
+# .github/workflows/qa-reports.yml 
+name: 🚀 QA Reports
 
+on:
+#  schedule:
+#    - cron: "0 * * * *"    # Runs every hour
+  workflow_dispatch:        # Allow manual run
+
+permissions:
+  contents: write
+
+jobs:
+  QA-Reports-Netlify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Ensure all core dependencies are installed (requests and cryptography are confirmed)
+          pip install cryptography requests # Add other known dependencies if necessary (e.g., BeautifulSoup, pandas)
+
+      # --- Report Ingestion and Processing ---
+
+      - name: Fetch Emails (Encrypted ZIPs)
+        env:
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        # Use || true to prevent the entire workflow from failing if no emails are found
+        run: python scripts/netlify/netlify_fetch_emails.py || true 
+
+      - name: Extract & Re-Encrypt HTML
+        env: 
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        # Use || true to prevent the entire workflow from failing if no attachments are found
+        run: python scripts/netlify/netlify_extract_html.py || true
+
+      - name: Upload HTML to Netlify (Draft Deploy)
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        # The upload script should be the first to fail if critical setup is missing
+        run: python scripts/netlify/netlify_upload_html.py
+
+      - name: Parse HTML, Update Metrics, & Delete Local Files
+        env: 
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_parse_html.py
+
+      - name: Generate Dynamic Dashboard Data (JSON)
+        run: python scripts/netlify/netlify_dashboard_data.py
+        
+      - name: Build Dashboard
+        env:
+          REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
+        run: python scripts/netlify/netlify_build_dashboard.py
+          
+      - name: Commit Updated Data and Dashboard
+        run: |
+          echo "=== COMMITTING RESULTS ==="
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          
+          # Add the generated files
+          git add data/
+          git add docs/
+          
+          git commit -m "Update results" || echo "No changes"
+          git push || echo "Push failed or no changes"
