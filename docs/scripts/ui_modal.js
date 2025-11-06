@@ -3,6 +3,25 @@ import { openReport } from './decryptor.js';
 
 let currentSessions = [];
 
+// Helper functions for time/duration formatting
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+function computeDurationMMSS(startIso, endIso) {
+  try {
+    const s = new Date(startIso);
+    const e = new Date(endIso);
+    if (isNaN(s.getTime()) || isNaN(e.getTime())) return 'N/A';
+    let sec = Math.max(0, Math.round((e - s) / 1000));
+    const minutes = Math.floor(sec / 60);
+    const seconds = sec % 60;
+    return `${pad2(minutes)}:${pad2(seconds)}`;
+  } catch {
+    return 'N/A';
+  }
+}
+
 export function showSessionModal(project, suite, date, sessions) {
   const modal = document.getElementById('session-modal');
   const sessionList = document.getElementById('session-list');
@@ -18,6 +37,9 @@ export function showSessionModal(project, suite, date, sessions) {
 
     const startTime = new Date(session.start);
     const timeString = isNaN(startTime.getTime()) ? 'N/A' : startTime.toLocaleTimeString('en-GB', { hour12: false });
+    // Calculate the duration
+    const durationString = computeDurationMMSS(session.start, session.end); 
+    
     const passed = session.passed || 0;
     const total = session.test_cases || 0;
     const failed = total - passed;
@@ -28,7 +50,9 @@ export function showSessionModal(project, suite, date, sessions) {
     div.innerHTML = `
       <div>
         <div class="session-profile-label">Profile: ${profileName}</div>
-        <div class="session-time-large">${timeString}</div>
+        <div class="session-time-large">
+            Start time: ${timeString} | Duration: ${durationString}
+        </div>
       </div>
       <div style="display:flex;align-items:center;gap:10px;">
         <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
@@ -64,6 +88,3 @@ export function setupModalCloseHandlers() {
     }
   });
 }
-
-// expose minimal API for legacy usage
-window.showSessionModal = showSessionModal;
