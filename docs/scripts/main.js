@@ -6,7 +6,7 @@ import { ArchiveManager } from './archive.js';
 import { setupModalCloseHandlers } from './ui_modal.js';
 import { CONFIG } from './config.js';
 
-let currentDashboardVersion = null; // Stores the last known version (timestamp)
+let currentDashboardVersion = null; 
 const POLLING_INTERVAL_MS = 30000; 
 
 // --- TIMELINE CONSTANTS ---
@@ -21,7 +21,6 @@ async function renderTimeline() {
     const timelineContainer = document.getElementById('timeline-chart');
     if (!timelineContainer) return;
     
-    // Clear previous chart content
     timelineContainer.innerHTML = ''; 
 
     // 1. Determine the selected environment filter
@@ -41,41 +40,34 @@ async function renderTimeline() {
         return;
     }
 
-    // --- FIX: Correct Environment Filtering Logic ---
-    // The Python script uses the full URL for specific environments.
+    // FIX 1: Correct Environment Filtering Logic
     const hourlyDataMap = data
         .filter(item => {
             if (filterKey === 'ALL') {
                 return item.environment === 'ALL';
             }
             // For specific environments ('intdev', 'intacc'), check if the full URL contains the key.
-            // Note: .toLowerCase() handles potential case issues in environment URLs.
             return item.environment.toLowerCase().includes(filterKey);
         })
         .reduce((acc, item) => {
             acc[item.hour] = item; 
             return acc;
         }, {});
-    // --- END FIX ---
     
-    // 3. Generate the timeline structure (Reversed Sorting)
-    const now = new Date();
-    
-    // Calculate the start time (oldest hour block)
-    const startDateTime = new Date();
-    startDateTime.setHours(startDateTime.getHours() - TIME_WINDOW_HOURS);
-    startDateTime.setMinutes(0, 0, 0);
-
+    // 3. Generate the timeline structure (REVERSED SORTING FIX)
     const columnsToRender = [];
     let lastRenderedDate = null; 
 
-    // Iterate BACKWARDS from the current hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
+    // Find the current hour block (rounded down)
+    const now = new Date();
+    now.setMinutes(0, 0, 0); // Round to the start of the current hour
+    
+    // We iterate backward from the most recent hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
     for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
-        // Calculate the current hour block being rendered (newest first)
+        
+        // CRITICAL FIX 2: Calculate the hour by subtracting from the fixed 'now' time.
+        // This ensures every iteration maps to a fixed, consistent hour block.
         const currentHour = new Date(now.getTime() - i * 60 * 60 * 1000);
-
-        // Skip records older than the start of the 5-day window
-        if (currentHour < startDateTime) continue;
         
         // Create the UTC hour key to match the Python script's output (e.g., 2025-11-06T18:00:00Z)
         const year = currentHour.getUTCFullYear();
@@ -96,28 +88,35 @@ async function renderTimeline() {
             const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
             const totalHeightPx = total_capped * sessionHeightUnit; 
             
+            // Calculate proportional heights based on uncapped total
             const passedProportion = passed / total;
             const failedProportion = failed / total;
 
             const passedHeightPx = totalHeightPx * passedProportion;
             const failedHeightPx = totalHeightPx * failedProportion;
             
-            // Time Label (HH:00) - Using 24H format
+            // Time Label (HH:00) - 24H format, non-UTC hour
             const hourLabel = String(currentHour.getHours()).padStart(2, '0') + ':00';
             
             // Date Grouping Logic
             const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
-            // Since we are iterating backwards, we check if the PREVIOUS hour (i-1) was a different day.
-            const previousHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
-            const prevDateString = `${String(previousHour.getDate()).padStart(2, '0')}.${String(previousHour.getMonth() + 1).padStart(2, '0')}`;
-            
-            // Only show the date on the first hour of a new day (when iterating backwards) or the very first column.
-            if (i === 0 || dateString !== prevDateString) {
+            // Check if this hour is the start of a new day
+            // In a backwards loop, this means checking if the NEXT hour (i-1) was a different day.
+            if (i === 0) {
+                // Always show the date for the very first (newest) column
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-            }
+            } else {
+                // Look at the date of the next hour block in the data stream (i-1)
+                const nextHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
+                const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
 
+                if (dateString !== nextDateString) {
+                    dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
+                }
+            }
+            
             const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx + 5;
 
             // Bar rendering
@@ -139,11 +138,15 @@ async function renderTimeline() {
             const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
-            const previousHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
-            const prevDateString = `${String(previousHour.getDate()).padStart(2, '0')}.${String(previousHour.getMonth() + 1).padStart(2, '0')}`;
-
-            if (i === 0 || dateString !== prevDateString) {
+            if (i === 0) {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
+            } else {
+                const nextHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
+                const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
+
+                if (dateString !== nextDateString) {
+                    dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
+                }
             }
             
             columnHtml = `
@@ -156,15 +159,17 @@ async function renderTimeline() {
             `;
         }
         
-        // Add the column to the start of the array to achieve reverse sorting (newest on left)
-        columnsToRender.unshift(`<div class="timeline-bar-column">${columnHtml}</div>`);
+        // FIX 3: Append the column. Since we iterate backwards (newest first), 
+        // appending correctly results in: [Newest Column, ..., Oldest Column] (Left to Right)
+        columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
     }
 
     // 5. Inject all columns into the container
     timelineContainer.innerHTML = columnsToRender.join('');
-
-    // Remove the scroll logic since reverse sorting removes the need to scroll to the end
 }
+
+
+// --- Main Entry Point and Listeners ---
 
 window.addEventListener('DOMContentLoaded', async () => {
     window.authManager = new AuthManager();
@@ -175,7 +180,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('login-button').addEventListener('click', handleLogin);
     
-    // Handle 'Enter' key on username input (focuses on next field)
     document.getElementById('username-input').addEventListener('keypress', e => {
         if (e.key === 'Enter') {
             e.preventDefault(); 
@@ -183,7 +187,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Handle 'Enter' key on password input (triggers login)
     document.getElementById('password-input').addEventListener('keypress', e => {
         if (e.key === 'Enter') handleLogin();
     });
@@ -192,9 +195,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     
     // CRITICAL: Call renderTimeline when environment changes
     document.getElementById('env-dropdown').addEventListener('change', () => {
-        // First, handle table re-render
         handleEnvChange(); 
-        // Then, update the timeline chart
         renderTimeline(); 
     });
 
@@ -203,7 +204,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// --- Version Polling Functions (Kept from your snippets) ---
+// --- Version Polling Functions ---
 
 function startVersionPolling() {
     if (window.pollingInterval) {
@@ -219,14 +220,12 @@ async function checkNewVersion() {
         if (!response.ok) return;
         const versionData = await response.json();
         
-        // This is a timestamp, so we check if it's newer
         if (currentDashboardVersion && versionData.version > currentDashboardVersion) {
             console.log(`New version detected: ${versionData.version}. Refreshing dashboard.`);
             currentDashboardVersion = versionData.version;
             await loadDashboardData('current');
-            renderTimeline(); // NEW: Re-render timeline on data refresh
+            renderTimeline(); 
         } else if (!currentDashboardVersion) {
-            // First run, just store the version
             currentDashboardVersion = versionData.version;
         }
     } catch (error) {
@@ -234,25 +233,16 @@ async function checkNewVersion() {
     }
 }
 
-// --- Login Function (CRITICAL FIX HERE) ---
+// --- Login Function ---
 
 async function handleLogin() {
-    // Assumes you have inputs: <input id="username-input"> and <input id="password-input">
-    
-    // 1. CRITICAL: Retrieve and trim both inputs.
     const username = document.getElementById('username-input').value.trim();
     const password = document.getElementById('password-input').value.trim();
     const errorBox = document.getElementById('error-message');
-
-    // 2. Create the combined secret (MUST MATCH THE GITHUB SECRET AND HASH INPUT)
     const fullSecretForDecryption = `${username} ${password}`; 
     
-    // 3. Authenticate using the new two-part system
     if (await window.authManager.authenticate(username, password)) { 
-        
-        // 4. FIX: Store the combined secret for the decryptor to use
         sessionStorage.setItem('reportPassword', fullSecretForDecryption);
-        
         errorBox.style.display = 'none';
         await showDashboardFlow();
     } else {
@@ -260,7 +250,7 @@ async function handleLogin() {
     }
 }
 
-// --- Dashboard Flow Functions (Kept from your snippets) ---
+// --- Dashboard Flow Functions ---
 
 async function showDashboardFlow() {
     document.getElementById('login-container').style.display = 'none';
@@ -270,15 +260,13 @@ async function showDashboardFlow() {
     await window.archiveManager.loadArchiveIndex();
     window.archiveManager.populateDropdownSelector();
 
-    // Populate fixed environment options
     window.dashboardManager.populateEnvDropdown();
 
     await loadDashboardData('current');
     
-    // NEW: Render timeline after initial data load
+    // RENDER TIMELINE ON INITIAL LOAD
     renderTimeline();
     
-    // START POLLING AFTER INITIAL DATA LOAD
     startVersionPolling(); 
 }
 
@@ -286,21 +274,18 @@ async function handleArchiveChange(event) {
     const archiveId = event.target.value;
     await loadDashboardData(archiveId);
     
-    // If the user switches to an archive, stop polling
     if (window.pollingInterval && archiveId !== 'current') {
         clearInterval(window.pollingInterval);
         console.log('Stopped version polling (switched to archive view).');
     } else if (archiveId === 'current') {
-        // If the user switches back to 'current', start polling again
         startVersionPolling(); 
     }
     
-    // Also update the timeline when archive changes (since data is fetched from the archive)
     renderTimeline(); 
 }
 
-async function handleEnvChange() {
-    window.dashboardManager.render(); // Re-render table with new filter
+function handleEnvChange() {
+    window.dashboardManager.render(); 
     // renderTimeline is called by the env-dropdown event listener in DOMContentLoaded
 }
 
