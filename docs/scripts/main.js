@@ -40,36 +40,42 @@ async function renderTimeline() {
         return;
     }
 
-    // FIX: Correct Environment Filtering Logic (based on partial match for environments)
+    // Correct Environment Filtering Logic
     const hourlyDataMap = data
         .filter(item => {
             if (filterKey === 'ALL') {
                 return item.environment === 'ALL';
             }
-            // For specific environments ('intdev', 'intacc'), check if the full URL contains the key.
+            // Check if the full environment URL contains the selected filter key (e.g., 'intacc' or 'intdev').
             return item.environment.toLowerCase().includes(filterKey);
         })
         .reduce((acc, item) => {
+            // Group data by its UTC hour key
             acc[item.hour] = item; 
             return acc;
         }, {});
     
-    // 3. Generate the timeline structure (REVERSED SORTING)
+    // 3. Generate the timeline structure (REVERSED SORTING: Newest on Left)
     const columnsToRender = [];
 
-    // Find the current hour block (rounded down to the start of the hour)
-    const now = new Date();
-    now.setMinutes(0, 0, 0); 
+    // Find the current date/time and round down to the start of the current *UTC* hour.
+    const nowUTC = new Date();
+    // Use UTC methods to ensure the baseline time is aligned with the UTC data keys.
+    nowUTC.setUTCMinutes(0, 0, 0); 
     
     // Iterate backward from the most recent hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
     for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
         
-        // Calculate the hour by subtracting from the fixed 'now' time.
-        const currentHour = new Date(now.getTime() - i * 60 * 60 * 1000);
+        // Calculate the hour by subtracting from the fixed 'nowUTC' time.
+        const currentHour = new Date(nowUTC.getTime() - i * 60 * 60 * 1000);
         
-        // CRITICAL FIX: Generate the UTC hour key reliably using ISOString and truncation
-        const fullISO = currentHour.toISOString();
-        const hourKey = fullISO.substring(0, 14) + '00:00Z'; // YYYY-MM-DDTHH:00:00Z
+        // CRITICAL FIX: Generate the UTC hour key using explicit UTC getters
+        // This guarantees the key exactly matches the data format: YYYY-MM-DDTHH:00:00Z
+        const year = currentHour.getUTCFullYear();
+        const month = String(currentHour.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(currentHour.getUTCDate()).padStart(2, '0');
+        const hour = String(currentHour.getUTCHours()).padStart(2, '0');
+        const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
 
         const hourData = hourlyDataMap[hourKey];
 
@@ -89,7 +95,7 @@ async function renderTimeline() {
             const passedHeightPx = totalHeightPx * passedProportion;
             const failedHeightPx = totalHeightPx * failedProportion;
             
-            // Time Label (HH:00) - 24H format, non-UTC hour
+            // Time Label (HH:00) - Use local time for display
             const hourLabel = String(currentHour.getHours()).padStart(2, '0') + ':00';
             
             // Date Grouping Logic
@@ -100,7 +106,8 @@ async function renderTimeline() {
             if (i === 0) {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
-                const nextHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
+                // Calculate the time for the *next* hour block in the sequence (i-1)
+                const nextHour = new Date(nowUTC.getTime() - (i - 1) * 60 * 60 * 1000);
                 const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
 
                 if (dateString !== nextDateString) {
@@ -132,7 +139,7 @@ async function renderTimeline() {
             if (i === 0) {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
-                const nextHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
+                const nextHour = new Date(nowUTC.getTime() - (i - 1) * 60 * 60 * 1000);
                 const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
 
                 if (dateString !== nextDateString) {
@@ -150,8 +157,7 @@ async function renderTimeline() {
             `;
         }
         
-        // Append the column. Since we iterate backwards (newest first), 
-        // appending results in the correct newest-on-left order.
+        // Append the column to maintain newest-on-left order.
         columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
     }
 
