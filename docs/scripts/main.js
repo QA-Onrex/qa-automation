@@ -55,26 +55,37 @@ async function renderTimeline() {
             return acc;
         }, {});
     
-    // 3. Generate the timeline structure (REVERSED SORTING: Newest on Left)
+    // 3. Generate the timeline structure (REVERSED SORTING)
     const columnsToRender = [];
 
-    // Find the current date/time and round down to the start of the current *UTC* hour.
-    const nowUTC = new Date();
-    // Use UTC methods to ensure the baseline time is aligned with the UTC data keys.
-    nowUTC.setUTCMinutes(0, 0, 0); 
+    // FIX: Calculate the start time based on the current UTC time block.
+    // This creates a timestamp (in ms) for the start of the current UTC hour.
+    const now = new Date();
+    const currentUTCHourMs = Date.UTC(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        now.getHours()
+    );
+    
+    // The current UTC hour block timestamp in milliseconds
+    const nowUTCMs = currentUTCHourMs;
     
     // Iterate backward from the most recent hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
     for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
         
-        // Calculate the hour by subtracting from the fixed 'nowUTC' time.
-        const currentHour = new Date(nowUTC.getTime() - i * 60 * 60 * 1000);
+        // Calculate the timestamp for the hour block to look up (in milliseconds)
+        const hourBlockUTCMs = nowUTCMs - i * 60 * 60 * 1000;
         
-        // CRITICAL FIX: Generate the UTC hour key using explicit UTC getters
-        // This guarantees the key exactly matches the data format: YYYY-MM-DDTHH:00:00Z
-        const year = currentHour.getUTCFullYear();
-        const month = String(currentHour.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(currentHour.getUTCDate()).padStart(2, '0');
-        const hour = String(currentHour.getUTCHours()).padStart(2, '0');
+        // Convert this UTC timestamp back to a local Date object for display (HH:00, DD.MM)
+        const currentHourLocal = new Date(hourBlockUTCMs); 
+
+        // CRITICAL FIX: Generate the UTC hour key using explicit UTC getters on a UTC date object
+        const currentHourUTC = new Date(hourBlockUTCMs); 
+        const year = currentHourUTC.getUTCFullYear();
+        const month = String(currentHourUTC.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(currentHourUTC.getUTCDate()).padStart(2, '0');
+        const hour = String(currentHourUTC.getUTCHours()).padStart(2, '0');
         const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
 
         const hourData = hourlyDataMap[hourKey];
@@ -96,10 +107,10 @@ async function renderTimeline() {
             const failedHeightPx = totalHeightPx * failedProportion;
             
             // Time Label (HH:00) - Use local time for display
-            const hourLabel = String(currentHour.getHours()).padStart(2, '0') + ':00';
+            const hourLabel = String(currentHourLocal.getHours()).padStart(2, '0') + ':00';
             
             // Date Grouping Logic
-            const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
+            const dateString = `${String(currentHourLocal.getDate()).padStart(2, '0')}.${String(currentHourLocal.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
             // Show the date if it's the newest column (i=0) or if the next hour block has a different day.
@@ -107,8 +118,9 @@ async function renderTimeline() {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
                 // Calculate the time for the *next* hour block in the sequence (i-1)
-                const nextHour = new Date(nowUTC.getTime() - (i - 1) * 60 * 60 * 1000);
-                const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
+                const nextHourBlockUTCMs = nowUTCMs - (i - 1) * 60 * 60 * 1000;
+                const nextHourLocal = new Date(nextHourBlockUTCMs);
+                const nextDateString = `${String(nextHourLocal.getDate()).padStart(2, '0')}.${String(nextHourLocal.getMonth() + 1).padStart(2, '0')}`;
 
                 if (dateString !== nextDateString) {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
@@ -131,16 +143,17 @@ async function renderTimeline() {
             `;
         } else {
             // Render an empty bar for hours with no data
-            const hourLabel = String(currentHour.getHours()).padStart(2, '0') + ':00';
+            const hourLabel = String(currentHourLocal.getHours()).padStart(2, '0') + ':00';
             
-            const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
+            const dateString = `${String(currentHourLocal.getDate()).padStart(2, '0')}.${String(currentHourLocal.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
             if (i === 0) {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
-                const nextHour = new Date(nowUTC.getTime() - (i - 1) * 60 * 60 * 1000);
-                const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
+                const nextHourBlockUTCMs = nowUTCMs - (i - 1) * 60 * 60 * 1000;
+                const nextHourLocal = new Date(nextHourBlockUTCMs);
+                const nextDateString = `${String(nextHourLocal.getDate()).padStart(2, '0')}.${String(nextHourLocal.getMonth() + 1).padStart(2, '0')}`;
 
                 if (dateString !== nextDateString) {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
