@@ -228,7 +228,7 @@ td.project-separator { background-color: #1e1e1e; }
 .table-container {
     overflow-x: auto;
     overflow-y: auto;
-    max-height: 90vh;
+    max-height: calc(100vh - 250px);
 }
 
 /* ─────────────────────────────── */
@@ -333,9 +333,16 @@ td.project-separator { background-color: #1e1e1e; }
 
 .timeline-wrapper {
     width: 100%;
-    margin-top: 30px;
-    padding: 15px 0 15px 16px; 
+    z-index: 50; /* Ensure it sits above the table content */
+    
+    /* NEW: Anchor the timeline to the bottom */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    
+    background-color: #1e1e1e; /* Match body background */
     border-top: 2px solid #444; 
+    padding: 15px 0 15px 16px; 
     box-sizing: border-box;
 }
 
@@ -350,16 +357,16 @@ td.project-separator { background-color: #1e1e1e; }
     overflow-x: auto; 
     overflow-y: hidden;
     white-space: nowrap; 
-    padding-bottom: 40px; /* Increased space for two lines of labels */
-    height: 180px; /* Increased height for chart area (100px bar + labels) */
+    padding-bottom: 40px; 
+    height: 180px; 
 }
 
-/* Hourly Column Styling - NOW WIDER (25px * 1.5 = 37.5px, using 38px) */
+/* Hourly Column Styling - NOW WIDER (38px) */
 .timeline-bar-column {
     display: inline-block;
-    width: 38px; /* New fixed width for each hourly column (x1.5 wider) */
+    width: 38px; 
     height: 100%;
-    margin-right: 2px; /* Reduced gap between bars */
+    margin-right: 2px; 
     position: relative;
     vertical-align: bottom;
     box-sizing: border-box;
@@ -388,12 +395,11 @@ td.project-separator { background-color: #1e1e1e; }
     color: #c62828; 
 }
 
-/* Stacked Bar Wrapper - BUG FIX: Positioned 40px from bottom for labels */
+/* Stacked Bar Wrapper - Positioned 40px from bottom for labels */
 .stacked-bar-wrapper {
     position: absolute;
     bottom: 40px; /* Space for HH:00 and DD.MM labels */
     width: 100%;
-    /* Height will be set dynamically by JS to totalHeightPx */
     height: 0; 
 }
 
@@ -416,7 +422,7 @@ td.project-separator { background-color: #1e1e1e; }
 /* Hourly Label (HH:00) */
 .timeline-hour-label {
     position: absolute;
-    bottom: 20px; /* Sits 20px from the bottom of the 150px column */
+    bottom: 20px; /* Sits 20px from the bottom */
     left: 0;
     width: 100%;
     font-size: 10px;
@@ -427,7 +433,7 @@ td.project-separator { background-color: #1e1e1e; }
 /* Date Label (DD.MM) - Grouped and shown only on the first column of the day */
 .timeline-date-label {
     position: absolute;
-    bottom: 0px; /* Sits at the bottom of the 150px column */
+    bottom: 0px; /* Sits at the bottom of the wrapper */
     left: 0;
     width: 100%;
     font-size: 10px;
