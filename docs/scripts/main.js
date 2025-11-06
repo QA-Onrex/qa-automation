@@ -40,7 +40,7 @@ async function renderTimeline() {
         return;
     }
 
-    // FIX 1: Correct Environment Filtering Logic
+    // FIX: Correct Environment Filtering Logic (based on partial match for environments)
     const hourlyDataMap = data
         .filter(item => {
             if (filterKey === 'ALL') {
@@ -54,27 +54,22 @@ async function renderTimeline() {
             return acc;
         }, {});
     
-    // 3. Generate the timeline structure (REVERSED SORTING FIX)
+    // 3. Generate the timeline structure (REVERSED SORTING)
     const columnsToRender = [];
-    let lastRenderedDate = null; 
 
-    // Find the current hour block (rounded down)
+    // Find the current hour block (rounded down to the start of the hour)
     const now = new Date();
-    now.setMinutes(0, 0, 0); // Round to the start of the current hour
+    now.setMinutes(0, 0, 0); 
     
-    // We iterate backward from the most recent hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
+    // Iterate backward from the most recent hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
     for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
         
-        // CRITICAL FIX 2: Calculate the hour by subtracting from the fixed 'now' time.
-        // This ensures every iteration maps to a fixed, consistent hour block.
+        // Calculate the hour by subtracting from the fixed 'now' time.
         const currentHour = new Date(now.getTime() - i * 60 * 60 * 1000);
         
-        // Create the UTC hour key to match the Python script's output (e.g., 2025-11-06T18:00:00Z)
-        const year = currentHour.getUTCFullYear();
-        const month = String(currentHour.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(currentHour.getUTCDate()).padStart(2, '0');
-        const hour = String(currentHour.getUTCHours()).padStart(2, '0');
-        const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
+        // CRITICAL FIX: Generate the UTC hour key reliably using ISOString and truncation
+        const fullISO = currentHour.toISOString();
+        const hourKey = fullISO.substring(0, 14) + '00:00Z'; // YYYY-MM-DDTHH:00:00Z
 
         const hourData = hourlyDataMap[hourKey];
 
@@ -88,7 +83,6 @@ async function renderTimeline() {
             const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
             const totalHeightPx = total_capped * sessionHeightUnit; 
             
-            // Calculate proportional heights based on uncapped total
             const passedProportion = passed / total;
             const failedProportion = failed / total;
 
@@ -102,13 +96,10 @@ async function renderTimeline() {
             const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
-            // Check if this hour is the start of a new day
-            // In a backwards loop, this means checking if the NEXT hour (i-1) was a different day.
+            // Show the date if it's the newest column (i=0) or if the next hour block has a different day.
             if (i === 0) {
-                // Always show the date for the very first (newest) column
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
-                // Look at the date of the next hour block in the data stream (i-1)
                 const nextHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
                 const nextDateString = `${String(nextHour.getDate()).padStart(2, '0')}.${String(nextHour.getMonth() + 1).padStart(2, '0')}`;
 
@@ -159,17 +150,14 @@ async function renderTimeline() {
             `;
         }
         
-        // FIX 3: Append the column. Since we iterate backwards (newest first), 
-        // appending correctly results in: [Newest Column, ..., Oldest Column] (Left to Right)
+        // Append the column. Since we iterate backwards (newest first), 
+        // appending results in the correct newest-on-left order.
         columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
     }
 
     // 5. Inject all columns into the container
     timelineContainer.innerHTML = columnsToRender.join('');
 }
-
-
-// --- Main Entry Point and Listeners ---
 
 window.addEventListener('DOMContentLoaded', async () => {
     window.authManager = new AuthManager();
