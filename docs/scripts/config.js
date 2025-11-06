@@ -5,6 +5,7 @@ export const CONFIG = {
     ARCHIVE_INDEX_URL: 'archive/archive_index.json',
     ARCHIVE_BASE_URL: 'archive/',
     VERSION_URL: 'version.json',
+    TIMELINE_DATA_URL: 'timeline_data.json',
     MAX_TOOLTIP_OFFSET: 10,
     TOOLTIP_PADDING: 10
 };
