@@ -334,8 +334,8 @@ td.project-separator { background-color: #1e1e1e; }
 .timeline-wrapper {
     width: 100%;
     margin-top: 30px;
-    padding: 15px 0 15px 16px; /* Adjust padding to match H1 and table padding */
-    border-top: 2px solid #444; /* Use existing border color */
+    padding: 15px 0 15px 16px; 
+    border-top: 2px solid #444; 
     box-sizing: border-box;
 }
 
@@ -347,52 +347,53 @@ td.project-separator { background-color: #1e1e1e; }
 
 .timeline-chart-container {
     width: 100%;
-    overflow-x: auto; /* Enables horizontal scroll for 5 days of data */
+    overflow-x: auto; 
     overflow-y: hidden;
-    white-space: nowrap; /* Ensures columns stay on one line */
-    padding-bottom: 20px; /* Space for scrollbar and hour label */
-    height: 150px; /* Fixed height for the chart area (100px bar + labels) */
+    white-space: nowrap; 
+    padding-bottom: 40px; /* Increased space for two lines of labels */
+    height: 180px; /* Increased height for chart area (100px bar + labels) */
 }
 
-/* Hourly Column Styling */
+/* Hourly Column Styling - NOW WIDER (25px * 1.5 = 37.5px, using 38px) */
 .timeline-bar-column {
     display: inline-block;
-    width: 25px; /* Fixed width for each hourly column */
+    width: 38px; /* New fixed width for each hourly column (x1.5 wider) */
     height: 100%;
-    margin-right: 5px;
+    margin-right: 2px; /* Reduced gap between bars */
     position: relative;
     vertical-align: bottom;
     box-sizing: border-box;
     text-align: center;
-    border-bottom: 1px solid #ddd; /* Baseline for empty columns */
+    border-bottom: 1px solid #ddd; 
 }
 
 /* Bar Label (P/F numbers) */
 .bar-label {
     position: absolute;
-    top: 5px; /* Adjusted to sit above the max bar height */
+    top: 5px; 
     left: 0;
     width: 100%;
     font-size: 10px;
     font-weight: bold;
     white-space: normal;
     line-height: 1;
-    z-index: 5; /* Ensure label is on top of bars */
+    z-index: 5; 
 }
 
 .bar-label .pass-count {
-    color: #2e7d32; /* Green - using the same color as the table */
+    color: #2e7d32; 
 }
 
 .bar-label .fail-count {
-    color: #c62828; /* Red - using the same color as the table */
+    color: #c62828; 
 }
 
-/* Stacked Bar Elements */
+/* Stacked Bar Wrapper - BUG FIX: Positioned 40px from bottom for labels */
 .stacked-bar-wrapper {
     position: absolute;
-    bottom: 20px; /* Offset from the bottom to allow space for the hour label */
+    bottom: 40px; /* Space for HH:00 and DD.MM labels */
     width: 100%;
+    /* Height will be set dynamically by JS to totalHeightPx */
     height: 0; 
 }
 
@@ -403,23 +404,35 @@ td.project-separator { background-color: #1e1e1e; }
 }
 
 .bar-pass {
-    background-color: #2e7d32; /* Green */
+    background-color: #2e7d32; 
     bottom: 0; 
 }
 
 .bar-fail {
-    background-color: #c62828; /* Red */
+    background-color: #c62828; 
     bottom: 0;
 }
 
+/* Hourly Label (HH:00) */
 .timeline-hour-label {
     position: absolute;
-    bottom: 0; /* Position at the very bottom */
+    bottom: 20px; /* Sits 20px from the bottom of the 150px column */
     left: 0;
     width: 100%;
-    font-size: 9px;
+    font-size: 10px;
     color: #888;
-    line-height: 1;
-    transform: rotate(-45deg); /* Rotate for better label fit */
-    transform-origin: 50% 100%;
+    line-height: 1.2;
+}
+
+/* Date Label (DD.MM) - Grouped and shown only on the first column of the day */
+.timeline-date-label {
+    position: absolute;
+    bottom: 0px; /* Sits at the bottom of the 150px column */
+    left: 0;
+    width: 100%;
+    font-size: 10px;
+    color: #ddd;
+    font-weight: bold;
+    line-height: 1.2;
+    padding-bottom: 4px;
 }
