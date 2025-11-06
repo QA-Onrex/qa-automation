@@ -9,7 +9,7 @@ import { CONFIG } from './config.js';
 let currentDashboardVersion = null; // Stores the last known version (timestamp)
 const POLLING_INTERVAL_MS = 30000; // Check every 30 seconds (adjust as needed)
 
-// --- NEW TIMELINE CONSTANTS AND FUNCTION ---
+// --- TIMELINE CONSTANTS ---
 const MAX_CHART_HEIGHT_PX = 100; 
 const MAX_SESSIONS_PER_HOUR = 20; 
 
@@ -26,9 +26,6 @@ async function renderTimeline() {
     // 1. Determine the selected environment filter
     const envFilterElement = document.getElementById('env-dropdown'); 
     const selectedEnv = envFilterElement ? envFilterElement.value : 'all';
-    
-    // Map the dropdown value to the key used by the Python aggregation script
-    // 'all' maps to the special key 'ALL' used for combined data.
     const filterKey = selectedEnv === 'all' ? 'ALL' : selectedEnv;
 
     // 2. Fetch and filter data
@@ -64,7 +61,8 @@ async function renderTimeline() {
     startDateTime.setMinutes(0, 0, 0);
 
     const columnsToRender = [];
-    
+    let lastRenderedDate = null; // Used for grouping the date labels
+
     // Iterate from the start hour up to the current hour (inclusive)
     for (let i = 0; i <= numHours; i++) {
         const currentHour = new Date(startDateTime.getTime() + i * 60 * 60 * 1000);
@@ -85,49 +83,75 @@ async function renderTimeline() {
         let columnHtml = '';
         
         if (hourData && hourData.total > 0) {
-            const { passed, failed, total, total_capped } = hourData;
+            const { passed, failed, total } = hourData;
             
-            // Calculate base height (in pixels) for 1 session, based on capped total
+            // Re-calculate total_capped based on current total, just in case data is stale
+            const total_capped = Math.min(total, MAX_SESSIONS_PER_HOUR);
+            
             const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
             
-            // Heights are based on the total_capped value
-            const totalHeightPx = total_capped * sessionHeightUnit;
+            // BUG FIX: This is the actual height the bar must occupy (0 to 100px)
+            const totalHeightPx = total_capped * sessionHeightUnit; 
             
-            // Calculate pixel heights for pass/fail bars based on their proportion of the uncapped total
+            // Calculate pixel heights for pass/fail bars
             const passedProportion = passed / total;
             const failedProportion = failed / total;
 
             const passedHeightPx = totalHeightPx * passedProportion;
             const failedHeightPx = totalHeightPx * failedProportion;
             
-            // Time label: Display hour and day (e.g., 14:00 Mon)
-            const timeLabel = currentHour.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-                              + ' ' 
-                              + currentHour.toLocaleDateString([], { weekday: 'short' });
+            // Time Label (HH:00)
+            const hourLabel = currentHour.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }).substring(0, 2) + ':00';
+            
+            // --- NEW DATE GROUPING LOGIC ---
+            const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
+            let dateLabelHtml = '';
+            
+            // Show the date label only on the first hour of a new day
+            if (dateString !== lastRenderedDate) {
+                dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
+                lastRenderedDate = dateString;
+            } else {
+                // If it's not a new day, only render the hour label
+                lastRenderedDate = dateString;
+            }
+            
+            // The bar-label positioning is now calculated relative to the top of the column
+            const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx + 5;
 
-            // The stack starts from the bottom. Red bar is placed at the bottom: 0. Green bar is placed on top of red.
-            // Bar label positioning: 5px above the total height of the bar.
+            // Bar rendering: stacked-bar-wrapper height is set to the dynamic totalHeightPx
             columnHtml = `
-                <div class="stacked-bar-wrapper" style="height: ${MAX_CHART_HEIGHT_PX}px;">
+                <div class="bar-label" style="top: ${labelTopPos}px;">
+                    <span class="pass-count">${passed}</span>/<span class="fail-count">${failed}</span>
+                </div>
+                <div class="stacked-bar-wrapper" style="height: ${totalHeightPx}px;">
                     <div class="bar-pass" style="height: ${passedHeightPx}px; bottom: ${failedHeightPx}px;"></div>
                     <div class="bar-fail" style="height: ${failedHeightPx}px; bottom: 0;"></div>
                 </div>
-                <div class="bar-label" style="top: ${MAX_CHART_HEIGHT_PX - totalHeightPx - 5}px;">
-                    <span class="pass-count">${passed}</span>/<span class="fail-count">${failed}</span>
-                </div>
-                <div class="timeline-hour-label">${timeLabel}</div>
+                <div class="timeline-hour-label">${hourLabel}</div>
+                ${dateLabelHtml}
             `;
         } else {
             // Render an empty bar for hours with no data
-            const timeLabel = currentHour.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-                              + ' ' 
-                              + currentHour.toLocaleDateString([], { weekday: 'short' });
+            const hourLabel = currentHour.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }).substring(0, 2) + ':00';
+            const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
+            
+            let dateLabelHtml = '';
+            if (dateString !== lastRenderedDate) {
+                dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
+                lastRenderedDate = dateString;
+            } else {
+                lastRenderedDate = dateString;
+            }
+            
+            // The empty bar case still needs to show the labels and the horizontal baseline
             columnHtml = `
-                <div class="stacked-bar-wrapper" style="height: ${MAX_CHART_HEIGHT_PX}px;"></div>
-                <div class="bar-label" style="top: ${MAX_CHART_HEIGHT_PX - 5}px; color: #666;">
+                <div class="bar-label" style="top: 5px; color: #666;">
                     0/0
                 </div>
-                <div class="timeline-hour-label">${timeLabel}</div>
+                <div class="stacked-bar-wrapper" style="height: ${MAX_CHART_HEIGHT_PX}px;"></div>
+                <div class="timeline-hour-label">${hourLabel}</div>
+                ${dateLabelHtml}
             `;
         }
 
@@ -140,7 +164,6 @@ async function renderTimeline() {
     // Scroll to the newest data (the far right) on load
     timelineContainer.scrollLeft = timelineContainer.scrollWidth;
 }
-
 
 window.addEventListener('DOMContentLoaded', async () => {
     window.authManager = new AuthManager();
