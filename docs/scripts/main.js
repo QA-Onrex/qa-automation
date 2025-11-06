@@ -7,11 +7,12 @@ import { setupModalCloseHandlers } from './ui_modal.js';
 import { CONFIG } from './config.js';
 
 let currentDashboardVersion = null; // Stores the last known version (timestamp)
-const POLLING_INTERVAL_MS = 30000; // Check every 30 seconds (adjust as needed)
+const POLLING_INTERVAL_MS = 30000; 
 
 // --- TIMELINE CONSTANTS ---
 const MAX_CHART_HEIGHT_PX = 100; 
 const MAX_SESSIONS_PER_HOUR = 20; 
+const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
 
 /**
  * Renders the hourly timeline chart based on the selected environment filter.
@@ -40,37 +41,43 @@ async function renderTimeline() {
         return;
     }
 
-    // Filter the data based on the environment key
-    const filteredData = data.filter(item => {
-        return item.environment === filterKey;
-    });
-
-    // Group the data by hour for easy lookup (key: hour_iso_string)
-    const hourlyDataMap = filteredData.reduce((acc, item) => {
-        acc[item.hour] = item; 
-        return acc;
-    }, {});
+    // --- FIX: Correct Environment Filtering Logic ---
+    // The Python script uses the full URL for specific environments.
+    const hourlyDataMap = data
+        .filter(item => {
+            if (filterKey === 'ALL') {
+                return item.environment === 'ALL';
+            }
+            // For specific environments ('intdev', 'intacc'), check if the full URL contains the key.
+            // Note: .toLowerCase() handles potential case issues in environment URLs.
+            return item.environment.toLowerCase().includes(filterKey);
+        })
+        .reduce((acc, item) => {
+            acc[item.hour] = item; 
+            return acc;
+        }, {});
+    // --- END FIX ---
     
-    // 3. Generate the last 5 days (120 hours) timeline structure
+    // 3. Generate the timeline structure (Reversed Sorting)
     const now = new Date();
-    const numHours = 5 * 24; // 5 days * 24 hours
     
-    // Calculate the start time (5 days ago, rounded to the nearest hour start)
+    // Calculate the start time (oldest hour block)
     const startDateTime = new Date();
-    startDateTime.setHours(startDateTime.getHours() - numHours);
+    startDateTime.setHours(startDateTime.getHours() - TIME_WINDOW_HOURS);
     startDateTime.setMinutes(0, 0, 0);
 
     const columnsToRender = [];
-    let lastRenderedDate = null; // Used for grouping the date labels
+    let lastRenderedDate = null; 
 
-    // Iterate from the start hour up to the current hour (inclusive)
-    for (let i = 0; i <= numHours; i++) {
-        const currentHour = new Date(startDateTime.getTime() + i * 60 * 60 * 1000);
+    // Iterate BACKWARDS from the current hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
+    for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
+        // Calculate the current hour block being rendered (newest first)
+        const currentHour = new Date(now.getTime() - i * 60 * 60 * 1000);
+
+        // Skip records older than the start of the 5-day window
+        if (currentHour < startDateTime) continue;
         
-        // Skip future hours
-        if (currentHour > now) continue;
-
-        // Create the UTC hour key to match the Python script's output
+        // Create the UTC hour key to match the Python script's output (e.g., 2025-11-06T18:00:00Z)
         const year = currentHour.getUTCFullYear();
         const month = String(currentHour.getUTCMonth() + 1).padStart(2, '0');
         const day = String(currentHour.getUTCDate()).padStart(2, '0');
@@ -84,42 +91,36 @@ async function renderTimeline() {
         
         if (hourData && hourData.total > 0) {
             const { passed, failed, total } = hourData;
-            
-            // Re-calculate total_capped based on current total, just in case data is stale
             const total_capped = Math.min(total, MAX_SESSIONS_PER_HOUR);
             
             const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
-            
-            // BUG FIX: This is the actual height the bar must occupy (0 to 100px)
             const totalHeightPx = total_capped * sessionHeightUnit; 
             
-            // Calculate pixel heights for pass/fail bars
             const passedProportion = passed / total;
             const failedProportion = failed / total;
 
             const passedHeightPx = totalHeightPx * passedProportion;
             const failedHeightPx = totalHeightPx * failedProportion;
             
-            // Time Label (HH:00)
-            const hourLabel = currentHour.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }).substring(0, 2) + ':00';
+            // Time Label (HH:00) - Using 24H format
+            const hourLabel = String(currentHour.getHours()).padStart(2, '0') + ':00';
             
-            // --- NEW DATE GROUPING LOGIC ---
+            // Date Grouping Logic
             const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
-            // Show the date label only on the first hour of a new day
-            if (dateString !== lastRenderedDate) {
-                dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-                lastRenderedDate = dateString;
-            } else {
-                // If it's not a new day, only render the hour label
-                lastRenderedDate = dateString;
-            }
+            // Since we are iterating backwards, we check if the PREVIOUS hour (i-1) was a different day.
+            const previousHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
+            const prevDateString = `${String(previousHour.getDate()).padStart(2, '0')}.${String(previousHour.getMonth() + 1).padStart(2, '0')}`;
             
-            // The bar-label positioning is now calculated relative to the top of the column
+            // Only show the date on the first hour of a new day (when iterating backwards) or the very first column.
+            if (i === 0 || dateString !== prevDateString) {
+                dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
+            }
+
             const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx + 5;
 
-            // Bar rendering: stacked-bar-wrapper height is set to the dynamic totalHeightPx
+            // Bar rendering
             columnHtml = `
                 <div class="bar-label" style="top: ${labelTopPos}px;">
                     <span class="pass-count">${passed}</span>/<span class="fail-count">${failed}</span>
@@ -133,18 +134,18 @@ async function renderTimeline() {
             `;
         } else {
             // Render an empty bar for hours with no data
-            const hourLabel = currentHour.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }).substring(0, 2) + ':00';
-            const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
+            const hourLabel = String(currentHour.getHours()).padStart(2, '0') + ':00';
             
+            const dateString = `${String(currentHour.getDate()).padStart(2, '0')}.${String(currentHour.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
-            if (dateString !== lastRenderedDate) {
+            
+            const previousHour = new Date(now.getTime() - (i - 1) * 60 * 60 * 1000);
+            const prevDateString = `${String(previousHour.getDate()).padStart(2, '0')}.${String(previousHour.getMonth() + 1).padStart(2, '0')}`;
+
+            if (i === 0 || dateString !== prevDateString) {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-                lastRenderedDate = dateString;
-            } else {
-                lastRenderedDate = dateString;
             }
             
-            // The empty bar case still needs to show the labels and the horizontal baseline
             columnHtml = `
                 <div class="bar-label" style="top: 5px; color: #666;">
                     0/0
@@ -154,15 +155,15 @@ async function renderTimeline() {
                 ${dateLabelHtml}
             `;
         }
-
-        columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
+        
+        // Add the column to the start of the array to achieve reverse sorting (newest on left)
+        columnsToRender.unshift(`<div class="timeline-bar-column">${columnHtml}</div>`);
     }
 
     // 5. Inject all columns into the container
     timelineContainer.innerHTML = columnsToRender.join('');
 
-    // Scroll to the newest data (the far right) on load
-    timelineContainer.scrollLeft = timelineContainer.scrollWidth;
+    // Remove the scroll logic since reverse sorting removes the need to scroll to the end
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
