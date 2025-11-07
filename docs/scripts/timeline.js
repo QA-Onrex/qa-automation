@@ -98,8 +98,8 @@ export class TimelineManager {
                     lastDateShown = dateString;
                 }
 
-                // Fixed position for all labels
-                const labelTopPos = -20; // Fixed position above all columns
+                // Fixed position for all labels - outside the column
+                const labelTopPos = -25; // Consistent with CSS
                 
                 // Bar rendering with improved text
                 columnHtml = `
