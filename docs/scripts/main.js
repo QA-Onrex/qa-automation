@@ -42,19 +42,19 @@ async function renderTimeline() {
 
     // Correct Environment Filtering Logic
     const hourlyDataMap = data
-        .filter(item => {
-            if (filterKey === 'ALL') {
-                return item.environment === 'ALL';
-            }
-            // Check if the full environment URL contains the selected filter key (e.g., 'intacc' or 'intdev').
-            return item.environment.toLowerCase().includes(filterKey);
-        })
-        .reduce((acc, item) => {
-            // Group data by its UTC hour key
-            acc[item.hour] = item; 
-            return acc;
-        }, {});
-    
+    .filter(item => {
+        if (filterKey === 'ALL') {
+            return item.environment === 'ALL';
+        }
+        return item.environment.toLowerCase().includes(filterKey);
+    })
+    .reduce((acc, item) => {
+        // Use hour + environment as unique key to prevent overwrites
+        const uniqueKey = `${item.hour}_${item.environment}`;
+        acc[uniqueKey] = item;
+        return acc;
+    }, {});
+        
     // 3. Generate the timeline structure (REVERSED SORTING)
     const columnsToRender = [];
 
