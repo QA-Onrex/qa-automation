@@ -3,7 +3,7 @@ import os
 import json
 from datetime import datetime, timedelta, timezone
 
-RESULTS_FILE = "data/netlify_results.json"
+DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
 TIMELINE_FILE = "docs/timeline_data.json" 
 TIME_WINDOW_DAYS = 5
 MAX_SESSIONS_PER_HOUR = 20
@@ -32,89 +32,93 @@ def get_session_status(session):
             return 'passed'
     return 'failed'
 
-def extract_environment(profile):
-    """Extract environment from profile (intdev, intacc, etc.)"""
-    if not profile:
-        return "unknown"
-    profile_lower = profile.lower()
+def extract_environment(profile_or_env):
+    """Extract environment from profile or environment field."""
+    if not profile_or_env:
+        return None
+    
+    profile_lower = str(profile_or_env).lower()
     if "intdev" in profile_lower:
         return "intdev"
     elif "intacc" in profile_lower:
         return "intacc"
     else:
-        return None  # Return None for other environments to exclude them
+        return None
 
 def generate_timeline():
-    """Generates the timeline data structure with hour keys as top-level."""
-    # 1. Load data
-    all_results = load_json_data(RESULTS_FILE)
+    """Generates the timeline data structure from dashboard data."""
+    # 1. Load dashboard data
+    dashboard_data = load_json_data(DASHBOARD_DATA_FILE)
     
-    if not all_results:
-        print("No master results found. Skipping timeline generation.")
+    if not dashboard_data or 'data' not in dashboard_data:
+        print("No dashboard data found. Skipping timeline generation.")
         return
 
-    # 2. Load existing timeline data
-    existing_timeline = load_json_data(TIMELINE_FILE)
+    # 2. Initialize timeline structure
+    timeline_data = {}
     
-    # 3. Determine time window
+    # 3. Process all projects, suites, and dates
+    for project, suites in dashboard_data['data'].items():
+        for suite, dates in suites.items():
+            for date_str, date_data in dates.items():
+                if 'sessions' not in date_data:
+                    continue
+                    
+                for session in date_data['sessions']:
+                    start_time_str = session.get("start")
+                    if not start_time_str:
+                        continue
+                        
+                    try:
+                        # Parse start time
+                        if '+' in start_time_str or '-' in start_time_str:
+                            start_dt = datetime.strptime(start_time_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+                        else:
+                            start_dt = datetime.strptime(start_time_str.replace('Z', ''), "%Y-%m-%dT%H:%M:%S.%f").replace(tzinfo=timezone.utc)
+
+                        # Convert to UTC and get hour start
+                        start_dt_utc = start_dt.astimezone(timezone.utc)
+                        hour_start_dt = start_dt_utc.replace(minute=0, second=0, microsecond=0)
+                        hour_key = hour_start_dt.isoformat().replace('+00:00', 'Z')
+                        
+                        # Extract environment from profile or environment field
+                        profile = session.get("profile", "")
+                        environment_field = session.get("environment", "")
+                        environment = extract_environment(profile) or extract_environment(environment_field)
+                        
+                        # Skip if environment is not intdev or intacc
+                        if environment is None:
+                            continue
+                        
+                        # Initialize hour data if not exists
+                        if hour_key not in timeline_data:
+                            timeline_data[hour_key] = {
+                                "ALL": {"total": 0, "passed": 0, "failed": 0},
+                                "intdev": {"total": 0, "passed": 0, "failed": 0},
+                                "intacc": {"total": 0, "passed": 0, "failed": 0}
+                            }
+                        
+                        # Determine status and update counts
+                        status = get_session_status(session)
+                        
+                        # Update ALL environment
+                        timeline_data[hour_key]["ALL"]["total"] += 1
+                        timeline_data[hour_key]["ALL"][status] += 1
+                        
+                        # Update specific environment
+                        timeline_data[hour_key][environment]["total"] += 1
+                        timeline_data[hour_key][environment][status] += 1
+                        
+                    except Exception as e:
+                        print(f"Error processing session: {e}")
+                        continue
+
+    # 4. Prune data older than 5 days
     utc_now = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
     cutoff_dt = utc_now - timedelta(days=TIME_WINDOW_DAYS)
     
-    # 4. Process new results
-    for rec in all_results:
-        start_time_str = rec.get("start")
-        if not start_time_str:
-            continue
-            
-        try:
-            # Parse start time
-            if '+' in start_time_str or '-' in start_time_str:
-                start_dt = datetime.strptime(start_time_str, "%Y-%m-%dT%H:%M:%S.%f%z")
-            else:
-                start_dt = datetime.strptime(start_time_str.replace('Z', ''), "%Y-%m-%dT%H:%M:%S.%f").replace(tzinfo=timezone.utc)
-
-            # Convert to UTC and get hour start
-            start_dt_utc = start_dt.astimezone(timezone.utc)
-            hour_start_dt = start_dt_utc.replace(minute=0, second=0, microsecond=0)
-            hour_key = hour_start_dt.isoformat().replace('+00:00', 'Z')
-            
-            # Skip if outside time window
-            if hour_start_dt < cutoff_dt:
-                continue
-
-            # Extract environment from profile
-            profile = rec.get("profile", "")
-            environment = extract_environment(profile)
-            
-            # Skip if environment is not intdev or intacc
-            if environment is None:
-                continue
-            
-            # Initialize hour data if not exists
-            if hour_key not in existing_timeline:
-                existing_timeline[hour_key] = {
-                    "ALL": {"total": 0, "passed": 0, "failed": 0},
-                    "intdev": {"total": 0, "passed": 0, "failed": 0},
-                    "intacc": {"total": 0, "passed": 0, "failed": 0}
-                }
-            
-            # Determine status and update counts
-            status = get_session_status(rec)
-            
-            # Update ALL environment
-            existing_timeline[hour_key]["ALL"]["total"] += 1
-            existing_timeline[hour_key]["ALL"][status] += 1
-            
-            # Update specific environment
-            existing_timeline[hour_key][environment]["total"] += 1
-            existing_timeline[hour_key][environment][status] += 1
-            
-        except Exception as e:
-            continue
-
-    # 5. Prune old data
     keys_to_remove = []
-    for hour_key in existing_timeline.keys():
+    for hour_key in timeline_data.keys():
         try:
             hour_dt = datetime.fromisoformat(hour_key.replace('Z', '+00:00')).replace(tzinfo=timezone.utc)
             if hour_dt < cutoff_dt:
@@ -123,11 +127,13 @@ def generate_timeline():
             keys_to_remove.append(hour_key)
     
     for key in keys_to_remove:
-        del existing_timeline[key]
+        del timeline_data[key]
+        print(f"Pruned old data: {key}")
 
-    # 6. Save as object with hour keys
-    save_json_data(TIMELINE_FILE, existing_timeline)
-    print(f"Successfully generated timeline data with {len(existing_timeline)} hourly blocks.")
+    # 5. Save timeline data
+    save_json_data(TIMELINE_FILE, timeline_data)
+    print(f"Successfully generated timeline data with {len(timeline_data)} hourly blocks.")
+    print(f"Data covers from {min(timeline_data.keys()) if timeline_data else 'N/A'} to {max(timeline_data.keys()) if timeline_data else 'N/A'}")
 
 if __name__ == "__main__":
     generate_timeline()
