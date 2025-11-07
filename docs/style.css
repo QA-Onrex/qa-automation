@@ -352,7 +352,7 @@ td.project-separator { background-color: #1e1e1e; }
 .timeline-chart-container {
     width: 100%;
     overflow-x: auto; 
-    overflow-y: hidden;
+    overflow-y: visible; /* CHANGED from hidden to visible */
     white-space: nowrap; 
     height: 180px; 
 }
@@ -368,12 +368,13 @@ td.project-separator { background-color: #1e1e1e; }
     box-sizing: border-box;
     text-align: center;
     border-bottom: 1px solid #ddd; 
+    overflow: visible; /* ADD THIS */
 }
 
 /* Bar Label (P/F numbers) */
 .bar-label {
     position: absolute;
-    top: -25px; /* Position above the max column height */
+    top: -20px; /* Reduced from -25px to -20px */
     left: 0;
     width: 100%;
     font-size: 12px;
@@ -382,6 +383,8 @@ td.project-separator { background-color: #1e1e1e; }
     line-height: 1;
     z-index: 5;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    background-color: rgba(30, 30, 30, 0.9); /* ADD background for better readability */
+    padding: 2px 0; /* ADD some padding */
 }
 
 .bar-label .pass-count {
