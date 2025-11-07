@@ -58,9 +58,27 @@ def generate_timeline():
 
     # 2. Initialize timeline structure using defaultdict
     timeline_data = defaultdict(lambda: {
-        "ALL": {"total": 0, "passed": 0, "failed": 0},
-        "intdev": {"total": 0, "passed": 0, "failed": 0},
-        "intacc": {"total": 0, "passed": 0, "failed": 0}
+        "ALL": {
+            "total": 0, 
+            "passed": 0, 
+            "failed": 0,
+            "passed_details": [],  # List of passed test suite details
+            "failed_details": []   # List of failed test suite details
+        },
+        "intdev": {
+            "total": 0, 
+            "passed": 0, 
+            "failed": 0,
+            "passed_details": [],
+            "failed_details": []
+        },
+        "intacc": {
+            "total": 0, 
+            "passed": 0, 
+            "failed": 0,
+            "passed_details": [],
+            "failed_details": []
+        }
     })
     
     # 3. Process all projects, suites, and dates
@@ -104,6 +122,23 @@ def generate_timeline():
                         if environment is None:
                             continue
                         
+                        # Get test suite name (extract the last part for brevity)
+                        test_suite_id = session.get("test_suite_id", "")
+                        # Extract just the last part of the test suite path for display
+                        test_suite_name = test_suite_id.split('/')[-1] if test_suite_id else "Unknown Suite"
+                        
+                        # Create test suite detail object
+                        suite_detail = {
+                            "name": test_suite_name,
+                            "start_time": start_dt_utc.isoformat().replace('+00:00', 'Z'),
+                            "full_name": test_suite_id,
+                            "test_cases": session.get("test_cases", 0),
+                            "passed_cases": session.get("passed", 0),
+                            "failed_cases": session.get("failed", 0),
+                            "error_cases": session.get("error", 0),
+                            "project": project
+                        }
+                        
                         # Determine if test suite passed or failed
                         passed = is_test_suite_passed(session)
                         
@@ -111,15 +146,19 @@ def generate_timeline():
                         timeline_data[hour_key]["ALL"]["total"] += 1
                         if passed:
                             timeline_data[hour_key]["ALL"]["passed"] += 1
+                            timeline_data[hour_key]["ALL"]["passed_details"].append(suite_detail)
                         else:
                             timeline_data[hour_key]["ALL"]["failed"] += 1
+                            timeline_data[hour_key]["ALL"]["failed_details"].append(suite_detail)
                         
                         # Update specific environment - count test suite as 1
                         timeline_data[hour_key][environment]["total"] += 1
                         if passed:
                             timeline_data[hour_key][environment]["passed"] += 1
+                            timeline_data[hour_key][environment]["passed_details"].append(suite_detail)
                         else:
                             timeline_data[hour_key][environment]["failed"] += 1
+                            timeline_data[hour_key][environment]["failed_details"].append(suite_detail)
                         
                     except Exception as e:
                         print(f"Error processing session: {e}")
@@ -155,6 +194,13 @@ def generate_timeline():
     total_passed = sum(hour_data["ALL"]["passed"] for hour_data in sorted_timeline_data.values())
     total_failed = sum(hour_data["ALL"]["failed"] for hour_data in sorted_timeline_data.values())
     print(f"Total test suite runs: {total_suites} (Passed: {total_passed}, Failed: {total_failed})")
+    
+    # Print sample of detailed data
+    if sorted_timeline_data:
+        sample_hour = next(iter(sorted_timeline_data.values()))
+        sample_passed_count = len(sample_hour["ALL"]["passed_details"])
+        sample_failed_count = len(sample_hour["ALL"]["failed_details"])
+        print(f"Sample hour contains: {sample_passed_count} passed suites, {sample_failed_count} failed suites with details")
 
 if __name__ == "__main__":
     generate_timeline()
