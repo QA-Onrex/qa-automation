@@ -341,12 +341,11 @@ td.project-separator { background-color: #1e1e1e; }
     border-top: 2px solid #444; 
     padding: 8px 0 8px 16px;
     box-sizing: border-box;
-    /* Height is now controlled by chart-container */
 }
 
 .timeline-wrapper h2 {
     color: #fff;
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0; /* Reduced from 10px to 5px */
     font-size: 1.2em;
 }
 
@@ -355,14 +354,14 @@ td.project-separator { background-color: #1e1e1e; }
     overflow-x: auto; 
     overflow-y: hidden;
     white-space: nowrap; 
-    height: 145px; /* REDUCED from 180px to 145px (35px less) */
+    height: 160px; /* Increased to fit numbers inside */
 }
 
 /* Hourly Column Styling */
 .timeline-bar-column {
     display: inline-block;
     width: 60px;
-    height: 100%; /* This will now be 145px instead of 180px */
+    height: 130px; /* Fixed height for columns */
     margin-right: 2px; 
     position: relative;
     vertical-align: bottom;
@@ -371,10 +370,10 @@ td.project-separator { background-color: #1e1e1e; }
     border-bottom: 1px solid #ddd; 
 }
 
-/* Bar Label (P/F numbers) */
+/* Bar Label (P/F numbers) - INSIDE COLUMN AT TOP */
 .bar-label {
     position: absolute;
-    top: -25px; /* Positioned above the column container */
+    top: 2px; /* Position at top inside the column */
     left: 0;
     width: 100%;
     font-size: 12px;
@@ -382,9 +381,6 @@ td.project-separator { background-color: #1e1e1e; }
     white-space: normal;
     line-height: 1;
     z-index: 5;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-    background-color: rgba(30, 30, 30, 0.9);
-    padding: 2px 0;
 }
 
 .bar-label .pass-count {
@@ -395,12 +391,12 @@ td.project-separator { background-color: #1e1e1e; }
     color: #f44336;
 }
 
-/* Stacked Bar Wrapper - Adjusted for new label position */
+/* Stacked Bar Wrapper - Adjusted position */
 .stacked-bar-wrapper {
     position: absolute;
     bottom: 40px; /* Space for HH:00 and DD.MM labels */
     width: 100%;
-    height: 0; 
+    height: 85px; /* 130px total - 25px top - 40px bottom = 65px for bars */
 }
 
 .bar-pass, .bar-fail {
@@ -441,5 +437,4 @@ td.project-separator { background-color: #1e1e1e; }
     font-weight: bold;
     line-height: 1.2;
     padding-bottom: 4px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
