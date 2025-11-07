@@ -345,7 +345,7 @@ td.project-separator { background-color: #1e1e1e; }
 
 .timeline-wrapper h2 {
     color: #fff;
-    margin: 0 0 5px 0; /* Reduced from 10px to 5px */
+    margin: 0 0 15px 0; /* Increased space below title */
     font-size: 1.2em;
 }
 
@@ -354,14 +354,14 @@ td.project-separator { background-color: #1e1e1e; }
     overflow-x: auto; 
     overflow-y: hidden;
     white-space: nowrap; 
-    height: 160px; /* Increased to fit numbers inside */
+    height: 180px; /* Increased to fit taller columns */
 }
 
 /* Hourly Column Styling */
 .timeline-bar-column {
     display: inline-block;
     width: 60px;
-    height: 130px; /* Fixed height for columns */
+    height: 150px; /* Increased from 130px to 150px */
     margin-right: 2px; 
     position: relative;
     vertical-align: bottom;
@@ -370,10 +370,10 @@ td.project-separator { background-color: #1e1e1e; }
     border-bottom: 1px solid #ddd; 
 }
 
-/* Bar Label (P/F numbers) - INSIDE COLUMN AT TOP */
+/* Bar Label (P/F numbers) - Moved higher up */
 .bar-label {
     position: absolute;
-    top: 2px; /* Position at top inside the column */
+    top: 5px; /* Higher position */
     left: 0;
     width: 100%;
     font-size: 12px;
@@ -391,12 +391,13 @@ td.project-separator { background-color: #1e1e1e; }
     color: #f44336;
 }
 
-/* Stacked Bar Wrapper - Adjusted position */
+/* Stacked Bar Wrapper - Moved down to make room for numbers */
 .stacked-bar-wrapper {
     position: absolute;
     bottom: 40px; /* Space for HH:00 and DD.MM labels */
     width: 100%;
-    height: 85px; /* 130px total - 25px top - 40px bottom = 65px for bars */
+    height: 100px; /* Increased height for bars */
+    top: 25px; /* ADDED: Start bars below the numbers */
 }
 
 .bar-pass, .bar-fail {
