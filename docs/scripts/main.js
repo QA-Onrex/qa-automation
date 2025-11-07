@@ -3,141 +3,20 @@
 import { AuthManager } from './auth.js';
 import { DashboardManager } from './dashboard.js';
 import { ArchiveManager } from './archive.js';
+import { TimelineManager } from './timeline.js';
 import { setupModalCloseHandlers } from './ui_modal.js';
 import { CONFIG } from './config.js';
 
 let currentDashboardVersion = null; 
 const POLLING_INTERVAL_MS = 30000; 
 
-// --- TIMELINE CONSTANTS ---
-const MAX_CHART_HEIGHT_PX = 100; 
-const MAX_SESSIONS_PER_HOUR = 20; 
-const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
-
-/**
- * Renders the hourly timeline chart
- */
-async function renderTimeline() {
-    const timelineContainer = document.getElementById('timeline-chart');
-    if (!timelineContainer) return;
-    
-    timelineContainer.innerHTML = ''; 
-
-    // 1. Fetch timeline data
-    let data;
-    try {
-        const response = await fetch(CONFIG.TIMELINE_DATA_URL);
-        if (!response.ok) throw new Error('Timeline data not found');
-        data = await response.json();
-        console.log('Timeline data loaded:', data); // Debug log
-    } catch (error) {
-        console.error('Failed to load timeline data:', error);
-        timelineContainer.innerHTML = '<p style="color: #c62828;">Failed to load timeline data.</p>';
-        return;
-    }
-
-    // 2. Generate the timeline structure
-    const columnsToRender = [];
-    const now = new Date();
-    
-    // Calculate current UTC hour in milliseconds
-    const currentUTCHourMs = Date.UTC(
-        now.getUTCFullYear(),
-        now.getUTCMonth(), 
-        now.getUTCDate(),
-        now.getUTCHours()
-    );
-    
-    // Generate 120 hours (5 days) of timeline
-    for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
-        // Calculate hour block (going backwards from current hour)
-        const hourBlockUTCMs = currentUTCHourMs - i * 60 * 60 * 1000;
-        
-        // Create UTC date for data lookup
-        const hourBlockUTC = new Date(hourBlockUTCMs);
-        
-        // Generate the exact hour key that matches our data structure
-        const year = hourBlockUTC.getUTCFullYear();
-        const month = String(hourBlockUTC.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(hourBlockUTC.getUTCDate()).padStart(2, '0');
-        const hour = String(hourBlockUTC.getUTCHours()).padStart(2, '0');
-        const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
-
-        // Convert to local time for display
-        const hourBlockLocal = new Date(hourBlockUTCMs);
-        
-        // Get data for this hour
-        const hourData = data[hourKey];
-        console.log(`Checking hour ${hourKey}:`, hourData); // Debug log
-
-        // 3. Create column HTML
-        let columnHtml = '';
-        
-        if (hourData && hourData.total > 0) {
-            const { passed, failed, total } = hourData;
-            const total_capped = Math.min(total, MAX_SESSIONS_PER_HOUR);
-            
-            const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
-            const totalHeightPx = total_capped * sessionHeightUnit;
-            
-            // Calculate heights for stacked bars
-            const passedHeightPx = totalHeightPx * (passed / total);
-            const failedHeightPx = totalHeightPx * (failed / total);
-            
-            // Time label (local time)
-            const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
-            
-            // Date label
-            const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
-            const dateLabelHtml = i === 0 ? `<div class="timeline-date-label">${dateString}</div>` : '';
-            
-            // Position label above the bar
-            const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx - 15;
-
-            // Bar rendering
-            columnHtml = `
-                <div class="bar-label" style="top: ${labelTopPos}px;">
-                    <span class="pass-count">${passed}</span>/<span class="fail-count">${failed}</span>
-                </div>
-                <div class="stacked-bar-wrapper" style="height: ${totalHeightPx}px;">
-                    <div class="bar-pass" style="height: ${passedHeightPx}px; bottom: ${failedHeightPx}px;"></div>
-                    <div class="bar-fail" style="height: ${failedHeightPx}px; bottom: 0;"></div>
-                </div>
-                <div class="timeline-hour-label">${hourLabel}</div>
-                ${dateLabelHtml}
-            `;
-            
-            console.log(`Rendering bar for ${hourKey}: ${passed}/${failed}`); // Debug log
-        } else {
-            // Empty bar for hours with no data
-            const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
-            const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
-            const dateLabelHtml = i === 0 ? `<div class="timeline-date-label">${dateString}</div>` : '';
-            
-            columnHtml = `
-                <div class="bar-label" style="top: 5px; color: #666;">
-                    0/0
-                </div>
-                <div class="stacked-bar-wrapper" style="height: ${MAX_CHART_HEIGHT_PX}px;"></div>
-                <div class="timeline-hour-label">${hourLabel}</div>
-                ${dateLabelHtml}
-            `;
-        }
-        
-        columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
-    }
-
-    // 4. Inject columns (newest on left)
-    timelineContainer.innerHTML = columnsToRender.join('');
-    console.log('Timeline rendered with', columnsToRender.length, 'columns'); // Debug log
-}
-
+// Initialize global managers
+window.authManager = new AuthManager();
+window.dashboardManager = new DashboardManager();
+window.archiveManager = new ArchiveManager();
+window.timelineManager = new TimelineManager();
 
 window.addEventListener('DOMContentLoaded', async () => {
-    window.authManager = new AuthManager();
-    window.dashboardManager = new DashboardManager();
-    window.archiveManager = new ArchiveManager();
-
     setupModalCloseHandlers();
 
     document.getElementById('login-button').addEventListener('click', handleLogin);
@@ -155,10 +34,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
     
-    // CRITICAL: Call renderTimeline when environment changes
     document.getElementById('env-dropdown').addEventListener('change', () => {
         handleEnvChange(); 
-        renderTimeline(); 
+        window.timelineManager.renderTimeline(); 
     });
 
     if (window.authManager.hasValidSession()) {
@@ -186,7 +64,7 @@ async function checkNewVersion() {
             console.log(`New version detected: ${versionData.version}. Refreshing dashboard.`);
             currentDashboardVersion = versionData.version;
             await loadDashboardData('current');
-            renderTimeline(); 
+            window.timelineManager.renderTimeline(); 
         } else if (!currentDashboardVersion) {
             currentDashboardVersion = versionData.version;
         }
@@ -226,8 +104,8 @@ async function showDashboardFlow() {
 
     await loadDashboardData('current');
     
-    // RENDER TIMELINE ON INITIAL LOAD
-    renderTimeline();
+    // Render timeline on initial load
+    window.timelineManager.renderTimeline();
     
     startVersionPolling(); 
 }
@@ -243,12 +121,11 @@ async function handleArchiveChange(event) {
         startVersionPolling(); 
     }
     
-    renderTimeline(); 
+    window.timelineManager.renderTimeline(); 
 }
 
 function handleEnvChange() {
     window.dashboardManager.render(); 
-    // renderTimeline is called by the env-dropdown event listener in DOMContentLoaded
 }
 
 async function loadDashboardData(archiveId = 'current') {
