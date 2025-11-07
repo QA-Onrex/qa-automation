@@ -80,9 +80,9 @@ export class TimelineManager {
                 const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
                 const totalHeightPx = total_capped * sessionHeightUnit;
                 
-                // Calculate heights for stacked bars
-                const passedHeightPx = totalHeightPx * (passed / total);
+                // Calculate heights for stacked bars - FAILED at bottom, PASSED on top
                 const failedHeightPx = totalHeightPx * (failed / total);
+                const passedHeightPx = totalHeightPx * (passed / total);
                 
                 // Time label (local time)
                 const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
@@ -96,14 +96,14 @@ export class TimelineManager {
                     lastDateShown = dateString;
                 }
                 
-                // Bar rendering with numbers above bars
+                // Bar rendering - bars grow from bottom, failed first then passed on top
                 columnHtml = `
                     <div class="bar-label">
                         <span class="pass-count">${passed}</span> / <span class="fail-count">${failed}</span>
                     </div>
                     <div class="stacked-bar-wrapper" style="height: ${totalHeightPx}px;">
+                        <div class="bar-fail" style="height: ${failedHeightPx}px;"></div>
                         <div class="bar-pass" style="height: ${passedHeightPx}px; bottom: ${failedHeightPx}px;"></div>
-                        <div class="bar-fail" style="height: ${failedHeightPx}px; bottom: 0;"></div>
                     </div>
                     <div class="timeline-hour-label">${hourLabel}</div>
                     ${dateLabelHtml}
