@@ -47,6 +47,12 @@ def is_test_suite_passed(session):
     # Test suite passes only if there are no failures, errors, or incomplete tests
     return failed == 0 and error == 0 and incomplete == 0
 
+def clean_test_suite_name(full_name):
+    """Remove the first 'Test Suites/' from the test suite name."""
+    if full_name.startswith("Test Suites/"):
+        return full_name[len("Test Suites/"):]
+    return full_name
+
 def generate_timeline():
     """Generates the timeline data structure from dashboard data."""
     # 1. Load dashboard data
@@ -122,21 +128,14 @@ def generate_timeline():
                         if environment is None:
                             continue
                         
-                        # Get test suite name (extract the last part for brevity)
+                        # Get test suite name and clean it
                         test_suite_id = session.get("test_suite_id", "")
-                        # Extract just the last part of the test suite path for display
-                        test_suite_name = test_suite_id.split('/')[-1] if test_suite_id else "Unknown Suite"
+                        cleaned_name = clean_test_suite_name(test_suite_id)
                         
-                        # Create test suite detail object
+                        # Create simplified test suite detail object
                         suite_detail = {
-                            "name": test_suite_name,
                             "start_time": start_dt_utc.isoformat().replace('+00:00', 'Z'),
-                            "full_name": test_suite_id,
-                            "test_cases": session.get("test_cases", 0),
-                            "passed_cases": session.get("passed", 0),
-                            "failed_cases": session.get("failed", 0),
-                            "error_cases": session.get("error", 0),
-                            "project": project
+                            "full_name": cleaned_name
                         }
                         
                         # Determine if test suite passed or failed
