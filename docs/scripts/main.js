@@ -15,7 +15,7 @@ const MAX_SESSIONS_PER_HOUR = 20;
 const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
 
 /**
- * Renders the hourly timeline chart based on the selected environment filter.
+ * Renders the hourly timeline chart
  */
 async function renderTimeline() {
     const timelineContainer = document.getElementById('timeline-chart');
@@ -23,74 +23,54 @@ async function renderTimeline() {
     
     timelineContainer.innerHTML = ''; 
 
-    // 1. Determine the selected environment filter
-    const envFilterElement = document.getElementById('env-dropdown'); 
-    const selectedEnv = envFilterElement ? envFilterElement.value : 'all';
-    const filterKey = selectedEnv === 'all' ? 'ALL' : selectedEnv;
-
-    // 2. Fetch and filter data
+    // 1. Fetch timeline data
     let data;
     try {
         const response = await fetch(CONFIG.TIMELINE_DATA_URL);
         if (!response.ok) throw new Error('Timeline data not found');
         data = await response.json();
+        console.log('Timeline data loaded:', data); // Debug log
     } catch (error) {
         console.error('Failed to load timeline data:', error);
-        timelineContainer.innerHTML = '<p style="color: #c62828;">Failed to load timeline data. (Check: docs/timeline_data.json)</p>';
+        timelineContainer.innerHTML = '<p style="color: #c62828;">Failed to load timeline data.</p>';
         return;
     }
 
-    // Correct Environment Filtering Logic
-    const hourlyDataMap = data
-        .filter(item => {
-            if (filterKey === 'ALL') {
-                return item.environment === 'ALL';
-            }
-            // Check if the full environment URL contains the selected filter key (e.g., 'intacc' or 'intdev').
-            return item.environment.toLowerCase().includes(filterKey);
-        })
-        .reduce((acc, item) => {
-            // Group data by its UTC hour key
-            acc[item.hour] = item; 
-            return acc;
-        }, {});
-    
-    // 3. Generate the timeline structure (REVERSED SORTING)
+    // 2. Generate the timeline structure
     const columnsToRender = [];
-
-    // FIX: Calculate the start time based on the current UTC time block.
-    // This creates a timestamp (in ms) for the start of the current UTC hour.
     const now = new Date();
+    
+    // Calculate current UTC hour in milliseconds
     const currentUTCHourMs = Date.UTC(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        now.getHours()
+        now.getUTCFullYear(),
+        now.getUTCMonth(), 
+        now.getUTCDate(),
+        now.getUTCHours()
     );
     
-    // The current UTC hour block timestamp in milliseconds
-    const nowUTCMs = currentUTCHourMs;
-    
-    // Iterate backward from the most recent hour (i=0) to the oldest hour (i=TIME_WINDOW_HOURS)
+    // Generate 120 hours (5 days) of timeline
     for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
+        // Calculate hour block (going backwards from current hour)
+        const hourBlockUTCMs = currentUTCHourMs - i * 60 * 60 * 1000;
         
-        // Calculate the timestamp for the hour block to look up (in milliseconds)
-        const hourBlockUTCMs = nowUTCMs - i * 60 * 60 * 1000;
+        // Create UTC date for data lookup
+        const hourBlockUTC = new Date(hourBlockUTCMs);
         
-        // Convert this UTC timestamp back to a local Date object for display (HH:00, DD.MM)
-        const currentHourLocal = new Date(hourBlockUTCMs); 
-
-        // CRITICAL FIX: Generate the UTC hour key using explicit UTC getters on a UTC date object
-        const currentHourUTC = new Date(hourBlockUTCMs); 
-        const year = currentHourUTC.getUTCFullYear();
-        const month = String(currentHourUTC.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(currentHourUTC.getUTCDate()).padStart(2, '0');
-        const hour = String(currentHourUTC.getUTCHours()).padStart(2, '0');
+        // Generate the exact hour key that matches our data structure
+        const year = hourBlockUTC.getUTCFullYear();
+        const month = String(hourBlockUTC.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(hourBlockUTC.getUTCDate()).padStart(2, '0');
+        const hour = String(hourBlockUTC.getUTCHours()).padStart(2, '0');
         const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
 
-        const hourData = hourlyDataMap[hourKey];
+        // Convert to local time for display
+        const hourBlockLocal = new Date(hourBlockUTCMs);
+        
+        // Get data for this hour
+        const hourData = data[hourKey];
+        console.log(`Checking hour ${hourKey}:`, hourData); // Debug log
 
-        // 4. Calculate heights and create column HTML
+        // 3. Create column HTML
         let columnHtml = '';
         
         if (hourData && hourData.total > 0) {
@@ -98,36 +78,21 @@ async function renderTimeline() {
             const total_capped = Math.min(total, MAX_SESSIONS_PER_HOUR);
             
             const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
-            const totalHeightPx = total_capped * sessionHeightUnit; 
+            const totalHeightPx = total_capped * sessionHeightUnit;
             
-            const passedProportion = passed / total;
-            const failedProportion = failed / total;
-
-            const passedHeightPx = totalHeightPx * passedProportion;
-            const failedHeightPx = totalHeightPx * failedProportion;
+            // Calculate heights for stacked bars
+            const passedHeightPx = totalHeightPx * (passed / total);
+            const failedHeightPx = totalHeightPx * (failed / total);
             
-            // Time Label (HH:00) - Use local time for display
-            const hourLabel = String(currentHourLocal.getHours()).padStart(2, '0') + ':00';
+            // Time label (local time)
+            const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
             
-            // Date Grouping Logic
-            const dateString = `${String(currentHourLocal.getDate()).padStart(2, '0')}.${String(currentHourLocal.getMonth() + 1).padStart(2, '0')}`;
-            let dateLabelHtml = '';
+            // Date label
+            const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
+            const dateLabelHtml = i === 0 ? `<div class="timeline-date-label">${dateString}</div>` : '';
             
-            // Show the date if it's the newest column (i=0) or if the next hour block has a different day.
-            if (i === 0) {
-                dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-            } else {
-                // Calculate the time for the *next* hour block in the sequence (i-1)
-                const nextHourBlockUTCMs = nowUTCMs - (i - 1) * 60 * 60 * 1000;
-                const nextHourLocal = new Date(nextHourBlockUTCMs);
-                const nextDateString = `${String(nextHourLocal.getDate()).padStart(2, '0')}.${String(nextHourLocal.getMonth() + 1).padStart(2, '0')}`;
-
-                if (dateString !== nextDateString) {
-                    dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-                }
-            }
-            
-            const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx + 5;
+            // Position label above the bar
+            const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx - 15;
 
             // Bar rendering
             columnHtml = `
@@ -141,24 +106,13 @@ async function renderTimeline() {
                 <div class="timeline-hour-label">${hourLabel}</div>
                 ${dateLabelHtml}
             `;
+            
+            console.log(`Rendering bar for ${hourKey}: ${passed}/${failed}`); // Debug log
         } else {
-            // Render an empty bar for hours with no data
-            const hourLabel = String(currentHourLocal.getHours()).padStart(2, '0') + ':00';
-            
-            const dateString = `${String(currentHourLocal.getDate()).padStart(2, '0')}.${String(currentHourLocal.getMonth() + 1).padStart(2, '0')}`;
-            let dateLabelHtml = '';
-            
-            if (i === 0) {
-                dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-            } else {
-                const nextHourBlockUTCMs = nowUTCMs - (i - 1) * 60 * 60 * 1000;
-                const nextHourLocal = new Date(nextHourBlockUTCMs);
-                const nextDateString = `${String(nextHourLocal.getDate()).padStart(2, '0')}.${String(nextHourLocal.getMonth() + 1).padStart(2, '0')}`;
-
-                if (dateString !== nextDateString) {
-                    dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
-                }
-            }
+            // Empty bar for hours with no data
+            const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
+            const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
+            const dateLabelHtml = i === 0 ? `<div class="timeline-date-label">${dateString}</div>` : '';
             
             columnHtml = `
                 <div class="bar-label" style="top: 5px; color: #666;">
@@ -170,13 +124,14 @@ async function renderTimeline() {
             `;
         }
         
-        // Append the column to maintain newest-on-left order.
         columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
     }
 
-    // 5. Inject all columns into the container
+    // 4. Inject columns (newest on left)
     timelineContainer.innerHTML = columnsToRender.join('');
+    console.log('Timeline rendered with', columnsToRender.length, 'columns'); // Debug log
 }
+
 
 window.addEventListener('DOMContentLoaded', async () => {
     window.authManager = new AuthManager();
