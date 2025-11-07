@@ -97,6 +97,9 @@ export class TimelineManager {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
                     lastDateShown = dateString;
                 }
+
+                // Position label right on top of the bar
+                const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx - 20;
                 
                 // Bar rendering with improved text
                 columnHtml = `
