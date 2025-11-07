@@ -391,29 +391,27 @@ td.project-separator { background-color: #1e1e1e; }
     color: #f44336;
 }
 
-/* Stacked Bar Wrapper - Moved down to make room for numbers */
+/* Stacked Bar Wrapper - Start from bottom */
 .stacked-bar-wrapper {
     position: absolute;
     bottom: 40px; /* Space for HH:00 and DD.MM labels */
     width: 100%;
-    height: 100px; /* Increased height for bars */
-    top: 25px; /* ADDED: Start bars below the numbers */
+    height: 100px; /* Maximum bar height */
 }
 
 .bar-pass, .bar-fail {
     width: 100%;
     position: absolute;
     left: 0;
+    bottom: 0; /* CRITICAL: Bars grow from bottom */
 }
 
 .bar-pass {
     background-color: #2e7d32; 
-    bottom: 0; 
 }
 
 .bar-fail {
     background-color: #c62828; 
-    bottom: 0;
 }
 
 /* Hourly Label (HH:00) */
