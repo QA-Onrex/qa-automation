@@ -2,7 +2,7 @@
 import { CONFIG } from './config.js';
 
 // --- TIMELINE CONSTANTS ---
-const MAX_CHART_HEIGHT_PX = 85; // Reduced to fit in 130px column
+const MAX_CHART_HEIGHT_PX = 100; // Increased to match CSS
 const MAX_SESSIONS_PER_HOUR = 20; 
 const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
 
@@ -96,7 +96,7 @@ export class TimelineManager {
                     lastDateShown = dateString;
                 }
                 
-                // Bar rendering with numbers at top
+                // Bar rendering with numbers above bars
                 columnHtml = `
                     <div class="bar-label">
                         <span class="pass-count">${passed}</span> / <span class="fail-count">${failed}</span>
