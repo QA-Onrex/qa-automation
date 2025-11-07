@@ -42,10 +42,10 @@ def extract_environment(profile):
     elif "intacc" in profile_lower:
         return "intacc"
     else:
-        return "other"
+        return None  # Return None for other environments to exclude them
 
 def generate_timeline():
-    """Generates the new timeline data structure."""
+    """Generates the timeline data structure with hour keys as top-level."""
     # 1. Load data
     all_results = load_json_data(RESULTS_FILE)
     
@@ -86,13 +86,16 @@ def generate_timeline():
             profile = rec.get("profile", "")
             environment = extract_environment(profile)
             
+            # Skip if environment is not intdev or intacc
+            if environment is None:
+                continue
+            
             # Initialize hour data if not exists
             if hour_key not in existing_timeline:
                 existing_timeline[hour_key] = {
                     "ALL": {"total": 0, "passed": 0, "failed": 0},
                     "intdev": {"total": 0, "passed": 0, "failed": 0},
-                    "intacc": {"total": 0, "passed": 0, "failed": 0},
-                    "other": {"total": 0, "passed": 0, "failed": 0}
+                    "intacc": {"total": 0, "passed": 0, "failed": 0}
                 }
             
             # Determine status and update counts
@@ -122,20 +125,8 @@ def generate_timeline():
     for key in keys_to_remove:
         del existing_timeline[key]
 
-    # 6. Convert to array format for frontend compatibility
-    timeline_array = []
-    for hour_key, environments in existing_timeline.items():
-        for env_name, env_data in environments.items():
-            timeline_array.append({
-                "hour": hour_key,
-                "environment": env_name,
-                "total": env_data["total"],
-                "passed": env_data["passed"],
-                "failed": env_data["failed"]
-            })
-    
-    # 7. Save as array
-    save_json_data(TIMELINE_FILE, timeline_array)
+    # 6. Save as object with hour keys
+    save_json_data(TIMELINE_FILE, existing_timeline)
     print(f"Successfully generated timeline data with {len(existing_timeline)} hourly blocks.")
 
 if __name__ == "__main__":
