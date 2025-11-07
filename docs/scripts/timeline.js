@@ -2,7 +2,7 @@
 import { CONFIG } from './config.js';
 
 // --- TIMELINE CONSTANTS ---
-const MAX_CHART_HEIGHT_PX = 100; // Increased to match CSS
+const MAX_CHART_HEIGHT_PX = 100;
 const MAX_SESSIONS_PER_HOUR = 20; 
 const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
 
@@ -12,7 +12,15 @@ export class TimelineManager {
     }
 
     /**
-     * Renders the hourly timeline chart
+     * Gets the currently selected environment filter
+     */
+    getSelectedEnvironment() {
+        const envFilterElement = document.getElementById('env-dropdown'); 
+        return envFilterElement ? envFilterElement.value : 'all';
+    }
+
+    /**
+     * Renders the hourly timeline chart with environment filtering
      */
     async renderTimeline() {
         const timelineContainer = document.getElementById('timeline-chart');
@@ -36,7 +44,11 @@ export class TimelineManager {
             return;
         }
 
-        // 2. Generate the timeline structure
+        // 2. Get selected environment filter
+        const selectedEnv = this.getSelectedEnvironment();
+        const filterKey = selectedEnv === 'all' ? 'ALL' : selectedEnv;
+
+        // 3. Generate the timeline structure
         const columnsToRender = [];
         const now = new Date();
         
@@ -67,14 +79,15 @@ export class TimelineManager {
             // Convert to local time for display
             const hourBlockLocal = new Date(hourBlockUTCMs);
             
-            // Get data for this hour
+            // Get data for this hour and apply environment filter
             const hourData = data[hourKey];
+            const envData = hourData ? hourData[filterKey] : null;
 
-            // 3. Create column HTML
+            // 4. Create column HTML
             let columnHtml = '';
             
-            if (hourData && hourData.total > 0) {
-                const { passed, failed, total } = hourData;
+            if (envData && envData.total > 0) {
+                const { passed, failed, total } = envData;
                 const total_capped = Math.min(total, MAX_SESSIONS_PER_HOUR);
                 
                 const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
@@ -131,7 +144,7 @@ export class TimelineManager {
             columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
         }
 
-        // 4. Inject columns (newest on left)
+        // 5. Inject columns (newest on left)
         timelineContainer.innerHTML = columnsToRender.join('');
     }
 
