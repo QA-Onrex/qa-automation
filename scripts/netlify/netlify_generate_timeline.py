@@ -122,8 +122,20 @@ def generate_timeline():
     for key in keys_to_remove:
         del existing_timeline[key]
 
-    # 6. Save updated timeline
-    save_json_data(TIMELINE_FILE, existing_timeline)
+    # 6. Convert to array format for frontend compatibility
+    timeline_array = []
+    for hour_key, environments in existing_timeline.items():
+        for env_name, env_data in environments.items():
+            timeline_array.append({
+                "hour": hour_key,
+                "environment": env_name,
+                "total": env_data["total"],
+                "passed": env_data["passed"],
+                "failed": env_data["failed"]
+            })
+    
+    # 7. Save as array
+    save_json_data(TIMELINE_FILE, timeline_array)
     print(f"Successfully generated timeline data with {len(existing_timeline)} hourly blocks.")
 
 if __name__ == "__main__":
