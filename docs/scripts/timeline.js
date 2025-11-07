@@ -12,11 +12,19 @@ export class TimelineManager {
     }
 
     /**
-     * Gets the currently selected environment filter
+     * Gets the currently selected environment filter and maps to data keys
      */
     getSelectedEnvironment() {
         const envFilterElement = document.getElementById('env-dropdown'); 
-        return envFilterElement ? envFilterElement.value : 'all';
+        const selectedValue = envFilterElement ? envFilterElement.value : 'All';
+        
+        // Map dropdown values to data keys
+        switch(selectedValue) {
+            case 'All': return 'ALL';
+            case 'Development': return 'intdev';
+            case 'Acceptance': return 'intacc';
+            default: return 'ALL';
+        }
     }
 
     /**
@@ -44,9 +52,8 @@ export class TimelineManager {
             return;
         }
 
-        // 2. Get selected environment filter
-        const selectedEnv = this.getSelectedEnvironment();
-        const filterKey = selectedEnv === 'all' ? 'ALL' : selectedEnv;
+        // 2. Get selected environment filter (already mapped to data key)
+        const filterKey = this.getSelectedEnvironment();
 
         // 3. Generate the timeline structure
         const columnsToRender = [];
