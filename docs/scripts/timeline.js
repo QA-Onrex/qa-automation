@@ -2,7 +2,7 @@
 import { CONFIG } from './config.js';
 
 // --- TIMELINE CONSTANTS ---
-const MAX_CHART_HEIGHT_PX = 100; 
+const MAX_CHART_HEIGHT_PX = 85; // Reduced to fit in 130px column
 const MAX_SESSIONS_PER_HOUR = 20; 
 const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
 
@@ -15,9 +15,7 @@ export class TimelineManager {
      * Renders the hourly timeline chart
      */
     async renderTimeline() {
-        console.log('=== TIMELINE DEBUG START ===');
         const timelineContainer = document.getElementById('timeline-chart');
-        console.log('Timeline container:', timelineContainer);
         
         if (!timelineContainer) {
             console.error('No timeline container found!');
@@ -97,13 +95,10 @@ export class TimelineManager {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
                     lastDateShown = dateString;
                 }
-
-                // Fixed position for all labels - outside the column
-                const labelTopPos = -25; // Consistent with CSS
                 
-                // Bar rendering with improved text
+                // Bar rendering with numbers at top
                 columnHtml = `
-                    <div class="bar-label" style="top: ${labelTopPos}px;">
+                    <div class="bar-label">
                         <span class="pass-count">${passed}</span> / <span class="fail-count">${failed}</span>
                     </div>
                     <div class="stacked-bar-wrapper" style="height: ${totalHeightPx}px;">
@@ -114,7 +109,7 @@ export class TimelineManager {
                     ${dateLabelHtml}
                 `;
             } else {
-                // Empty bar for hours with no data - NO 0/0 LABEL
+                // Empty bar for hours with no data - NO NUMBERS
                 const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
                 
                 // Date logic for empty columns too
@@ -138,7 +133,6 @@ export class TimelineManager {
 
         // 4. Inject columns (newest on left)
         timelineContainer.innerHTML = columnsToRender.join('');
-        console.log('=== TIMELINE DEBUG END ===');
     }
 
     /**
