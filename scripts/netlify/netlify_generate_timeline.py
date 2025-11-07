@@ -38,6 +38,15 @@ def extract_environment(environment_field):
     else:
         return None
 
+def is_test_suite_passed(session):
+    """Determine if a test suite run passed (all test cases passed)."""
+    failed = session.get("failed", 0)
+    error = session.get("error", 0)
+    incomplete = session.get("incomplete", 0)
+    
+    # Test suite passes only if there are no failures, errors, or incomplete tests
+    return failed == 0 and error == 0 and incomplete == 0
+
 def generate_timeline():
     """Generates the timeline data structure from dashboard data."""
     # 1. Load dashboard data
@@ -95,20 +104,22 @@ def generate_timeline():
                         if environment is None:
                             continue
                         
-                        # Get test case counts
-                        test_cases = session.get("test_cases", 0)
-                        passed = session.get("passed", 0)
-                        failed = session.get("failed", 0)
+                        # Determine if test suite passed or failed
+                        passed = is_test_suite_passed(session)
                         
-                        # Update ALL environment
-                        timeline_data[hour_key]["ALL"]["total"] += test_cases
-                        timeline_data[hour_key]["ALL"]["passed"] += passed
-                        timeline_data[hour_key]["ALL"]["failed"] += failed
+                        # Update ALL environment - count test suite as 1
+                        timeline_data[hour_key]["ALL"]["total"] += 1
+                        if passed:
+                            timeline_data[hour_key]["ALL"]["passed"] += 1
+                        else:
+                            timeline_data[hour_key]["ALL"]["failed"] += 1
                         
-                        # Update specific environment
-                        timeline_data[hour_key][environment]["total"] += test_cases
-                        timeline_data[hour_key][environment]["passed"] += passed
-                        timeline_data[hour_key][environment]["failed"] += failed
+                        # Update specific environment - count test suite as 1
+                        timeline_data[hour_key][environment]["total"] += 1
+                        if passed:
+                            timeline_data[hour_key][environment]["passed"] += 1
+                        else:
+                            timeline_data[hour_key][environment]["failed"] += 1
                         
                     except Exception as e:
                         print(f"Error processing session: {e}")
@@ -138,6 +149,12 @@ def generate_timeline():
     save_json_data(TIMELINE_FILE, sorted_timeline_data)
     print(f"Successfully generated timeline data with {len(sorted_timeline_data)} hourly blocks.")
     print(f"Data covers from {min(sorted_timeline_data.keys()) if sorted_timeline_data else 'N/A'} to {max(sorted_timeline_data.keys()) if sorted_timeline_data else 'N/A'}")
+    
+    # Print some statistics
+    total_suites = sum(hour_data["ALL"]["total"] for hour_data in sorted_timeline_data.values())
+    total_passed = sum(hour_data["ALL"]["passed"] for hour_data in sorted_timeline_data.values())
+    total_failed = sum(hour_data["ALL"]["failed"] for hour_data in sorted_timeline_data.values())
+    print(f"Total test suite runs: {total_suites} (Passed: {total_passed}, Failed: {total_failed})")
 
 if __name__ == "__main__":
     generate_timeline()
