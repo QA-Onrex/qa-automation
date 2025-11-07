@@ -380,19 +380,20 @@ td.project-separator { background-color: #1e1e1e; }
     top: 5px; 
     left: 0;
     width: 100%;
-    font-size: 10px;
+    font-size: 12px; /* Larger font */
     font-weight: bold;
     white-space: normal;
     line-height: 1;
-    z-index: 5; 
+    z-index: 5;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7); /* Better readability */
 }
 
 .bar-label .pass-count {
-    color: #2e7d32; 
+    color: #4caf50; /* Brighter green */
 }
 
 .bar-label .fail-count {
-    color: #c62828; 
+    color: #f44336; /* Brighter red */
 }
 
 /* Stacked Bar Wrapper - Positioned 40px from bottom for labels */
@@ -433,7 +434,7 @@ td.project-separator { background-color: #1e1e1e; }
 /* Date Label (DD.MM) - Grouped and shown only on the first column of the day */
 .timeline-date-label {
     position: absolute;
-    bottom: 0px; /* Sits at the bottom of the wrapper */
+    bottom: 0px;
     left: 0;
     width: 100%;
     font-size: 10px;
@@ -441,4 +442,5 @@ td.project-separator { background-color: #1e1e1e; }
     font-weight: bold;
     line-height: 1.2;
     padding-bottom: 4px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
