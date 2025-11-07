@@ -333,16 +333,13 @@ td.project-separator { background-color: #1e1e1e; }
 
 .timeline-wrapper {
     width: 100%;
-    z-index: 50; /* Ensure it sits above the table content */
-    
-    /* NEW: Anchor the timeline to the bottom */
+    z-index: 50;
     position: fixed;
     bottom: 0;
     left: 0;
-    
-    background-color: #1e1e1e; /* Match body background */
+    background-color: #1e1e1e;
     border-top: 2px solid #444; 
-    padding: 15px 0 15px 16px; 
+    padding: 8px 0 8px 16px; /* Reduced from 15px to 8px */
     box-sizing: border-box;
 }
 
@@ -360,10 +357,10 @@ td.project-separator { background-color: #1e1e1e; }
     height: 180px; 
 }
 
-/* Hourly Column Styling - NOW WIDER (38px) */
+/* Hourly Column Styling */
 .timeline-bar-column {
     display: inline-block;
-    width: 38px; 
+    width: 60px;
     height: 100%;
     margin-right: 2px; 
     position: relative;
@@ -376,26 +373,26 @@ td.project-separator { background-color: #1e1e1e; }
 /* Bar Label (P/F numbers) */
 .bar-label {
     position: absolute;
-    top: 5px; 
+    top: -25px; /* Position above the max column height */
     left: 0;
     width: 100%;
-    font-size: 14px; /* Larger font */
+    font-size: 12px;
     font-weight: bold;
     white-space: normal;
     line-height: 1;
     z-index: 5;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7); /* Better readability */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
 
 .bar-label .pass-count {
-    color: #4caf50; /* Brighter green */
+    color: #4caf50;
 }
 
 .bar-label .fail-count {
-    color: #f44336; /* Brighter red */
+    color: #f44336;
 }
 
-/* Stacked Bar Wrapper - Positioned 40px from bottom for labels */
+/* Stacked Bar Wrapper - Adjusted for new label position */
 .stacked-bar-wrapper {
     position: absolute;
     bottom: 40px; /* Space for HH:00 and DD.MM labels */
