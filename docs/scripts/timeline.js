@@ -99,7 +99,7 @@ export class TimelineManager {
                 }
 
                 // Fixed position for all labels
-                const labelTopPos = -25; // Fixed position above all columns
+                const labelTopPos = -20; // Fixed position above all columns
                 
                 // Bar rendering with improved text
                 columnHtml = `
