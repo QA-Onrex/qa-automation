@@ -14,7 +14,6 @@ const MAX_CHART_HEIGHT_PX = 100;
 const MAX_SESSIONS_PER_HOUR = 20; 
 const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
 
-// In docs/scripts/main.js - renderTimeline function
 async function renderTimeline() {
     const timelineContainer = document.getElementById('timeline-chart');
     if (!timelineContainer) return;
@@ -27,11 +26,11 @@ async function renderTimeline() {
     const filterKey = selectedEnv === 'all' ? 'ALL' : selectedEnv;
 
     // 2. Fetch timeline data
-    let data;
+    let timelineData;
     try {
         const response = await fetch(CONFIG.TIMELINE_DATA_URL);
         if (!response.ok) throw new Error('Timeline data not found');
-        data = await response.json();
+        timelineData = await response.json();
     } catch (error) {
         console.error('Failed to load timeline data:', error);
         timelineContainer.innerHTML = '<p style="color: #c62828;">Failed to load timeline data.</p>';
@@ -41,30 +40,34 @@ async function renderTimeline() {
     // 3. Generate the timeline structure
     const columnsToRender = [];
     const now = new Date();
+    
+    // Calculate current UTC hour in milliseconds
     const currentUTCHourMs = Date.UTC(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        now.getHours()
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        now.getUTCHours()
     );
     
-    const nowUTCMs = currentUTCHourMs;
-    
     for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
-        // Calculate hour block
-        const hourBlockUTCMs = nowUTCMs - i * 60 * 60 * 1000;
-        const currentHourLocal = new Date(hourBlockUTCMs);
+        // Calculate hour block (going backwards from current hour)
+        const hourBlockUTCMs = currentUTCHourMs - i * 60 * 60 * 1000;
         
-        // Generate hour key for data lookup
-        const currentHourUTC = new Date(hourBlockUTCMs);
-        const year = currentHourUTC.getUTCFullYear();
-        const month = String(currentHourUTC.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(currentHourUTC.getUTCDate()).padStart(2, '0');
-        const hour = String(currentHourUTC.getUTCHours()).padStart(2, '0');
+        // Create UTC date for data lookup
+        const hourBlockUTC = new Date(hourBlockUTCMs);
+        
+        // Generate the exact hour key that matches our data structure
+        const year = hourBlockUTC.getUTCFullYear();
+        const month = String(hourBlockUTC.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(hourBlockUTC.getUTCDate()).padStart(2, '0');
+        const hour = String(hourBlockUTC.getUTCHours()).padStart(2, '0');
         const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
 
+        // Convert to local time for display
+        const hourBlockLocal = new Date(hourBlockUTCMs);
+        
         // Get data for this hour and environment
-        const hourData = data[hourKey];
+        const hourData = timelineData[hourKey];
         const envData = hourData ? hourData[filterKey] : null;
 
         // 4. Create column HTML
@@ -77,32 +80,33 @@ async function renderTimeline() {
             const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
             const totalHeightPx = total_capped * sessionHeightUnit;
             
-            const passedProportion = passed / total;
-            const failedProportion = failed / total;
-
-            const passedHeightPx = totalHeightPx * passedProportion;
-            const failedHeightPx = totalHeightPx * failedProportion;
+            // Calculate heights for stacked bars
+            const passedHeightPx = totalHeightPx * (passed / total);
+            const failedHeightPx = totalHeightPx * (failed / total);
             
-            // Time label
-            const hourLabel = String(currentHourLocal.getHours()).padStart(2, '0') + ':00';
+            // Time label (local time)
+            const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
             
-            // Date grouping
-            const dateString = `${String(currentHourLocal.getDate()).padStart(2, '0')}.${String(currentHourLocal.getMonth() + 1).padStart(2, '0')}`;
+            // Date grouping logic
+            const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
             if (i === 0) {
+                // First column always shows date
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
-                const nextHourBlockUTCMs = nowUTCMs - (i - 1) * 60 * 60 * 1000;
-                const nextHourLocal = new Date(nextHourBlockUTCMs);
-                const nextDateString = `${String(nextHourLocal.getDate()).padStart(2, '0')}.${String(nextHourLocal.getMonth() + 1).padStart(2, '0')}`;
+                // Check if this is the first hour of a new day
+                const prevHourBlockUTCMs = currentUTCHourMs - (i - 1) * 60 * 60 * 1000;
+                const prevHourLocal = new Date(prevHourBlockUTCMs);
+                const prevDateString = `${String(prevHourLocal.getDate()).padStart(2, '0')}.${String(prevHourLocal.getMonth() + 1).padStart(2, '0')}`;
 
-                if (dateString !== nextDateString) {
+                if (dateString !== prevDateString) {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
                 }
             }
             
-            const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx + 5;
+            // Position label above the bar
+            const labelTopPos = MAX_CHART_HEIGHT_PX - totalHeightPx - 15;
 
             // Bar rendering
             columnHtml = `
@@ -117,20 +121,20 @@ async function renderTimeline() {
                 ${dateLabelHtml}
             `;
         } else {
-            // Empty bar for no data
-            const hourLabel = String(currentHourLocal.getHours()).padStart(2, '0') + ':00';
+            // Empty bar for hours with no data
+            const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
             
-            const dateString = `${String(currentHourLocal.getDate()).padStart(2, '0')}.${String(currentHourLocal.getMonth() + 1).padStart(2, '0')}`;
+            const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
             let dateLabelHtml = '';
             
             if (i === 0) {
                 dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
             } else {
-                const nextHourBlockUTCMs = nowUTCMs - (i - 1) * 60 * 60 * 1000;
-                const nextHourLocal = new Date(nextHourBlockUTCMs);
-                const nextDateString = `${String(nextHourLocal.getDate()).padStart(2, '0')}.${String(nextHourLocal.getMonth() + 1).padStart(2, '0')}`;
+                const prevHourBlockUTCMs = currentUTCHourMs - (i - 1) * 60 * 60 * 1000;
+                const prevHourLocal = new Date(prevHourBlockUTCMs);
+                const prevDateString = `${String(prevHourLocal.getDate()).padStart(2, '0')}.${String(prevHourLocal.getMonth() + 1).padStart(2, '0')}`;
 
-                if (dateString !== nextDateString) {
+                if (dateString !== prevDateString) {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
                 }
             }
@@ -148,42 +152,9 @@ async function renderTimeline() {
         columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
     }
 
-    // 5. Inject columns
+    // 5. Inject columns (newest on left)
     timelineContainer.innerHTML = columnsToRender.join('');
 }
-
-window.addEventListener('DOMContentLoaded', async () => {
-    window.authManager = new AuthManager();
-    window.dashboardManager = new DashboardManager();
-    window.archiveManager = new ArchiveManager();
-
-    setupModalCloseHandlers();
-
-    document.getElementById('login-button').addEventListener('click', handleLogin);
-    
-    document.getElementById('username-input').addEventListener('keypress', e => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); 
-            document.getElementById('password-input').focus();
-        }
-    });
-
-    document.getElementById('password-input').addEventListener('keypress', e => {
-        if (e.key === 'Enter') handleLogin();
-    });
-
-    document.getElementById('archive-dropdown').addEventListener('change', handleArchiveChange);
-    
-    // CRITICAL: Call renderTimeline when environment changes
-    document.getElementById('env-dropdown').addEventListener('change', () => {
-        handleEnvChange(); 
-        renderTimeline(); 
-    });
-
-    if (window.authManager.hasValidSession()) {
-        await showDashboardFlow();
-    }
-});
 
 // --- Version Polling Functions ---
 
