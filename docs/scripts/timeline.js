@@ -98,10 +98,8 @@ export class TimelineManager {
                     lastDateShown = dateString;
                 }
 
-                // Position label above the bar, but cap it so it doesn't go below a minimum
-                const minLabelTop = -25; // Minimum position (above all columns)
-                const calculatedTop = MAX_CHART_HEIGHT_PX - totalHeightPx - 20;
-                const labelTopPos = Math.min(calculatedTop, minLabelTop); // Use whichever is higher
+                // Fixed position for all labels
+                const labelTopPos = -25; // Fixed position above all columns
                 
                 // Bar rendering with improved text
                 columnHtml = `
