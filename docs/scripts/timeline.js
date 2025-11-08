@@ -1,5 +1,8 @@
 // docs/scripts/timeline.js
 import { CONFIG } from './config.js';
+// Import the new timeline functions
+import { showTimelineTooltip, hideTooltip } from './ui_tooltip.js';
+import { showTimelineModal } from './ui_modal.js';
 
 // --- TIMELINE CONSTANTS ---
 const MAX_CHART_HEIGHT_PX = 100;
@@ -46,93 +49,73 @@ export class TimelineManager {
             const response = await fetch(CONFIG.TIMELINE_DATA_URL + '?t=' + Date.now());
             if (!response.ok) throw new Error('Timeline data not found');
             data = await response.json();
+            this.timelineData = data;
         } catch (error) {
-            console.error('Failed to load timeline data:', error);
-            timelineContainer.innerHTML = '<p style="color: #c62828;">Failed to load timeline data.</p>';
+            console.error('Error fetching timeline data:', error);
+            timelineContainer.innerHTML = '<div style="color: #f44336; padding: 20px;">Could not load timeline data.</div>';
             return;
         }
 
-        // 2. Get selected environment filter (already mapped to data key)
-        const filterKey = this.getSelectedEnvironment();
-
-        // 3. Generate the timeline structure
+        const selectedEnv = this.getSelectedEnvironment();
+        const nowUtc = new Date(Date.now()).toISOString().replace(/\.\d{3}/, '').replace('Z', '+00:00');
+        const now = new Date(nowUtc);
+        
         const columnsToRender = [];
-        const now = new Date();
+        let lastDateShown = '';
         
-        // Calculate current UTC hour in milliseconds
-        const currentUTCHourMs = Date.UTC(
-            now.getUTCFullYear(),
-            now.getUTCMonth(), 
-            now.getUTCDate(),
-            now.getUTCHours()
-        );
-        
-        // Track the last date shown to avoid duplicates
-        let lastDateShown = null;
-        
-        // Generate 120 hours (5 days) of timeline
-        for (let i = 0; i <= TIME_WINDOW_HOURS; i++) {
-            // Calculate hour block (going backwards from current hour)
-            const hourBlockUTCMs = currentUTCHourMs - i * 60 * 60 * 1000;
-            const hourBlockUTC = new Date(hourBlockUTCMs);
+        // Loop backwards from the current hour for TIME_WINDOW_HOURS
+        for (let i = 0; i < TIME_WINDOW_HOURS; i++) {
+            // Calculate the hour block start time (UTC)
+            const hourBlockUtc = new Date(now);
+            hourBlockUtc.setUTCHours(now.getUTCHours() - i, 0, 0, 0); 
             
-            // Generate the exact hour key that matches our data structure
-            const year = hourBlockUTC.getUTCFullYear();
-            const month = String(hourBlockUTC.getUTCMonth() + 1).padStart(2, '0');
-            const day = String(hourBlockUTC.getUTCDate()).padStart(2, '0');
-            const hour = String(hourBlockUTC.getUTCHours()).padStart(2, '0');
-            const hourKey = `${year}-${month}-${day}T${hour}:00:00Z`;
-
-            // Convert to local time for display
-            const hourBlockLocal = new Date(hourBlockUTCMs);
+            // Generate the ISO key (matches Python script format)
+            const hourKey = hourBlockUtc.toISOString().replace('+00:00', 'Z'); 
             
-            // Get data for this hour and apply environment filter
-            const hourData = data[hourKey];
-            const envData = hourData ? hourData[filterKey] : null;
-
-            // 4. Create column HTML
+            // Get the data for the current hour, or an empty object
+            const hourData = this.timelineData[hourKey];
+            const envData = hourData ? hourData[selectedEnv] : null;
+            
             let columnHtml = '';
             
+            // Convert UTC key to local time for display labels
+            const hourBlockLocal = new Date(hourKey);
+
             if (envData && envData.total > 0) {
-                const { passed, failed, total } = envData;
-                const total_capped = Math.min(total, MAX_SESSIONS_PER_HOUR);
+                const { total, passed, failed } = envData;
                 
-                const sessionHeightUnit = MAX_CHART_HEIGHT_PX / MAX_SESSIONS_PER_HOUR;
-                const totalHeightPx = total_capped * sessionHeightUnit;
+                // Calculate heights based on total sessions
+                const ratio = Math.min(total / MAX_SESSIONS_PER_HOUR, 1);
+                const chartHeight = ratio * MAX_CHART_HEIGHT_PX;
                 
-                // Calculate heights for stacked bars - FAILED at bottom, PASSED on top
-                const failedHeightPx = totalHeightPx * (failed / total);
-                const passedHeightPx = totalHeightPx * (passed / total);
+                const passHeight = (passed / total) * chartHeight;
+                const failHeight = (failed / total) * chartHeight;
                 
-                // Time label (local time)
+                // Format display labels
                 const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
-                
-                // Date logic - show date for first column and when date changes
                 const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
-                let dateLabelHtml = '';
                 
+                let dateLabelHtml = '';
                 if (i === 0 || dateString !== lastDateShown) {
                     dateLabelHtml = `<div class="timeline-date-label">${dateString}</div>`;
                     lastDateShown = dateString;
                 }
                 
-                // Bar rendering - bars grow from bottom, failed first then passed on top
                 columnHtml = `
                     <div class="bar-label">
-                        <span class="pass-count">${passed}</span> / <span class="fail-count">${failed}</span>
+                        <span class="pass-count">${passed}</span>/<span class="fail-count">${failed}</span>
                     </div>
-                    <div class="stacked-bar-wrapper" style="height: ${totalHeightPx}px;">
-                        <div class="bar-fail" style="height: ${failedHeightPx}px;"></div>
-                        <div class="bar-pass" style="height: ${passedHeightPx}px; bottom: ${failedHeightPx}px;"></div>
+                    <div class="stacked-bar-wrapper" style="height: ${MAX_CHART_HEIGHT_PX}px;">
+                        <div class="bar-fail" style="height: ${failHeight}px; bottom: 0;"></div>
+                        <div class="bar-pass" style="height: ${passHeight}px; bottom: ${failHeight}px;"></div>
                     </div>
                     <div class="timeline-hour-label">${hourLabel}</div>
                     ${dateLabelHtml}
                 `;
             } else {
-                // Empty bar for hours with no data - NO NUMBERS
+                // Empty bar for hours with no data
                 const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
                 
-                // Date logic for empty columns too
                 const dateString = `${String(hourBlockLocal.getDate()).padStart(2, '0')}.${String(hourBlockLocal.getMonth() + 1).padStart(2, '0')}`;
                 let dateLabelHtml = '';
                 
@@ -148,11 +131,50 @@ export class TimelineManager {
                 `;
             }
             
-            columnsToRender.push(`<div class="timeline-bar-column">${columnHtml}</div>`);
+            // Use data attributes to store the relevant key for event listeners
+            columnsToRender.push(
+                `<div class="timeline-bar-column" data-hour-key="${hourKey}">
+                    ${columnHtml}
+                </div>`
+            );
         }
 
         // 5. Inject columns (newest on left)
         timelineContainer.innerHTML = columnsToRender.join('');
+
+        // 6. Attach Event Listeners to all columns
+        document.querySelectorAll('.timeline-bar-column').forEach(column => {
+            const hourKey = column.dataset.hourKey;
+            if (!hourKey) return; // Skip columns without a key
+            
+            const hourData = this.timelineData[hourKey];
+
+            // Attach listeners only if data exists for the hour (or to the whole column)
+            if (hourData) {
+                // TOOLTIP: Attach mouseover/mouseleave to the entire column
+                // Note: The tooltip content is generated based on ALL sessions, 
+                // but the event should be triggered by any element in the column.
+                column.addEventListener('mousemove', e => {
+                    // Check if mouse is over the bar wrapper to prevent showing on just the labels
+                    if (e.target.closest('.stacked-bar-wrapper')) {
+                        showTimelineTooltip(e, hourKey, hourData[this.getSelectedEnvironment()]);
+                    } else {
+                        hideTooltip();
+                    }
+                });
+                column.addEventListener('mouseleave', hideTooltip);
+
+                // MODAL: Attach click listener to the entire column
+                column.addEventListener('click', () => {
+                    // Use ALL environment data for the modal, regardless of the active chart filter
+                    showTimelineModal(hourKey, hourData);
+                });
+            } else {
+                // For empty columns, ensure tooltip is hidden if accidentally triggered
+                column.addEventListener('mousemove', hideTooltip);
+                column.addEventListener('mouseleave', hideTooltip);
+            }
+        });
     }
 
     /**
