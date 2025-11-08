@@ -134,10 +134,17 @@ def generate_timeline():
                         
                         # Create simplified test suite detail object
                         suite_detail = {
-                            "start_time": start_dt_utc.isoformat().replace('+00:00', 'Z'),
-                            "full_name": cleaned_name
-                        }
-                        
+                        "full_name": cleaned_name,
+                        "netlify_url": session.get("netlify_url", ""),
+                        "profile": session.get("profile", ""),
+                        "passed": session.get("passed", 0),
+                        "failed": session.get("failed", 0),
+                        "error": session.get("error", 0),
+                        "incomplete": session.get("incomplete", 0),
+                        "skipped": session.get("skipped", 0),
+                        "start_time": start_dt_utc.isoformat().replace('+00:00', 'Z'),
+                        "end_time": session.get("end", "")
+}                        
                         # Determine if test suite passed or failed
                         passed = is_test_suite_passed(session)
                         
