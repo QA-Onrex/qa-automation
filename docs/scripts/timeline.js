@@ -1,5 +1,5 @@
 // docs/scripts/timeline.js
-import { CONFIG } from './config.js';
+import { CONFIG } from './config.js'; // Ensure CONFIG is imported
 // Import the new timeline functions
 import { showTimelineTooltip, hideTooltip } from './ui_tooltip.js';
 import { showTimelineModal } from './ui_modal.js';
@@ -8,6 +8,8 @@ import { showTimelineModal } from './ui_modal.js';
 const MAX_CHART_HEIGHT_PX = 100;
 const MAX_SESSIONS_PER_HOUR = 20; 
 const TIME_WINDOW_HOURS = 5 * 24; // 120 hours
+
+export class TimelineManager {
 
 export class TimelineManager {
     constructor() {
