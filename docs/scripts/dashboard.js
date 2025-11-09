@@ -1,6 +1,6 @@
 // docs/scripts/dashboard.js
-import { showTooltip, hideTooltip } from './ui_tooltip.js';
-import { showSessionModal } from './ui_modal.js';
+import { showTooltip, hideTooltip } from './tooltip.js';
+import { showSessionModal } from './modal.js';
 import { openReport } from './decryptor.js';
 import { CONFIG } from './config.js';
 
