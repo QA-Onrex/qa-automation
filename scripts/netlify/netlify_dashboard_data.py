@@ -1,6 +1,7 @@
 # scripts/netlify/netlify_dashboard_data.py
 import json
 import os
+import sys
 from datetime import datetime, timedelta
 from collections import defaultdict
 
@@ -78,10 +79,19 @@ def generate_dashboard_data():
             for suite in data[project]:
                 data_dict[project][suite] = {}
                 for date, sessions in data[project][suite].items():
+                    # --- START MODIFICATION ---
+                    # 1. Calculate session count
+                    session_count = len(sessions)
+                    
+                    # 2. Create a copy of the latest session and augment it with the count
+                    latest_session = sessions[0].copy()
+                    latest_session["sessionCount"] = session_count
+
                     data_dict[project][suite][date] = {
                         "sessions": sessions,
-                        "latest": sessions[0]
+                        "latest": latest_session  # Use the augmented session object
                     }
+                    # --- END MODIFICATION ---
 
         dashboard_data = {
             "data": data_dict,
