@@ -1,5 +1,4 @@
 // docs/scripts/ui_tooltip.js
-import { CONFIG } from './config.js'; // Added import for CONFIG
 
 function pad2(n) {
   return String(n).padStart(2, '0');
@@ -25,11 +24,6 @@ function computeDurationMMSS(startIso, endIso) {
   }
 }
 
-/**
- * Shows the tooltip for the Dashboard (single session data).
- * @param {Event} event - The mouse event.
- * @param {Object} session - The session detail object.
- */
 export function showTooltip(event, session) {
   if (!session) return;
   const tooltip = document.getElementById('tooltip');
@@ -40,8 +34,7 @@ export function showTooltip(event, session) {
   const end = session.end ? new Date(session.end) : null;
 
   tooltip.innerHTML = `
-    <div class='tooltip-row'><strong>${session.project || 'N/A'} - ${session.suite || 'N/A'}</strong></div>
-    <div class='tooltip-row'><strong>Profile: ${session.profile || 'N/A'}</strong></div>
+    <div class='tooltip-row'><span class='tooltip-label'>Profile:</span><strong>${session.profile || 'N/A'}</strong></div>
     <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${session.test_cases || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${session.passed || 0}</div>
     <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${session.failed || 0}</div>
@@ -52,65 +45,24 @@ export function showTooltip(event, session) {
     <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
   `;
 
-  positionTooltip(event, tooltip);
+  tooltip.style.display = 'block';
+
+  const padding = 8;
+  let top = event.pageY + padding;
+  let left = event.pageX + padding;
+  const rect = tooltip.getBoundingClientRect();
+
+  if (top + rect.height > window.innerHeight) top = event.pageY - rect.height - padding;
+  if (left + rect.width > window.innerWidth) left = event.pageX - rect.width - padding;
+
+  tooltip.style.top = `${top}px`;
+  tooltip.style.left = `${left}px`;
 }
 
-/**
- * Shows the tooltip for the Timeline (hourly aggregated data).
- * @param {Event} event - The mouse event.
- * @param {string} hourKey - The ISO key for the hour block.
- * @param {Object} envData - The aggregated data for the selected environment.
- */
-export function showTimelineTooltip(event, hourKey, envData) {
-    if (!envData) return;
-    const tooltip = document.getElementById('tooltip');
-    if (!tooltip) return;
-
-    const hourBlockLocal = new Date(hourKey);
-    const dateStr = `${pad2(hourBlockLocal.getDate())}/${pad2(hourBlockLocal.getMonth() + 1)} - ${pad2(hourBlockLocal.getHours())}:00`;
-
-    tooltip.innerHTML = `
-        <div class='tooltip-row'><strong>Hour: ${dateStr}</strong></div>
-        <div class='tooltip-row'><span class='tooltip-label'>Total Sessions:</span>${envData.total}</div>
-        <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${envData.passed}</div>
-        <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${envData.failed}</div>
-    `;
-
-    positionTooltip(event, tooltip);
-}
-
-/**
- * Helper to position the tooltip and prevent it from going off-screen.
- */
-function positionTooltip(event, tooltip) {
-    tooltip.style.display = 'block';
-
-    const padding = CONFIG.TOOLTIP_PADDING || 10;
-    let top = event.pageY + padding;
-    let left = event.pageX + padding;
-    const rect = tooltip.getBoundingClientRect();
-
-    if (top + rect.height > window.innerHeight) {
-        top = event.pageY - rect.height - padding;
-    }
-    // Prevent going off left edge
-    if (left < 0) left = padding;
-    // Prevent going off right edge
-    if (left + rect.width > window.innerWidth) {
-        // Move to the left of the cursor
-        left = event.pageX - rect.width - padding;
-    }
-
-    tooltip.style.top = `${top}px`;
-    tooltip.style.left = `${left}px`;
-}
-
-/**
- * Hides the general tooltip element.
- */
 export function hideTooltip() {
   const tooltip = document.getElementById('tooltip');
-  if (tooltip) {
-    tooltip.style.display = 'none';
-  }
+  if (tooltip) tooltip.style.display = 'none';
 }
+
+window.showTooltip = showTooltip;
+window.hideTooltip = hideTooltip;
