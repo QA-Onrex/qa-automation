@@ -1,0 +1,57 @@
+/* docs/styles/login.css - Login Screen Styles */
+/* ─────────────────────────────── */
+/* 🔹 Login Container and Box */
+/* ─────────────────────────────── */
+#login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#login-box {
+    background-color: #2b2b2b;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+#login-box h2 {
+    margin-top: 0;
+    color: #fff;
+}
+
+/* ─────────────────────────────── */
+/* 🔹 Form Elements */
+/* ─────────────────────────────── */
+#username-input,
+#password-input {
+    width: 250px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    color: #ddd;
+    border-radius: 4px;
+}
+
+#login-button {
+    padding: 10px 20px;
+    background-color: #2e7d32; /* Green primary action color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#login-button:hover {
+    background-color: #1b5e20;
+}
+
+#error-message {
+    color: #c62828; /* Red error color */
+    margin-top: 10px;
+    display: none;
+}
