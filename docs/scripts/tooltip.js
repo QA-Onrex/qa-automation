@@ -1,4 +1,4 @@
-// docs/scripts/ui_tooltip.js
+// docs/scripts/tooltip.js
 
 function pad2(n) {
   return String(n).padStart(2, '0');
