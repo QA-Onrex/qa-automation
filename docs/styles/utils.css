@@ -1,0 +1,27 @@
+/* docs/styles/utils.css - Color and Status Utility Classes */
+/* ─────────────────────────────── */
+/* 🔹 Table Cell Pass/Fail Colors (TD) */
+/* ─────────────────────────────── */
+td.green { background-color: #2e7d32; color: #fff; cursor: pointer; }
+td.yellow { background-color: #f9a825; color: #000; cursor: pointer; }
+td.red { background-color: #c62828; color: #fff; cursor: pointer; }
+td.green:hover, td.yellow:hover, td.red:hover { opacity: 0.8; }
+
+/* ─────────────────────────────── */
+/* 🔹 Generic Pass/Fail Status Tags (e.g., in Modal/Details) */
+/* ─────────────────────────────── */
+.pass-fail {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+}
+
+.pass-fail.green { background-color: #2e7d32; }
+.pass-fail.yellow { background-color: #f9a825; color: #000; }
+.pass-fail.red { background-color: #c62828; }
+
+/* Remove legacy .session-status */
+.session-status { display: none; }
