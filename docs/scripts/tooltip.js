@@ -60,6 +60,7 @@ export function showTooltip(event, session) {
         <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${start ? formatDate(start) : 'N/A'}</div>
         <div class='tooltip-row'><span class='tooltip-label'>End:</span>${end ? formatDate(end) : 'N/A'}</div>
         <div class='tooltip-row'><span class='tooltip-label'>Duration:</span>${durationStr}</div>
+        <div class='tooltip-row'><span class='tooltip-label'>Test Cases:</span>${session.sessionCount || 0}</div>
         ${multipleSessionsHtml}
     `;
 
