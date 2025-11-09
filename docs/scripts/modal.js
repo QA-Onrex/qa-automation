@@ -1,4 +1,4 @@
-// docs/scripts/ui_modal.js
+// docs/scripts/modal.js
 import { openReport } from './decryptor.js';
 
 let currentSessions = [];
