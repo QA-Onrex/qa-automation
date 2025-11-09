@@ -1,0 +1,29 @@
+/* docs/styles/tooltip.css - Tooltip Styles */
+/* ─────────────────────────────── */
+/* 🔹 Tooltip Container */
+/* ─────────────────────────────── */
+.tooltip {
+    /* Absolute position for dynamic placement near mouse/cell */
+    position: absolute;
+    display: none;
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 1000;
+    pointer-events: none; /* Allows clicks to pass through the tooltip */
+    white-space: nowrap;
+}
+
+/* ─────────────────────────────── */
+/* 🔹 Tooltip Content Layout */
+/* ─────────────────────────────── */
+.tooltip-row { 
+    margin: 3px 0; 
+}
+
+.tooltip-label { 
+    font-weight: bold; 
+    display: inline-block; 
+    width: 100px; /* Aligns the data values */
+}
