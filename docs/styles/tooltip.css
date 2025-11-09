@@ -1,29 +1,50 @@
 /* docs/styles/tooltip.css - Tooltip Styles */
+
 /* ─────────────────────────────── */
-/* 🔹 Tooltip Container */
+/* 🔹 Tooltip Container (Corrected to use ID selector: #tooltip) */
 /* ─────────────────────────────── */
-.tooltip {
+#tooltip {
     /* Absolute position for dynamic placement near mouse/cell */
     position: absolute;
     display: none;
     background-color: #2b2b2b;
     border: 1px solid #444;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 6px; /* Slightly smoother corners */
     z-index: 1000;
     pointer-events: none; /* Allows clicks to pass through the tooltip */
     white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Added shadow for better visibility */
+    color: #f1f1f1; /* Ensure text color is light */
+    font-size: 13px;
+    line-height: 1.4;
 }
 
 /* ─────────────────────────────── */
-/* 🔹 Tooltip Content Layout */
+/* 🔹 Tooltip Content Layout (Updated to use Flexbox for alignment) */
 /* ─────────────────────────────── */
 .tooltip-row { 
+    /* CRITICAL CHANGE: Use Flexbox to align content side-by-side cleanly */
+    display: flex;
+    justify-content: space-between; /* Pushes the label to the left and the value to the right */
+    align-items: center; /* Vertically align items */
     margin: 3px 0; 
+    min-width: 220px; /* Gives content room to breathe */
 }
 
 .tooltip-label { 
-    font-weight: bold; 
-    display: inline-block; 
-    width: 100px; /* Aligns the data values */
+    /* Removed fixed width, using flex layout for positioning */
+    font-weight: normal; 
+    color: #b0b0b0; /* Subdued color for labels */
+    margin-right: 20px; /* Space between label and value */
+    text-align: left;
 }
+
+.tooltip-row strong {
+    font-weight: bold;
+    color: #ffffff; /* Bright white for values */
+    text-align: right;
+}
+```eof
+
+With the Python script correctly providing the `sessionCount` and this updated CSS for layout, the "Total Runs" row should now be visible and perfectly aligned in your tooltip!
