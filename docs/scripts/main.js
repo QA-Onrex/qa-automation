@@ -4,7 +4,7 @@ import { AuthManager } from './auth.js';
 import { DashboardManager } from './dashboard.js';
 import { ArchiveManager } from './archive.js';
 import { TimelineManager } from './timeline.js';
-import { setupModalCloseHandlers } from './ui_modal.js';
+import { setupModalCloseHandlers } from './modal.js';
 import { CONFIG } from './config.js';
 
 let currentDashboardVersion = null; 
