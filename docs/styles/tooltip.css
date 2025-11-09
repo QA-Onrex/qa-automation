@@ -3,7 +3,7 @@
 /* ─────────────────────────────── */
 /* 🔹 Tooltip Container (Corrected to use ID selector: #tooltip) */
 /* ─────────────────────────────── */
-#tooltip {
+.tooltip {
     /* Absolute position for dynamic placement near mouse/cell */
     position: absolute;
     display: none;
@@ -45,6 +45,3 @@
     color: #ffffff; /* Bright white for values */
     text-align: right;
 }
-```eof
-
-With the Python script correctly providing the `sessionCount` and this updated CSS for layout, the "Total Runs" row should now be visible and perfectly aligned in your tooltip!
