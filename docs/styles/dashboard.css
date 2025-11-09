@@ -1,0 +1,24 @@
+/* docs/styles/dashboard.css - Dashboard Layout and Utilities */
+/* ─────────────────────────────── */
+/* 🔹 Dashboard Visibility */
+/* ─────────────────────────────── */
+#dashboard-content {
+    /* Initially hidden until successful login */
+    display: none;
+}
+
+/* ─────────────────────────────── */
+/* 🔹 Helper Messages */
+/* ─────────────────────────────── */
+#loading-message {
+    text-align: center;
+    padding: 20px;
+    color: #ddd;
+}
+
+#last-updated {
+    text-align: right;
+    padding: 5px 16px;
+    color: #888;
+    font-size: 12px;
+}
