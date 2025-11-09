@@ -89,7 +89,7 @@ export class DashboardManager {
             continue;
           }
 
-          const latestForEnv = sessions[0];
+          const latestForEnv = record.latest;
           const passed = latestForEnv.passed || 0;
           const total = latestForEnv.test_cases || 0;
           const failed = total - passed;
