@@ -1,609 +1,4 @@
 {
-  "2025-11-07T23:00:00Z": {
-    "ALL": {
-      "total": 11,
-      "passed": 1,
-      "failed": 10,
-      "passed_details": [
-        {
-          "full_name": "6_valuation/6e_Manual Valuation",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220112_1762557425056.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 3,
-          "failed": 0,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:13:26.150000Z",
-          "end_time": "2025-11-08T00:17:04.612+01:00"
-        }
-      ],
-      "failed_details": [
-        {
-          "full_name": "settings/invoice settings",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220124_1762559367911.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 5,
-          "failed": 4,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:41:08.089000Z",
-          "end_time": "2025-11-08T00:49:27.498+01:00"
-        },
-        {
-          "full_name": "8_media page",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220116_1762558037681.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 7,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:19:48.109000Z",
-          "end_time": "2025-11-08T00:27:17.347+01:00"
-        },
-        {
-          "full_name": "7_market value page",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220114_1762557583752.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 6,
-          "failed": 1,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:17:09.288000Z",
-          "end_time": "2025-11-08T00:19:43.577+01:00"
-        },
-        {
-          "full_name": "9_regional salvage request",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220118_1762558426924.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 12,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:27:21.967000Z",
-          "end_time": "2025-11-08T00:33:46.064+01:00"
-        },
-        {
-          "full_name": "master data/1_text block master data",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220120_1762558665193.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 2,
-          "failed": 4,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:33:52.826000Z",
-          "end_time": "2025-11-08T00:37:44.587+01:00"
-        },
-        {
-          "full_name": "Accounting",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220122_1762558864014.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 1,
-          "failed": 3,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:37:49.481000Z",
-          "end_time": "2025-11-08T00:41:03.323+01:00"
-        },
-        {
-          "full_name": "settings/Test invoice number structure settings",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220128_1762560148431.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 8,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:56:20.701000Z",
-          "end_time": "2025-11-08T01:02:27.948+01:00"
-        },
-        {
-          "full_name": "6_valuation/6d_valuation HGV",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220110_1762557201966.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 9,
-          "failed": 2,
-          "error": 1,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:07:15.456000Z",
-          "end_time": "2025-11-08T00:13:21.565+01:00"
-        },
-        {
-          "full_name": "invoice",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220126_1762559775991.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 14,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:49:31.946000Z",
-          "end_time": "2025-11-08T00:56:15.060+01:00"
-        },
-        {
-          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220108_1762556830939.html",
-          "profile": "anke SD3ep intdev",
-          "passed": 0,
-          "failed": 5,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:04:32.332000Z",
-          "end_time": "2025-11-08T00:07:10.268+01:00"
-        }
-      ]
-    },
-    "intdev": {
-      "total": 11,
-      "passed": 1,
-      "failed": 10,
-      "passed_details": [
-        {
-          "full_name": "6_valuation/6e_Manual Valuation",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220112_1762557425056.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 3,
-          "failed": 0,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:13:26.150000Z",
-          "end_time": "2025-11-08T00:17:04.612+01:00"
-        }
-      ],
-      "failed_details": [
-        {
-          "full_name": "settings/invoice settings",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220124_1762559367911.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 5,
-          "failed": 4,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:41:08.089000Z",
-          "end_time": "2025-11-08T00:49:27.498+01:00"
-        },
-        {
-          "full_name": "8_media page",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220116_1762558037681.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 7,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:19:48.109000Z",
-          "end_time": "2025-11-08T00:27:17.347+01:00"
-        },
-        {
-          "full_name": "7_market value page",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220114_1762557583752.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 6,
-          "failed": 1,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:17:09.288000Z",
-          "end_time": "2025-11-08T00:19:43.577+01:00"
-        },
-        {
-          "full_name": "9_regional salvage request",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220118_1762558426924.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 12,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:27:21.967000Z",
-          "end_time": "2025-11-08T00:33:46.064+01:00"
-        },
-        {
-          "full_name": "master data/1_text block master data",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220120_1762558665193.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 2,
-          "failed": 4,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:33:52.826000Z",
-          "end_time": "2025-11-08T00:37:44.587+01:00"
-        },
-        {
-          "full_name": "Accounting",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220122_1762558864014.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 1,
-          "failed": 3,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:37:49.481000Z",
-          "end_time": "2025-11-08T00:41:03.323+01:00"
-        },
-        {
-          "full_name": "settings/Test invoice number structure settings",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220128_1762560148431.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 8,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:56:20.701000Z",
-          "end_time": "2025-11-08T01:02:27.948+01:00"
-        },
-        {
-          "full_name": "6_valuation/6d_valuation HGV",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220110_1762557201966.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 9,
-          "failed": 2,
-          "error": 1,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:07:15.456000Z",
-          "end_time": "2025-11-08T00:13:21.565+01:00"
-        },
-        {
-          "full_name": "invoice",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220126_1762559775991.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 14,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:49:31.946000Z",
-          "end_time": "2025-11-08T00:56:15.060+01:00"
-        },
-        {
-          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220108_1762556830939.html",
-          "profile": "anke SD3ep intdev",
-          "passed": 0,
-          "failed": 5,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-07T23:04:32.332000Z",
-          "end_time": "2025-11-08T00:07:10.268+01:00"
-        }
-      ]
-    },
-    "intacc": {
-      "total": 0,
-      "passed": 0,
-      "failed": 0,
-      "passed_details": [],
-      "failed_details": []
-    }
-  },
-  "2025-11-08T00:00:00Z": {
-    "ALL": {
-      "total": 7,
-      "passed": 0,
-      "failed": 7,
-      "passed_details": [],
-      "failed_details": [
-        {
-          "full_name": "settings/workflow/workflow settings",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220130_1762561501977.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 4,
-          "failed": 55,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:02:33.044000Z",
-          "end_time": "2025-11-08T01:24:58.883+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/DYNAREX on Demand",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220134_1762562256882.html",
-          "profile": "default DoD intdev",
-          "passed": 3,
-          "failed": 3,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:35:32.832000Z",
-          "end_time": "2025-11-08T01:37:36.321+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/member - get final DoD check",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220140_1762562609814.html",
-          "profile": "default member intdev",
-          "passed": 0,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:40:59.386000Z",
-          "end_time": "2025-11-08T01:43:29.290+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220138_1762562455409.html",
-          "profile": "default DoD intdev",
-          "passed": 3,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:38:55.391000Z",
-          "end_time": "2025-11-08T01:40:55.013+01:00"
-        },
-        {
-          "full_name": "settings/workflow/invoice wf - allowed actions",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220132_1762562128516.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 8,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:25:07.886000Z",
-          "end_time": "2025-11-08T01:35:27.833+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/member - get initial billing counts",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220136_1762562331377.html",
-          "profile": "default member intdev",
-          "passed": 0,
-          "failed": 1,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:37:40.902000Z",
-          "end_time": "2025-11-08T01:38:51.074+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220142_1762564917905.html",
-          "profile": "default member intdev",
-          "passed": 6,
-          "failed": 34,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:43:34.012000Z",
-          "end_time": "2025-11-08T02:21:55.253+01:00"
-        }
-      ]
-    },
-    "intdev": {
-      "total": 7,
-      "passed": 0,
-      "failed": 7,
-      "passed_details": [],
-      "failed_details": [
-        {
-          "full_name": "settings/workflow/workflow settings",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220130_1762561501977.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 4,
-          "failed": 55,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:02:33.044000Z",
-          "end_time": "2025-11-08T01:24:58.883+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/DYNAREX on Demand",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220134_1762562256882.html",
-          "profile": "default DoD intdev",
-          "passed": 3,
-          "failed": 3,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:35:32.832000Z",
-          "end_time": "2025-11-08T01:37:36.321+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/member - get final DoD check",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220140_1762562609814.html",
-          "profile": "default member intdev",
-          "passed": 0,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:40:59.386000Z",
-          "end_time": "2025-11-08T01:43:29.290+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220138_1762562455409.html",
-          "profile": "default DoD intdev",
-          "passed": 3,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:38:55.391000Z",
-          "end_time": "2025-11-08T01:40:55.013+01:00"
-        },
-        {
-          "full_name": "settings/workflow/invoice wf - allowed actions",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220132_1762562128516.html",
-          "profile": "default DYNAREX intdev",
-          "passed": 0,
-          "failed": 8,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:25:07.886000Z",
-          "end_time": "2025-11-08T01:35:27.833+01:00"
-        },
-        {
-          "full_name": "billing/DoD Regression/member - get initial billing counts",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220136_1762562331377.html",
-          "profile": "default member intdev",
-          "passed": 0,
-          "failed": 1,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:37:40.902000Z",
-          "end_time": "2025-11-08T01:38:51.074+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220142_1762564917905.html",
-          "profile": "default member intdev",
-          "passed": 6,
-          "failed": 34,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T00:43:34.012000Z",
-          "end_time": "2025-11-08T02:21:55.253+01:00"
-        }
-      ]
-    },
-    "intacc": {
-      "total": 0,
-      "passed": 0,
-      "failed": 0,
-      "passed_details": [],
-      "failed_details": []
-    }
-  },
-  "2025-11-08T01:00:00Z": {
-    "ALL": {
-      "total": 4,
-      "passed": 0,
-      "failed": 4,
-      "passed_details": [],
-      "failed_details": [
-        {
-          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220148_1762566581671.html",
-          "profile": "default member intdev",
-          "passed": 9,
-          "failed": 9,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:42:35.663000Z",
-          "end_time": "2025-11-08T02:49:41.041+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/billing state assessment - SD3EP",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220146_1762566151233.html",
-          "profile": "default member intdev",
-          "passed": 4,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:39:19.271000Z",
-          "end_time": "2025-11-08T02:42:30.666+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220144_1762565954226.html",
-          "profile": "default member intdev",
-          "passed": 3,
-          "failed": 19,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:22:03.025000Z",
-          "end_time": "2025-11-08T02:39:12.932+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/DoD - state assessment not available",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220150_1762567301952.html",
-          "profile": "default member intdev",
-          "passed": 20,
-          "failed": 3,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:49:46.571000Z",
-          "end_time": "2025-11-08T03:01:41.137+01:00"
-        }
-      ]
-    },
-    "intdev": {
-      "total": 4,
-      "passed": 0,
-      "failed": 4,
-      "passed_details": [],
-      "failed_details": [
-        {
-          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220148_1762566581671.html",
-          "profile": "default member intdev",
-          "passed": 9,
-          "failed": 9,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:42:35.663000Z",
-          "end_time": "2025-11-08T02:49:41.041+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/billing state assessment - SD3EP",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220146_1762566151233.html",
-          "profile": "default member intdev",
-          "passed": 4,
-          "failed": 2,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:39:19.271000Z",
-          "end_time": "2025-11-08T02:42:30.666+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220144_1762565954226.html",
-          "profile": "default member intdev",
-          "passed": 3,
-          "failed": 19,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:22:03.025000Z",
-          "end_time": "2025-11-08T02:39:12.932+01:00"
-        },
-        {
-          "full_name": "billing/State assessment/DoD - state assessment not available",
-          "netlify_url": "https://6910a0794a3e6ae9b085ede2--qa-onrex.netlify.app/reports/20251107_220150_1762567301952.html",
-          "profile": "default member intdev",
-          "passed": 20,
-          "failed": 3,
-          "error": 0,
-          "incomplete": 0,
-          "skipped": 0,
-          "start_time": "2025-11-08T01:49:46.571000Z",
-          "end_time": "2025-11-08T03:01:41.137+01:00"
-        }
-      ]
-    },
-    "intacc": {
-      "total": 0,
-      "passed": 0,
-      "failed": 0,
-      "passed_details": [],
-      "failed_details": []
-    }
-  },
   "2025-11-10T09:00:00Z": {
     "ALL": {
       "total": 2,
@@ -5677,6 +5072,586 @@
           "end_time": "2025-11-12T10:40:42.975+01:00"
         }
       ]
+    }
+  },
+  "2025-11-12T10:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_113842_1762944210594.html",
+          "profile": "default member intacc",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T10:38:50.733000Z",
+          "end_time": "2025-11-12T11:43:29.982+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_113842_1762944210594.html",
+          "profile": "default member intacc",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T10:38:50.733000Z",
+          "end_time": "2025-11-12T11:43:29.982+01:00"
+        }
+      ],
+      "failed_details": []
+    }
+  },
+  "2025-11-12T11:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_124518_1762948434775.html",
+          "profile": "default member intacc",
+          "passed": 22,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T11:45:26.040000Z",
+          "end_time": "2025-11-12T12:53:54.507+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_124518_1762948434775.html",
+          "profile": "default member intacc",
+          "passed": 22,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T11:45:26.040000Z",
+          "end_time": "2025-11-12T12:53:54.507+01:00"
+        }
+      ],
+      "failed_details": []
+    }
+  },
+  "2025-11-12T12:00:00Z": {
+    "ALL": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135652_1762952291623.html",
+          "profile": "default - Deutsch",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:57:13.782000Z",
+          "end_time": "2025-11-12T13:58:11.306+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Offices",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135654_1762952480306.html",
+          "profile": "default - Deutsch",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:58:20.758000Z",
+          "end_time": "2025-11-12T14:01:19.733+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_131230_1762949979589.html",
+          "profile": "default member intacc",
+          "passed": 18,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:12:37.605000Z",
+          "end_time": "2025-11-12T13:19:39.040+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_132058_1762950718905.html",
+          "profile": "default member intacc",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:21:06.183000Z",
+          "end_time": "2025-11-12T13:31:58.503+01:00"
+        },
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_134402_1762951662422.html",
+          "profile": "DAT HU intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:44:11.640000Z",
+          "end_time": "2025-11-12T13:47:42.300+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135652_1762952291623.html",
+          "profile": "default - Deutsch",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:57:13.782000Z",
+          "end_time": "2025-11-12T13:58:11.306+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Offices",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135654_1762952480306.html",
+          "profile": "default - Deutsch",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:58:20.758000Z",
+          "end_time": "2025-11-12T14:01:19.733+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_131230_1762949979589.html",
+          "profile": "default member intacc",
+          "passed": 18,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:12:37.605000Z",
+          "end_time": "2025-11-12T13:19:39.040+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_132058_1762950718905.html",
+          "profile": "default member intacc",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:21:06.183000Z",
+          "end_time": "2025-11-12T13:31:58.503+01:00"
+        },
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_134402_1762951662422.html",
+          "profile": "DAT HU intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T12:44:11.640000Z",
+          "end_time": "2025-11-12T13:47:42.300+01:00"
+        }
+      ],
+      "failed_details": []
+    }
+  },
+  "2025-11-12T13:00:00Z": {
+    "ALL": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142843_1762954949306.html",
+          "profile": "default - Deutsch",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:39:22.196000Z",
+          "end_time": "2025-11-12T14:42:29.026+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_144642_1762955673697.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:52:11.624000Z",
+          "end_time": "2025-11-12T14:54:33.460+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142847_1762955090964.html",
+          "profile": "default - Deutsch",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:43:42.136000Z",
+          "end_time": "2025-11-12T14:44:50.822+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_144638_1762955313564.html",
+          "profile": "default - Deutsch",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:46:51.480000Z",
+          "end_time": "2025-11-12T14:48:32.784+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142839_1762954572097.html",
+          "profile": "default - Deutsch",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:28:56.019000Z",
+          "end_time": "2025-11-12T14:36:11.507+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_144640_1762955523006.html",
+          "profile": "default - Deutsch",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:48:42.112000Z",
+          "end_time": "2025-11-12T14:52:02.683+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142841_1762954754155.html",
+          "profile": "default - Deutsch",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:36:20.961000Z",
+          "end_time": "2025-11-12T14:39:14.054+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142845_1762955013920.html",
+          "profile": "default - Deutsch",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:42:37.783000Z",
+          "end_time": "2025-11-12T14:43:33.559+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135658_1762952586065.html",
+          "profile": "member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:02:36.523000Z",
+          "end_time": "2025-11-12T14:03:05.784+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135704_1762952731688.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:04:33.004000Z",
+          "end_time": "2025-11-12T14:05:31.214+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135656_1762952547735.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:01:29.179000Z",
+          "end_time": "2025-11-12T14:02:27.382+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135700_1762952629121.html",
+          "profile": "default - Deutsch",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:03:14.409000Z",
+          "end_time": "2025-11-12T14:03:48.769+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135702_1762952664485.html",
+          "profile": "member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:03:57.614000Z",
+          "end_time": "2025-11-12T14:04:24.053+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142843_1762954949306.html",
+          "profile": "default - Deutsch",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:39:22.196000Z",
+          "end_time": "2025-11-12T14:42:29.026+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_144642_1762955673697.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:52:11.624000Z",
+          "end_time": "2025-11-12T14:54:33.460+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142847_1762955090964.html",
+          "profile": "default - Deutsch",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:43:42.136000Z",
+          "end_time": "2025-11-12T14:44:50.822+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_144638_1762955313564.html",
+          "profile": "default - Deutsch",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:46:51.480000Z",
+          "end_time": "2025-11-12T14:48:32.784+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142839_1762954572097.html",
+          "profile": "default - Deutsch",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:28:56.019000Z",
+          "end_time": "2025-11-12T14:36:11.507+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_144640_1762955523006.html",
+          "profile": "default - Deutsch",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:48:42.112000Z",
+          "end_time": "2025-11-12T14:52:02.683+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142841_1762954754155.html",
+          "profile": "default - Deutsch",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:36:20.961000Z",
+          "end_time": "2025-11-12T14:39:14.054+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_142845_1762955013920.html",
+          "profile": "default - Deutsch",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:42:37.783000Z",
+          "end_time": "2025-11-12T14:43:33.559+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135658_1762952586065.html",
+          "profile": "member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:02:36.523000Z",
+          "end_time": "2025-11-12T14:03:05.784+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135704_1762952731688.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:04:33.004000Z",
+          "end_time": "2025-11-12T14:05:31.214+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135656_1762952547735.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:01:29.179000Z",
+          "end_time": "2025-11-12T14:02:27.382+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135700_1762952629121.html",
+          "profile": "default - Deutsch",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:03:14.409000Z",
+          "end_time": "2025-11-12T14:03:48.769+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://69149aa52dde1508c3bc4e6f--qa-onrex.netlify.app/reports/20251112_135702_1762952664485.html",
+          "profile": "member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-11-12T13:03:57.614000Z",
+          "end_time": "2025-11-12T14:04:24.053+01:00"
+        }
+      ],
+      "failed_details": []
     }
   }
 }
