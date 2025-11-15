@@ -23,3 +23,10 @@ export const CONFIG = {
     ...DEFAULT_CONFIG,
     ...(typeof window !== 'undefined' && window.LOCAL_CONFIG ? window.LOCAL_CONFIG : {})
 };
+
+// Support optional local overrides for development via window.LOCAL_CONFIG
+// Create docs/scripts/local-config.js to set window.LOCAL_CONFIG = { ... }
+export const CONFIG = {
+    ...DEFAULT_CONFIG,
+    ...(typeof window !== 'undefined' && window.LOCAL_CONFIG ? window.LOCAL_CONFIG : {})
+};
