@@ -9,8 +9,6 @@ import { CONFIG } from './config.js';
 
 let currentDashboardVersion = null; 
 const POLLING_INTERVAL_MS = 30000; 
-let mailboxPollTimer = null;
-let lastWorkflowTriggerTs = 0;
 
 // Initialize global managers
 window.authManager = new AuthManager();
@@ -75,58 +73,6 @@ async function checkNewVersion() {
     }
 }
 
-// --- Mailbox Polling + Workflow Trigger ---
-function startMailboxPolling() {
-    if (!CONFIG.AUTO_MAILBOX_POLL_ENABLED) return;
-    if (mailboxPollTimer) clearInterval(mailboxPollTimer);
-    const interval = CONFIG.MAILBOX_POLL_INTERVAL_MS || 60000;
-    console.log(`Mailbox polling enabled: every ${Math.round(interval/1000)}s`);
-    mailboxPollTimer = setInterval(checkMailboxAndTrigger, interval);
-}
-
-function stopMailboxPolling() {
-    if (mailboxPollTimer) {
-        clearInterval(mailboxPollTimer);
-        mailboxPollTimer = null;
-        console.log('Mailbox polling stopped.');
-    }
-}
-
-async function checkMailboxAndTrigger() {
-    try {
-        // Only poll when viewing Current (Live)
-        if (window.archiveManager?.currentArchive !== 'current') return;
-
-        const pollUrl = CONFIG.MAILBOX_POLL_URL;
-        const resp = await fetch(pollUrl, { cache: 'no-store' });
-        if (!resp.ok) return;
-        const data = await resp.json();
-        if (data && data.found) {
-            const now = Date.now();
-            const cooldown = CONFIG.WORKFLOW_COOLDOWN_MS || (10 * 60 * 1000);
-            if (now - lastWorkflowTriggerTs < cooldown) {
-                console.log('New report detected but still in cooldown window. Skipping trigger.');
-                return;
-            }
-            lastWorkflowTriggerTs = now;
-            console.log('New report detected. Triggering workflow...');
-            try {
-                const triggerResp = await fetch(CONFIG.WORKFLOW_TRIGGER_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ reason: 'auto-detected-new-report', ts: now })
-                });
-                if (!triggerResp.ok) {
-                    console.warn('Workflow trigger request failed:', triggerResp.status);
-                }
-            } catch (e) {
-                console.error('Failed to call workflow trigger endpoint:', e);
-            }
-        }
-    } catch (e) {
-        console.error('Mailbox poll failed:', e);
-    }
-}
 
 // --- Login Function ---
 
@@ -163,7 +109,6 @@ async function showDashboardFlow() {
     window.timelineManager.renderTimeline();
     
     startVersionPolling();
-    startMailboxPolling();
 }
 
 async function handleArchiveChange(event) {
@@ -175,12 +120,6 @@ async function handleArchiveChange(event) {
         console.log('Stopped version polling (switched to archive view).');
     } else if (archiveId === 'current') {
         startVersionPolling(); 
-    }
-    
-    if (archiveId !== 'current') {
-        stopMailboxPolling();
-    } else {
-        startMailboxPolling();
     }
 
     window.timelineManager.renderTimeline(); 

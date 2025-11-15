@@ -3,8 +3,8 @@ name: 🚀 QA Reports
 
 on:
 #  schedule:
-#    - cron: "0 * * * *"    # Runs every hour
-  workflow_dispatch:        # Allow manual run
+#    - cron: "*/5 * * * *"    # Runs every 5 minutes
+  workflow_dispatch:         # Allow manual run
 
 permissions:
   contents: write
