@@ -89,7 +89,8 @@ export class DashboardManager {
             continue;
           }
 
-          const latestForEnv = record.latest;
+          // Pick the latest session AFTER applying the environment filter (data is pre-sorted newest first)
+          const latestForEnv = sessions[0];
           const passed = latestForEnv.passed || 0;
           const total = latestForEnv.test_cases || 0;
           const failed = total - passed;
