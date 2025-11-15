@@ -158,7 +158,8 @@ export class DashboardManager {
       }
 
       if (projectHasVisibleSuites) {
-        body.push(`<tr><td class="project-header">${project}</td><td class="project-separator"></td></tr>`);
+        // Render only the sticky project header cell; remove stray first data-column cell
+        body.push(`<tr><td class="project-header">${project}</td></tr>`);
         body.push(...suiteRows);
       }
     }
