@@ -1,5 +1,7 @@
 // docs/scripts/timeline.js
 import { CONFIG } from './config.js';
+import { showTimelineTooltip, hideTooltip } from './tooltip.js';
+import { showSessionModal } from './modal.js';
 
 // --- TIMELINE CONSTANTS ---
 const MAX_CHART_HEIGHT_PX = 100;
@@ -128,6 +130,15 @@ export class TimelineManager {
                     <div class="timeline-hour-label">${hourLabel}</div>
                     ${dateLabelHtml}
                 `;
+                const compactEnv = {
+                    passed: envData.passed || 0,
+                    failed: envData.failed || 0,
+                    passed_details: Array.isArray(envData.passed_details) ? envData.passed_details : [],
+                    failed_details: Array.isArray(envData.failed_details) ? envData.failed_details : []
+                };
+                const dataAttr = encodeURIComponent(JSON.stringify(compactEnv));
+                columnsToRender.push(`<div class="timeline-bar-column" data-env="${dataAttr}" data-hourms="${hourBlockLocal.getTime()}">${columnHtml}</div>`);
+                continue;
             } else {
                 // Empty bar for hours with no data - NO NUMBERS
                 const hourLabel = String(hourBlockLocal.getHours()).padStart(2, '0') + ':00';
@@ -153,6 +164,48 @@ export class TimelineManager {
 
         // 5. Inject columns (newest on left)
         timelineContainer.innerHTML = columnsToRender.join('');
+
+        // 6. Attach hover tooltips for columns with data
+        const cols = timelineContainer.querySelectorAll('.timeline-bar-column[data-env]');
+        cols.forEach(col => {
+            const hourMs = Number(col.getAttribute('data-hourms'));
+            let envData;
+            try {
+                envData = JSON.parse(decodeURIComponent(col.getAttribute('data-env')));
+            } catch {
+                envData = null;
+            }
+            if (!envData) return;
+            col.addEventListener('mousemove', (e) => {
+                const d = new Date(hourMs);
+                showTimelineTooltip(e, d, envData);
+            });
+            col.addEventListener('mouseleave', () => hideTooltip());
+
+            // Click to open modal with sessions list for this hour
+            col.addEventListener('click', () => {
+                const hourLocal = new Date(hourMs);
+                const y = hourLocal.getFullYear();
+                const m = String(hourLocal.getMonth() + 1).padStart(2, '0');
+                const d = String(hourLocal.getDate()).padStart(2, '0');
+                const hh = String(hourLocal.getHours()).padStart(2, '0');
+                const title = `${y}/${m}/${d} - ${hh}:00`;
+
+                const passedList = Array.isArray(envData.passed_details) ? envData.passed_details : [];
+                const failedList = Array.isArray(envData.failed_details) ? envData.failed_details : [];
+                const sessions = [...passedList, ...failedList];
+
+                // If there are no sessions, do nothing
+                if (!sessions.length) return;
+
+                // Use generic identifiers for project/suite, since timeline aggregates across suites
+                const project = 'Timeline';
+                const suite = 'Timeline Hour';
+                const date = title;
+
+                showSessionModal(project, suite, date, sessions, { titleOverride: title, includeSuiteName: true });
+            });
+        });
     }
 
     /**
