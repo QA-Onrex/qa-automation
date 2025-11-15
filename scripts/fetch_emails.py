@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_fetch_emails.py
+# scripts/netlify/fetch_emails.py
 import imaplib
 import email
 import os
@@ -6,7 +6,7 @@ import traceback
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from netlify_encryptor import encrypt_bytes_to_file
+from scripts.encryptor import encrypt_bytes_to_file
 
 # Configuration
 zoho_user = os.getenv("ZOHO_EMAIL")

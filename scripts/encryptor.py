@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_encryptor.py
+# scripts/netlify/encryptor.py
 import os
 import base64
 import sys

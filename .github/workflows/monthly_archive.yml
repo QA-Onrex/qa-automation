@@ -28,7 +28,7 @@ jobs:
           python -m pip install --upgrade pip
 
       - name: Create Monthly Archive
-        run: python scripts/netlify/netlify_archive_manager.py
+        run: python scripts/netlify/archive_manager.py
 
       - name: Commit and Push Archive
         run: |

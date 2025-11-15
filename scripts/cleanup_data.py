@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta
 from dateutil import parser  # More flexible date parsing
 
-RESULTS_FILE = "data/netlify_results.json"
+RESULTS_FILE = "data/results.json"
 DATA_RETENTION = 35
 EMAIL_RETENTION = 10
 

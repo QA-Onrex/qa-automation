@@ -36,13 +36,13 @@ jobs:
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         # Use || true to prevent the entire workflow from failing if no emails are found
-        run: python scripts/netlify/netlify_fetch_emails.py || true 
+        run: python scripts/netlify/fetch_emails.py || true
 
       - name: Extract & Re-Encrypt HTML
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         # Use || true to prevent the entire workflow from failing if no attachments are found
-        run: python scripts/netlify/netlify_extract_html.py || true
+        run: python scripts/netlify/extract_html.py || true
 
       - name: Upload HTML to Netlify (Draft Deploy)
         env:
@@ -50,20 +50,20 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
         # The upload script should be the first to fail if critical setup is missing
-        run: python scripts/netlify/netlify_upload_html.py
+        run: python scripts/netlify/upload_html.py
 
       - name: Parse HTML, Update Metrics, & Delete Local Files
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/netlify/netlify_parse_html.py
+        run: python scripts/netlify/parse_html.py
 
       - name: Generate Timeline Data (JSON)
         env: 
           REPORT_PASSWORD: ${{ secrets.REPORT_PASSWORD }}
-        run: python scripts/netlify/netlify_generate_timeline.py
+        run: python scripts/netlify/generate_timeline.py
 
       - name: Generate Dynamic Dashboard Data (JSON)
-        run: python scripts/netlify/netlify_dashboard_data.py
+        run: python scripts/netlify/generate_dashboard.py
                   
       - name: Commit Updated Data and Dashboard
         run: |

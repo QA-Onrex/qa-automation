@@ -1,10 +1,10 @@
-# scripts/netlify/netlify_generate_timeline.py
+# scripts/netlify/generate_timeline.py
 import os
 import json
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 
-DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
+RESULTS_FILE = "data/results.json"
 TIMELINE_FILE = "docs/timeline_data.json" 
 TIME_WINDOW_DAYS = 5
 
@@ -54,13 +54,58 @@ def clean_test_suite_name(full_name):
     return full_name
 
 def generate_timeline():
-    """Generates the timeline data structure from dashboard data."""
-    # 1. Load dashboard data
-    dashboard_data = load_json_data(DASHBOARD_DATA_FILE)
-    
-    if not dashboard_data or 'data' not in dashboard_data:
-        print("No dashboard data found. Skipping timeline generation.")
+    """Generates the timeline data structure from results.json directly.
+
+    Previously this script consumed docs/dashboard_data.json, but that file
+    may not be available/updated at generation time. We now read raw
+    data/results.json and group it locally into the same shape that the
+    rest of the logic expects (project -> suite -> date -> { sessions: [...] }).
+    """
+    # 1. Load raw results data
+    results = load_json_data(RESULTS_FILE)
+    if not isinstance(results, list) or not results:
+        print("No results found. Skipping timeline generation.")
         return
+
+    # Build a minimal dashboard-like structure compatible with the existing loop
+    # dashboard_like = { 'data': { project: { suite: { date: { 'sessions': [...] }}}}}
+    from collections import defaultdict
+    grouped = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: {"sessions": []})))
+
+    for r in results:
+        project = r.get("project", "Unknown")
+        suite = r.get("test_suite_id", "Unknown")
+        start = r.get("start") or r.get("end")
+        if not start:
+            continue
+        try:
+            # Normalize to datetime and derive date key YYYY.MM.DD
+            start_str = str(start).replace("Z", "+00:00")
+            if "." in start_str:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+            else:
+                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
+            date_key = dt_obj.strftime("%Y.%m.%d")
+        except Exception:
+            # Skip entries with invalid date
+            continue
+
+        grouped[project][suite][date_key]["sessions"].append(r)
+
+    # Convert to plain dict
+    dashboard_data = {"data": {}}
+    for project, suites in grouped.items():
+        dashboard_data["data"][project] = {}
+        for suite, dates in suites.items():
+            dashboard_data["data"][project][suite] = {}
+            for date_key, payload in dates.items():
+                # keep sessions order (optionally newest first by end time)
+                sessions = payload.get("sessions", [])
+                try:
+                    sessions.sort(key=lambda x: x.get("end", ""), reverse=True)
+                except Exception:
+                    pass
+                dashboard_data["data"][project][suite][date_key] = {"sessions": sessions}
 
     # 2. Initialize timeline structure using defaultdict
     timeline_data = defaultdict(lambda: {

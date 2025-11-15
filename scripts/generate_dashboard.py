@@ -1,11 +1,11 @@
-# scripts/netlify/netlify_dashboard_data.py
+# scripts/netlify/generate_dashboard.py
 import json
 import os
 import sys
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-RESULTS_FILE = "data/netlify_results.json"
+RESULTS_FILE = "data/results.json"
 DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
 
 

@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_archive_manager.py
+# scripts/netlify/archive_manager.py
 import json
 import os
 from datetime import datetime, timedelta

@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_upload_html.py
+# scripts/netlify/upload_html.py
 import os
 import json
 import hashlib
@@ -6,12 +6,11 @@ import requests
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from netlify_encryptor import decrypt_file_to_bytes
 
 # Configuration
 NETLIFY_SITE_ID = os.getenv("NETLIFY_SITE_ID")
 NETLIFY_AUTH_TOKEN = os.getenv("NETLIFY_AUTH_TOKEN")
-HTML_FOLDER = "data/netlify_html"
+HTML_FOLDER = "data/html"
 URLS_FILE = "data/netlify_urls.json"
 HEADERS_FILENAME = "_headers"
 

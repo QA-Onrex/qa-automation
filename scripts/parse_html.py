@@ -1,16 +1,15 @@
-# scripts/netlify/netlify_parse_html.py
+# scripts/netlify/parse_html.py
 import os
 import json
 import re
-from datetime import datetime
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from netlify_encryptor import decrypt_file_to_bytes
+from scripts.encryptor import decrypt_file_to_bytes
 
-HTML_FOLDER = "data/netlify_html"
+HTML_FOLDER = "data/html"
 URLS_FILE = "data/netlify_urls.json"
-RESULTS_FILE = "data/netlify_results.json"
+RESULTS_FILE = "data/results.json"
 PROCESSED_FOLDER = "docs/netlify_reports"
 
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
@@ -22,7 +21,7 @@ if os.path.exists(RESULTS_FILE):
         with open(RESULTS_FILE, "r", encoding="utf-8") as f:
             results = json.load(f)
     except json.JSONDecodeError:
-        print("netlify_results.json is empty or invalid, starting fresh")
+        print("results.json is empty or invalid, starting fresh")
         results = []
 
 
@@ -219,7 +218,7 @@ def main():
         # Call the separate script to update the version file
         version_script_path = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
-                "netlify_version_manager.py"
+                "version_manager.py"
         )
         # Execute the version manager script
         os.system(f"python {version_script_path}")

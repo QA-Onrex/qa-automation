@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_version_manager.py
+# scripts/netlify/version_manager.py
 import json
 import os
 from datetime import datetime
