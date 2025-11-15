@@ -3,6 +3,24 @@ import { openReport } from './decryptor.js';
 
 let currentSessions = [];
 
+// Helper: remove leading "Test Suites/" from any suite path for display only
+// Strips up to two leading occurrences, only from the very beginning.
+function stripTestSuitesPrefix(name, maxTimes = 2) {
+  try {
+    if (typeof name !== 'string') return name;
+    let out = name;
+    let count = 0;
+    const prefix = 'Test Suites/';
+    while (count < maxTimes && out.startsWith(prefix)) {
+      out = out.slice(prefix.length);
+      count++;
+    }
+    return out;
+  } catch {
+    return name;
+  }
+}
+
 // Helper functions for time/duration formatting
 function pad2(n) {
   return String(n).padStart(2, '0');
@@ -25,7 +43,7 @@ function computeDurationMMSS(startIso, endIso) {
 export function showSessionModal(project, suite, date, sessions, options = {}) {
   const modal = document.getElementById('session-modal');
   const sessionList = document.getElementById('session-list');
-  const displayName = suite.replace('Test Suites/', '');
+  const displayName = stripTestSuitesPrefix(suite);
 
   // Title: use override if provided (e.g., for Timeline modal), else suite name
   const titleText = options.titleOverride || displayName;
@@ -56,7 +74,7 @@ export function showSessionModal(project, suite, date, sessions, options = {}) {
     const sessionIsGreen = effectiveFailed === 0;
     let colorClass = sessionIsGreen ? 'green' : 'red';
     const profileName = session.profile || 'N/A';
-    const fullName = session.full_name || displayName;
+    const fullName = stripTestSuitesPrefix(session.full_name || displayName);
 
     const suiteLineHtml = options.includeSuiteName ? `<div class="session-suite-label">${fullName}</div>` : '';
     div.innerHTML = `

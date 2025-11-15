@@ -4,6 +4,23 @@ import { showSessionModal } from './modal.js';
 import { openReport } from './decryptor.js';
 import { CONFIG } from './config.js';
 
+// Helper: strip up to two leading "Test Suites/" prefixes for display only
+function stripLeadingTestSuites(name, maxTimes = 2) {
+  try {
+    if (typeof name !== 'string') return name;
+    const prefix = 'Test Suites/';
+    let out = name;
+    let count = 0;
+    while (count < maxTimes && out.startsWith(prefix)) {
+      out = out.slice(prefix.length);
+      count++;
+    }
+    return out;
+  } catch {
+    return name;
+  }
+}
+
 export class DashboardManager {
   constructor() {
     this.data = null;
@@ -134,7 +151,8 @@ export class DashboardManager {
         }
 
         if (suiteHasEnvMatch) {
-          suiteRows.push(`<tr><td class="suite-name">${suite.replace('Test Suites/', '')}</td>${dateCells.join('')}</tr>`);
+          const displaySuite = stripLeadingTestSuites(suite, 2);
+          suiteRows.push(`<tr><td class="suite-name">${displaySuite}</td>${dateCells.join('')}</tr>`);
           projectHasVisibleSuites = true;
         }
       }
