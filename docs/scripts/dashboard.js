@@ -49,9 +49,19 @@ export class DashboardManager {
   }
 
   renderTable(data, dates, selectedEnv) {
+    // Format column dates as DD.MM
     const headerHTML = [
       '<tr><th>Test Suite</th>' +
-      dates.map(d => `<th>${d.slice(5)}</th>`).join('') +
+      dates.map(d => {
+        const parts = String(d).split('-'); // expect YYYY-MM-DD
+        if (parts.length >= 3) {
+          const dd = parts[2];
+          const mm = parts[1];
+          return `<th>${dd}.${mm}</th>`;
+        }
+        // Fallback: original substring
+        return `<th>${String(d).slice(8,10)}.${String(d).slice(5,7)}</th>`;
+      }).join('') +
       '</tr>'
     ];
     document.getElementById('table-header').innerHTML = headerHTML.join('');
@@ -89,8 +99,7 @@ export class DashboardManager {
             continue;
           }
 
-          // Pick the latest session AFTER applying the environment filter (data is pre-sorted newest first)
-          const latestForEnv = sessions[0];
+          const latestForEnv = record.latest;
           const passed = latestForEnv.passed || 0;
           const total = latestForEnv.test_cases || 0;
           const failed = total - passed;

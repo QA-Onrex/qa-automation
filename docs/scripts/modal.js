@@ -22,12 +22,14 @@ function computeDurationMMSS(startIso, endIso) {
   }
 }
 
-export function showSessionModal(project, suite, date, sessions) {
+export function showSessionModal(project, suite, date, sessions, options = {}) {
   const modal = document.getElementById('session-modal');
   const sessionList = document.getElementById('session-list');
   const displayName = suite.replace('Test Suites/', '');
 
-  modal.querySelector('h3').textContent = displayName;
+  // Title: use override if provided (e.g., for Timeline modal), else suite name
+  const titleText = options.titleOverride || displayName;
+  modal.querySelector('h3').textContent = titleText;
   sessionList.innerHTML = '';
   currentSessions = sessions;
 
@@ -35,27 +37,38 @@ export function showSessionModal(project, suite, date, sessions) {
     const div = document.createElement('div');
     div.className = 'session-item';
 
-    const startTime = new Date(session.start);
+    // Support sessions coming from timeline (start_time/end_time) and dashboard (start/end)
+    const startIso = session.start || session.start_time;
+    const endIso = session.end || session.end_time;
+    const startTime = new Date(startIso);
     const timeString = isNaN(startTime.getTime()) ? 'N/A' : startTime.toLocaleTimeString('en-GB', { hour12: false });
     // Calculate the duration
-    const durationString = computeDurationMMSS(session.start, session.end); 
+    const durationString = computeDurationMMSS(startIso, endIso); 
     
     const passed = session.passed || 0;
-    const total = session.test_cases || 0;
-    const failed = total - passed;
-    const sessionIsGreen = (typeof session.test_cases === 'number') && ((session.passed || 0) === (session.test_cases || 0));
+    // Count all non-passed outcomes as failed bucket: failed + error + incomplete + skipped
+    const failedBucket = (session.failed || 0) + (session.error || 0) + (session.incomplete || 0) + (session.skipped || 0);
+    // Prefer explicit test_cases when available; otherwise sum from components
+    const total = (typeof session.test_cases === 'number')
+      ? session.test_cases
+      : (passed + failedBucket);
+    const effectiveFailed = Math.max(0, failedBucket || (typeof total === 'number' ? (total - passed) : 0));
+    const sessionIsGreen = effectiveFailed === 0;
     let colorClass = sessionIsGreen ? 'green' : 'red';
     const profileName = session.profile || 'N/A';
+    const fullName = session.full_name || displayName;
 
+    const suiteLineHtml = options.includeSuiteName ? `<div class="session-suite-label">${fullName}</div>` : '';
     div.innerHTML = `
       <div>
         <div class="session-profile-label">Profile: ${profileName}</div>
+        ${suiteLineHtml}
         <div class="session-time-large">
             Start time: ${timeString} | Duration: ${durationString}
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:10px;">
-        <span class="pass-fail ${colorClass}">${passed}/${failed}</span>
+        <span class="pass-fail ${colorClass}">${passed}/${effectiveFailed}</span>
       </div>
     `;
 

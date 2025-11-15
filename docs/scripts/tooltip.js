@@ -87,3 +87,63 @@ export function hideTooltip() {
 
 window.showTooltip = showTooltip;
 window.hideTooltip = hideTooltip;
+
+// --- Timeline tooltip (hour summary + sessions list) ---
+function formatYMD(hourDate) {
+    const y = hourDate.getFullYear();
+    const m = pad2(hourDate.getMonth() + 1);
+    const d = pad2(hourDate.getDate());
+    return `${y}/${m}/${d}`;
+}
+
+function formatHM(date) {
+    return `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
+}
+
+export function showTimelineTooltip(event, hourLocalDate, envData) {
+    if (!envData || !hourLocalDate) return;
+    const tooltip = document.getElementById('tooltip');
+    if (!tooltip) return;
+
+    // Title and summary
+    const titleLine = `${formatYMD(hourLocalDate)} - ${pad2(hourLocalDate.getHours())}:00 (Timeline Hour)`;
+    const summaryLine = `✅ ${envData.passed || 0} passed | ❌ ${envData.failed || 0} failed`;
+
+    // Build sessions list (combine passed and failed details)
+    const passedList = Array.isArray(envData.passed_details) ? envData.passed_details : [];
+    const failedList = Array.isArray(envData.failed_details) ? envData.failed_details : [];
+    const allSessions = [...passedList, ...failedList];
+
+    // Sort by start_time descending
+    allSessions.sort((a, b) => new Date(b.start_time) - new Date(a.start_time));
+
+    const sessionLines = allSessions.map(s => {
+        const start = s.start_time ? new Date(s.start_time) : null;
+        const hm = start ? formatHM(start) : '--:--';
+        const fullName = s.full_name || 'Unknown';
+        const shortName = fullName.includes('/') ? fullName.split('/').pop() : fullName;
+        const isPass = (s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0;
+        const mark = isPass ? '✓' : '✗';
+        return `<div class='tooltip-row'>${hm} ${shortName} ${mark}</div>`;
+    }).join('');
+
+    tooltip.innerHTML = `
+        <div class='tooltip-row' style='font-weight:600;'>${titleLine}</div>
+        <div class='tooltip-row'>${summaryLine}</div>
+        ${sessionLines ? "<div class='tooltip-row'>&nbsp;</div>" + sessionLines : ''}
+    `;
+
+    tooltip.style.display = 'block';
+
+    // Position similarly to showTooltip
+    const padding = 8;
+    let top = event.pageY + padding;
+    let left = event.pageX + padding;
+    const rect = tooltip.getBoundingClientRect();
+    if (top + rect.height > window.innerHeight) top = event.pageY - rect.height - padding;
+    if (left + rect.width > window.innerWidth) left = event.pageX - rect.width - padding;
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
+}
+
+window.showTimelineTooltip = showTimelineTooltip;
