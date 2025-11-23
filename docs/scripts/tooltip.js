@@ -56,6 +56,7 @@ export function showTooltip(event, session) {
         <div class='tooltip-row'><span class='tooltip-label'>Passed:</span>${session.passed || 0}</div>
         <div class='tooltip-row'><span class='tooltip-label'>Failed:</span>${session.failed || 0}</div>
         <div class='tooltip-row'><span class='tooltip-label'>Error:</span>${session.error || 0}</div>
+        <div class='tooltip-row'><span class='tooltip-label'>Incomplete:</span>${session.incomplete || 0}</div>
         <div class='tooltip-row'><span class='tooltip-label'>Skipped:</span>${session.skipped || 0}</div>
         <div class='tooltip-row'><span class='tooltip-label'>Start:</span>${start ? formatDate(start) : 'N/A'}</div>
         <div class='tooltip-row'><span class='tooltip-label'>End:</span>${end ? formatDate(end) : 'N/A'}</div>
@@ -122,7 +123,8 @@ export function showTimelineTooltip(event, hourLocalDate, envData) {
         const hm = start ? formatHM(start) : '--:--';
         const fullName = s.full_name || 'Unknown';
         const shortName = fullName.includes('/') ? fullName.split('/').pop() : fullName;
-        const isPass = (s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0;
+        // Treat Skipped as a failure along with Failed, Error, and Incomplete
+        const isPass = (s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0 && (s.skipped || 0) === 0;
         const mark = isPass ? '✓' : '✗';
         return `<div class='tooltip-row'>${hm} ${shortName} ${mark}</div>`;
     }).join('');

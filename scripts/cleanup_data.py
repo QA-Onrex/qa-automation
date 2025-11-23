@@ -9,7 +9,7 @@ DATA_RETENTION = 35
 EMAIL_RETENTION = 10
 
 def load_results():
-    """Load test results from JSON file"""
+    """Load test results from the JSON file"""
     if not os.path.exists(RESULTS_FILE):
         print(f"Results file not found: {RESULTS_FILE}")
         return []
@@ -18,8 +18,8 @@ def load_results():
 
 
 def save_results(results):
-    """Save results back to JSON file"""
-    # Create directory if it doesn't exist
+    """Save results back to the JSON file"""
+    # Create a directory if it doesn't exist
     os.makedirs(os.path.dirname(RESULTS_FILE), exist_ok=True)
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
@@ -27,7 +27,7 @@ def save_results(results):
 
 def filter_old_records(results, days=DATA_RETENTION):
     """Filter out records older than specified days"""
-    # Create timezone-aware cutoff date
+    # Create a timezone-aware cutoff date
     cutoff_date = datetime.now().astimezone() - timedelta(days=days)
     filtered_results = []
     removed_count = 0

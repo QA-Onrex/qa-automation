@@ -122,14 +122,15 @@ export class DashboardManager {
           const failed = total - passed;
 
           // Color logic
-          const hasFail = sessions.some(s => (s.failed || 0) > 0 || (s.error || 0) > 0 || (s.incomplete || 0) > 0);
-          const allGreen = sessions.every(s => ((s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0));
+          // Treat Failed, Error, Incomplete, and Skipped as failures for color logic
+          const hasFail = sessions.some(s => (s.failed || 0) > 0 || (s.error || 0) > 0 || (s.incomplete || 0) > 0 || (s.skipped || 0) > 0);
+          const allGreen = sessions.every(s => ((s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0 && (s.skipped || 0) === 0));
           let color = 'green';
           if (sessions.length === 1) {
             color = hasFail ? 'red' : 'green';
           } else {
             if (allGreen) color = 'green';
-            else if (((latestForEnv.failed || 0) === 0) && ((latestForEnv.error || 0) === 0) && ((latestForEnv.incomplete || 0) === 0))
+            else if (((latestForEnv.failed || 0) === 0) && ((latestForEnv.error || 0) === 0) && ((latestForEnv.incomplete || 0) === 0) && ((latestForEnv.skipped || 0) === 0))
               color = 'yellow';
             else color = 'red';
           }

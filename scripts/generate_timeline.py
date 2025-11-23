@@ -9,7 +9,6 @@ TIMELINE_FILE = "docs/timeline_data.json"
 TIME_WINDOW_DAYS = 5
 
 def load_json_data(filepath):
-    """Safely loads and returns JSON data from a file."""
     if os.path.exists(filepath):
         try:
             with open(filepath, "r", encoding="utf-8") as f:
@@ -20,13 +19,11 @@ def load_json_data(filepath):
     return {}
 
 def save_json_data(filepath, data):
-    """Saves data to a JSON file."""
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 def extract_environment(environment_field):
-    """Extract environment from environment field."""
     if not environment_field:
         return None
     
@@ -39,13 +36,13 @@ def extract_environment(environment_field):
         return None
 
 def is_test_suite_passed(session):
-    """Determine if a test suite run passed (all test cases passed)."""
     failed = session.get("failed", 0)
     error = session.get("error", 0)
     incomplete = session.get("incomplete", 0)
+    skipped = session.get("skipped", 0)
     
-    # Test suite passes only if there are no failures, errors, or incomplete tests
-    return failed == 0 and error == 0 and incomplete == 0
+    # Test suite passes only if there are no failures, errors, incomplete, or skipped tests
+    return failed == 0 and error == 0 and incomplete == 0 and skipped == 0
 
 def clean_test_suite_name(full_name):
     """Remove the first 'Test Suites/' from the test suite name."""
@@ -64,7 +61,9 @@ def generate_timeline():
     # 1. Load raw results data
     results = load_json_data(RESULTS_FILE)
     if not isinstance(results, list) or not results:
+        # GitHub Actions annotation (match style used in other scripts)
         print("No results found. Skipping timeline generation.")
+        print("::notice::⏭️ Results found: 0")
         return
 
     # Build a minimal dashboard-like structure compatible with the existing loop
@@ -238,6 +237,9 @@ def generate_timeline():
     # 6. Save timeline data
     save_json_data(TIMELINE_FILE, sorted_timeline_data)
     print(f"Successfully generated timeline data with {len(sorted_timeline_data)} hourly blocks.")
+    # GitHub Actions annotation summary
+    print(f"::notice::📄 Results found: {len(results)}")
+    print(f"::notice::✅ Timeline blocks: {len(sorted_timeline_data)}")
     print(f"Data covers from {min(sorted_timeline_data.keys()) if sorted_timeline_data else 'N/A'} to {max(sorted_timeline_data.keys()) if sorted_timeline_data else 'N/A'}")
     
     # Print some statistics

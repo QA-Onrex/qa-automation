@@ -33,7 +33,9 @@ def generate_dashboard_data():
     try:
         results = load_results()
         if not results:
-            print("⏭️ Reports processed: 0")
+            # GitHub Actions annotation (match style used in other scripts)
+            print("No results found.")
+            print("::notice::⏭️ Results found: 0")
             return
 
         # Deduplicate before processing
@@ -106,6 +108,9 @@ def generate_dashboard_data():
             json.dump(dashboard_data, f, indent=2, default=str)
 
         print(f"📊 Reports processed: {total_reports_count}")
+        # GitHub Actions annotation summary
+        print(f"::notice::📊 Results found: {len(results)}")
+        print(f"::notice::✅ Reports processed: {total_reports_count}")
         print(f"Dashboard data updated: {DASHBOARD_DATA_FILE}")
         print(f"Projects: {len(data_dict)}")
         print(f"Last updated: {dashboard_data['last_updated']}")
