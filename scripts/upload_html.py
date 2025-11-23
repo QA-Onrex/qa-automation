@@ -1,4 +1,4 @@
-# scripts/netlify/upload_html.py
+# scripts/upload_html.py
 import os
 import json
 import hashlib

@@ -1,4 +1,4 @@
-# scripts/netlify/netlify_data_cleanup.py
+# scripts/cleanup_data.py
 import json
 import os
 from datetime import datetime, timedelta

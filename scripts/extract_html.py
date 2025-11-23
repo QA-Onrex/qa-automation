@@ -1,4 +1,4 @@
-# scripts/netlify/extract_html.py
+# scripts/extract_html.py
 import os
 import zipfile
 import io
@@ -6,7 +6,7 @@ import traceback
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from scripts.encryptor import decrypt_file_to_bytes, encrypt_bytes_to_file
+from encryptor import decrypt_file_to_bytes, encrypt_bytes_to_file
 
 ATTACHMENTS_FOLDER = "data/netlify_attachments"
 HTML_FOLDER = "data/html"

@@ -1,4 +1,4 @@
-# scripts/netlify/generate_timeline.py
+# scripts/generate_timeline.py
 import os
 import json
 from datetime import datetime, timedelta, timezone

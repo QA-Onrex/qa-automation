@@ -1,4 +1,4 @@
-# scripts/netlify/cleanup_drafts.py
+# scripts/cleanup_drafts.py
 import os
 import requests
 from datetime import datetime, timedelta

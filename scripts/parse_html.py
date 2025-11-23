@@ -1,16 +1,16 @@
-# scripts/netlify/parse_html.py
+# scripts/parse_html.py
 import os
 import json
 import re
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from scripts.encryptor import decrypt_file_to_bytes
+from encryptor import decrypt_file_to_bytes
 
 HTML_FOLDER = "data/html"
 URLS_FILE = "data/netlify_urls.json"
 RESULTS_FILE = "data/results.json"
-PROCESSED_FOLDER = "docs/netlify_reports"
+PROCESSED_FOLDER = "docs/reports"
 
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 

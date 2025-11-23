@@ -1,4 +1,4 @@
-# scripts/netlify/generate_dashboard.py
+# scripts/generate_dashboard.py
 import json
 import os
 import sys
