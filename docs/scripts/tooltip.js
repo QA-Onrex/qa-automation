@@ -107,7 +107,7 @@ export function showTimelineTooltip(event, hourLocalDate, envData) {
     if (!tooltip) return;
 
     // Title and summary
-    const titleLine = `${formatYMD(hourLocalDate)} - ${pad2(hourLocalDate.getHours())}:00 (Timeline Hour)`;
+    const titleLine = `${formatYMD(hourLocalDate)} - ${pad2(hourLocalDate.getHours())}:00`;
     const summaryLine = `✅ ${envData.passed || 0} passed | ❌ ${envData.failed || 0} failed`;
 
     // Build sessions list (combine passed and failed details)
@@ -125,7 +125,7 @@ export function showTimelineTooltip(event, hourLocalDate, envData) {
         const shortName = fullName.includes('/') ? fullName.split('/').pop() : fullName;
         // Treat Skipped as a failure along with Failed, Error, and Incomplete
         const isPass = (s.failed || 0) === 0 && (s.error || 0) === 0 && (s.incomplete || 0) === 0 && (s.skipped || 0) === 0;
-        const mark = isPass ? '✓' : '✗';
+        const mark = isPass ? '✅' : '❌';
         return `<div class='tooltip-row'>${hm} ${shortName} ${mark}</div>`;
     }).join('');
 
