@@ -20,7 +20,7 @@ export class ArchiveManager {
 
     populateDropdownSelector() {
         const dropdown = document.getElementById('archive-dropdown');
-        dropdown.innerHTML = '<option value="current">Current (Live)</option>';
+        dropdown.innerHTML = '<option value="current">Current</option>';
 
         this.archives.forEach(archiveId => {
             const option = document.createElement('option');
@@ -31,7 +31,7 @@ export class ArchiveManager {
     }
 
     formatArchiveDisplayName(archiveId) {
-        if (archiveId === 'current') return 'Current (Live)';
+        if (archiveId === 'current') return 'Current';
         const [year, month] = archiveId.split('_');
         const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         return `${monthNames[parseInt(month) - 1]} ${year}`;
