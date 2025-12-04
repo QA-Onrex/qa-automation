@@ -1327,6 +1327,22 @@
         "2025.12.04": {
           "sessions": [
             {
+              "netlify_url": "https://693169a1d51e534f112ca246--qa-onrex.netlify.app/reports/20251204_112846_1764845684683.html",
+              "html_filename": "20251204_112846_1764845684683.html",
+              "environment": "https://intacc01.onrex.de/auth/",
+              "project": "DYNAREX V2",
+              "test_suite_id": "Test Suites/Test Suites/Settings/Users - Cleanup",
+              "profile": "default",
+              "test_cases": 2,
+              "passed": 2,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2025-12-04T11:53:40.322+01:00",
+              "end": "2025-12-04T11:54:44.359+01:00"
+            },
+            {
               "netlify_url": "https://693155931f7794194e9d0759--qa-onrex.netlify.app/reports/20251204_095015_1764839613739.html",
               "html_filename": "20251204_095015_1764839613739.html",
               "environment": "https://intacc01.onrex.de/auth/",
@@ -1344,8 +1360,8 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://693155931f7794194e9d0759--qa-onrex.netlify.app/reports/20251204_095015_1764839613739.html",
-            "html_filename": "20251204_095015_1764839613739.html",
+            "netlify_url": "https://693169a1d51e534f112ca246--qa-onrex.netlify.app/reports/20251204_112846_1764845684683.html",
+            "html_filename": "20251204_112846_1764845684683.html",
             "environment": "https://intacc01.onrex.de/auth/",
             "project": "DYNAREX V2",
             "test_suite_id": "Test Suites/Test Suites/Settings/Users - Cleanup",
@@ -1356,9 +1372,9 @@
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2025-12-04T10:12:23.655+01:00",
-            "end": "2025-12-04T10:13:33.509+01:00",
-            "sessionCount": 1
+            "start": "2025-12-04T11:53:40.322+01:00",
+            "end": "2025-12-04T11:54:44.359+01:00",
+            "sessionCount": 2
           }
         }
       },
@@ -3946,6 +3962,45 @@
             "start": "2025-12-04T11:34:58.575+01:00",
             "end": "2025-12-04T11:35:28.224+01:00",
             "sessionCount": 2
+          }
+        }
+      },
+      "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions - old": {
+        "2025.12.04": {
+          "sessions": [
+            {
+              "netlify_url": "https://693169a1d51e534f112ca246--qa-onrex.netlify.app/reports/20251204_112844_1764845616046.html",
+              "html_filename": "20251204_112844_1764845616046.html",
+              "environment": "https://intacc01.onrex.de/auth/",
+              "project": "DYNAREX V2",
+              "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions - old",
+              "profile": "default",
+              "test_cases": 6,
+              "passed": 6,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2025-12-04T11:44:09.603+01:00",
+              "end": "2025-12-04T11:53:35.377+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://693169a1d51e534f112ca246--qa-onrex.netlify.app/reports/20251204_112844_1764845616046.html",
+            "html_filename": "20251204_112844_1764845616046.html",
+            "environment": "https://intacc01.onrex.de/auth/",
+            "project": "DYNAREX V2",
+            "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions - old",
+            "profile": "default",
+            "test_cases": 6,
+            "passed": 6,
+            "failed": 0,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2025-12-04T11:44:09.603+01:00",
+            "end": "2025-12-04T11:53:35.377+01:00",
+            "sessionCount": 1
           }
         }
       }
@@ -7775,5 +7830,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "04/12/2025, 11:47:36 (GMT+1)"
+  "last_updated": "04/12/2025, 11:59:47 (GMT+1)"
 }
