@@ -632,9 +632,9 @@
   },
   "2025-12-09T10:00:00Z": {
     "ALL": {
-      "total": 2,
-      "passed": 2,
-      "failed": 0,
+      "total": 7,
+      "passed": 5,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "5_calculation page/5b_calculation page with BS information",
@@ -659,9 +659,70 @@
           "skipped": 0,
           "start_time": "2025-12-09T10:11:56.624000Z",
           "end_time": "2025-12-09T11:19:55.740+01:00"
+        },
+        {
+          "full_name": "6_valuation/6e_Manual Valuation",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092009_1765277094045.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:41:11.904000Z",
+          "end_time": "2025-12-09T11:44:53.929+01:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092005_1765276473492.html",
+          "profile": "anke SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:29:59.967000Z",
+          "end_time": "2025-12-09T11:34:33.298+01:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092003_1765276190992.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:20:04.889000Z",
+          "end_time": "2025-12-09T11:29:50.417+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092007_1765276863019.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:34:41.905000Z",
+          "end_time": "2025-12-09T11:41:02.486+01:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092011_1765277335524.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:45:03.154000Z",
+          "end_time": "2025-12-09T11:48:53.163+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -671,9 +732,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
-      "passed": 2,
-      "failed": 0,
+      "total": 7,
+      "passed": 5,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "5_calculation page/5b_calculation page with BS information",
@@ -698,9 +759,70 @@
           "skipped": 0,
           "start_time": "2025-12-09T10:11:56.624000Z",
           "end_time": "2025-12-09T11:19:55.740+01:00"
+        },
+        {
+          "full_name": "6_valuation/6e_Manual Valuation",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092009_1765277094045.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:41:11.904000Z",
+          "end_time": "2025-12-09T11:44:53.929+01:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092005_1765276473492.html",
+          "profile": "anke SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:29:59.967000Z",
+          "end_time": "2025-12-09T11:34:33.298+01:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092003_1765276190992.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:20:04.889000Z",
+          "end_time": "2025-12-09T11:29:50.417+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092007_1765276863019.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:34:41.905000Z",
+          "end_time": "2025-12-09T11:41:02.486+01:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://6937ff3b14e1c291f6536c93--qa-onrex.netlify.app/reports/20251209_092011_1765277335524.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-09T10:45:03.154000Z",
+          "end_time": "2025-12-09T11:48:53.163+01:00"
+        }
+      ]
     }
   }
 }
