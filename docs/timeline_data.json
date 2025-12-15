@@ -2329,10 +2329,34 @@
   },
   "2025-12-15T21:00:00Z": {
     "ALL": {
-      "total": 12,
-      "passed": 12,
+      "total": 14,
+      "passed": 14,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223653_1765836143800.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:52:47.847000Z",
+          "end_time": "2025-12-15T23:02:22.790+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223651_1765835563678.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:50:25.450000Z",
+          "end_time": "2025-12-15T22:52:43.148+01:00"
+        },
         {
           "full_name": "Test Suites/Settings/Permissions - Custom roles",
           "netlify_url": "https://6940831db6d52baa6ab98480--qa-onrex.netlify.app/reports/20251215_223649_1765835421233.html",
@@ -2501,10 +2525,34 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 11,
-      "passed": 11,
+      "total": 13,
+      "passed": 13,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223653_1765836143800.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:52:47.847000Z",
+          "end_time": "2025-12-15T23:02:22.790+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223651_1765835563678.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:50:25.450000Z",
+          "end_time": "2025-12-15T22:52:43.148+01:00"
+        },
         {
           "full_name": "Test Suites/Settings/Permissions - Custom roles",
           "netlify_url": "https://6940831db6d52baa6ab98480--qa-onrex.netlify.app/reports/20251215_223649_1765835421233.html",
@@ -2636,6 +2684,151 @@
           "skipped": 0,
           "start_time": "2025-12-15T21:43:05.678000Z",
           "end_time": "2025-12-15T22:43:35.370+01:00"
+        }
+      ],
+      "failed_details": []
+    }
+  },
+  "2025-12-15T22:00:00Z": {
+    "ALL": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223703_1765837080967.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:17:09.274000Z",
+          "end_time": "2025-12-15T23:18:00.362+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223701_1765837024971.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:13:46.997000Z",
+          "end_time": "2025-12-15T23:17:04.533+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223657_1765836652394.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:03:36.599000Z",
+          "end_time": "2025-12-15T23:10:51.681+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223655_1765836212752.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:02:27.968000Z",
+          "end_time": "2025-12-15T23:03:32.184+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223659_1765836822979.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:10:56.601000Z",
+          "end_time": "2025-12-15T23:13:42.633+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223703_1765837080967.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:17:09.274000Z",
+          "end_time": "2025-12-15T23:18:00.362+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223701_1765837024971.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:13:46.997000Z",
+          "end_time": "2025-12-15T23:17:04.533+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223657_1765836652394.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:03:36.599000Z",
+          "end_time": "2025-12-15T23:10:51.681+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223655_1765836212752.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:02:27.968000Z",
+          "end_time": "2025-12-15T23:03:32.184+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6940894c45df11b30ef7e9ca--qa-onrex.netlify.app/reports/20251215_223659_1765836822979.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T22:10:56.601000Z",
+          "end_time": "2025-12-15T23:13:42.633+01:00"
         }
       ],
       "failed_details": []
