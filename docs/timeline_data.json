@@ -2329,10 +2329,22 @@
   },
   "2025-12-15T21:00:00Z": {
     "ALL": {
-      "total": 2,
-      "passed": 2,
+      "total": 4,
+      "passed": 4,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://694080072f813c991d2f8558--qa-onrex.netlify.app/reports/20251215_221821_1765834371878.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:18:28.268000Z",
+          "end_time": "2025-12-15T22:32:51.273+01:00"
+        },
         {
           "full_name": "Test Suites/Settings/Templates",
           "netlify_url": "https://69407b56b6d52b977ab982b8--qa-onrex.netlify.app/reports/20251215_220246_1765833432291.html",
@@ -2356,20 +2368,45 @@
           "skipped": 0,
           "start_time": "2025-12-15T21:00:38.156000Z",
           "end_time": "2025-12-15T22:02:29.205+01:00"
+        },
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://694080072f813c991d2f8558--qa-onrex.netlify.app/reports/20251215_223633_1765834679866.html",
+          "profile": "default - Deutsch",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:37:10.002000Z",
+          "end_time": "2025-12-15T22:37:59.235+01:00"
         }
       ],
       "failed_details": []
     },
     "intdev": {
-      "total": 0,
-      "passed": 0,
+      "total": 1,
+      "passed": 1,
       "failed": 0,
-      "passed_details": [],
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://694080072f813c991d2f8558--qa-onrex.netlify.app/reports/20251215_221821_1765834371878.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:18:28.268000Z",
+          "end_time": "2025-12-15T22:32:51.273+01:00"
+        }
+      ],
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
-      "passed": 2,
+      "total": 3,
+      "passed": 3,
       "failed": 0,
       "passed_details": [
         {
@@ -2395,6 +2432,18 @@
           "skipped": 0,
           "start_time": "2025-12-15T21:00:38.156000Z",
           "end_time": "2025-12-15T22:02:29.205+01:00"
+        },
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://694080072f813c991d2f8558--qa-onrex.netlify.app/reports/20251215_223633_1765834679866.html",
+          "profile": "default - Deutsch",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-15T21:37:10.002000Z",
+          "end_time": "2025-12-15T22:37:59.235+01:00"
         }
       ],
       "failed_details": []
