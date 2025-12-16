@@ -2591,5 +2591,80 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2025-12-16T13:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69415fb12a650b43f6ce23e6--qa-onrex.netlify.app/reports/20251216_141650_1765891165290.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-16T13:16:57.201000Z",
+          "end_time": "2025-12-16T14:19:25.070+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69415fb12a650b43f6ce23e6--qa-onrex.netlify.app/reports/20251216_142036_1765891821218.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-16T13:20:43.585000Z",
+          "end_time": "2025-12-16T14:30:19.608+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69415fb12a650b43f6ce23e6--qa-onrex.netlify.app/reports/20251216_141650_1765891165290.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-16T13:16:57.201000Z",
+          "end_time": "2025-12-16T14:19:25.070+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69415fb12a650b43f6ce23e6--qa-onrex.netlify.app/reports/20251216_142036_1765891821218.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2025-12-16T13:20:43.585000Z",
+          "end_time": "2025-12-16T14:30:19.608+01:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
   }
 }
