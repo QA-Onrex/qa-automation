@@ -1968,10 +1968,46 @@
   },
   "2026-01-07T07:00:00Z": {
     "ALL": {
-      "total": 5,
-      "passed": 5,
+      "total": 10,
+      "passed": 10,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082821_1767771793248.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:40:55.270000Z",
+          "end_time": "2026-01-07T08:43:12.669+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082819_1767771651452.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:37:10.277000Z",
+          "end_time": "2026-01-07T08:40:51.183+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082817_1767771426278.html",
+          "profile": "default",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:35:51.782000Z",
+          "end_time": "2026-01-07T08:37:05.923+01:00"
+        },
         {
           "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
           "netlify_url": "https://695e0cb690683d1848c8a220--qa-onrex.netlify.app/reports/20260107_082809_1767771230870.html",
@@ -1983,6 +2019,18 @@
           "skipped": 0,
           "start_time": "2026-01-07T07:33:24.705000Z",
           "end_time": "2026-01-07T08:33:49.964+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082815_1767771347932.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:34:54.492000Z",
+          "end_time": "2026-01-07T08:35:47.380+01:00"
         },
         {
           "full_name": "Test Suites/departments/settings - department page",
@@ -2019,6 +2067,18 @@
           "skipped": 0,
           "start_time": "2026-01-07T07:29:34.004000Z",
           "end_time": "2026-01-07T08:32:23.308+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082813_1767771290573.html",
+          "profile": "member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:34:28.579000Z",
+          "end_time": "2026-01-07T08:34:50.348+01:00"
         },
         {
           "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
@@ -2043,10 +2103,46 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 5,
-      "passed": 5,
+      "total": 10,
+      "passed": 10,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082821_1767771793248.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:40:55.270000Z",
+          "end_time": "2026-01-07T08:43:12.669+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082819_1767771651452.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:37:10.277000Z",
+          "end_time": "2026-01-07T08:40:51.183+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082817_1767771426278.html",
+          "profile": "default",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:35:51.782000Z",
+          "end_time": "2026-01-07T08:37:05.923+01:00"
+        },
         {
           "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
           "netlify_url": "https://695e0cb690683d1848c8a220--qa-onrex.netlify.app/reports/20260107_082809_1767771230870.html",
@@ -2058,6 +2154,18 @@
           "skipped": 0,
           "start_time": "2026-01-07T07:33:24.705000Z",
           "end_time": "2026-01-07T08:33:49.964+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082815_1767771347932.html",
+          "profile": "default - Deutsch",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:34:54.492000Z",
+          "end_time": "2026-01-07T08:35:47.380+01:00"
         },
         {
           "full_name": "Test Suites/departments/settings - department page",
@@ -2094,6 +2202,18 @@
           "skipped": 0,
           "start_time": "2026-01-07T07:29:34.004000Z",
           "end_time": "2026-01-07T08:32:23.308+01:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://695e10b2e1bbb4a26b43c56c--qa-onrex.netlify.app/reports/20260107_082813_1767771290573.html",
+          "profile": "member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-07T07:34:28.579000Z",
+          "end_time": "2026-01-07T08:34:50.348+01:00"
         },
         {
           "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
