@@ -2840,8 +2840,8 @@
   },
   "2026-01-09T07:00:00Z": {
     "ALL": {
-      "total": 16,
-      "passed": 15,
+      "total": 17,
+      "passed": 16,
       "failed": 1,
       "passed_details": [
         {
@@ -2915,6 +2915,18 @@
           "skipped": 0,
           "start_time": "2026-01-09T07:24:38.708000Z",
           "end_time": "2026-01-09T08:28:18.569+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_081553_1767945924830.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T07:52:48.271000Z",
+          "end_time": "2026-01-09T09:05:23.249+01:00"
         },
         {
           "full_name": "Test Suites/Settings/Permissions - Standart roles",
@@ -3048,8 +3060,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 16,
-      "passed": 15,
+      "total": 17,
+      "passed": 16,
       "failed": 1,
       "passed_details": [
         {
@@ -3123,6 +3135,18 @@
           "skipped": 0,
           "start_time": "2026-01-09T07:24:38.708000Z",
           "end_time": "2026-01-09T08:28:18.569+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_081553_1767945924830.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T07:52:48.271000Z",
+          "end_time": "2026-01-09T09:05:23.249+01:00"
         },
         {
           "full_name": "Test Suites/Settings/Permissions - Standart roles",
@@ -3245,6 +3269,105 @@
           "skipped": 0,
           "start_time": "2026-01-09T07:30:45.247000Z",
           "end_time": "2026-01-09T08:36:52.575+01:00"
+        }
+      ]
+    }
+  },
+  "2026-01-09T08:00:00Z": {
+    "ALL": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_090605_1767945997016.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T08:06:13.392000Z",
+          "end_time": "2026-01-09T09:06:36.304+01:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_090607_1767946114402.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T08:06:41.256000Z",
+          "end_time": "2026-01-09T09:08:33.668+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "case",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_090609_1767946432078.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T08:08:38.494000Z",
+          "end_time": "2026-01-09T09:13:51.338+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_090605_1767945997016.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T08:06:13.392000Z",
+          "end_time": "2026-01-09T09:06:36.304+01:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_090607_1767946114402.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T08:06:41.256000Z",
+          "end_time": "2026-01-09T09:08:33.668+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "case",
+          "netlify_url": "https://6960be54efbff213ad580c68--qa-onrex.netlify.app/reports/20260109_090609_1767946432078.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-09T08:08:38.494000Z",
+          "end_time": "2026-01-09T09:13:51.338+01:00"
         }
       ]
     }
