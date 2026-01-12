@@ -2068,10 +2068,22 @@
   },
   "2026-01-12T14:00:00Z": {
     "ALL": {
-      "total": 1,
-      "passed": 1,
-      "failed": 0,
+      "total": 6,
+      "passed": 3,
+      "failed": 3,
       "passed_details": [
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_155143_1768229703451.html",
+          "profile": "SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:51:59.272000Z",
+          "end_time": "2026-01-12T15:55:03.058+01:00"
+        },
         {
           "full_name": "Automatic Downtime request check/Downtime Auto Requested",
           "netlify_url": "https://6965079d9fde5a16fd8b0e57--qa-onrex.netlify.app/reports/20260112_152234_1768227898425.html",
@@ -2083,15 +2095,76 @@
           "skipped": 0,
           "start_time": "2026-01-12T14:22:51.205000Z",
           "end_time": "2026-01-12T15:24:57.879+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_153517_1768229013507.html",
+          "profile": "default DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:40:43.229000Z",
+          "end_time": "2026-01-12T15:43:33.123+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_154641_1768229421089.html",
+          "profile": "SD3ep intdev",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:46:57.344000Z",
+          "end_time": "2026-01-12T15:50:20.609+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_153515_1768228834315.html",
+          "profile": "SD3ep intdev",
+          "passed": 3,
+          "failed": 1,
+          "error": 1,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:35:30.472000Z",
+          "end_time": "2026-01-12T15:40:33.326+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_154643_1768229654425.html",
+          "profile": "default DoD intdev",
+          "passed": 0,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:50:29.744000Z",
+          "end_time": "2026-01-12T15:54:14.004+01:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 1,
-      "passed": 1,
-      "failed": 0,
+      "total": 6,
+      "passed": 3,
+      "failed": 3,
       "passed_details": [
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_155143_1768229703451.html",
+          "profile": "SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:51:59.272000Z",
+          "end_time": "2026-01-12T15:55:03.058+01:00"
+        },
         {
           "full_name": "Automatic Downtime request check/Downtime Auto Requested",
           "netlify_url": "https://6965079d9fde5a16fd8b0e57--qa-onrex.netlify.app/reports/20260112_152234_1768227898425.html",
@@ -2103,9 +2176,58 @@
           "skipped": 0,
           "start_time": "2026-01-12T14:22:51.205000Z",
           "end_time": "2026-01-12T15:24:57.879+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_153517_1768229013507.html",
+          "profile": "default DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:40:43.229000Z",
+          "end_time": "2026-01-12T15:43:33.123+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_154641_1768229421089.html",
+          "profile": "SD3ep intdev",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:46:57.344000Z",
+          "end_time": "2026-01-12T15:50:20.609+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_153515_1768228834315.html",
+          "profile": "SD3ep intdev",
+          "passed": 3,
+          "failed": 1,
+          "error": 1,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:35:30.472000Z",
+          "end_time": "2026-01-12T15:40:33.326+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested",
+          "netlify_url": "https://69650c67475ca80d802379d1--qa-onrex.netlify.app/reports/20260112_154643_1768229654425.html",
+          "profile": "default DoD intdev",
+          "passed": 0,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T14:50:29.744000Z",
+          "end_time": "2026-01-12T15:54:14.004+01:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
