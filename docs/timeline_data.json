@@ -1848,9 +1848,9 @@
   },
   "2026-01-12T11:00:00Z": {
     "ALL": {
-      "total": 1,
+      "total": 2,
       "passed": 1,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "7_market value page",
@@ -1865,7 +1865,20 @@
           "end_time": "2026-01-12T12:45:49.963+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://6964ea795f419ac52a9ba367--qa-onrex.netlify.app/reports/20260112_124657_1768220663636.html",
+          "profile": "default",
+          "passed": 58,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T11:47:04.636000Z",
+          "end_time": "2026-01-12T13:24:22.313+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -1875,9 +1888,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 1,
+      "total": 2,
       "passed": 1,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "7_market value page",
@@ -1892,7 +1905,20 @@
           "end_time": "2026-01-12T12:45:49.963+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://6964ea795f419ac52a9ba367--qa-onrex.netlify.app/reports/20260112_124657_1768220663636.html",
+          "profile": "default",
+          "passed": 58,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-12T11:47:04.636000Z",
+          "end_time": "2026-01-12T13:24:22.313+01:00"
+        }
+      ]
     }
   }
 }
