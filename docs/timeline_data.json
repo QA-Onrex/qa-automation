@@ -2600,10 +2600,22 @@
   },
   "2026-01-13T09:00:00Z": {
     "ALL": {
-      "total": 6,
-      "passed": 6,
-      "failed": 0,
+      "total": 8,
+      "passed": 7,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Member Login",
+          "netlify_url": "https://69661b783f70c19794f7ccd7--qa-onrex.netlify.app/reports/20260113_105020_1768297865142.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-13T09:50:36.426000Z",
+          "end_time": "2026-01-13T10:51:04.688+01:00"
+        },
         {
           "full_name": "Z_Online/Z_Online_Member Login",
           "netlify_url": "https://69660ee18ccfc76ed9e03fcf--qa-onrex.netlify.app/reports/20260113_101515_1768295760674.html",
@@ -2677,7 +2689,20 @@
           "end_time": "2026-01-13T10:25:22.178+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Adminpage",
+          "netlify_url": "https://69661b783f70c19794f7ccd7--qa-onrex.netlify.app/reports/20260113_105022_1768298902042.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-13T09:51:14.268000Z",
+          "end_time": "2026-01-13T11:08:20.792+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 5,
@@ -2748,10 +2773,22 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 1,
-      "passed": 1,
-      "failed": 0,
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Member Login",
+          "netlify_url": "https://69661b783f70c19794f7ccd7--qa-onrex.netlify.app/reports/20260113_105020_1768297865142.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-13T09:50:36.426000Z",
+          "end_time": "2026-01-13T10:51:04.688+01:00"
+        },
         {
           "full_name": "Z_Online/Z_Online_Member Login",
           "netlify_url": "https://69660ee18ccfc76ed9e03fcf--qa-onrex.netlify.app/reports/20260113_101515_1768295760674.html",
@@ -2763,6 +2800,68 @@
           "skipped": 0,
           "start_time": "2026-01-13T09:15:31.130000Z",
           "end_time": "2026-01-13T10:16:00.323+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Adminpage",
+          "netlify_url": "https://69661b783f70c19794f7ccd7--qa-onrex.netlify.app/reports/20260113_105022_1768298902042.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-13T09:51:14.268000Z",
+          "end_time": "2026-01-13T11:08:20.792+01:00"
+        }
+      ]
+    }
+  },
+  "2026-01-13T10:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Custom_Page",
+          "netlify_url": "https://69661b783f70c19794f7ccd7--qa-onrex.netlify.app/reports/20260113_105025_1768298988762.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-13T10:08:31.229000Z",
+          "end_time": "2026-01-13T11:09:48.224+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Custom_Page",
+          "netlify_url": "https://69661b783f70c19794f7ccd7--qa-onrex.netlify.app/reports/20260113_105025_1768298988762.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-13T10:08:31.229000Z",
+          "end_time": "2026-01-13T11:09:48.224+01:00"
         }
       ],
       "failed_details": []
