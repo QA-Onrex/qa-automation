@@ -47,5 +47,78 @@
         }
       ]
     }
+  },
+  "2026-01-20T09:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://696f508a1f129a7eab9c8249--qa-onrex.netlify.app/reports/20260120_104605_1768902565259.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-20T09:47:57.123000Z",
+          "end_time": "2026-01-20T10:49:24.729+01:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://696f508a1f129a7eab9c8249--qa-onrex.netlify.app/reports/20260120_104608_1768902739707.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-20T09:49:35.539000Z",
+          "end_time": "2026-01-20T10:52:18.490+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://696f508a1f129a7eab9c8249--qa-onrex.netlify.app/reports/20260120_104605_1768902565259.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-20T09:47:57.123000Z",
+          "end_time": "2026-01-20T10:49:24.729+01:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://696f508a1f129a7eab9c8249--qa-onrex.netlify.app/reports/20260120_104608_1768902739707.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-20T09:49:35.539000Z",
+          "end_time": "2026-01-20T10:52:18.490+01:00"
+        }
+      ],
+      "failed_details": []
+    }
   }
 }
