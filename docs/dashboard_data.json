@@ -10729,6 +10729,22 @@
         "2026.01.27": {
           "sessions": [
             {
+              "netlify_url": "https://69787a004719a4c1c713aa6c--qa-onrex.netlify.app/reports/20260127_091618_1769502559795.html",
+              "html_filename": "20260127_091618_1769502559795.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/2_case admin page/2b_ClaimType_PrintFlagLogic",
+              "profile": "default",
+              "test_cases": 12,
+              "passed": 12,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-01-27T09:16:25.622+01:00",
+              "end": "2026-01-27T09:29:19.065+01:00"
+            },
+            {
               "netlify_url": "https://69785d0e6082016b1bd27f8a--qa-onrex.netlify.app/reports/20260127_020730_1769495317863.html",
               "html_filename": "20260127_020730_1769495317863.html",
               "environment": "https://intdev01.onrex.de/auth",
@@ -10762,21 +10778,21 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://69785d0e6082016b1bd27f8a--qa-onrex.netlify.app/reports/20260127_020730_1769495317863.html",
-            "html_filename": "20260127_020730_1769495317863.html",
-            "environment": "https://intdev01.onrex.de/auth",
+            "netlify_url": "https://69787a004719a4c1c713aa6c--qa-onrex.netlify.app/reports/20260127_091618_1769502559795.html",
+            "html_filename": "20260127_091618_1769502559795.html",
+            "environment": "https://intacc01.onrex.de/auth",
             "project": "DYNAREX",
             "test_suite_id": "Test Suites/2_case admin page/2b_ClaimType_PrintFlagLogic",
-            "profile": "default DYNAREX intdev",
+            "profile": "default",
             "test_cases": 12,
-            "passed": 0,
-            "failed": 12,
+            "passed": 12,
+            "failed": 0,
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-01-27T07:22:43.542+01:00",
-            "end": "2026-01-27T07:28:35.666+01:00",
-            "sessionCount": 2
+            "start": "2026-01-27T09:16:25.622+01:00",
+            "end": "2026-01-27T09:29:19.065+01:00",
+            "sessionCount": 3
           }
         }
       },
@@ -28848,5 +28864,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "27/01/2026, 08:55:20 (GMT+1)"
+  "last_updated": "27/01/2026, 09:40:33 (GMT+1)"
 }
