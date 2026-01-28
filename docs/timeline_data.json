@@ -2910,9 +2910,9 @@
   },
   "2026-01-28T06:00:00Z": {
     "ALL": {
-      "total": 7,
+      "total": 11,
       "passed": 4,
-      "failed": 3,
+      "failed": 7,
       "passed_details": [
         {
           "full_name": "billing/State assessment/DoD - state assessment not available",
@@ -2975,6 +2975,54 @@
           "skipped": 0,
           "start_time": "2026-01-28T06:29:04.876000Z",
           "end_time": "2026-01-28T07:34:59.832+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_021630_1769582439059.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:35:07.093000Z",
+          "end_time": "2026-01-28T07:40:37.009+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_022900_1769582757568.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:40:43.373000Z",
+          "end_time": "2026-01-28T07:45:55.936+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_023218_1769583052045.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:46:01.808000Z",
+          "end_time": "2026-01-28T07:50:50.306+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_024406_1769583954737.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 23,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:50:56.286000Z",
+          "end_time": "2026-01-28T08:05:50.135+01:00"
         },
         {
           "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
@@ -3003,9 +3051,9 @@
       ]
     },
     "intdev": {
-      "total": 7,
+      "total": 11,
       "passed": 4,
-      "failed": 3,
+      "failed": 7,
       "passed_details": [
         {
           "full_name": "billing/State assessment/DoD - state assessment not available",
@@ -3070,6 +3118,54 @@
           "end_time": "2026-01-28T07:34:59.832+01:00"
         },
         {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_021630_1769582439059.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:35:07.093000Z",
+          "end_time": "2026-01-28T07:40:37.009+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_022900_1769582757568.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:40:43.373000Z",
+          "end_time": "2026-01-28T07:45:55.936+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_023218_1769583052045.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:46:01.808000Z",
+          "end_time": "2026-01-28T07:50:50.306+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_024406_1769583954737.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 23,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T06:50:56.286000Z",
+          "end_time": "2026-01-28T08:05:50.135+01:00"
+        },
+        {
           "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
           "netlify_url": "https://6979b1c40cb647ea7c8963b3--qa-onrex.netlify.app/reports/20260128_015448_1769581239983.html",
           "profile": "SD3ep intdev",
@@ -3092,6 +3188,55 @@
           "skipped": 0,
           "start_time": "2026-01-28T06:11:34.875000Z",
           "end_time": "2026-01-28T07:17:47.678+01:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-01-28T07:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_025536_1769584685644.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 11,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T07:06:00.328000Z",
+          "end_time": "2026-01-28T08:18:03.435+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6979b8d10cb647fd08896426--qa-onrex.netlify.app/reports/20260128_025536_1769584685644.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 11,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-28T07:06:00.328000Z",
+          "end_time": "2026-01-28T08:18:03.435+01:00"
         }
       ]
     },
