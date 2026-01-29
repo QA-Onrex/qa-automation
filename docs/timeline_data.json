@@ -4822,5 +4822,78 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-01-29T07:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://697b12024867ff60a02d538d--qa-onrex.netlify.app/reports/20260129_022328_1769670473421.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-29T07:02:20.467000Z",
+          "end_time": "2026-01-29T08:07:51.504+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://697b12024867ff60a02d538d--qa-onrex.netlify.app/reports/20260129_024121_1769670628242.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 1,
+          "skipped": 0,
+          "start_time": "2026-01-29T07:07:57.881000Z",
+          "end_time": "2026-01-29T08:10:26.880+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://697b12024867ff60a02d538d--qa-onrex.netlify.app/reports/20260129_022328_1769670473421.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-01-29T07:02:20.467000Z",
+          "end_time": "2026-01-29T08:07:51.504+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://697b12024867ff60a02d538d--qa-onrex.netlify.app/reports/20260129_024121_1769670628242.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 1,
+          "skipped": 0,
+          "start_time": "2026-01-29T07:07:57.881000Z",
+          "end_time": "2026-01-29T08:10:26.880+01:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
   }
 }
