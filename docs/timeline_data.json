@@ -4829,9 +4829,9 @@
   },
   "2026-02-02T07:00:00Z": {
     "ALL": {
-      "total": 2,
+      "total": 3,
       "passed": 0,
-      "failed": 2,
+      "failed": 3,
       "passed_details": [],
       "failed_details": [
         {
@@ -4857,6 +4857,18 @@
           "skipped": 0,
           "start_time": "2026-02-02T07:35:10.531000Z",
           "end_time": "2026-02-02T08:39:40.189+01:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://698067e0d5736a5b6db62c33--qa-onrex.netlify.app/reports/20260202_085538_1770020089231.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 13,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-02T07:55:43.608000Z",
+          "end_time": "2026-02-02T09:14:45.600+01:00"
         }
       ]
     },
@@ -4893,11 +4905,24 @@
       ]
     },
     "intacc": {
-      "total": 0,
+      "total": 1,
       "passed": 0,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://698067e0d5736a5b6db62c33--qa-onrex.netlify.app/reports/20260202_085538_1770020089231.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 13,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-02T07:55:43.608000Z",
+          "end_time": "2026-02-02T09:14:45.600+01:00"
+        }
+      ]
     }
   }
 }
