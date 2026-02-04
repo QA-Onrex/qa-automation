@@ -1407,10 +1407,23 @@
   },
   "2026-02-02T07:00:00Z": {
     "ALL": {
-      "total": 3,
-      "passed": 0,
+      "total": 4,
+      "passed": 1,
       "failed": 3,
-      "passed_details": [],
+      "passed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260202_081057_1770016550455.html",
+          "profile": "default",
+          "passed": 30,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-02T07:11:05.569000Z",
+          "end_time": "2026-02-02T08:15:49.637+01:00"
+        }
+      ],
       "failed_details": [
         {
           "full_name": "1_Login_logout/1a_Login-Logout",
@@ -1483,10 +1496,23 @@
       ]
     },
     "intacc": {
-      "total": 1,
-      "passed": 0,
+      "total": 2,
+      "passed": 1,
       "failed": 1,
-      "passed_details": [],
+      "passed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260202_081057_1770016550455.html",
+          "profile": "default",
+          "passed": 30,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-02T07:11:05.569000Z",
+          "end_time": "2026-02-02T08:15:49.637+01:00"
+        }
+      ],
       "failed_details": [
         {
           "full_name": "Multiple calculation providers",
@@ -2544,10 +2570,58 @@
   },
   "2026-02-03T14:00:00Z": {
     "ALL": {
-      "total": 14,
-      "passed": 14,
-      "failed": 0,
+      "total": 20,
+      "passed": 19,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144821_1770129081080.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:27:48.007000Z",
+          "end_time": "2026-02-03T15:31:20.807+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144813_1770128105842.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:04:12.958000Z",
+          "end_time": "2026-02-03T15:15:05.164+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144817_1770128669998.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:16:34.106000Z",
+          "end_time": "2026-02-03T15:24:29.551+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144815_1770128184695.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:15:15.428000Z",
+          "end_time": "2026-02-03T15:16:24.605+01:00"
+        },
         {
           "full_name": "Test Suites/Settings/Permissions - Search",
           "netlify_url": "https://69820281bdf9c63b3b66639c--qa-onrex.netlify.app/reports/20260203_144811_1770127443118.html",
@@ -2571,6 +2645,18 @@
           "skipped": 0,
           "start_time": "2026-02-03T14:33:05.608000Z",
           "end_time": "2026-02-03T15:46:56.979+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144819_1770128858083.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:24:39.700000Z",
+          "end_time": "2026-02-03T15:27:37.615+01:00"
         },
         {
           "full_name": "5_calculation page/5b_calculation page with BS information",
@@ -2717,7 +2803,20 @@
           "end_time": "2026-02-03T16:06:24.069+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144823_1770129176032.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:31:30.517000Z",
+          "end_time": "2026-02-03T15:32:55.478+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -2727,10 +2826,58 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 14,
-      "passed": 14,
-      "failed": 0,
+      "total": 20,
+      "passed": 19,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144821_1770129081080.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:27:48.007000Z",
+          "end_time": "2026-02-03T15:31:20.807+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144813_1770128105842.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:04:12.958000Z",
+          "end_time": "2026-02-03T15:15:05.164+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144817_1770128669998.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:16:34.106000Z",
+          "end_time": "2026-02-03T15:24:29.551+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144815_1770128184695.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:15:15.428000Z",
+          "end_time": "2026-02-03T15:16:24.605+01:00"
+        },
         {
           "full_name": "Test Suites/Settings/Permissions - Search",
           "netlify_url": "https://69820281bdf9c63b3b66639c--qa-onrex.netlify.app/reports/20260203_144811_1770127443118.html",
@@ -2754,6 +2901,18 @@
           "skipped": 0,
           "start_time": "2026-02-03T14:33:05.608000Z",
           "end_time": "2026-02-03T15:46:56.979+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144819_1770128858083.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:24:39.700000Z",
+          "end_time": "2026-02-03T15:27:37.615+01:00"
         },
         {
           "full_name": "5_calculation page/5b_calculation page with BS information",
@@ -2900,7 +3059,20 @@
           "end_time": "2026-02-03T16:06:24.069+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260203_144823_1770129176032.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-03T14:31:30.517000Z",
+          "end_time": "2026-02-03T15:32:55.478+01:00"
+        }
+      ]
     }
   },
   "2026-02-03T15:00:00Z": {
@@ -3605,6 +3777,177 @@
           "skipped": 0,
           "start_time": "2026-02-04T07:50:45.175000Z",
           "end_time": "2026-02-04T08:53:37.166+01:00"
+        }
+      ]
+    }
+  },
+  "2026-02-04T08:00:00Z": {
+    "ALL": {
+      "total": 6,
+      "passed": 3,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092851_1770194033356.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:32:56.433000Z",
+          "end_time": "2026-02-04T09:33:52.880+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092849_1770193966929.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:29:00.961000Z",
+          "end_time": "2026-02-04T09:32:46.335+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_090735_1770192639598.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:07:45.375000Z",
+          "end_time": "2026-02-04T09:10:39.039+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092246_1770193431036.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:23:10.437000Z",
+          "end_time": "2026-02-04T09:23:50.645+01:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092259_1770193582659.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:23:58.739000Z",
+          "end_time": "2026-02-04T09:26:20.915+01:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092301_1770193937956.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 11,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:26:31.199000Z",
+          "end_time": "2026-02-04T09:32:15.236+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 6,
+      "passed": 3,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092851_1770194033356.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:32:56.433000Z",
+          "end_time": "2026-02-04T09:33:52.880+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092849_1770193966929.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:29:00.961000Z",
+          "end_time": "2026-02-04T09:32:46.335+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_090735_1770192639598.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:07:45.375000Z",
+          "end_time": "2026-02-04T09:10:39.039+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092246_1770193431036.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:23:10.437000Z",
+          "end_time": "2026-02-04T09:23:50.645+01:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092259_1770193582659.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:23:58.739000Z",
+          "end_time": "2026-02-04T09:26:20.915+01:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://69830669894d1e4bf42240e9--qa-onrex.netlify.app/reports/20260204_092301_1770193937956.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 11,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-04T08:26:31.199000Z",
+          "end_time": "2026-02-04T09:32:15.236+01:00"
         }
       ]
     }
