@@ -123,9 +123,9 @@
   },
   "2026-02-13T11:00:00Z": {
     "ALL": {
-      "total": 1,
+      "total": 2,
       "passed": 1,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "Audatex - Regression test",
@@ -140,7 +140,20 @@
           "end_time": "2026-02-13T12:25:27.166+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://698f11f09a84e00890ac02af--qa-onrex.netlify.app/reports/20260213_122945_1770982561194.html",
+          "profile": "default",
+          "passed": 26,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-13T11:29:50.111000Z",
+          "end_time": "2026-02-13T12:35:59.925+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -150,9 +163,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 1,
+      "total": 2,
       "passed": 1,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "Audatex - Regression test",
@@ -167,7 +180,20 @@
           "end_time": "2026-02-13T12:25:27.166+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://698f11f09a84e00890ac02af--qa-onrex.netlify.app/reports/20260213_122945_1770982561194.html",
+          "profile": "default",
+          "passed": 26,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-13T11:29:50.111000Z",
+          "end_time": "2026-02-13T12:35:59.925+01:00"
+        }
+      ]
     }
   }
 }
