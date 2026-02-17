@@ -1504,9 +1504,9 @@
   },
   "2026-02-17T13:00:00Z": {
     "ALL": {
-      "total": 2,
+      "total": 4,
       "passed": 1,
-      "failed": 1,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "invoice",
@@ -1522,6 +1522,30 @@
         }
       ],
       "failed_details": [
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_145858_1771337204450.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 1,
+          "skipped": 0,
+          "start_time": "2026-02-17T13:59:06.681000Z",
+          "end_time": "2026-02-17T15:05:43.693+01:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_145451_1771336694812.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T13:54:59.323000Z",
+          "end_time": "2026-02-17T14:58:13.831+01:00"
+        },
         {
           "full_name": "invoice",
           "netlify_url": "https://699473d7e4ac517b6feb78b7--qa-onrex.netlify.app/reports/20260217_143952_1771335895070.html",
@@ -1544,9 +1568,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
+      "total": 4,
       "passed": 1,
-      "failed": 1,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "invoice",
@@ -1563,6 +1587,30 @@
       ],
       "failed_details": [
         {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_145858_1771337204450.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 1,
+          "skipped": 0,
+          "start_time": "2026-02-17T13:59:06.681000Z",
+          "end_time": "2026-02-17T15:05:43.693+01:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_145451_1771336694812.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T13:54:59.323000Z",
+          "end_time": "2026-02-17T14:58:13.831+01:00"
+        },
+        {
           "full_name": "invoice",
           "netlify_url": "https://699473d7e4ac517b6feb78b7--qa-onrex.netlify.app/reports/20260217_143952_1771335895070.html",
           "profile": "default",
@@ -1573,6 +1621,201 @@
           "skipped": 0,
           "start_time": "2026-02-17T13:40:00.832000Z",
           "end_time": "2026-02-17T14:43:01.816+01:00"
+        }
+      ]
+    }
+  },
+  "2026-02-17T14:00:00Z": {
+    "ALL": {
+      "total": 7,
+      "passed": 6,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_153218_1771339090985.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:32:25.903000Z",
+          "end_time": "2026-02-17T15:38:10.452+01:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_151255_1771337787348.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:13:02.800000Z",
+          "end_time": "2026-02-17T15:16:27.124+01:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_151754_1771338132205.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:18:01.503000Z",
+          "end_time": "2026-02-17T15:22:11.923+01:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_154150_1771339351162.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:42:04.244000Z",
+          "end_time": "2026-02-17T15:42:30.791+01:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_154153_1771339483868.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:42:43.931000Z",
+          "end_time": "2026-02-17T15:44:43.488+01:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_154155_1771339887345.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:44:54.601000Z",
+          "end_time": "2026-02-17T15:51:27.107+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_150653_1771337419342.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:07:01.524000Z",
+          "end_time": "2026-02-17T15:10:18.649+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 7,
+      "passed": 6,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_153218_1771339090985.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:32:25.903000Z",
+          "end_time": "2026-02-17T15:38:10.452+01:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_151255_1771337787348.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:13:02.800000Z",
+          "end_time": "2026-02-17T15:16:27.124+01:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_151754_1771338132205.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:18:01.503000Z",
+          "end_time": "2026-02-17T15:22:11.923+01:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_154150_1771339351162.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:42:04.244000Z",
+          "end_time": "2026-02-17T15:42:30.791+01:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_154153_1771339483868.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:42:43.931000Z",
+          "end_time": "2026-02-17T15:44:43.488+01:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_154155_1771339887345.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:44:54.601000Z",
+          "end_time": "2026-02-17T15:51:27.107+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://699481f39e61360076b44a12--qa-onrex.netlify.app/reports/20260217_150653_1771337419342.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-17T14:07:01.524000Z",
+          "end_time": "2026-02-17T15:10:18.649+01:00"
         }
       ]
     }
