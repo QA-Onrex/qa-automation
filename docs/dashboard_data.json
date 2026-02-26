@@ -23550,6 +23550,38 @@
         "2026.02.26": {
           "sessions": [
             {
+              "netlify_url": "https://699ffe159d491e0f3b49e761--qa-onrex.netlify.app/reports/20260226_085057_1772092443176.html",
+              "html_filename": "20260226_085057_1772092443176.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/8_media page",
+              "profile": "default",
+              "test_cases": 3,
+              "passed": 3,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-02-26T08:51:05.756+01:00",
+              "end": "2026-02-26T08:54:02.791+01:00"
+            },
+            {
+              "netlify_url": "https://699ffe159d491e0f3b49e761--qa-onrex.netlify.app/reports/20260226_084305_1772091964993.html",
+              "html_filename": "20260226_084305_1772091964993.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/8_media page",
+              "profile": "default",
+              "test_cases": 3,
+              "passed": 2,
+              "failed": 1,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-02-26T08:43:12.833+01:00",
+              "end": "2026-02-26T08:46:04.295+01:00"
+            },
+            {
               "netlify_url": "https://699ff8df9d491e008f49e6c4--qa-onrex.netlify.app/reports/20260226_082647_1772090963998.html",
               "html_filename": "20260226_082647_1772090963998.html",
               "environment": "https://intacc01.onrex.de/auth",
@@ -23583,8 +23615,8 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://699ff8df9d491e008f49e6c4--qa-onrex.netlify.app/reports/20260226_082647_1772090963998.html",
-            "html_filename": "20260226_082647_1772090963998.html",
+            "netlify_url": "https://699ffe159d491e0f3b49e761--qa-onrex.netlify.app/reports/20260226_085057_1772092443176.html",
+            "html_filename": "20260226_085057_1772092443176.html",
             "environment": "https://intacc01.onrex.de/auth",
             "project": "DYNAREX",
             "test_suite_id": "Test Suites/8_media page",
@@ -23595,9 +23627,9 @@
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-02-26T08:26:54.737+01:00",
-            "end": "2026-02-26T08:29:23.805+01:00",
-            "sessionCount": 2
+            "start": "2026-02-26T08:51:05.756+01:00",
+            "end": "2026-02-26T08:54:02.791+01:00",
+            "sessionCount": 4
           }
         }
       },
@@ -37012,6 +37044,45 @@
             "sessionCount": 1
           }
         }
+      },
+      "Test Suites/CorrespondenceTemplate_Editable": {
+        "2026.02.26": {
+          "sessions": [
+            {
+              "netlify_url": "https://699ffe159d491e0f3b49e761--qa-onrex.netlify.app/reports/20260226_085616_1772092672123.html",
+              "html_filename": "20260226_085616_1772092672123.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/CorrespondenceTemplate_Editable",
+              "profile": "default",
+              "test_cases": 7,
+              "passed": 7,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-02-26T08:56:21.822+01:00",
+              "end": "2026-02-26T08:57:51.212+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://699ffe159d491e0f3b49e761--qa-onrex.netlify.app/reports/20260226_085616_1772092672123.html",
+            "html_filename": "20260226_085616_1772092672123.html",
+            "environment": "https://intacc01.onrex.de/auth",
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/CorrespondenceTemplate_Editable",
+            "profile": "default",
+            "test_cases": 7,
+            "passed": 7,
+            "failed": 0,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-02-26T08:56:21.822+01:00",
+            "end": "2026-02-26T08:57:51.212+01:00",
+            "sessionCount": 1
+          }
+        }
       }
     },
     "Claimnet": {
@@ -45060,5 +45131,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "26/02/2026, 08:40:17 (GMT+1)"
+  "last_updated": "26/02/2026, 09:02:31 (GMT+1)"
 }
