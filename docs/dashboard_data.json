@@ -23546,6 +23546,59 @@
             "end": "2026-02-25T16:27:01.016+01:00",
             "sessionCount": 13
           }
+        },
+        "2026.02.26": {
+          "sessions": [
+            {
+              "netlify_url": "https://699ff8df9d491e008f49e6c4--qa-onrex.netlify.app/reports/20260226_082647_1772090963998.html",
+              "html_filename": "20260226_082647_1772090963998.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/8_media page",
+              "profile": "default",
+              "test_cases": 3,
+              "passed": 3,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-02-26T08:26:54.737+01:00",
+              "end": "2026-02-26T08:29:23.805+01:00"
+            },
+            {
+              "netlify_url": "https://699ff8df9d491e008f49e6c4--qa-onrex.netlify.app/reports/20260226_081814_1772090371758.html",
+              "html_filename": "20260226_081814_1772090371758.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/8_media page",
+              "profile": "default",
+              "test_cases": 3,
+              "passed": 2,
+              "failed": 0,
+              "error": 1,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-02-26T08:18:22.307+01:00",
+              "end": "2026-02-26T08:19:31.142+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://699ff8df9d491e008f49e6c4--qa-onrex.netlify.app/reports/20260226_082647_1772090963998.html",
+            "html_filename": "20260226_082647_1772090963998.html",
+            "environment": "https://intacc01.onrex.de/auth",
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/8_media page",
+            "profile": "default",
+            "test_cases": 3,
+            "passed": 3,
+            "failed": 0,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-02-26T08:26:54.737+01:00",
+            "end": "2026-02-26T08:29:23.805+01:00",
+            "sessionCount": 2
+          }
         }
       },
       "Test Suites/master data/1_text block master data": {
@@ -44962,6 +45015,7 @@
     }
   },
   "dates": [
+    "2026.02.26",
     "2026.02.25",
     "2026.02.20",
     "2026.02.18",
@@ -45006,5 +45060,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "26/02/2026, 07:41:40 (GMT+1)"
+  "last_updated": "26/02/2026, 08:40:17 (GMT+1)"
 }
