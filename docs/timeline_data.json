@@ -854,11 +854,36 @@
   },
   "2026-02-26T13:00:00Z": {
     "ALL": {
-      "total": 2,
-      "passed": 0,
-      "failed": 2,
-      "passed_details": [],
+      "total": 4,
+      "passed": 1,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69a05a68f3518a1037f0a73c--qa-onrex.netlify.app/reports/20260226_144756_1772114654341.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-26T13:48:03.176000Z",
+          "end_time": "2026-02-26T15:04:13.594+01:00"
+        }
+      ],
       "failed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69a05a68f3518a1037f0a73c--qa-onrex.netlify.app/reports/20260226_141609_1772113551072.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 1,
+          "skipped": 0,
+          "start_time": "2026-02-26T13:16:17.604000Z",
+          "end_time": "2026-02-26T14:19:56.196+01:00"
+        },
         {
           "full_name": "8_media page",
           "netlify_url": "https://69a04d5b7da9005c24f6fe8d--qa-onrex.netlify.app/reports/20260226_140845_1772111561747.html",
@@ -893,11 +918,36 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
-      "passed": 0,
-      "failed": 2,
-      "passed_details": [],
+      "total": 4,
+      "passed": 1,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69a05a68f3518a1037f0a73c--qa-onrex.netlify.app/reports/20260226_144756_1772114654341.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-26T13:48:03.176000Z",
+          "end_time": "2026-02-26T15:04:13.594+01:00"
+        }
+      ],
       "failed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69a05a68f3518a1037f0a73c--qa-onrex.netlify.app/reports/20260226_141609_1772113551072.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 1,
+          "skipped": 0,
+          "start_time": "2026-02-26T13:16:17.604000Z",
+          "end_time": "2026-02-26T14:19:56.196+01:00"
+        },
         {
           "full_name": "8_media page",
           "netlify_url": "https://69a04d5b7da9005c24f6fe8d--qa-onrex.netlify.app/reports/20260226_140845_1772111561747.html",
@@ -923,6 +973,55 @@
           "end_time": "2026-02-26T14:06:45.820+01:00"
         }
       ]
+    }
+  },
+  "2026-02-26T14:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69a05a68f3518a1037f0a73c--qa-onrex.netlify.app/reports/20260226_151301_1772116505492.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-26T14:13:09.142000Z",
+          "end_time": "2026-02-26T15:35:04.928+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69a05a68f3518a1037f0a73c--qa-onrex.netlify.app/reports/20260226_151301_1772116505492.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-26T14:13:09.142000Z",
+          "end_time": "2026-02-26T15:35:04.928+01:00"
+        }
+      ],
+      "failed_details": []
     }
   }
 }
