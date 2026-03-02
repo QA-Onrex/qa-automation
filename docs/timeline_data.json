@@ -1782,9 +1782,9 @@
   },
   "2026-03-02T22:00:00Z": {
     "ALL": {
-      "total": 10,
+      "total": 11,
       "passed": 0,
-      "failed": 10,
+      "failed": 11,
       "passed_details": [],
       "failed_details": [
         {
@@ -1894,6 +1894,18 @@
           "skipped": 0,
           "start_time": "2026-03-02T22:47:18.754000Z",
           "end_time": "2026-03-02T23:50:28.071+01:00"
+        },
+        {
+          "full_name": "invoice",
+          "netlify_url": "https://69a61ef469446f34370b1193--qa-onrex.netlify.app/reports/20260302_204446_1772492646367.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 14,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T22:56:33.061000Z",
+          "end_time": "2026-03-03T00:04:04.186+01:00"
         },
         {
           "full_name": "settings/invoice settings",
@@ -1917,9 +1929,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 10,
+      "total": 11,
       "passed": 0,
-      "failed": 10,
+      "failed": 11,
       "passed_details": [],
       "failed_details": [
         {
@@ -2031,6 +2043,18 @@
           "end_time": "2026-03-02T23:50:28.071+01:00"
         },
         {
+          "full_name": "invoice",
+          "netlify_url": "https://69a61ef469446f34370b1193--qa-onrex.netlify.app/reports/20260302_204446_1772492646367.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 14,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T22:56:33.061000Z",
+          "end_time": "2026-03-03T00:04:04.186+01:00"
+        },
+        {
           "full_name": "settings/invoice settings",
           "netlify_url": "https://69a615f0a8c97495ebe69330--qa-onrex.netlify.app/reports/20260302_204444_1772492188674.html",
           "profile": "default",
@@ -2041,6 +2065,55 @@
           "skipped": 0,
           "start_time": "2026-03-02T22:50:33.809000Z",
           "end_time": "2026-03-02T23:56:27.112+01:00"
+        }
+      ]
+    }
+  },
+  "2026-03-02T23:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://69a61ef469446f34370b1193--qa-onrex.netlify.app/reports/20260302_204448_1772493019487.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T23:04:11.118000Z",
+          "end_time": "2026-03-03T00:10:18.258+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://69a61ef469446f34370b1193--qa-onrex.netlify.app/reports/20260302_204448_1772493019487.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T23:04:11.118000Z",
+          "end_time": "2026-03-03T00:10:18.258+01:00"
         }
       ]
     }
