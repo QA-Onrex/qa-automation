@@ -1,9 +1,9 @@
 {
   "2026-02-26T07:00:00Z": {
     "ALL": {
-      "total": 5,
-      "passed": 3,
-      "failed": 2,
+      "total": 7,
+      "passed": 4,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "8_media page",
@@ -40,6 +40,18 @@
           "skipped": 0,
           "start_time": "2026-02-26T07:56:21.822000Z",
           "end_time": "2026-02-26T08:57:51.212+01:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260226_084633_1772092095265.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-26T07:46:40.758000Z",
+          "end_time": "2026-02-26T08:48:15.049+01:00"
         }
       ],
       "failed_details": [
@@ -66,6 +78,18 @@
           "skipped": 0,
           "start_time": "2026-02-26T07:18:22.307000Z",
           "end_time": "2026-02-26T08:19:31.142+01:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260226_084137_1772091784029.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 4,
+          "start_time": "2026-02-26T07:41:45.817000Z",
+          "end_time": "2026-02-26T08:43:03.343+01:00"
         }
       ]
     },
@@ -77,9 +101,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 5,
-      "passed": 3,
-      "failed": 2,
+      "total": 7,
+      "passed": 4,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "8_media page",
@@ -116,6 +140,18 @@
           "skipped": 0,
           "start_time": "2026-02-26T07:56:21.822000Z",
           "end_time": "2026-02-26T08:57:51.212+01:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260226_084633_1772092095265.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-02-26T07:46:40.758000Z",
+          "end_time": "2026-02-26T08:48:15.049+01:00"
         }
       ],
       "failed_details": [
@@ -142,6 +178,18 @@
           "skipped": 0,
           "start_time": "2026-02-26T07:18:22.307000Z",
           "end_time": "2026-02-26T08:19:31.142+01:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260226_084137_1772091784029.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 4,
+          "start_time": "2026-02-26T07:41:45.817000Z",
+          "end_time": "2026-02-26T08:43:03.343+01:00"
         }
       ]
     }
@@ -1149,6 +1197,81 @@
         }
       ],
       "failed_details": []
+    }
+  },
+  "2026-03-02T19:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260302_204346_1772481211051.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T19:49:14.285000Z",
+          "end_time": "2026-03-02T20:53:30.614+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260302_204344_1772480949352.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T19:45:33.250000Z",
+          "end_time": "2026-03-02T20:49:07.909+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260302_204346_1772481211051.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T19:49:14.285000Z",
+          "end_time": "2026-03-02T20:53:30.614+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a5eb55c576a719034547b2--qa-onrex.netlify.app/reports/20260302_204344_1772480949352.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-02T19:45:33.250000Z",
+          "end_time": "2026-03-02T20:49:07.909+01:00"
+        }
+      ]
     }
   }
 }
