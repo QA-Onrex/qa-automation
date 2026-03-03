@@ -2716,10 +2716,22 @@
   },
   "2026-03-03T16:00:00Z": {
     "ALL": {
-      "total": 5,
-      "passed": 4,
+      "total": 6,
+      "passed": 5,
       "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_185436_1772557276259.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T16:56:40.319000Z",
+          "end_time": "2026-03-03T19:01:15.678+02:00"
+        },
         {
           "full_name": "Test Suites/Settings/Permissions - Standart roles",
           "netlify_url": "https://69a713d7c0149a1278d33a92--qa-onrex.netlify.app/reports/20260303_185434_1772556992897.html",
@@ -2792,10 +2804,22 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 5,
-      "passed": 4,
+      "total": 6,
+      "passed": 5,
       "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_185436_1772557276259.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T16:56:40.319000Z",
+          "end_time": "2026-03-03T19:01:15.678+02:00"
+        },
         {
           "full_name": "Test Suites/Settings/Permissions - Standart roles",
           "netlify_url": "https://69a713d7c0149a1278d33a92--qa-onrex.netlify.app/reports/20260303_185434_1772556992897.html",
@@ -2857,6 +2881,249 @@
           "skipped": 0,
           "start_time": "2026-03-03T16:55:54.104000Z",
           "end_time": "2026-03-03T17:58:45.089+01:00"
+        }
+      ]
+    }
+  },
+  "2026-03-03T17:00:00Z": {
+    "ALL": {
+      "total": 9,
+      "passed": 2,
+      "failed": 7,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_180458_1772557829977.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:06:52.954000Z",
+          "end_time": "2026-03-03T18:10:29.851+01:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181206_1772558504904.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:17:28.634000Z",
+          "end_time": "2026-03-03T18:21:44.178+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_185441_1772558545353.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:03:22.381000Z",
+          "end_time": "2026-03-03T19:22:24.279+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_185438_1772557396224.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:01:22.600000Z",
+          "end_time": "2026-03-03T19:03:15.491+02:00"
+        },
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181204_1772558243632.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:13:53.419000Z",
+          "end_time": "2026-03-03T18:17:22.103+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181210_1772559171756.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 12,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:25:55.943000Z",
+          "end_time": "2026-03-03T18:32:49.448+01:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181212_1772559621834.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:32:56.815000Z",
+          "end_time": "2026-03-03T18:40:20.652+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181214_1772559965428.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:40:26.451000Z",
+          "end_time": "2026-03-03T18:46:03.141+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181208_1772558751345.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:21:49.080000Z",
+          "end_time": "2026-03-03T18:25:50.389+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 9,
+      "passed": 2,
+      "failed": 7,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_180458_1772557829977.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:06:52.954000Z",
+          "end_time": "2026-03-03T18:10:29.851+01:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181206_1772558504904.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:17:28.634000Z",
+          "end_time": "2026-03-03T18:21:44.178+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_185441_1772558545353.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:03:22.381000Z",
+          "end_time": "2026-03-03T19:22:24.279+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_185438_1772557396224.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:01:22.600000Z",
+          "end_time": "2026-03-03T19:03:15.491+02:00"
+        },
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181204_1772558243632.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:13:53.419000Z",
+          "end_time": "2026-03-03T18:17:22.103+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181210_1772559171756.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 12,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:25:55.943000Z",
+          "end_time": "2026-03-03T18:32:49.448+01:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181212_1772559621834.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:32:56.815000Z",
+          "end_time": "2026-03-03T18:40:20.652+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181214_1772559965428.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:40:26.451000Z",
+          "end_time": "2026-03-03T18:46:03.141+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://69a720a7b4e3205d38933430--qa-onrex.netlify.app/reports/20260303_181208_1772558751345.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T17:21:49.080000Z",
+          "end_time": "2026-03-03T18:25:50.389+01:00"
         }
       ]
     }
