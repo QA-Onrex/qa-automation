@@ -3686,8 +3686,8 @@
   },
   "2026-03-03T20:00:00Z": {
     "ALL": {
-      "total": 2,
-      "passed": 1,
+      "total": 5,
+      "passed": 4,
       "failed": 1,
       "passed_details": [
         {
@@ -3701,6 +3701,42 @@
           "skipped": 0,
           "start_time": "2026-03-03T20:28:10.225000Z",
           "end_time": "2026-03-03T22:30:22.198+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214337_1772572402865.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T20:57:16.972000Z",
+          "end_time": "2026-03-03T22:13:22.155+01:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214333_1772571206959.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T20:49:15.042000Z",
+          "end_time": "2026-03-03T21:53:26.040+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214335_1772571430638.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T20:53:33.450000Z",
+          "end_time": "2026-03-03T21:57:10.186+01:00"
         }
       ],
       "failed_details": [
@@ -3726,8 +3762,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
-      "passed": 1,
+      "total": 5,
+      "passed": 4,
       "failed": 1,
       "passed_details": [
         {
@@ -3741,6 +3777,42 @@
           "skipped": 0,
           "start_time": "2026-03-03T20:28:10.225000Z",
           "end_time": "2026-03-03T22:30:22.198+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214337_1772572402865.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T20:57:16.972000Z",
+          "end_time": "2026-03-03T22:13:22.155+01:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214333_1772571206959.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T20:49:15.042000Z",
+          "end_time": "2026-03-03T21:53:26.040+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214335_1772571430638.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T20:53:33.450000Z",
+          "end_time": "2026-03-03T21:57:10.186+01:00"
         }
       ],
       "failed_details": [
@@ -3755,6 +3827,79 @@
           "skipped": 0,
           "start_time": "2026-03-03T20:45:27.928000Z",
           "end_time": "2026-03-03T21:49:08.479+01:00"
+        }
+      ]
+    }
+  },
+  "2026-03-03T21:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214339_1772572775319.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T21:13:29.677000Z",
+          "end_time": "2026-03-03T22:19:33.737+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214341_1772573278496.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T21:19:40.342000Z",
+          "end_time": "2026-03-03T22:27:57.025+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214339_1772572775319.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T21:13:29.677000Z",
+          "end_time": "2026-03-03T22:19:33.737+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69a7531196e3e1f4f14ba4fc--qa-onrex.netlify.app/reports/20260303_214341_1772573278496.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-03T21:19:40.342000Z",
+          "end_time": "2026-03-03T22:27:57.025+01:00"
         }
       ]
     }
