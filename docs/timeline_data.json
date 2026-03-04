@@ -4995,5 +4995,80 @@
         }
       ]
     }
+  },
+  "2026-03-04T06:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070957_1772605185347.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T06:15:48.470000Z",
+          "end_time": "2026-03-04T07:19:44.277+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070955_1772604943814.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T06:11:44.336000Z",
+          "end_time": "2026-03-04T07:15:42.798+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070957_1772605185347.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T06:15:48.470000Z",
+          "end_time": "2026-03-04T07:19:44.277+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070955_1772604943814.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T06:11:44.336000Z",
+          "end_time": "2026-03-04T07:15:42.798+01:00"
+        }
+      ]
+    }
   }
 }

@@ -13242,6 +13242,22 @@
         "2026.03.04": {
           "sessions": [
             {
+              "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070955_1772604943814.html",
+              "html_filename": "20260304_070955_1772604943814.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/1_Login_logout/1a_Login-Logout",
+              "profile": "default",
+              "test_cases": 8,
+              "passed": 6,
+              "failed": 2,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-04T07:11:44.336+01:00",
+              "end": "2026-03-04T07:15:42.798+01:00"
+            },
+            {
               "netlify_url": "https://69a7c949f514d0ccee553238--qa-onrex.netlify.app/reports/20260303_214911_1772603586096.html",
               "html_filename": "20260303_214911_1772603586096.html",
               "environment": "https://intacc01.onrex.de/auth",
@@ -13259,21 +13275,21 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://69a7c949f514d0ccee553238--qa-onrex.netlify.app/reports/20260303_214911_1772603586096.html",
-            "html_filename": "20260303_214911_1772603586096.html",
+            "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070955_1772604943814.html",
+            "html_filename": "20260304_070955_1772604943814.html",
             "environment": "https://intacc01.onrex.de/auth",
             "project": "DYNAREX",
             "test_suite_id": "Test Suites/1_Login_logout/1a_Login-Logout",
             "profile": "default",
             "test_cases": 8,
-            "passed": 2,
-            "failed": 6,
+            "passed": 6,
+            "failed": 2,
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-03-04T06:49:00.507+01:00",
-            "end": "2026-03-04T06:53:04.855+01:00",
-            "sessionCount": 1
+            "start": "2026-03-04T07:11:44.336+01:00",
+            "end": "2026-03-04T07:15:42.798+01:00",
+            "sessionCount": 2
           }
         }
       },
@@ -16901,6 +16917,43 @@
             "start": "2026-03-03T21:49:15.042+01:00",
             "end": "2026-03-03T21:53:26.040+01:00",
             "sessionCount": 3
+          }
+        },
+        "2026.03.04": {
+          "sessions": [
+            {
+              "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070957_1772605185347.html",
+              "html_filename": "20260304_070957_1772605185347.html",
+              "environment": "http://intacc01.onrex.de/auth/",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/1_Login_logout/1b_login_logout_multi_client",
+              "profile": "multi user intacc",
+              "test_cases": 6,
+              "passed": 6,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-04T07:15:48.470+01:00",
+              "end": "2026-03-04T07:19:44.277+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://69a7cfb87e83ec790d408334--qa-onrex.netlify.app/reports/20260304_070957_1772605185347.html",
+            "html_filename": "20260304_070957_1772605185347.html",
+            "environment": "http://intacc01.onrex.de/auth/",
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/1_Login_logout/1b_login_logout_multi_client",
+            "profile": "multi user intacc",
+            "test_cases": 6,
+            "passed": 6,
+            "failed": 0,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-03-04T07:15:48.470+01:00",
+            "end": "2026-03-04T07:19:44.277+01:00",
+            "sessionCount": 1
           }
         }
       },
@@ -51350,5 +51403,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "04/03/2026, 07:07:43 (GMT+1)"
+  "last_updated": "04/03/2026, 07:22:49 (GMT+1)"
 }
