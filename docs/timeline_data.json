@@ -5817,5 +5817,128 @@
         }
       ]
     }
+  },
+  "2026-03-04T08:00:00Z": {
+    "ALL": {
+      "total": 4,
+      "passed": 3,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092820_1772613232895.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:30:15.103000Z",
+          "end_time": "2026-03-04T09:33:52.239+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092826_1772614575450.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:41:31.266000Z",
+          "end_time": "2026-03-04T09:56:14.894+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092824_1772613682469.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:38:36.233000Z",
+          "end_time": "2026-03-04T09:41:21.835+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092828_1772615044459.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:56:24.336000Z",
+          "end_time": "2026-03-04T10:04:02.889+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 4,
+      "passed": 3,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092820_1772613232895.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:30:15.103000Z",
+          "end_time": "2026-03-04T09:33:52.239+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092826_1772614575450.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:41:31.266000Z",
+          "end_time": "2026-03-04T09:56:14.894+01:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092824_1772613682469.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:38:36.233000Z",
+          "end_time": "2026-03-04T09:41:21.835+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69a7f663b379f474527d50ba--qa-onrex.netlify.app/reports/20260304_092828_1772615044459.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T08:56:24.336000Z",
+          "end_time": "2026-03-04T10:04:02.889+01:00"
+        }
+      ]
+    }
   }
 }
