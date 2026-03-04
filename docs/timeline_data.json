@@ -4390,9 +4390,9 @@
   },
   "2026-03-04T02:00:00Z": {
     "ALL": {
-      "total": 4,
+      "total": 5,
       "passed": 0,
-      "failed": 4,
+      "failed": 5,
       "passed_details": [],
       "failed_details": [
         {
@@ -4430,6 +4430,18 @@
           "skipped": 0,
           "start_time": "2026-03-04T02:12:30.708000Z",
           "end_time": "2026-03-04T03:16:41.336+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214453_1772594175860.html",
+          "profile": "default member intacc",
+          "passed": 20,
+          "failed": 20,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T02:19:59.647000Z",
+          "end_time": "2026-03-04T04:16:13.933+01:00"
         },
         {
           "full_name": "billing/DoD Regression/member - get final DoD check",
@@ -4453,9 +4465,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 4,
+      "total": 5,
       "passed": 0,
-      "failed": 4,
+      "failed": 5,
       "passed_details": [],
       "failed_details": [
         {
@@ -4495,6 +4507,18 @@
           "end_time": "2026-03-04T03:16:41.336+01:00"
         },
         {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214453_1772594175860.html",
+          "profile": "default member intacc",
+          "passed": 20,
+          "failed": 20,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T02:19:59.647000Z",
+          "end_time": "2026-03-04T04:16:13.933+01:00"
+        },
+        {
           "full_name": "billing/DoD Regression/member - get final DoD check",
           "netlify_url": "https://69a79cdc48daff2a36fff410--qa-onrex.netlify.app/reports/20260303_214451_1772590795044.html",
           "profile": "default member intacc",
@@ -4505,6 +4529,204 @@
           "skipped": 0,
           "start_time": "2026-03-04T02:16:46.557000Z",
           "end_time": "2026-03-04T03:19:54.442+01:00"
+        }
+      ]
+    }
+  },
+  "2026-03-04T03:00:00Z": {
+    "ALL": {
+      "total": 4,
+      "passed": 1,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214502_1772597384730.html",
+          "profile": "default member intacc",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:59:35.114000Z",
+          "end_time": "2026-03-04T05:09:44.452+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214456_1772595241626.html",
+          "profile": "default member intacc",
+          "passed": 7,
+          "failed": 15,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:16:20.893000Z",
+          "end_time": "2026-03-04T04:34:00.459+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214500_1772596770017.html",
+          "profile": "default member intacc",
+          "passed": 7,
+          "failed": 11,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:45:41.473000Z",
+          "end_time": "2026-03-04T04:59:29.114+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214458_1772595937078.html",
+          "profile": "default member intacc",
+          "passed": 4,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:34:07.040000Z",
+          "end_time": "2026-03-04T04:45:36.289+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 4,
+      "passed": 1,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214502_1772597384730.html",
+          "profile": "default member intacc",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:59:35.114000Z",
+          "end_time": "2026-03-04T05:09:44.452+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214456_1772595241626.html",
+          "profile": "default member intacc",
+          "passed": 7,
+          "failed": 15,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:16:20.893000Z",
+          "end_time": "2026-03-04T04:34:00.459+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214500_1772596770017.html",
+          "profile": "default member intacc",
+          "passed": 7,
+          "failed": 11,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:45:41.473000Z",
+          "end_time": "2026-03-04T04:59:29.114+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214458_1772595937078.html",
+          "profile": "default member intacc",
+          "passed": 4,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T03:34:07.040000Z",
+          "end_time": "2026-03-04T04:45:36.289+01:00"
+        }
+      ]
+    }
+  },
+  "2026-03-04T04:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214504_1772597579490.html",
+          "profile": "DAT HU intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:09:49.116000Z",
+          "end_time": "2026-03-04T05:12:59.327+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - DYNAREX",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214507_1772597965989.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:13:03.358000Z",
+          "end_time": "2026-03-04T05:19:24.193+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214504_1772597579490.html",
+          "profile": "DAT HU intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:09:49.116000Z",
+          "end_time": "2026-03-04T05:12:59.327+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - DYNAREX",
+          "netlify_url": "https://69a7b3abd0faef1781b5b515--qa-onrex.netlify.app/reports/20260303_214507_1772597965989.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:13:03.358000Z",
+          "end_time": "2026-03-04T05:19:24.193+01:00"
         }
       ]
     }
