@@ -4998,8 +4998,8 @@
   },
   "2026-03-04T06:00:00Z": {
     "ALL": {
-      "total": 15,
-      "passed": 9,
+      "total": 16,
+      "passed": 10,
       "failed": 6,
       "passed_details": [
         {
@@ -5085,6 +5085,18 @@
           "skipped": 0,
           "start_time": "2026-03-04T06:42:54.652000Z",
           "end_time": "2026-03-04T07:44:44.678+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071007_1772608120949.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T06:46:50.375000Z",
+          "end_time": "2026-03-04T08:08:39.943+01:00"
         },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
@@ -5194,8 +5206,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 15,
-      "passed": 9,
+      "total": 16,
+      "passed": 10,
       "failed": 6,
       "passed_details": [
         {
@@ -5281,6 +5293,18 @@
           "skipped": 0,
           "start_time": "2026-03-04T06:42:54.652000Z",
           "end_time": "2026-03-04T07:44:44.678+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071007_1772608120949.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T06:46:50.375000Z",
+          "end_time": "2026-03-04T08:08:39.943+01:00"
         },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
@@ -5379,6 +5403,345 @@
           "skipped": 0,
           "start_time": "2026-03-04T06:38:13.965000Z",
           "end_time": "2026-03-04T07:46:42.186+01:00"
+        }
+      ]
+    }
+  },
+  "2026-03-04T07:00:00Z": {
+    "ALL": {
+      "total": 13,
+      "passed": 11,
+      "failed": 2,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073030_1772610538494.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:47:23.875000Z",
+          "end_time": "2026-03-04T08:48:57.969+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073028_1772610434548.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:42:51.617000Z",
+          "end_time": "2026-03-04T08:47:14.019+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073020_1772609242006.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:06:04.874000Z",
+          "end_time": "2026-03-04T08:27:21.515+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073024_1772609912550.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:29:32.077000Z",
+          "end_time": "2026-03-04T08:38:32.278+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073022_1772609362852.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:27:31.559000Z",
+          "end_time": "2026-03-04T08:29:22.465+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073026_1772610162020.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:38:41.690000Z",
+          "end_time": "2026-03-04T08:42:41.845+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071009_1772608355110.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:08:45.126000Z",
+          "end_time": "2026-03-04T08:12:34.664+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071015_1772609860594.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:30:41.503000Z",
+          "end_time": "2026-03-04T08:37:40.111+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071013_1772609437298.html",
+          "profile": "default",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:19:35.126000Z",
+          "end_time": "2026-03-04T08:30:36.519+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071017_1772610155191.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:37:46.240000Z",
+          "end_time": "2026-03-04T08:42:34.548+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071019_1772610392332.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:42:39.420000Z",
+          "end_time": "2026-03-04T08:46:32.006+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073018_1772607955341.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:02:04.571000Z",
+          "end_time": "2026-03-04T08:05:54.735+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071011_1772608768666.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:12:40.572000Z",
+          "end_time": "2026-03-04T08:19:27.851+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 13,
+      "passed": 11,
+      "failed": 2,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073030_1772610538494.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:47:23.875000Z",
+          "end_time": "2026-03-04T08:48:57.969+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073028_1772610434548.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:42:51.617000Z",
+          "end_time": "2026-03-04T08:47:14.019+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073020_1772609242006.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:06:04.874000Z",
+          "end_time": "2026-03-04T08:27:21.515+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073024_1772609912550.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:29:32.077000Z",
+          "end_time": "2026-03-04T08:38:32.278+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073022_1772609362852.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:27:31.559000Z",
+          "end_time": "2026-03-04T08:29:22.465+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073026_1772610162020.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:38:41.690000Z",
+          "end_time": "2026-03-04T08:42:41.845+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071009_1772608355110.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:08:45.126000Z",
+          "end_time": "2026-03-04T08:12:34.664+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071015_1772609860594.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:30:41.503000Z",
+          "end_time": "2026-03-04T08:37:40.111+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071013_1772609437298.html",
+          "profile": "default",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:19:35.126000Z",
+          "end_time": "2026-03-04T08:30:36.519+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071017_1772610155191.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:37:46.240000Z",
+          "end_time": "2026-03-04T08:42:34.548+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071019_1772610392332.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:42:39.420000Z",
+          "end_time": "2026-03-04T08:46:32.006+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_073018_1772607955341.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:02:04.571000Z",
+          "end_time": "2026-03-04T08:05:54.735+01:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://69a7e472a1f8cf173a37acb7--qa-onrex.netlify.app/reports/20260304_071011_1772608768666.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T07:12:40.572000Z",
+          "end_time": "2026-03-04T08:19:27.851+01:00"
         }
       ]
     }
