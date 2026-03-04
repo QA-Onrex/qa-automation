@@ -4658,9 +4658,9 @@
   },
   "2026-03-04T04:00:00Z": {
     "ALL": {
-      "total": 2,
-      "passed": 1,
-      "failed": 1,
+      "total": 7,
+      "passed": 5,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "DEKRA HU",
@@ -4673,6 +4673,54 @@
           "skipped": 0,
           "start_time": "2026-03-04T04:09:49.116000Z",
           "end_time": "2026-03-04T05:12:59.327+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD plus",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214513_1772598596665.html",
+          "profile": "default DoDplus intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:27:13.438000Z",
+          "end_time": "2026-03-04T05:29:56.478+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214509_1772598173321.html",
+          "profile": "SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:19:30.404000Z",
+          "end_time": "2026-03-04T05:22:52.691+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214511_1772598428896.html",
+          "profile": "default DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:22:57.543000Z",
+          "end_time": "2026-03-04T05:27:08.489+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214515_1772598765498.html",
+          "profile": "default GTU DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:30:00.793000Z",
+          "end_time": "2026-03-04T05:32:45.107+01:00"
         }
       ],
       "failed_details": [
@@ -4687,6 +4735,18 @@
           "skipped": 0,
           "start_time": "2026-03-04T04:13:03.358000Z",
           "end_time": "2026-03-04T05:19:24.193+01:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214517_1772601101822.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 35,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:32:49.837000Z",
+          "end_time": "2026-03-04T06:11:35.730+01:00"
         }
       ]
     },
@@ -4698,9 +4758,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
-      "passed": 1,
-      "failed": 1,
+      "total": 7,
+      "passed": 5,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "DEKRA HU",
@@ -4713,6 +4773,54 @@
           "skipped": 0,
           "start_time": "2026-03-04T04:09:49.116000Z",
           "end_time": "2026-03-04T05:12:59.327+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD plus",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214513_1772598596665.html",
+          "profile": "default DoDplus intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:27:13.438000Z",
+          "end_time": "2026-03-04T05:29:56.478+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214509_1772598173321.html",
+          "profile": "SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:19:30.404000Z",
+          "end_time": "2026-03-04T05:22:52.691+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214511_1772598428896.html",
+          "profile": "default DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:22:57.543000Z",
+          "end_time": "2026-03-04T05:27:08.489+01:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214515_1772598765498.html",
+          "profile": "default GTU DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:30:00.793000Z",
+          "end_time": "2026-03-04T05:32:45.107+01:00"
         }
       ],
       "failed_details": [
@@ -4727,6 +4835,18 @@
           "skipped": 0,
           "start_time": "2026-03-04T04:13:03.358000Z",
           "end_time": "2026-03-04T05:19:24.193+01:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69a7c31c7e83ec50e1408266--qa-onrex.netlify.app/reports/20260303_214517_1772601101822.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 35,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-04T04:32:49.837000Z",
+          "end_time": "2026-03-04T06:11:35.730+01:00"
         }
       ]
     }
