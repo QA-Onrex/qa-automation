@@ -8833,8 +8833,8 @@
   },
   "2026-03-05T10:00:00Z": {
     "ALL": {
-      "total": 4,
-      "passed": 4,
+      "total": 5,
+      "passed": 5,
       "failed": 0,
       "passed_details": [
         {
@@ -8848,6 +8848,18 @@
           "skipped": 0,
           "start_time": "2026-03-05T10:00:12.460000Z",
           "end_time": "2026-03-05T11:02:11.247+01:00"
+        },
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081344_1772709466881.html",
+          "profile": "default",
+          "passed": 59,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T10:39:52.457000Z",
+          "end_time": "2026-03-05T12:17:46.101+01:00"
         },
         {
           "full_name": "settings/Test invoice number structure settings",
@@ -8896,8 +8908,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 4,
-      "passed": 4,
+      "total": 5,
+      "passed": 5,
       "failed": 0,
       "passed_details": [
         {
@@ -8911,6 +8923,18 @@
           "skipped": 0,
           "start_time": "2026-03-05T10:00:12.460000Z",
           "end_time": "2026-03-05T11:02:11.247+01:00"
+        },
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081344_1772709466881.html",
+          "profile": "default",
+          "passed": 59,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T10:39:52.457000Z",
+          "end_time": "2026-03-05T12:17:46.101+01:00"
         },
         {
           "full_name": "settings/Test invoice number structure settings",
@@ -8950,6 +8974,105 @@
         }
       ],
       "failed_details": []
+    }
+  },
+  "2026-03-05T11:00:00Z": {
+    "ALL": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "billing/DoD Regression/member - get initial billing counts",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081350_1772710284392.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:30:47.298000Z",
+          "end_time": "2026-03-05T12:31:24.160+01:00"
+        },
+        {
+          "full_name": "settings/workflow/invoice wf - allowed actions",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081346_1772709950134.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:17:56.411000Z",
+          "end_time": "2026-03-05T12:25:49.858+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081348_1772710237728.html",
+          "profile": "default DoD intacc",
+          "passed": 2,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:25:59.106000Z",
+          "end_time": "2026-03-05T12:30:36.483+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "billing/DoD Regression/member - get initial billing counts",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081350_1772710284392.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:30:47.298000Z",
+          "end_time": "2026-03-05T12:31:24.160+01:00"
+        },
+        {
+          "full_name": "settings/workflow/invoice wf - allowed actions",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081346_1772709950134.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:17:56.411000Z",
+          "end_time": "2026-03-05T12:25:49.858+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand",
+          "netlify_url": "https://69a96a104902f75cdd365609--qa-onrex.netlify.app/reports/20260305_081348_1772710237728.html",
+          "profile": "default DoD intacc",
+          "passed": 2,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:25:59.106000Z",
+          "end_time": "2026-03-05T12:30:36.483+01:00"
+        }
+      ]
     }
   }
 }
