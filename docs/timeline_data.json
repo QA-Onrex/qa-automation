@@ -8978,9 +8978,9 @@
   },
   "2026-03-05T11:00:00Z": {
     "ALL": {
-      "total": 3,
+      "total": 5,
       "passed": 2,
-      "failed": 1,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "billing/DoD Regression/member - get initial billing counts",
@@ -9019,6 +9019,30 @@
           "skipped": 0,
           "start_time": "2026-03-05T11:25:59.106000Z",
           "end_time": "2026-03-05T12:30:36.483+01:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
+          "netlify_url": "https://69a97031ebc5624a45696a90--qa-onrex.netlify.app/reports/20260305_081352_1772710536510.html",
+          "profile": "default DoD intacc",
+          "passed": 2,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:31:32.756000Z",
+          "end_time": "2026-03-05T12:35:35.542+01:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/member - get final DoD check",
+          "netlify_url": "https://69a97031ebc5624a45696a90--qa-onrex.netlify.app/reports/20260305_081354_1772710756374.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:35:45.746000Z",
+          "end_time": "2026-03-05T12:39:15.915+01:00"
         }
       ]
     },
@@ -9030,9 +9054,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 3,
+      "total": 5,
       "passed": 2,
-      "failed": 1,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "billing/DoD Regression/member - get initial billing counts",
@@ -9071,6 +9095,30 @@
           "skipped": 0,
           "start_time": "2026-03-05T11:25:59.106000Z",
           "end_time": "2026-03-05T12:30:36.483+01:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
+          "netlify_url": "https://69a97031ebc5624a45696a90--qa-onrex.netlify.app/reports/20260305_081352_1772710536510.html",
+          "profile": "default DoD intacc",
+          "passed": 2,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:31:32.756000Z",
+          "end_time": "2026-03-05T12:35:35.542+01:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/member - get final DoD check",
+          "netlify_url": "https://69a97031ebc5624a45696a90--qa-onrex.netlify.app/reports/20260305_081354_1772710756374.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-05T11:35:45.746000Z",
+          "end_time": "2026-03-05T12:39:15.915+01:00"
         }
       ]
     }
