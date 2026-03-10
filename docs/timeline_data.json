@@ -2131,8 +2131,8 @@
   },
   "2026-03-10T07:00:00Z": {
     "ALL": {
-      "total": 12,
-      "passed": 12,
+      "total": 13,
+      "passed": 13,
       "failed": 0,
       "passed_details": [
         {
@@ -2146,6 +2146,18 @@
           "skipped": 0,
           "start_time": "2026-03-10T07:41:33.994000Z",
           "end_time": "2026-03-10T08:52:21.706+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082515_1773129691152.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T07:53:51.133000Z",
+          "end_time": "2026-03-10T09:01:30.901+01:00"
         },
         {
           "full_name": "Test Suites/Settings/Users - Cleanup",
@@ -2290,8 +2302,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 12,
-      "passed": 12,
+      "total": 13,
+      "passed": 13,
       "failed": 0,
       "passed_details": [
         {
@@ -2305,6 +2317,18 @@
           "skipped": 0,
           "start_time": "2026-03-10T07:41:33.994000Z",
           "end_time": "2026-03-10T08:52:21.706+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082515_1773129691152.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T07:53:51.133000Z",
+          "end_time": "2026-03-10T09:01:30.901+01:00"
         },
         {
           "full_name": "Test Suites/Settings/Users - Cleanup",
@@ -2437,6 +2461,127 @@
           "skipped": 0,
           "start_time": "2026-03-10T07:31:48.482000Z",
           "end_time": "2026-03-10T08:32:24.260+01:00"
+        }
+      ],
+      "failed_details": []
+    }
+  },
+  "2026-03-10T08:00:00Z": {
+    "ALL": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082521_1773130196979.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:08:58.529000Z",
+          "end_time": "2026-03-10T09:09:56.820+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082519_1773130129301.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:05:02.567000Z",
+          "end_time": "2026-03-10T09:08:49.124+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082523_1773131042266.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:10:06.091000Z",
+          "end_time": "2026-03-10T09:24:01.395+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082517_1773129893577.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:01:40.764000Z",
+          "end_time": "2026-03-10T09:04:53.152+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082521_1773130196979.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:08:58.529000Z",
+          "end_time": "2026-03-10T09:09:56.820+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082519_1773130129301.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:05:02.567000Z",
+          "end_time": "2026-03-10T09:08:49.124+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082523_1773131042266.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:10:06.091000Z",
+          "end_time": "2026-03-10T09:24:01.395+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69afdb93b63e326b33f6a14c--qa-onrex.netlify.app/reports/20260310_082517_1773129893577.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-10T08:01:40.764000Z",
+          "end_time": "2026-03-10T09:04:53.152+01:00"
         }
       ],
       "failed_details": []
