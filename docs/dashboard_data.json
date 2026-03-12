@@ -38797,6 +38797,43 @@
             "end": "2026-03-09T16:41:58.982+01:00",
             "sessionCount": 1
           }
+        },
+        "2026.03.12": {
+          "sessions": [
+            {
+              "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_145331_1773323792150.html",
+              "html_filename": "20260312_145331_1773323792150.html",
+              "environment": "https://intacc01-member.onrex.de/member/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/billing/DoD Regression/member - get initial billing counts",
+              "profile": "default member intacc",
+              "test_cases": 1,
+              "passed": 1,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-12T14:55:52.685+01:00",
+              "end": "2026-03-12T14:56:32.021+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_145331_1773323792150.html",
+            "html_filename": "20260312_145331_1773323792150.html",
+            "environment": "https://intacc01-member.onrex.de/member/auth",
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/billing/DoD Regression/member - get initial billing counts",
+            "profile": "default member intacc",
+            "test_cases": 1,
+            "passed": 1,
+            "failed": 0,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-03-12T14:55:52.685+01:00",
+            "end": "2026-03-12T14:56:32.021+01:00",
+            "sessionCount": 1
+          }
         }
       },
       "Test Suites/invoice": {
@@ -40213,6 +40250,43 @@
             "end": "2026-03-09T16:41:11.224+01:00",
             "sessionCount": 1
           }
+        },
+        "2026.03.12": {
+          "sessions": [
+            {
+              "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_145329_1773323740616.html",
+              "html_filename": "20260312_145329_1773323740616.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/billing/DoD Regression/DYNAREX on Demand",
+              "profile": "default DoD intacc",
+              "test_cases": 6,
+              "passed": 3,
+              "failed": 3,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-12T14:53:49.289+01:00",
+              "end": "2026-03-12T14:55:39.602+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_145329_1773323740616.html",
+            "html_filename": "20260312_145329_1773323740616.html",
+            "environment": "https://intacc01.onrex.de/auth",
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/billing/DoD Regression/DYNAREX on Demand",
+            "profile": "default DoD intacc",
+            "test_cases": 6,
+            "passed": 3,
+            "failed": 3,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-03-12T14:53:49.289+01:00",
+            "end": "2026-03-12T14:55:39.602+01:00",
+            "sessionCount": 1
+          }
         }
       },
       "Test Suites/settings/invoice settings": {
@@ -41527,6 +41601,22 @@
         "2026.03.12": {
           "sessions": [
             {
+              "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_102721_1773322907416.html",
+              "html_filename": "20260312_102721_1773322907416.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/settings/workflow/invoice wf - allowed actions",
+              "profile": "default",
+              "test_cases": 8,
+              "passed": 5,
+              "failed": 3,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-12T14:31:01.800+01:00",
+              "end": "2026-03-12T14:41:46.028+01:00"
+            },
+            {
               "netlify_url": "https://69b28e1b9886c4a8aba03cd5--qa-onrex.netlify.app/reports/20260312_101528_1773307418844.html",
               "html_filename": "20260312_101528_1773307418844.html",
               "environment": "https://intacc01.onrex.de/auth",
@@ -41544,21 +41634,21 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://69b28e1b9886c4a8aba03cd5--qa-onrex.netlify.app/reports/20260312_101528_1773307418844.html",
-            "html_filename": "20260312_101528_1773307418844.html",
+            "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_102721_1773322907416.html",
+            "html_filename": "20260312_102721_1773322907416.html",
             "environment": "https://intacc01.onrex.de/auth",
             "project": "DYNAREX",
             "test_suite_id": "Test Suites/settings/workflow/invoice wf - allowed actions",
             "profile": "default",
             "test_cases": 8,
-            "passed": 8,
-            "failed": 0,
+            "passed": 5,
+            "failed": 3,
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-03-12T10:15:38.456+01:00",
-            "end": "2026-03-12T10:23:38.223+01:00",
-            "sessionCount": 1
+            "start": "2026-03-12T14:31:01.800+01:00",
+            "end": "2026-03-12T14:41:46.028+01:00",
+            "sessionCount": 2
           }
         }
       },
@@ -42831,6 +42921,43 @@
             "skipped": 0,
             "start": "2026-03-09T16:42:08.250+01:00",
             "end": "2026-03-09T16:46:11.510+01:00",
+            "sessionCount": 1
+          }
+        },
+        "2026.03.12": {
+          "sessions": [
+            {
+              "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_145334_1773323908257.html",
+              "html_filename": "20260312_145334_1773323908257.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/billing/DoD Regression/DYNAREX on Demand - without old case",
+              "profile": "default DoD intacc",
+              "test_cases": 5,
+              "passed": 3,
+              "failed": 2,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-12T14:56:44.519+01:00",
+              "end": "2026-03-12T14:58:27.470+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://69b2c931e7809fae2f30caf4--qa-onrex.netlify.app/reports/20260312_145334_1773323908257.html",
+            "html_filename": "20260312_145334_1773323908257.html",
+            "environment": "https://intacc01.onrex.de/auth",
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/billing/DoD Regression/DYNAREX on Demand - without old case",
+            "profile": "default DoD intacc",
+            "test_cases": 5,
+            "passed": 3,
+            "failed": 2,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-03-12T14:56:44.519+01:00",
+            "end": "2026-03-12T14:58:27.470+01:00",
             "sessionCount": 1
           }
         }
@@ -61448,5 +61575,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "12/03/2026, 14:07:16 (GMT+1)"
+  "last_updated": "12/03/2026, 15:09:55 (GMT+1)"
 }
