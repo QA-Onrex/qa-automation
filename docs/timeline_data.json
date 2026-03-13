@@ -3765,9 +3765,9 @@
   },
   "2026-03-13T15:00:00Z": {
     "ALL": {
-      "total": 2,
+      "total": 3,
       "passed": 2,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
@@ -3794,7 +3794,20 @@
           "end_time": "2026-03-13T16:18:46.687+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69b4354e2a410206ad66e27e--qa-onrex.netlify.app/reports/20260313_105843_1773415678653.html",
+          "profile": "default member intacc",
+          "passed": 16,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-13T15:18:59.980000Z",
+          "end_time": "2026-03-13T16:27:57.706+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -3804,9 +3817,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 2,
+      "total": 3,
       "passed": 2,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
@@ -3833,7 +3846,20 @@
           "end_time": "2026-03-13T16:18:46.687+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69b4354e2a410206ad66e27e--qa-onrex.netlify.app/reports/20260313_105843_1773415678653.html",
+          "profile": "default member intacc",
+          "passed": 16,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-13T15:18:59.980000Z",
+          "end_time": "2026-03-13T16:27:57.706+01:00"
+        }
+      ]
     }
   }
 }
