@@ -19648,6 +19648,22 @@
         "2026.03.16": {
           "sessions": [
             {
+              "netlify_url": "https://69b7bb4ed8b44165f3d0567a--qa-onrex.netlify.app/reports/20260316_075739_1773644357082.html",
+              "html_filename": "20260316_075739_1773644357082.html",
+              "environment": null,
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/1_Login_logout/1b_login_logout_multi_client",
+              "profile": "multi user intacc",
+              "test_cases": 6,
+              "passed": 6,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-16T07:57:52.484+01:00",
+              "end": "2026-03-16T07:59:16.463+01:00"
+            },
+            {
               "netlify_url": "https://69b7a9b86810d74ffbd119d1--qa-onrex.netlify.app/reports/20260316_071926_1773642646742.html",
               "html_filename": "20260316_071926_1773642646742.html",
               "environment": null,
@@ -19665,21 +19681,21 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://69b7a9b86810d74ffbd119d1--qa-onrex.netlify.app/reports/20260316_071926_1773642646742.html",
-            "html_filename": "20260316_071926_1773642646742.html",
+            "netlify_url": "https://69b7bb4ed8b44165f3d0567a--qa-onrex.netlify.app/reports/20260316_075739_1773644357082.html",
+            "html_filename": "20260316_075739_1773644357082.html",
             "environment": null,
             "project": "DYNAREX",
             "test_suite_id": "Test Suites/1_Login_logout/1b_login_logout_multi_client",
-            "profile": "default",
+            "profile": "multi user intacc",
             "test_cases": 6,
-            "passed": 0,
-            "failed": 6,
+            "passed": 6,
+            "failed": 0,
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-03-16T07:20:55.662+01:00",
-            "end": "2026-03-16T07:30:45.478+01:00",
-            "sessionCount": 1
+            "start": "2026-03-16T07:57:52.484+01:00",
+            "end": "2026-03-16T07:59:16.463+01:00",
+            "sessionCount": 2
           }
         }
       },
@@ -53061,6 +53077,43 @@
             "end": "2026-03-13T17:26:52.963+01:00",
             "sessionCount": 1
           }
+        },
+        "2026.03.16": {
+          "sessions": [
+            {
+              "netlify_url": "https://69b7bb4ed8b44165f3d0567a--qa-onrex.netlify.app/reports/20260316_085910_1773648337955.html",
+              "html_filename": "20260316_085910_1773648337955.html",
+              "environment": null,
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/Audatex - Regression test",
+              "profile": "default",
+              "test_cases": 27,
+              "passed": 26,
+              "failed": 1,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-03-16T08:59:21.181+01:00",
+              "end": "2026-03-16T09:05:36.592+01:00"
+            }
+          ],
+          "latest": {
+            "netlify_url": "https://69b7bb4ed8b44165f3d0567a--qa-onrex.netlify.app/reports/20260316_085910_1773648337955.html",
+            "html_filename": "20260316_085910_1773648337955.html",
+            "environment": null,
+            "project": "DYNAREX",
+            "test_suite_id": "Test Suites/Audatex - Regression test",
+            "profile": "default",
+            "test_cases": 27,
+            "passed": 26,
+            "failed": 1,
+            "error": 0,
+            "incomplete": 0,
+            "skipped": 0,
+            "start": "2026-03-16T08:59:21.181+01:00",
+            "end": "2026-03-16T09:05:36.592+01:00",
+            "sessionCount": 1
+          }
         }
       },
       "Test Suites/CorrespondenceTemplate_Editable": {
@@ -63798,5 +63851,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "16/03/2026, 07:56:59 (GMT+1)"
+  "last_updated": "16/03/2026, 09:12:00 (GMT+1)"
 }
