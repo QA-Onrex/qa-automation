@@ -931,5 +931,78 @@
         }
       ]
     }
+  },
+  "2026-03-23T12:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69c144b0c85a5705d354e1fd--qa-onrex.netlify.app/reports/20260323_133657_1774270003966.html",
+          "profile": "default member intacc",
+          "passed": 22,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-23T12:37:08.650000Z",
+          "end_time": "2026-03-23T13:46:43.474+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69c144b0c85a5705d354e1fd--qa-onrex.netlify.app/reports/20260323_135715_1774270967870.html",
+          "profile": "default member intacc",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-23T12:57:26.057000Z",
+          "end_time": "2026-03-23T14:02:47.397+01:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69c144b0c85a5705d354e1fd--qa-onrex.netlify.app/reports/20260323_133657_1774270003966.html",
+          "profile": "default member intacc",
+          "passed": 22,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-23T12:37:08.650000Z",
+          "end_time": "2026-03-23T13:46:43.474+01:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69c144b0c85a5705d354e1fd--qa-onrex.netlify.app/reports/20260323_135715_1774270967870.html",
+          "profile": "default member intacc",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-23T12:57:26.057000Z",
+          "end_time": "2026-03-23T14:02:47.397+01:00"
+        }
+      ],
+      "failed_details": []
+    }
   }
 }
