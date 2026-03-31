@@ -1721,8 +1721,8 @@
   },
   "2026-03-31T13:00:00Z": {
     "ALL": {
-      "total": 10,
-      "passed": 10,
+      "total": 11,
+      "passed": 11,
       "failed": 0,
       "passed_details": [
         {
@@ -1844,6 +1844,18 @@
           "skipped": 0,
           "start_time": "2026-03-31T13:54:14.435000Z",
           "end_time": "2026-03-31T15:57:12.003+02:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_100407_1774965830878.html",
+          "profile": "default",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T13:57:24.254000Z",
+          "end_time": "2026-03-31T16:03:50.622+02:00"
         }
       ],
       "failed_details": []
@@ -1856,8 +1868,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 10,
-      "passed": 10,
+      "total": 11,
+      "passed": 11,
       "failed": 0,
       "passed_details": [
         {
@@ -1979,6 +1991,235 @@
           "skipped": 0,
           "start_time": "2026-03-31T13:54:14.435000Z",
           "end_time": "2026-03-31T15:57:12.003+02:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_100407_1774965830878.html",
+          "profile": "default",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T13:57:24.254000Z",
+          "end_time": "2026-03-31T16:03:50.622+02:00"
+        }
+      ],
+      "failed_details": []
+    }
+  },
+  "2026-03-31T14:00:00Z": {
+    "ALL": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_100410_1774966191387.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:04:03.344000Z",
+          "end_time": "2026-03-31T16:09:50.733+02:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_100412_1774966311614.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:10:04.671000Z",
+          "end_time": "2026-03-31T16:11:51.338+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order accepted and revoked",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162438_1774967339362.html",
+          "profile": "default - intacc",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:27:45.263000Z",
+          "end_time": "2026-03-31T16:28:59.077+02:00"
+        },
+        {
+          "full_name": "Test Suites/Accept order",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162431_1774967146252.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:24:55.217000Z",
+          "end_time": "2026-03-31T16:25:45.602+02:00"
+        },
+        {
+          "full_name": "Test Suites/Reject order",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162433_1774967199439.html",
+          "profile": "default - intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:25:57.665000Z",
+          "end_time": "2026-03-31T16:26:38.931+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order not accepted and revoked",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162435_1774967253495.html",
+          "profile": "default - intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:26:50.924000Z",
+          "end_time": "2026-03-31T16:27:33.311+02:00"
+        },
+        {
+          "full_name": "Test Suites/Return order",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162442_1774967500977.html",
+          "profile": "default - intacc",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:30:36.607000Z",
+          "end_time": "2026-03-31T16:31:40.855+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order forwarded to another user",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162440_1774967425220.html",
+          "profile": "default - intacc",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:29:11.210000Z",
+          "end_time": "2026-03-31T16:30:24.788+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_100410_1774966191387.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:04:03.344000Z",
+          "end_time": "2026-03-31T16:09:50.733+02:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_100412_1774966311614.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:10:04.671000Z",
+          "end_time": "2026-03-31T16:11:51.338+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order accepted and revoked",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162438_1774967339362.html",
+          "profile": "default - intacc",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:27:45.263000Z",
+          "end_time": "2026-03-31T16:28:59.077+02:00"
+        },
+        {
+          "full_name": "Test Suites/Accept order",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162431_1774967146252.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:24:55.217000Z",
+          "end_time": "2026-03-31T16:25:45.602+02:00"
+        },
+        {
+          "full_name": "Test Suites/Reject order",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162433_1774967199439.html",
+          "profile": "default - intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:25:57.665000Z",
+          "end_time": "2026-03-31T16:26:38.931+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order not accepted and revoked",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162435_1774967253495.html",
+          "profile": "default - intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:26:50.924000Z",
+          "end_time": "2026-03-31T16:27:33.311+02:00"
+        },
+        {
+          "full_name": "Test Suites/Return order",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162442_1774967500977.html",
+          "profile": "default - intacc",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:30:36.607000Z",
+          "end_time": "2026-03-31T16:31:40.855+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order forwarded to another user",
+          "netlify_url": "https://69cbe57000369442d053c886--qa-onrex.netlify.app/reports/20260331_162440_1774967425220.html",
+          "profile": "default - intacc",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-03-31T14:29:11.210000Z",
+          "end_time": "2026-03-31T16:30:24.788+02:00"
         }
       ],
       "failed_details": []
