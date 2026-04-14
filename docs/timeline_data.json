@@ -5828,9 +5828,9 @@
   },
   "2026-04-14T07:00:00Z": {
     "ALL": {
-      "total": 12,
-      "passed": 12,
-      "failed": 0,
+      "total": 18,
+      "passed": 17,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "1_Login_logout/1a_Login-Logout",
@@ -5857,6 +5857,30 @@
           "end_time": "2026-04-14T09:24:27.561+02:00"
         },
         {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090321_1776152571418.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:30:32.418000Z",
+          "end_time": "2026-04-14T09:42:50.852+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090324_1776152718199.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:43:05.068000Z",
+          "end_time": "2026-04-14T09:45:17.584+02:00"
+        },
+        {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
           "netlify_url": "https://69ddec23760e1e49c9bec6c5--qa-onrex.netlify.app/reports/20260414_090313_1776150537264.html",
           "profile": "multi user intacc",
@@ -5869,6 +5893,18 @@
           "end_time": "2026-04-14T09:08:56.635+02:00"
         },
         {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090326_1776152931864.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:45:30.842000Z",
+          "end_time": "2026-04-14T09:48:51.568+02:00"
+        },
+        {
           "full_name": "2_case admin page/2a_Case admin data",
           "netlify_url": "https://69ddec23760e1e49c9bec6c5--qa-onrex.netlify.app/reports/20260414_090315_1776150658680.html",
           "profile": "default",
@@ -5879,6 +5915,30 @@
           "skipped": 0,
           "start_time": "2026-04-14T07:09:10.600000Z",
           "end_time": "2026-04-14T09:10:58.289+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090331_1776153713917.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:55:36.495000Z",
+          "end_time": "2026-04-14T10:01:53.326+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090329_1776153323166.html",
+          "profile": "default",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:49:04.596000Z",
+          "end_time": "2026-04-14T09:55:22.644+02:00"
         },
         {
           "full_name": "Test Suites/Order accepted and revoked",
@@ -5977,7 +6037,20 @@
           "end_time": "2026-04-14T09:15:59.027+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090319_1776151819722.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:24:40.808000Z",
+          "end_time": "2026-04-14T09:30:18.642+02:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -5987,9 +6060,9 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 12,
-      "passed": 12,
-      "failed": 0,
+      "total": 18,
+      "passed": 17,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "1_Login_logout/1a_Login-Logout",
@@ -6016,6 +6089,30 @@
           "end_time": "2026-04-14T09:24:27.561+02:00"
         },
         {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090321_1776152571418.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:30:32.418000Z",
+          "end_time": "2026-04-14T09:42:50.852+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090324_1776152718199.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:43:05.068000Z",
+          "end_time": "2026-04-14T09:45:17.584+02:00"
+        },
+        {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
           "netlify_url": "https://69ddec23760e1e49c9bec6c5--qa-onrex.netlify.app/reports/20260414_090313_1776150537264.html",
           "profile": "multi user intacc",
@@ -6028,6 +6125,18 @@
           "end_time": "2026-04-14T09:08:56.635+02:00"
         },
         {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090326_1776152931864.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:45:30.842000Z",
+          "end_time": "2026-04-14T09:48:51.568+02:00"
+        },
+        {
           "full_name": "2_case admin page/2a_Case admin data",
           "netlify_url": "https://69ddec23760e1e49c9bec6c5--qa-onrex.netlify.app/reports/20260414_090315_1776150658680.html",
           "profile": "default",
@@ -6038,6 +6147,30 @@
           "skipped": 0,
           "start_time": "2026-04-14T07:09:10.600000Z",
           "end_time": "2026-04-14T09:10:58.289+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090331_1776153713917.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:55:36.495000Z",
+          "end_time": "2026-04-14T10:01:53.326+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090329_1776153323166.html",
+          "profile": "default",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:49:04.596000Z",
+          "end_time": "2026-04-14T09:55:22.644+02:00"
         },
         {
           "full_name": "Test Suites/Order accepted and revoked",
@@ -6134,6 +6267,68 @@
           "skipped": 0,
           "start_time": "2026-04-14T07:12:56.302000Z",
           "end_time": "2026-04-14T09:15:59.027+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090319_1776151819722.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T07:24:40.808000Z",
+          "end_time": "2026-04-14T09:30:18.642+02:00"
+        }
+      ]
+    }
+  },
+  "2026-04-14T08:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090333_1776153954160.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T08:02:06.760000Z",
+          "end_time": "2026-04-14T10:05:53.760+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://69ddf5a654181767e8d61b8f--qa-onrex.netlify.app/reports/20260414_090333_1776153954160.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T08:02:06.760000Z",
+          "end_time": "2026-04-14T10:05:53.760+02:00"
         }
       ],
       "failed_details": []
