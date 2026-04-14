@@ -6552,8 +6552,8 @@
   },
   "2026-04-14T09:00:00Z": {
     "ALL": {
-      "total": 5,
-      "passed": 4,
+      "total": 8,
+      "passed": 7,
       "failed": 1,
       "passed_details": [
         {
@@ -6579,6 +6579,42 @@
           "skipped": 0,
           "start_time": "2026-04-14T09:14:33.224000Z",
           "end_time": "2026-04-14T11:21:05.701+02:00"
+        },
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090408_1776160443178.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T09:30:27.224000Z",
+          "end_time": "2026-04-14T11:54:02.348+02:00"
+        },
+        {
+          "full_name": "master data/1_text block master data",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090413_1776160846970.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T09:58:14.128000Z",
+          "end_time": "2026-04-14T12:00:46.434+02:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090411_1776160680596.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T09:54:16.410000Z",
+          "end_time": "2026-04-14T11:58:00.184+02:00"
         },
         {
           "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
@@ -6628,8 +6664,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 5,
-      "passed": 4,
+      "total": 8,
+      "passed": 7,
       "failed": 1,
       "passed_details": [
         {
@@ -6655,6 +6691,42 @@
           "skipped": 0,
           "start_time": "2026-04-14T09:14:33.224000Z",
           "end_time": "2026-04-14T11:21:05.701+02:00"
+        },
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090408_1776160443178.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T09:30:27.224000Z",
+          "end_time": "2026-04-14T11:54:02.348+02:00"
+        },
+        {
+          "full_name": "master data/1_text block master data",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090413_1776160846970.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T09:58:14.128000Z",
+          "end_time": "2026-04-14T12:00:46.434+02:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090411_1776160680596.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T09:54:16.410000Z",
+          "end_time": "2026-04-14T11:58:00.184+02:00"
         },
         {
           "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
@@ -6693,6 +6765,129 @@
           "skipped": 0,
           "start_time": "2026-04-14T09:00:29.129000Z",
           "end_time": "2026-04-14T11:09:13.443+02:00"
+        }
+      ]
+    }
+  },
+  "2026-04-14T10:00:00Z": {
+    "ALL": {
+      "total": 4,
+      "passed": 1,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "Accounting",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090416_1776160987677.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:01:00.085000Z",
+          "end_time": "2026-04-14T12:03:07.545+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090423_1776161995903.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:13:31.512000Z",
+          "end_time": "2026-04-14T12:19:54.145+02:00"
+        },
+        {
+          "full_name": "invoice",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090421_1776161598610.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:08:22.121000Z",
+          "end_time": "2026-04-14T12:13:17.650+02:00"
+        },
+        {
+          "full_name": "settings/invoice settings",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090418_1776161288314.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:03:20.606000Z",
+          "end_time": "2026-04-14T12:08:06.499+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 4,
+      "passed": 1,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "Accounting",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090416_1776160987677.html",
+          "profile": "default",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:01:00.085000Z",
+          "end_time": "2026-04-14T12:03:07.545+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090423_1776161995903.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:13:31.512000Z",
+          "end_time": "2026-04-14T12:19:54.145+02:00"
+        },
+        {
+          "full_name": "invoice",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090421_1776161598610.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:08:22.121000Z",
+          "end_time": "2026-04-14T12:13:17.650+02:00"
+        },
+        {
+          "full_name": "settings/invoice settings",
+          "netlify_url": "https://69de1ccbf5d4200598387391--qa-onrex.netlify.app/reports/20260414_090418_1776161288314.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-14T10:03:20.606000Z",
+          "end_time": "2026-04-14T12:08:06.499+02:00"
         }
       ]
     }
