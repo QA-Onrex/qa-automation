@@ -56355,6 +56355,22 @@
         "2026.04.15": {
           "sessions": [
             {
+              "netlify_url": "https://69df77bea522b98f5d66550f--qa-onrex.netlify.app/reports/20260415_131112_1776252196366.html",
+              "html_filename": "20260415_131112_1776252196366.html",
+              "environment": "https://intacc01.onrex.de/auth",
+              "project": "DYNAREX",
+              "test_suite_id": "Test Suites/6_valuation/6b_valuation Expert",
+              "profile": "default",
+              "test_cases": 11,
+              "passed": 11,
+              "failed": 0,
+              "error": 0,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-04-15T13:11:23.977+02:00",
+              "end": "2026-04-15T13:23:15.898+02:00"
+            },
+            {
               "netlify_url": "https://69df0865625ed12009713290--qa-onrex.netlify.app/reports/20260415_010127_1776216753451.html",
               "html_filename": "20260415_010127_1776216753451.html",
               "environment": "https://intdev01.onrex.de/auth",
@@ -56372,21 +56388,21 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://69df0865625ed12009713290--qa-onrex.netlify.app/reports/20260415_010127_1776216753451.html",
-            "html_filename": "20260415_010127_1776216753451.html",
-            "environment": "https://intdev01.onrex.de/auth",
+            "netlify_url": "https://69df77bea522b98f5d66550f--qa-onrex.netlify.app/reports/20260415_131112_1776252196366.html",
+            "html_filename": "20260415_131112_1776252196366.html",
+            "environment": "https://intacc01.onrex.de/auth",
             "project": "DYNAREX",
             "test_suite_id": "Test Suites/6_valuation/6b_valuation Expert",
-            "profile": "default DYNAREX intdev",
+            "profile": "default",
             "test_cases": 11,
-            "passed": 9,
-            "failed": 2,
+            "passed": 11,
+            "failed": 0,
             "error": 0,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-04-15T03:22:36.553+02:00",
-            "end": "2026-04-15T03:32:32.214+02:00",
-            "sessionCount": 1
+            "start": "2026-04-15T13:11:23.977+02:00",
+            "end": "2026-04-15T13:23:15.898+02:00",
+            "sessionCount": 2
           }
         }
       },
@@ -103386,5 +103402,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "15/04/2026, 11:24:34 (GMT+1)"
+  "last_updated": "15/04/2026, 12:34:23 (GMT+1)"
 }
