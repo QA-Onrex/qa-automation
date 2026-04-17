@@ -10800,8 +10800,8 @@
   },
   "2026-04-16T23:00:00Z": {
     "ALL": {
-      "total": 4,
-      "passed": 4,
+      "total": 7,
+      "passed": 7,
       "failed": 0,
       "passed_details": [
         {
@@ -10827,6 +10827,42 @@
           "skipped": 0,
           "start_time": "2026-04-16T23:08:04.787000Z",
           "end_time": "2026-04-17T01:21:55.043+02:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010051_1776382497792.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-16T23:22:00.131000Z",
+          "end_time": "2026-04-17T01:34:57.077+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010053_1776382955903.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-16T23:35:02.021000Z",
+          "end_time": "2026-04-17T01:42:35.483+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010055_1776384143030.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-16T23:42:40.371000Z",
+          "end_time": "2026-04-17T02:02:22.604+02:00"
         },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
@@ -10856,8 +10892,8 @@
       "failed_details": []
     },
     "intdev": {
-      "total": 4,
-      "passed": 4,
+      "total": 7,
+      "passed": 7,
       "failed": 0,
       "passed_details": [
         {
@@ -10885,6 +10921,42 @@
           "end_time": "2026-04-17T01:21:55.043+02:00"
         },
         {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010051_1776382497792.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-16T23:22:00.131000Z",
+          "end_time": "2026-04-17T01:34:57.077+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010053_1776382955903.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-16T23:35:02.021000Z",
+          "end_time": "2026-04-17T01:42:35.483+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010055_1776384143030.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-16T23:42:40.371000Z",
+          "end_time": "2026-04-17T02:02:22.604+02:00"
+        },
+        {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
           "netlify_url": "https://69e171036b56994da1b4e48d--qa-onrex.netlify.app/reports/20260417_010045_1776380752497.html",
           "profile": "multi user intdev",
@@ -10907,6 +10979,79 @@
           "skipped": 0,
           "start_time": "2026-04-16T23:05:57.202000Z",
           "end_time": "2026-04-17T01:07:59.637+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-04-17T00:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010057_1776384295316.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T00:02:27.583000Z",
+          "end_time": "2026-04-17T02:04:54.765+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010059_1776384489241.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T00:04:59.437000Z",
+          "end_time": "2026-04-17T02:08:08.883+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010057_1776384295316.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T00:02:27.583000Z",
+          "end_time": "2026-04-17T02:04:54.765+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://69e17a1a9978c65caf6c17fb--qa-onrex.netlify.app/reports/20260417_010059_1776384489241.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T00:04:59.437000Z",
+          "end_time": "2026-04-17T02:08:08.883+02:00"
         }
       ],
       "failed_details": []
