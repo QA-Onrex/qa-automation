@@ -11944,8 +11944,8 @@
   },
   "2026-04-17T05:00:00Z": {
     "ALL": {
-      "total": 8,
-      "passed": 6,
+      "total": 10,
+      "passed": 8,
       "failed": 2,
       "passed_details": [
         {
@@ -12019,6 +12019,30 @@
           "skipped": 0,
           "start_time": "2026-04-17T05:44:28.760000Z",
           "end_time": "2026-04-17T07:47:42.232+02:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_010221_1776405311563.html",
+          "profile": "default intdev",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:47:46.696000Z",
+          "end_time": "2026-04-17T07:55:11.403+02:00"
+        },
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_010223_1776405730647.html",
+          "profile": "default intdev",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:55:15.625000Z",
+          "end_time": "2026-04-17T08:02:09.969+02:00"
         }
       ],
       "failed_details": [
@@ -12049,8 +12073,8 @@
       ]
     },
     "intdev": {
-      "total": 8,
-      "passed": 6,
+      "total": 10,
+      "passed": 8,
       "failed": 2,
       "passed_details": [
         {
@@ -12124,6 +12148,30 @@
           "skipped": 0,
           "start_time": "2026-04-17T05:44:28.760000Z",
           "end_time": "2026-04-17T07:47:42.232+02:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_010221_1776405311563.html",
+          "profile": "default intdev",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:47:46.696000Z",
+          "end_time": "2026-04-17T07:55:11.403+02:00"
+        },
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_010223_1776405730647.html",
+          "profile": "default intdev",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:55:15.625000Z",
+          "end_time": "2026-04-17T08:02:09.969+02:00"
         }
       ],
       "failed_details": [
@@ -12150,6 +12198,780 @@
           "skipped": 0,
           "start_time": "2026-04-17T05:01:24.433000Z",
           "end_time": "2026-04-17T07:08:02.824+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-04-17T06:00:00Z": {
+    "ALL": {
+      "total": 19,
+      "passed": 14,
+      "failed": 5,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081029_1776408974900.html",
+          "profile": "dynarex intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:55:21.112000Z",
+          "end_time": "2026-04-17T08:56:14.486+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081027_1776408916944.html",
+          "profile": "dynarex intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:51:07.483000Z",
+          "end_time": "2026-04-17T08:55:16.616+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081019_1776407916446.html",
+          "profile": "dynarex intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:26:06.694000Z",
+          "end_time": "2026-04-17T08:38:35.394+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081023_1776408469663.html",
+          "profile": "dynarex intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:39:52.162000Z",
+          "end_time": "2026-04-17T08:47:49.288+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081021_1776407987425.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:38:40.557000Z",
+          "end_time": "2026-04-17T08:39:47.138+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081017_1776407162815.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:24:42.395000Z",
+          "end_time": "2026-04-17T08:26:02.228+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081015_1776407078334.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:20:49.322000Z",
+          "end_time": "2026-04-17T08:24:37.694+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081031_1776409799704.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:56:19.850000Z",
+          "end_time": "2026-04-17T09:09:59.186+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081013_1776406845271.html",
+          "profile": "dynarex intdev",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:19:27.420000Z",
+          "end_time": "2026-04-17T08:20:45.018+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081025_1776408663020.html",
+          "profile": "dynarex intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:47:53.568000Z",
+          "end_time": "2026-04-17T08:51:02.859+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081011_1776406763121.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:18:26.237000Z",
+          "end_time": "2026-04-17T08:19:22.818+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081003_1776406531501.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:14:34.553000Z",
+          "end_time": "2026-04-17T08:15:31.284+02:00"
+        },
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_080959_1776406289828.html",
+          "profile": "dynarex intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:10:36.364000Z",
+          "end_time": "2026-04-17T08:11:29.219+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Offices",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081001_1776406470580.html",
+          "profile": "dynarex intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:11:34.429000Z",
+          "end_time": "2026-04-17T08:14:30.118+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081005_1776406575022.html",
+          "profile": "member intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:15:36.143000Z",
+          "end_time": "2026-04-17T08:16:14.174+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081009_1776406702275.html",
+          "profile": "member intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:17:47.279000Z",
+          "end_time": "2026-04-17T08:18:21.533+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081007_1776406662981.html",
+          "profile": "dynarex intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:16:18.929000Z",
+          "end_time": "2026-04-17T08:17:42.513+02:00"
+        },
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_080617_1776406168951.html",
+          "profile": "DAT HU intdev",
+          "passed": 2,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:06:23.144000Z",
+          "end_time": "2026-04-17T08:09:27.773+02:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_010225_1776405941955.html",
+          "profile": "default intdev",
+          "passed": 4,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:02:15.334000Z",
+          "end_time": "2026-04-17T08:05:41.081+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 19,
+      "passed": 14,
+      "failed": 5,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081029_1776408974900.html",
+          "profile": "dynarex intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:55:21.112000Z",
+          "end_time": "2026-04-17T08:56:14.486+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081027_1776408916944.html",
+          "profile": "dynarex intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:51:07.483000Z",
+          "end_time": "2026-04-17T08:55:16.616+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081019_1776407916446.html",
+          "profile": "dynarex intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:26:06.694000Z",
+          "end_time": "2026-04-17T08:38:35.394+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081023_1776408469663.html",
+          "profile": "dynarex intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:39:52.162000Z",
+          "end_time": "2026-04-17T08:47:49.288+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081021_1776407987425.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:38:40.557000Z",
+          "end_time": "2026-04-17T08:39:47.138+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081017_1776407162815.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:24:42.395000Z",
+          "end_time": "2026-04-17T08:26:02.228+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081015_1776407078334.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:20:49.322000Z",
+          "end_time": "2026-04-17T08:24:37.694+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081031_1776409799704.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:56:19.850000Z",
+          "end_time": "2026-04-17T09:09:59.186+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081013_1776406845271.html",
+          "profile": "dynarex intdev",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:19:27.420000Z",
+          "end_time": "2026-04-17T08:20:45.018+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081025_1776408663020.html",
+          "profile": "dynarex intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:47:53.568000Z",
+          "end_time": "2026-04-17T08:51:02.859+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081011_1776406763121.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:18:26.237000Z",
+          "end_time": "2026-04-17T08:19:22.818+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081003_1776406531501.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:14:34.553000Z",
+          "end_time": "2026-04-17T08:15:31.284+02:00"
+        },
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_080959_1776406289828.html",
+          "profile": "dynarex intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:10:36.364000Z",
+          "end_time": "2026-04-17T08:11:29.219+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Offices",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081001_1776406470580.html",
+          "profile": "dynarex intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:11:34.429000Z",
+          "end_time": "2026-04-17T08:14:30.118+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081005_1776406575022.html",
+          "profile": "member intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:15:36.143000Z",
+          "end_time": "2026-04-17T08:16:14.174+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081009_1776406702275.html",
+          "profile": "member intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:17:47.279000Z",
+          "end_time": "2026-04-17T08:18:21.533+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_081007_1776406662981.html",
+          "profile": "dynarex intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:16:18.929000Z",
+          "end_time": "2026-04-17T08:17:42.513+02:00"
+        },
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_080617_1776406168951.html",
+          "profile": "DAT HU intdev",
+          "passed": 2,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:06:23.144000Z",
+          "end_time": "2026-04-17T08:09:27.773+02:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_010225_1776405941955.html",
+          "profile": "default intdev",
+          "passed": 4,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T06:02:15.334000Z",
+          "end_time": "2026-04-17T08:05:41.081+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-04-17T07:00:00Z": {
+    "ALL": {
+      "total": 11,
+      "passed": 10,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Order accepted and revoked",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091039_1776410032181.html",
+          "profile": "default - intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:12:48.826000Z",
+          "end_time": "2026-04-17T09:13:51.717+02:00"
+        },
+        {
+          "full_name": "Test Suites/Accept order",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091033_1776409890791.html",
+          "profile": "default - intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:10:48.263000Z",
+          "end_time": "2026-04-17T09:11:30.186+02:00"
+        },
+        {
+          "full_name": "Test Suites/Reject order",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091035_1776409926235.html",
+          "profile": "default - intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:11:35.431000Z",
+          "end_time": "2026-04-17T09:12:05.729+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order not accepted and revoked",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091037_1776409964580.html",
+          "profile": "default - intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:12:10.694000Z",
+          "end_time": "2026-04-17T09:12:43.992+02:00"
+        },
+        {
+          "full_name": "Test Suites/Return order",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091043_1776410162555.html",
+          "profile": "default - intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:15:04.225000Z",
+          "end_time": "2026-04-17T09:16:02.302+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order forwarded to another user",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091041_1776410100192.html",
+          "profile": "default - intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:13:56.354000Z",
+          "end_time": "2026-04-17T09:15:00.044+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_092354_1776410668632.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:24:03.241000Z",
+          "end_time": "2026-04-17T09:24:28.245+02:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_092358_1776411240110.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:27:19.273000Z",
+          "end_time": "2026-04-17T09:33:59.382+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091647_1776410531936.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:20:18.259000Z",
+          "end_time": "2026-04-17T09:22:11.536+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091645_1776410414155.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:16:58.523000Z",
+          "end_time": "2026-04-17T09:20:13.235+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "office management",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_092356_1776410834685.html",
+          "profile": "default_intdev",
+          "passed": 5,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:24:33.034000Z",
+          "end_time": "2026-04-17T09:27:13.637+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 11,
+      "passed": 10,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Order accepted and revoked",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091039_1776410032181.html",
+          "profile": "default - intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:12:48.826000Z",
+          "end_time": "2026-04-17T09:13:51.717+02:00"
+        },
+        {
+          "full_name": "Test Suites/Accept order",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091033_1776409890791.html",
+          "profile": "default - intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:10:48.263000Z",
+          "end_time": "2026-04-17T09:11:30.186+02:00"
+        },
+        {
+          "full_name": "Test Suites/Reject order",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091035_1776409926235.html",
+          "profile": "default - intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:11:35.431000Z",
+          "end_time": "2026-04-17T09:12:05.729+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order not accepted and revoked",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091037_1776409964580.html",
+          "profile": "default - intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:12:10.694000Z",
+          "end_time": "2026-04-17T09:12:43.992+02:00"
+        },
+        {
+          "full_name": "Test Suites/Return order",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091043_1776410162555.html",
+          "profile": "default - intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:15:04.225000Z",
+          "end_time": "2026-04-17T09:16:02.302+02:00"
+        },
+        {
+          "full_name": "Test Suites/Order forwarded to another user",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091041_1776410100192.html",
+          "profile": "default - intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:13:56.354000Z",
+          "end_time": "2026-04-17T09:15:00.044+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_092354_1776410668632.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:24:03.241000Z",
+          "end_time": "2026-04-17T09:24:28.245+02:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_092358_1776411240110.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:27:19.273000Z",
+          "end_time": "2026-04-17T09:33:59.382+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091647_1776410531936.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:20:18.259000Z",
+          "end_time": "2026-04-17T09:22:11.536+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_091645_1776410414155.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:16:58.523000Z",
+          "end_time": "2026-04-17T09:20:13.235+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "office management",
+          "netlify_url": "https://69e1e816a596c748dbb0176d--qa-onrex.netlify.app/reports/20260417_092356_1776410834685.html",
+          "profile": "default_intdev",
+          "passed": 5,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T07:24:33.034000Z",
+          "end_time": "2026-04-17T09:27:13.637+02:00"
         }
       ]
     },
