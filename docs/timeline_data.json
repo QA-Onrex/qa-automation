@@ -11695,5 +11695,470 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-04-17T03:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "settings/workflow/invoice wf - allowed actions",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010151_1776398618552.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T03:50:15.465000Z",
+          "end_time": "2026-04-17T06:03:37.936+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010149_1776397810484.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 54,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T03:12:03.819000Z",
+          "end_time": "2026-04-17T05:50:08.726+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "settings/workflow/invoice wf - allowed actions",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010151_1776398618552.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T03:50:15.465000Z",
+          "end_time": "2026-04-17T06:03:37.936+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010149_1776397810484.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 54,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T03:12:03.819000Z",
+          "end_time": "2026-04-17T05:50:08.726+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-04-17T04:00:00Z": {
+    "ALL": {
+      "total": 6,
+      "passed": 1,
+      "failed": 5,
+      "passed_details": [
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010157_1776399729395.html",
+          "profile": "default DoD intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:14:23.878000Z",
+          "end_time": "2026-04-17T06:22:08.690+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/DoD Regression/member - get initial billing counts",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010155_1776399259451.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:12:57.488000Z",
+          "end_time": "2026-04-17T06:14:19.023+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010153_1776399173100.html",
+          "profile": "default DoD intdev",
+          "passed": 5,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:03:43.999000Z",
+          "end_time": "2026-04-17T06:12:52.483+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010203_1776402079797.html",
+          "profile": "default member intdev",
+          "passed": 13,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:50:51.830000Z",
+          "end_time": "2026-04-17T07:01:19.041+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010201_1776401447333.html",
+          "profile": "default member intdev",
+          "passed": 21,
+          "failed": 19,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:24:02.594000Z",
+          "end_time": "2026-04-17T06:50:45.970+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/member - get final DoD check",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010159_1776399838250.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:22:13.613000Z",
+          "end_time": "2026-04-17T06:23:57.412+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 6,
+      "passed": 1,
+      "failed": 5,
+      "passed_details": [
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010157_1776399729395.html",
+          "profile": "default DoD intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:14:23.878000Z",
+          "end_time": "2026-04-17T06:22:08.690+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/DoD Regression/member - get initial billing counts",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010155_1776399259451.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:12:57.488000Z",
+          "end_time": "2026-04-17T06:14:19.023+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010153_1776399173100.html",
+          "profile": "default DoD intdev",
+          "passed": 5,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:03:43.999000Z",
+          "end_time": "2026-04-17T06:12:52.483+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010203_1776402079797.html",
+          "profile": "default member intdev",
+          "passed": 13,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:50:51.830000Z",
+          "end_time": "2026-04-17T07:01:19.041+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010201_1776401447333.html",
+          "profile": "default member intdev",
+          "passed": 21,
+          "failed": 19,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:24:02.594000Z",
+          "end_time": "2026-04-17T06:50:45.970+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/member - get final DoD check",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010159_1776399838250.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T04:22:13.613000Z",
+          "end_time": "2026-04-17T06:23:57.412+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-04-17T05:00:00Z": {
+    "ALL": {
+      "total": 8,
+      "passed": 6,
+      "failed": 2,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010209_1776403911338.html",
+          "profile": "default member intdev",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:18:01.597000Z",
+          "end_time": "2026-04-17T07:31:50.583+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD plus",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010217_1776404664489.html",
+          "profile": "default DoDplus intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:41:08.684000Z",
+          "end_time": "2026-04-17T07:44:24.122+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010213_1776404265155.html",
+          "profile": "SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:34:22.394000Z",
+          "end_time": "2026-04-17T07:37:44.704+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - DYNAREX",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010211_1776404057982.html",
+          "profile": "default intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:31:55.733000Z",
+          "end_time": "2026-04-17T07:34:17.823+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010215_1776404464410.html",
+          "profile": "default DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:37:49.488000Z",
+          "end_time": "2026-04-17T07:41:03.749+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010219_1776404862495.html",
+          "profile": "default GTU DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:44:28.760000Z",
+          "end_time": "2026-04-17T07:47:42.232+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010207_1776403076334.html",
+          "profile": "default member intdev",
+          "passed": 1,
+          "failed": 17,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:08:08.115000Z",
+          "end_time": "2026-04-17T07:17:55.232+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010205_1776402483600.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:01:24.433000Z",
+          "end_time": "2026-04-17T07:08:02.824+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 8,
+      "passed": 6,
+      "failed": 2,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010209_1776403911338.html",
+          "profile": "default member intdev",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:18:01.597000Z",
+          "end_time": "2026-04-17T07:31:50.583+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD plus",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010217_1776404664489.html",
+          "profile": "default DoDplus intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:41:08.684000Z",
+          "end_time": "2026-04-17T07:44:24.122+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010213_1776404265155.html",
+          "profile": "SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:34:22.394000Z",
+          "end_time": "2026-04-17T07:37:44.704+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - DYNAREX",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010211_1776404057982.html",
+          "profile": "default intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:31:55.733000Z",
+          "end_time": "2026-04-17T07:34:17.823+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010215_1776404464410.html",
+          "profile": "default DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:37:49.488000Z",
+          "end_time": "2026-04-17T07:41:03.749+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010219_1776404862495.html",
+          "profile": "default GTU DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:44:28.760000Z",
+          "end_time": "2026-04-17T07:47:42.232+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010207_1776403076334.html",
+          "profile": "default member intdev",
+          "passed": 1,
+          "failed": 17,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:08:08.115000Z",
+          "end_time": "2026-04-17T07:17:55.232+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://69e1cb4708020f2fac6c711d--qa-onrex.netlify.app/reports/20260417_010205_1776402483600.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-17T05:01:24.433000Z",
+          "end_time": "2026-04-17T07:08:02.824+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
   }
 }
