@@ -11544,9 +11544,9 @@
   },
   "2026-04-23T22:00:00Z": {
     "ALL": {
-      "total": 10,
+      "total": 11,
       "passed": 5,
-      "failed": 5,
+      "failed": 6,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3g_vehicle tires tab",
@@ -11669,13 +11669,25 @@
           "skipped": 0,
           "start_time": "2026-04-23T22:12:53.854000Z",
           "end_time": "2026-04-24T00:15:46.973+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230120_1776985683989.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 1,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T22:58:12.901000Z",
+          "end_time": "2026-04-24T01:08:01.468+02:00"
         }
       ]
     },
     "intdev": {
-      "total": 10,
+      "total": 11,
       "passed": 5,
-      "failed": 5,
+      "failed": 6,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3g_vehicle tires tab",
@@ -11798,8 +11810,165 @@
           "skipped": 0,
           "start_time": "2026-04-23T22:12:53.854000Z",
           "end_time": "2026-04-24T00:15:46.973+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230120_1776985683989.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 1,
+          "failed": 10,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T22:58:12.901000Z",
+          "end_time": "2026-04-24T01:08:01.468+02:00"
         }
       ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-04-23T23:00:00Z": {
+    "ALL": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6e_Manual Valuation",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230128_1776987322672.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:31:21.385000Z",
+          "end_time": "2026-04-24T01:35:22.168+02:00"
+        },
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230126_1776987077050.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:24:45.677000Z",
+          "end_time": "2026-04-24T01:31:16.664+02:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230124_1776986681336.html",
+          "profile": "anke SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:18:42.109000Z",
+          "end_time": "2026-04-24T01:24:40.990+02:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230130_1776987608016.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:35:27.153000Z",
+          "end_time": "2026-04-24T01:40:07.423+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230122_1776986317841.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:08:09.123000Z",
+          "end_time": "2026-04-24T01:18:37.268+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6e_Manual Valuation",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230128_1776987322672.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:31:21.385000Z",
+          "end_time": "2026-04-24T01:35:22.168+02:00"
+        },
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230126_1776987077050.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:24:45.677000Z",
+          "end_time": "2026-04-24T01:31:16.664+02:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230124_1776986681336.html",
+          "profile": "anke SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:18:42.109000Z",
+          "end_time": "2026-04-24T01:24:40.990+02:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230130_1776987608016.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:35:27.153000Z",
+          "end_time": "2026-04-24T01:40:07.423+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://69eab1a17f5933c967d26ce9--qa-onrex.netlify.app/reports/20260423_230122_1776986317841.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-23T23:08:09.123000Z",
+          "end_time": "2026-04-24T01:18:37.268+02:00"
+        }
+      ],
+      "failed_details": []
     },
     "intacc": {
       "total": 0,
