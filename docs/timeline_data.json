@@ -7574,8 +7574,8 @@
   },
   "2026-04-28T13:00:00Z": {
     "ALL": {
-      "total": 7,
-      "passed": 6,
+      "total": 17,
+      "passed": 16,
       "failed": 1,
       "passed_details": [
         {
@@ -7589,6 +7589,126 @@
           "skipped": 0,
           "start_time": "2026-04-28T13:01:45.930000Z",
           "end_time": "2026-04-28T15:10:51.475+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095114_1777382517374.html",
+          "profile": "default member intacc",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:11:04.978000Z",
+          "end_time": "2026-04-28T15:21:56.831+02:00"
+        },
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095117_1777382699934.html",
+          "profile": "DAT HU intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:22:09.337000Z",
+          "end_time": "2026-04-28T15:24:59.806+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD plus",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095128_1777383350412.html",
+          "profile": "default DoDplus intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:32:54.885000Z",
+          "end_time": "2026-04-28T15:35:49.933+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095122_1777382975603.html",
+          "profile": "SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:27:31.945000Z",
+          "end_time": "2026-04-28T15:29:35.196+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - DYNAREX",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095120_1777382840115.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:25:11.741000Z",
+          "end_time": "2026-04-28T15:27:19.647+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095125_1777383163272.html",
+          "profile": "default DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:29:47.509000Z",
+          "end_time": "2026-04-28T15:32:43.037+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095130_1777383536677.html",
+          "profile": "default GTU DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:36:02.130000Z",
+          "end_time": "2026-04-28T15:38:56.181+02:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095132_1777383975655.html",
+          "profile": "default",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:39:08.576000Z",
+          "end_time": "2026-04-28T15:46:15.133+02:00"
+        },
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095134_1777384349327.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:46:28.074000Z",
+          "end_time": "2026-04-28T15:52:29.175+02:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095136_1777384463239.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:52:40.850000Z",
+          "end_time": "2026-04-28T15:54:22.795+02:00"
         },
         {
           "full_name": "Test Suites/Order accepted and revoked",
@@ -7674,8 +7794,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 7,
-      "passed": 6,
+      "total": 17,
+      "passed": 16,
       "failed": 1,
       "passed_details": [
         {
@@ -7689,6 +7809,126 @@
           "skipped": 0,
           "start_time": "2026-04-28T13:01:45.930000Z",
           "end_time": "2026-04-28T15:10:51.475+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095114_1777382517374.html",
+          "profile": "default member intacc",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:11:04.978000Z",
+          "end_time": "2026-04-28T15:21:56.831+02:00"
+        },
+        {
+          "full_name": "DEKRA HU",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095117_1777382699934.html",
+          "profile": "DAT HU intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:22:09.337000Z",
+          "end_time": "2026-04-28T15:24:59.806+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD plus",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095128_1777383350412.html",
+          "profile": "default DoDplus intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:32:54.885000Z",
+          "end_time": "2026-04-28T15:35:49.933+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - SD3ep",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095122_1777382975603.html",
+          "profile": "SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:27:31.945000Z",
+          "end_time": "2026-04-28T15:29:35.196+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Auto Requested - DYNAREX",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095120_1777382840115.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:25:11.741000Z",
+          "end_time": "2026-04-28T15:27:19.647+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095125_1777383163272.html",
+          "profile": "default DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:29:47.509000Z",
+          "end_time": "2026-04-28T15:32:43.037+02:00"
+        },
+        {
+          "full_name": "Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095130_1777383536677.html",
+          "profile": "default GTU DoD intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:36:02.130000Z",
+          "end_time": "2026-04-28T15:38:56.181+02:00"
+        },
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095132_1777383975655.html",
+          "profile": "default",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:39:08.576000Z",
+          "end_time": "2026-04-28T15:46:15.133+02:00"
+        },
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095134_1777384349327.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:46:28.074000Z",
+          "end_time": "2026-04-28T15:52:29.175+02:00"
+        },
+        {
+          "full_name": "CorrespondenceTemplate_Editable",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_095136_1777384463239.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T13:52:40.850000Z",
+          "end_time": "2026-04-28T15:54:22.795+02:00"
         },
         {
           "full_name": "Test Suites/Order accepted and revoked",
@@ -7765,6 +8005,274 @@
           "end_time": "2026-04-28T15:15:11.983+02:00"
         }
       ]
+    }
+  },
+  "2026-04-28T14:00:00Z": {
+    "ALL": {
+      "total": 5,
+      "passed": 1,
+      "failed": 4,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_165341_1777388278424.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:53:58.388000Z",
+          "end_time": "2026-04-28T16:57:57.803+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Return order",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_162408_1777386329011.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:24:18.239000Z",
+          "end_time": "2026-04-28T16:25:28.324+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_165343_1777388509152.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:58:09.599000Z",
+          "end_time": "2026-04-28T17:01:48.381+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_163129_1777387248198.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:37:13.684000Z",
+          "end_time": "2026-04-28T16:40:47.771+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_163127_1777387023098.html",
+          "profile": "default",
+          "passed": 14,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:31:43.989000Z",
+          "end_time": "2026-04-28T16:37:02.302+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 5,
+      "passed": 1,
+      "failed": 4,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_165341_1777388278424.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:53:58.388000Z",
+          "end_time": "2026-04-28T16:57:57.803+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Return order",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_162408_1777386329011.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:24:18.239000Z",
+          "end_time": "2026-04-28T16:25:28.324+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_165343_1777388509152.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:58:09.599000Z",
+          "end_time": "2026-04-28T17:01:48.381+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_163129_1777387248198.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:37:13.684000Z",
+          "end_time": "2026-04-28T16:40:47.771+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_163127_1777387023098.html",
+          "profile": "default",
+          "passed": 14,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T14:31:43.989000Z",
+          "end_time": "2026-04-28T16:37:02.302+02:00"
+        }
+      ]
+    }
+  },
+  "2026-04-28T15:00:00Z": {
+    "ALL": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_173618_1777390967914.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:40:37.577000Z",
+          "end_time": "2026-04-28T17:42:47.639+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_171406_1777389632470.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:18:24.140000Z",
+          "end_time": "2026-04-28T17:20:31.846+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_173615_1777390827044.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:36:34.204000Z",
+          "end_time": "2026-04-28T17:40:26.455+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_171404_1777389493609.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:14:21.213000Z",
+          "end_time": "2026-04-28T17:18:13.080+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_173618_1777390967914.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:40:37.577000Z",
+          "end_time": "2026-04-28T17:42:47.639+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_171406_1777389632470.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:18:24.140000Z",
+          "end_time": "2026-04-28T17:20:31.846+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_173615_1777390827044.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:36:34.204000Z",
+          "end_time": "2026-04-28T17:40:26.455+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://69f0d693a568a95700b6a363--qa-onrex.netlify.app/reports/20260428_171404_1777389493609.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-04-28T15:14:21.213000Z",
+          "end_time": "2026-04-28T17:18:13.080+02:00"
+        }
+      ],
+      "failed_details": []
     }
   }
 }
