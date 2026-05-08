@@ -27884,6 +27884,22 @@
         "2026.05.08": {
           "sessions": [
             {
+              "netlify_url": "https://69fd99373d6938a87be07cc2--qa-onrex.netlify.app/reports/20260508_090541_1778224010554.html",
+              "html_filename": "20260508_090541_1778224010554.html",
+              "environment": null,
+              "project": "DYNAREX V2",
+              "test_suite_id": "Test Suites/Test Suites/login-logout",
+              "profile": "dynarex intdev",
+              "test_cases": 7,
+              "passed": 0,
+              "failed": 2,
+              "error": 5,
+              "incomplete": 0,
+              "skipped": 0,
+              "start": "2026-05-08T09:06:29.237+02:00",
+              "end": "2026-05-08T09:06:50.104+02:00"
+            },
+            {
               "netlify_url": "https://69fd68b52218800fb40ba94a--qa-onrex.netlify.app/reports/20260508_043617_1778207866964.html",
               "html_filename": "20260508_043617_1778207866964.html",
               "environment": "https://intdev01.onrex.de/auth/",
@@ -27901,21 +27917,21 @@
             }
           ],
           "latest": {
-            "netlify_url": "https://69fd68b52218800fb40ba94a--qa-onrex.netlify.app/reports/20260508_043617_1778207866964.html",
-            "html_filename": "20260508_043617_1778207866964.html",
-            "environment": "https://intdev01.onrex.de/auth/",
+            "netlify_url": "https://69fd99373d6938a87be07cc2--qa-onrex.netlify.app/reports/20260508_090541_1778224010554.html",
+            "html_filename": "20260508_090541_1778224010554.html",
+            "environment": null,
             "project": "DYNAREX V2",
             "test_suite_id": "Test Suites/Test Suites/login-logout",
             "profile": "dynarex intdev",
             "test_cases": 7,
-            "passed": 7,
-            "failed": 0,
-            "error": 0,
+            "passed": 0,
+            "failed": 2,
+            "error": 5,
             "incomplete": 0,
             "skipped": 0,
-            "start": "2026-05-08T04:36:54.070+02:00",
-            "end": "2026-05-08T04:37:46.508+02:00",
-            "sessionCount": 1
+            "start": "2026-05-08T09:06:29.237+02:00",
+            "end": "2026-05-08T09:06:50.104+02:00",
+            "sessionCount": 2
           }
         }
       },
@@ -165227,5 +165243,5 @@
     "2025.11.24",
     "2025.11.21"
   ],
-  "last_updated": "08/05/2026, 07:21:04 (GMT+1)"
+  "last_updated": "08/05/2026, 09:05:12 (GMT+1)"
 }
