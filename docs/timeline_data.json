@@ -12060,9 +12060,9 @@
   },
   "2026-05-14T21:00:00Z": {
     "ALL": {
-      "total": 10,
+      "total": 11,
       "passed": 10,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "1_Login_logout/1a_Login-Logout",
@@ -12185,12 +12185,25 @@
           "end_time": "2026-05-14T23:56:21.925+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230057_1778796165672.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 9,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T21:56:26.391000Z",
+          "end_time": "2026-05-15T00:02:44.723+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 10,
+      "total": 11,
       "passed": 10,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "1_Login_logout/1a_Login-Logout",
@@ -12313,7 +12326,360 @@
           "end_time": "2026-05-14T23:56:21.925+02:00"
         }
       ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230057_1778796165672.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 9,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T21:56:26.391000Z",
+          "end_time": "2026-05-15T00:02:44.723+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
       "failed_details": []
+    }
+  },
+  "2026-05-14T22:00:00Z": {
+    "ALL": {
+      "total": 11,
+      "passed": 4,
+      "failed": 7,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3f_damage area tab",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230107_1778797389917.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:17:35.349000Z",
+          "end_time": "2026-05-15T00:23:09.151+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3g_vehicle tires tab",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230109_1778797542982.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:23:14.044000Z",
+          "end_time": "2026-05-15T00:25:42.441+02:00"
+        },
+        {
+          "full_name": "4_participants page/4a_participants",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230111_1778798087342.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:25:47.061000Z",
+          "end_time": "2026-05-15T00:34:46.442+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230117_1778799301970.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:46:42.740000Z",
+          "end_time": "2026-05-15T00:55:01.048+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230115_1778798798538.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:41:31.533000Z",
+          "end_time": "2026-05-15T00:46:37.510+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230105_1778797051047.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:11:01.473000Z",
+          "end_time": "2026-05-15T00:17:30.057+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5a_calculation page",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230113_1778798486469.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 2,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:34:51.382000Z",
+          "end_time": "2026-05-15T00:41:24.515+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230103_1778796657261.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:08:13.639000Z",
+          "end_time": "2026-05-15T00:10:56.091+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230059_1778796325036.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:02:49.647000Z",
+          "end_time": "2026-05-15T00:05:24.169+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230101_1778796489449.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:05:29.438000Z",
+          "end_time": "2026-05-15T00:08:08.435+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230119_1778799722904.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 2,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:55:06.340000Z",
+          "end_time": "2026-05-15T01:02:01.134+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 11,
+      "passed": 4,
+      "failed": 7,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3f_damage area tab",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230107_1778797389917.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:17:35.349000Z",
+          "end_time": "2026-05-15T00:23:09.151+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3g_vehicle tires tab",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230109_1778797542982.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:23:14.044000Z",
+          "end_time": "2026-05-15T00:25:42.441+02:00"
+        },
+        {
+          "full_name": "4_participants page/4a_participants",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230111_1778798087342.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:25:47.061000Z",
+          "end_time": "2026-05-15T00:34:46.442+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230117_1778799301970.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:46:42.740000Z",
+          "end_time": "2026-05-15T00:55:01.048+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230115_1778798798538.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:41:31.533000Z",
+          "end_time": "2026-05-15T00:46:37.510+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230105_1778797051047.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:11:01.473000Z",
+          "end_time": "2026-05-15T00:17:30.057+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5a_calculation page",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230113_1778798486469.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 2,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:34:51.382000Z",
+          "end_time": "2026-05-15T00:41:24.515+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230103_1778796657261.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:08:13.639000Z",
+          "end_time": "2026-05-15T00:10:56.091+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230059_1778796325036.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:02:49.647000Z",
+          "end_time": "2026-05-15T00:05:24.169+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230101_1778796489449.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 3,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:05:29.438000Z",
+          "end_time": "2026-05-15T00:08:08.435+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230119_1778799722904.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 2,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T22:55:06.340000Z",
+          "end_time": "2026-05-15T01:02:01.134+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-05-14T23:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230121_1778799961770.html",
+          "profile": "anke SD3ep intdev",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T23:02:07.351000Z",
+          "end_time": "2026-05-15T01:06:00.322+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6a06562465e718fda9bf39cb--qa-onrex.netlify.app/reports/20260514_230121_1778799961770.html",
+          "profile": "anke SD3ep intdev",
+          "passed": 0,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-14T23:02:07.351000Z",
+          "end_time": "2026-05-15T01:06:00.322+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
