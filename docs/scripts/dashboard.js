@@ -106,16 +106,21 @@ export class DashboardManager {
           // structure: { "Development": [...], "Acceptance": [...], "All": "Development"|"Acceptance" }
           const sessionsByEnv = record.sessions;
 
-          // Resolve the environment to use
-          // If selectedEnv is "All", it might be a reference to "Development" or "Acceptance"
-          let envToUse = selectedEnv;
-          if (sessionsByEnv[selectedEnv] && typeof sessionsByEnv[selectedEnv] === 'string') {
-            // selectedEnv value is a reference (e.g., "All" -> "Development")
-            envToUse = sessionsByEnv[selectedEnv];
+          // Resolve sessions based on selected environment
+          let sessions;
+          if (selectedEnv === 'All') {
+            // Combine all sessions from both environments, sorted by time
+            const devSessions = sessionsByEnv['Development'] || [];
+            const accSessions = sessionsByEnv['Acceptance'] || [];
+            sessions = [...devSessions, ...accSessions].sort((a, b) => new Date(b.end) - new Date(a.end));
+          } else {
+            // For specific environments, resolve references if needed
+            let envToUse = selectedEnv;
+            if (sessionsByEnv[selectedEnv] && typeof sessionsByEnv[selectedEnv] === 'string') {
+              envToUse = sessionsByEnv[selectedEnv];
+            }
+            sessions = sessionsByEnv[envToUse];
           }
-
-          // Get the sessions array for the resolved environment
-          const sessions = sessionsByEnv[envToUse];
 
           // Check if sessions exist and is an array
           if (!Array.isArray(sessions) || sessions.length === 0) {
