@@ -36,9 +36,8 @@ def backup_results_by_month(target_month):
             print(f"⚠️  No results found for month {target_year_month}")
             return False
 
-        # Create backup file in data/archive/
-        os.makedirs("data/archive", exist_ok=True)
-        backup_file = os.path.join("data/archive", f"{target_month}_results_backup.json")
+        # Create backup file
+        backup_file = os.path.join(ARCHIVE_FOLDER, f"{target_month}_results.json")
 
         with open(backup_file, "w", encoding="utf-8") as f:
             json.dump(filtered_results, f, indent=2, ensure_ascii=False)
