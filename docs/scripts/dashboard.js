@@ -107,18 +107,18 @@ export class DashboardManager {
           const sessionsByEnv = record.sessions;
 
           // Resolve the environment to use
-          // If selectedEnv value is a string like "Development", "Acceptance", or "All"
-          // and if it's "All", resolve the reference to actual environment
+          // If selectedEnv is "All", it might be a reference to "Development" or "Acceptance"
           let envToUse = selectedEnv;
-          if (typeof sessionsByEnv[selectedEnv] === 'string') {
-            // selectedEnv points to a reference (e.g., "All" -> "Development")
+          if (sessionsByEnv[selectedEnv] && typeof sessionsByEnv[selectedEnv] === 'string') {
+            // selectedEnv value is a reference (e.g., "All" -> "Development")
             envToUse = sessionsByEnv[selectedEnv];
           }
 
           // Get the sessions array for the resolved environment
-          const sessions = sessionsByEnv[envToUse] || [];
+          const sessions = sessionsByEnv[envToUse];
 
-          if (sessions.length === 0) {
+          // Check if sessions exist and is an array
+          if (!Array.isArray(sessions) || sessions.length === 0) {
             dateCells.push('<td class="empty">–</td>');
             continue;
           }
