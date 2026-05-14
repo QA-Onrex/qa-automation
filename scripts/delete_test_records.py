@@ -7,7 +7,7 @@ import sys
 RESULTS_FILE = "D:/PyCharm_Project/qa-automation/data/results.json"
 
 # Hardcoded test name to delete
-test_name = "Test Suites/GU Interface (all)"
+test_name = "Test Suites/zzz_Sandbox/address book"
 
 
 def load_results():

@@ -36,9 +36,9 @@ def debug_test_names():
         print(f"  [{count:4d}] {name}")
 
     # Search for "Verify Receiver"
-    print("\n🔍 Tests containing 'Accept order':")
+    print("\n🔍 Tests containing 'zzz_Sandbox':")
     for name, count in sorted_tests:
-        if "Accept order" in name:
+        if "zzz_Sandbox" in name:
             print(f"  [{count:4d}] {name}")
 
 
