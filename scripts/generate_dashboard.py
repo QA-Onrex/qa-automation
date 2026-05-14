@@ -21,10 +21,10 @@ def normalize_environment(record):
 
     # Development patterns
     if "intdev" in profile or "dev" in profile:
-        return "Development"
+        return "intdev"
 
     # Everything else defaults to Acceptance
-    return "Acceptance"
+    return "intacc"
 
 
 def load_results():
