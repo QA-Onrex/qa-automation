@@ -24,7 +24,7 @@ def backup_results_by_month(target_month):
         print(f"✅ Loaded results.json with {len(all_results)} total records")
 
         # Filter results by target month
-        target_year_month = target_month.replace("_", ".")  # Convert "2025_09" to "2025.09"
+        target_year_month = target_month.replace("_", "-")  # Convert "2025_09" to "2025-09"
         filtered_results = []
 
         for record in all_results:

@@ -39,5 +39,5 @@ jobs:
           # Add the archive files
           git add docs/archive/
           
-          git commit -m "Monthly archive: $(date -d 'last month' +'%Y_%m')" || echo "No changes to commit"
+          git commit -m "Monthly archive" || echo "No changes to commit"
           git push || echo "Push failed or no changes"
