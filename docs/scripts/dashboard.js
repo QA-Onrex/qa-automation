@@ -102,21 +102,31 @@ export class DashboardManager {
             continue;
           }
 
-          // Filter sessions by environment
-          const sessions = record.sessions.filter(s => {
-            if (selectedEnv === 'All') return true;
-            if (selectedEnv === 'Development') return s.environment?.includes('intdev');
-            if (selectedEnv === 'Acceptance') return s.environment?.includes('intacc');
-            return false;
-          });
+          // New structure: sessions is organized by environment
+          // structure: { "Development": [...], "Acceptance": [...], "All": "Development"|"Acceptance" }
+          const sessionsByEnv = record.sessions;
 
-          if (sessions.length > 0) suiteHasEnvMatch = true;
+          // Resolve the environment to use
+          // If selectedEnv value is a string like "Development", "Acceptance", or "All"
+          // and if it's "All", resolve the reference to actual environment
+          let envToUse = selectedEnv;
+          if (typeof sessionsByEnv[selectedEnv] === 'string') {
+            // selectedEnv points to a reference (e.g., "All" -> "Development")
+            envToUse = sessionsByEnv[selectedEnv];
+          }
+
+          // Get the sessions array for the resolved environment
+          const sessions = sessionsByEnv[envToUse] || [];
+
           if (sessions.length === 0) {
             dateCells.push('<td class="empty">–</td>');
             continue;
           }
 
-          const latestForEnv = record.latest;
+          suiteHasEnvMatch = true;
+
+          // Get the latest session from the selected environment
+          const latestForEnv = sessions[0];
           const passed = latestForEnv.passed || 0;
           const total = latestForEnv.test_cases || 0;
           const failed = total - passed;
@@ -135,8 +145,12 @@ export class DashboardManager {
             else color = 'red';
           }
 
+          // Augment the latest session with sessionCount for tooltip display
+          const augmentedSession = { ...latestForEnv };
+          augmentedSession.sessionCount = sessions.length;
+
           // Encode session info inline
-          const sessionEncoded = encodeURIComponent(JSON.stringify(latestForEnv));
+          const sessionEncoded = encodeURIComponent(JSON.stringify(augmentedSession));
           const sessionsEncoded = encodeURIComponent(JSON.stringify(sessions));
 
           dateCells.push(
@@ -147,7 +161,7 @@ export class DashboardManager {
                   data-session='${sessionEncoded}' 
                   data-sessions='${sessionsEncoded}'>
                   ${passed}/${failed}
-            </td>`
+             </td>`
           );
         }
 

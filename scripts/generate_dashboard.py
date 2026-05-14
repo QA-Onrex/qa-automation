@@ -8,6 +8,7 @@ from collections import defaultdict
 RESULTS_FILE = "data/results.json"
 DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
 
+
 def normalize_environment(record):
     """Normalize environment field using profile as fallback"""
     environment = record.get("environment")
@@ -44,6 +45,43 @@ def deduplicate_results(results):
         if key:
             seen[key] = r
     return list(seen.values())
+
+
+def organize_sessions_by_environment(sessions):
+    """
+    Organize sessions by environment and return structured data.
+    Structure:
+    {
+        "Development": [dev_sessions sorted by time desc],
+        "Acceptance": [acc_sessions sorted by time desc],
+        "All": "Development" or "Acceptance" (reference to latest environment)
+    }
+    """
+    dev_sessions = [s for s in sessions if "intdev" in s.get("environment", "").lower()]
+    acc_sessions = [s for s in sessions if "intacc" in s.get("environment", "").lower()]
+
+    # Sort each by end time descending (newest first)
+    dev_sessions.sort(key=lambda x: x.get("end", ""), reverse=True)
+    acc_sessions.sort(key=lambda x: x.get("end", ""), reverse=True)
+
+    # Determine which environment has the latest run overall
+    latest_env = "Development"
+    if dev_sessions and acc_sessions:
+        # Both have runs, compare the latest from each
+        dev_latest_time = dev_sessions[0].get("end", "")
+        acc_latest_time = acc_sessions[0].get("end", "")
+        if acc_latest_time > dev_latest_time:
+            latest_env = "Acceptance"
+    elif not dev_sessions:
+        # Only acceptance has runs
+        latest_env = "Acceptance"
+    # else: only development has runs, keep default "Development"
+
+    return {
+        "Development": dev_sessions,
+        "Acceptance": acc_sessions,
+        "All": latest_env  # Reference to the environment with the latest run
+    }
 
 
 def generate_dashboard_data():
@@ -102,19 +140,12 @@ def generate_dashboard_data():
             for suite in data[project]:
                 data_dict[project][suite] = {}
                 for date, sessions in data[project][suite].items():
-                    # --- START MODIFICATION ---
-                    # 1. Calculate session count
-                    session_count = len(sessions)
-
-                    # 2. Create a copy of the latest session and augment it with the count
-                    latest_session = sessions[0].copy()
-                    latest_session["sessionCount"] = session_count
+                    # Organize sessions by environment (no data duplication)
+                    sessions_by_env = organize_sessions_by_environment(sessions)
 
                     data_dict[project][suite][date] = {
-                        "sessions": sessions,
-                        "latest": latest_session  # Use the augmented session object
+                        "sessions": sessions_by_env
                     }
-                    # --- END MODIFICATION ---
 
         dashboard_data = {
             "data": data_dict,
