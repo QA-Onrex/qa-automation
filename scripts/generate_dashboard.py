@@ -12,8 +12,8 @@ def normalize_environment(record):
     """Normalize environment field using profile as fallback"""
     environment = record.get("environment")
 
-    # If environment is already set and not null, use it
-    if environment:
+    # If environment exists and contains expected patterns, keep it
+    if environment and ("intdev" in environment.lower() or "intacc" in environment.lower()):
         return environment
 
     # Fallback to profile
