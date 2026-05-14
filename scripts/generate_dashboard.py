@@ -8,6 +8,24 @@ from collections import defaultdict
 RESULTS_FILE = "data/results.json"
 DASHBOARD_DATA_FILE = "docs/dashboard_data.json"
 
+def normalize_environment(record):
+    """Normalize environment field using profile as fallback"""
+    environment = record.get("environment")
+
+    # If environment is already set and not null, use it
+    if environment:
+        return environment
+
+    # Fallback to profile
+    profile = record.get("profile", "").lower()
+
+    # Development patterns
+    if "intdev" in profile or "dev" in profile:
+        return "Development"
+
+    # Everything else defaults to Acceptance
+    return "Acceptance"
+
 
 def load_results():
     """Load test results from JSON file"""
@@ -49,6 +67,9 @@ def generate_dashboard_data():
         print("Processing test results...")
 
         for r in results:
+            # Normalize environment before processing
+            r["environment"] = normalize_environment(r)
+
             project = r.get("project", "Unknown")
             suite = r.get("test_suite_id", "Unknown")
             start = r.get("start") or r.get("end")
@@ -84,7 +105,7 @@ def generate_dashboard_data():
                     # --- START MODIFICATION ---
                     # 1. Calculate session count
                     session_count = len(sessions)
-                    
+
                     # 2. Create a copy of the latest session and augment it with the count
                     latest_session = sessions[0].copy()
                     latest_session["sessionCount"] = session_count
