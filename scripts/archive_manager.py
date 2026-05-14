@@ -10,6 +10,47 @@ ARCHIVE_INDEX_FILE = os.path.join(ARCHIVE_FOLDER, "archive_index.json")
 # Set this to force a specific month (e.g., "2025_09") or leave empty for the previous month
 FORCE_MONTH = ""  # "2025_09"
 
+def backup_results_by_month(target_month):
+    """Create a backup of results.json containing only records from target month"""
+    try:
+        # Load results.json
+        if not os.path.exists("data/results.json"):
+            print(f"❌ Results file not found: data/results.json")
+            return False
+
+        with open("data/results.json", "r", encoding="utf-8") as f:
+            all_results = json.load(f)
+
+        print(f"✅ Loaded results.json with {len(all_results)} total records")
+
+        # Filter results by target month
+        target_year_month = target_month.replace("_", ".")  # Convert "2025_09" to "2025.09"
+        filtered_results = []
+
+        for record in all_results:
+            start = record.get("start") or record.get("end")
+            if start and start.startswith(target_year_month):
+                filtered_results.append(record)
+
+        if not filtered_results:
+            print(f"⚠️  No results found for month {target_year_month}")
+            return False
+
+        # Create backup file in data/archive/
+        os.makedirs("data/archive", exist_ok=True)
+        backup_file = os.path.join("data/archive", f"{target_month}_results_backup.json")
+
+        with open(backup_file, "w", encoding="utf-8") as f:
+            json.dump(filtered_results, f, indent=2, ensure_ascii=False)
+
+        print(f"💾 Results backup created: {backup_file}")
+        print(f"📊 Backup contains: {len(filtered_results)} records from {target_year_month}")
+
+        return True
+
+    except Exception as e:
+        print(f"❌ Error creating results backup: {e}")
+        return False
 
 def load_dashboard_data():
     """Load current dashboard data"""
@@ -170,61 +211,71 @@ def validate_month_format(month_str):
 
 
 def create_monthly_archive():
-    """Create a monthly archive of dashboard data"""
+    """Create a monthly archive of dashboard data and results backup"""
     try:
         print("📁 Starting monthly archive creation...")
-        
+
         # Get the target month (either forced or previous month)
         archive_date = get_target_month()
-        
+
         # Validate month format
         if not validate_month_format(archive_date):
             print(f"❌ Invalid month format: {archive_date}. Use YYYY_MM format (e.g., 2025_10)")
             return
-        
+
+        # --- STEP 1: Create results.json backup ---
+        print("\n📋 STEP 1: Backing up results.json...")
+        if not backup_results_by_month(archive_date):
+            print("⚠️  Results backup failed, but continuing with dashboard archive...")
+
+        # --- STEP 2: Create dashboard archive ---
+        print("\n📊 STEP 2: Creating dashboard archive...")
+
         archive_file = os.path.join(ARCHIVE_FOLDER, f"{archive_date}_dashboard_data.json")
-        
+
         # Check if the archive already exists
         if os.path.exists(archive_file):
             print(f"⏭️ Archive for {archive_date} already exists - skipping")
             return
-        
+
         print(f"📅 Creating archive for: {archive_date}")
-        
+
         # Load current dashboard data
         dashboard_data = load_dashboard_data()
         if not dashboard_data:
             print("❌ No dashboard data to archive")
             return
-        
+
         # Filter data to only include records from the target month
         filtered_data = filter_data_by_month(dashboard_data, archive_date)
         if not filtered_data:
             print("❌ No data found for the target month")
             return
-        
+
         # Update last_updated to reflect archive creation time
-        filtered_data["last_updated"] = f"Archived on {(datetime.now() + timedelta(hours=1)).strftime('%d/%m/%Y, %H:%M:%S (GMT+1)')}"
-        
+        filtered_data[
+            "last_updated"] = f"Archived on {(datetime.now() + timedelta(hours=1)).strftime('%d/%m/%Y, %H:%M:%S (GMT+1)')}"
+
         # Validate data before archiving
         if not validate_dashboard_data(filtered_data):
             print("❌ Archive data validation failed - skipping archive")
             return
-        
+
         # Ensure the archive folder exists
         os.makedirs(ARCHIVE_FOLDER, exist_ok=True)
-        
+
         # Save archive
         with open(archive_file, "w", encoding="utf-8") as f:
             json.dump(filtered_data, f, indent=2, default=str)
-        
+
         print(f"💾 Archive saved: {archive_file}")
-        
-        # Update archive index
+
+        # --- STEP 3: Update archive index ---
+        print("\n📋 STEP 3: Updating archive index...")
         update_archive_index(archive_date)
-        
-        print(f"✅ Monthly archive created successfully: {archive_date}")
-        
+
+        print(f"\n✅ Monthly archive completed successfully: {archive_date}")
+
     except Exception as e:
         print(f"❌ Archive creation error: {e}")
         raise

@@ -28,7 +28,7 @@ jobs:
           python -m pip install --upgrade pip
 
       - name: Create Monthly Archive
-        run: python scripts/netlify/archive_manager.py
+        run: python scripts/archive_manager.py
 
       - name: Commit and Push Archive
         run: |
@@ -39,5 +39,5 @@ jobs:
           # Add the archive files
           git add docs/archive/
           
-          git commit -m "Monthly archive: $(date +'%Y_%m')" || echo "No changes to commit"
+          git commit -m "Monthly archive: $(date -d 'last month' +'%Y_%m')" || echo "No changes to commit"
           git push || echo "Push failed or no changes"
