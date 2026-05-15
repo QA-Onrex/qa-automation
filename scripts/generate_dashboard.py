@@ -117,13 +117,12 @@ def generate_dashboard_data():
             # Parse date safely
             try:
                 start_str = start.replace("Z", "+00:00")
-                if "." in start_str:
-                    dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
-                else:
-                    dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
-                date = dt_obj.strftime("%Y.%m.%d")
+                # Extract just the date from the ISO string (YYYY-MM-DD part)
+                date_only = start_str.split("T")[0]  # Get "2026-05-15" from "2026-05-15T00:02:23.8+02:00"
+                # Convert to dashboard format: "2026.05.15"
+                date = date_only.replace("-", ".")
                 all_dates_set.add(date)
-            except ValueError:
+            except (ValueError, IndexError):
                 continue
 
             # Store session
