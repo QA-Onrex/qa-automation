@@ -112,7 +112,7 @@ def delete_old_emails_from_mailbox(mail, mailbox_name, days=EMAIL_RETENTION):
         for uid in uids:
             try:
                 # Mark for deletion
-                mail.uid("STORE", uid, "+FLAGS", "(\Deleted)")
+                mail.uid("STORE", uid, "+FLAGS", "(\\Deleted)")
                 deleted_count += 1
             except Exception as e:
                 print(f"⚠️ Failed to mark email {uid.decode()} for deletion: {e}")
