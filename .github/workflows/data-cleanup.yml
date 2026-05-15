@@ -1,6 +1,8 @@
 name: 🧹 Daily Data Cleanup
 
 on:
+  schedule:
+    - cron: '0 11 * * *'  # Run daily at 11 AM UTC
   workflow_dispatch:  # This enables manual triggering
 
 permissions:
@@ -28,10 +30,10 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           
-        run: python scripts/netlify/cleanup_drafts.py
+        run: python scripts/cleanup_drafts.py
 
       - name: Run Data Cleanup
-        run: python scripts/netlify/cleanup_data.py
+        run: python scripts/cleanup_data.py
 
       - name: Commit Updated Data and Dashboard
         run: |
