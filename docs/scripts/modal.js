@@ -51,7 +51,15 @@ export function showSessionModal(project, suite, date, sessions, options = {}) {
   sessionList.innerHTML = '';
   currentSessions = sessions;
 
-  sessions.forEach(session => {
+
+  // Sort sessions by start time, newest first (oldest at bottom)
+  const sortedSessions = [...sessions].sort((a, b) => {
+    const aTime = new Date(a.start || a.start_time);
+    const bTime = new Date(b.start || b.start_time);
+    return bTime - aTime; // Descending: newest first
+  });
+
+  sortedSessions.forEach(session => {
     const div = document.createElement('div');
     div.className = 'session-item';
 
