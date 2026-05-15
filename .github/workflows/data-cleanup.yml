@@ -29,10 +29,13 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          
+
         run: python scripts/cleanup_drafts.py
 
       - name: Run Data Cleanup
+        env:
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
         run: python scripts/cleanup_data.py
 
       - name: Commit Updated Data and Dashboard
