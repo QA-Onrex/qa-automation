@@ -77,15 +77,15 @@ def generate_timeline():
         start = r.get("start") or r.get("end")
         if not start:
             continue
+
+        # Parse date safely - DO NOT parse timezone, just extract the date part
         try:
-            # Normalize to datetime and derive date key YYYY.MM.DD
             start_str = str(start).replace("Z", "+00:00")
-            if "." in start_str:
-                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S.%f%z")
-            else:
-                dt_obj = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%S%z")
-            date_key = dt_obj.strftime("%Y.%m.%d")
-        except Exception:
+            # Extract just the date from the ISO string (YYYY-MM-DD part)
+            date_only = start_str.split("T")[0]  # Get "2026-05-15" from "2026-05-15T00:02:23.8+02:00"
+            # Convert to dashboard format: "2026.05.15"
+            date_key = date_only.replace("-", ".")
+        except (ValueError, IndexError):
             # Skip entries with invalid date
             continue
 
