@@ -5459,9 +5459,9 @@
   },
   "2026-05-22T01:00:00Z": {
     "ALL": {
-      "total": 5,
+      "total": 6,
       "passed": 5,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "billing/DoD Regression/member - get initial billing counts",
@@ -5524,12 +5524,25 @@
           "end_time": "2026-05-22T03:30:28.034+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://6a0ff0f904b8f7299aff92ab--qa-onrex.netlify.app/reports/20260521_230200_1779414722742.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 40,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-22T01:30:32.532000Z",
+          "end_time": "2026-05-22T03:52:00.863+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 5,
+      "total": 6,
       "passed": 5,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "billing/DoD Regression/member - get initial billing counts",
@@ -5592,7 +5605,20 @@
           "end_time": "2026-05-22T03:30:28.034+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://6a0ff0f904b8f7299aff92ab--qa-onrex.netlify.app/reports/20260521_230200_1779414722742.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 40,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-22T01:30:32.532000Z",
+          "end_time": "2026-05-22T03:52:00.863+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
