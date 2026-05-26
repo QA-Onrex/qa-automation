@@ -33,7 +33,7 @@ def move_message(mail, msg_uid):
             if copy_resp[0] != "OK":
                 print(f"Failed to copy UID {msg_uid.decode()} - skipping delete")
                 return False
-            mail.uid("STORE", msg_uid, "+FLAGS", "(\Deleted)")
+            mail.uid("STORE", msg_uid, "+FLAGS", "(\\Deleted)")
             return True
     except Exception as e:
         print(f"Error moving message UID {msg_uid.decode()}: {e}")
