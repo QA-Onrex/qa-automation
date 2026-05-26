@@ -117,7 +117,7 @@ def main():
             uid_str = uid.decode()
             try:
                 # Fetch email content
-                typ, msg_data = mail.uid("fetch", uid, "(RFC822)")
+                typ, msg_data = mail.uid("fetch", uid, "(BODY[]))")
                 if typ != "OK" or not msg_data or not msg_data[0]:
                     print(f"Failed to fetch email UID {uid_str}")
                     continue
