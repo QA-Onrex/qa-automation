@@ -8042,9 +8042,9 @@
   },
   "2026-05-27T04:00:00Z": {
     "ALL": {
-      "total": 16,
+      "total": 17,
       "passed": 16,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "Test Suites/Settings/Templates",
@@ -8239,12 +8239,25 @@
           "end_time": "2026-05-27T06:37:57.606+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a16946cbacb3173c445f2b0--qa-onrex.netlify.app/reports/20260527_063730_1779857223314.html",
+          "profile": "default_intdev",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-27T04:40:31.916000Z",
+          "end_time": "2026-05-27T06:47:02.502+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 16,
+      "total": 17,
       "passed": 16,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "Test Suites/Settings/Templates",
@@ -8439,7 +8452,20 @@
           "end_time": "2026-05-27T06:37:57.606+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a16946cbacb3173c445f2b0--qa-onrex.netlify.app/reports/20260527_063730_1779857223314.html",
+          "profile": "default_intdev",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-05-27T04:40:31.916000Z",
+          "end_time": "2026-05-27T06:47:02.502+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
