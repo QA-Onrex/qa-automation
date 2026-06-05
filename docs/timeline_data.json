@@ -8312,10 +8312,70 @@
   },
   "2026-06-05T07:00:00Z": {
     "ALL": {
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
+      "total": 18,
+      "passed": 16,
+      "failed": 2,
       "passed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082748_1780644191505.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:20:20.627000Z",
+          "end_time": "2026-06-05T09:23:11.107+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082754_1780644820190.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:29:00.046000Z",
+          "end_time": "2026-06-05T09:33:39.720+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082750_1780644311203.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:23:15.306000Z",
+          "end_time": "2026-06-05T09:25:10.649+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082744_1780643760609.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:11:12.250000Z",
+          "end_time": "2026-06-05T09:16:00.061+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082746_1780644016313.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:16:04.827000Z",
+          "end_time": "2026-06-05T09:20:16.065+02:00"
+        },
         {
           "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
           "netlify_url": "https://6a2276ce4ba4107b85bb19b1--qa-onrex.netlify.app/reports/20260605_082740_1780643295564.html",
@@ -8363,15 +8423,184 @@
           "skipped": 0,
           "start_time": "2026-06-05T07:06:00.230000Z",
           "end_time": "2026-06-05T09:08:02.958+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091745_1780644659611.html",
+          "profile": "dynarex intdev",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:29:33.247000Z",
+          "end_time": "2026-06-05T09:30:59.238+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091739_1780644343637.html",
+          "profile": "dynarex intdev",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:25:01.645000Z",
+          "end_time": "2026-06-05T09:25:43.251+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Offices",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091733_1780644164199.html",
+          "profile": "dynarex intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:19:33.028000Z",
+          "end_time": "2026-06-05T09:22:43.963+02:00"
+        },
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091731_1780643960469.html",
+          "profile": "dynarex intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:18:16.150000Z",
+          "end_time": "2026-06-05T09:19:20.086+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091741_1780644385812.html",
+          "profile": "member intdev",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:25:56.958000Z",
+          "end_time": "2026-06-05T09:26:25.253+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091735_1780644242510.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:22:56.662000Z",
+          "end_time": "2026-06-05T09:24:02.188+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091737_1780644288676.html",
+          "profile": "member intdev",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:24:14.833000Z",
+          "end_time": "2026-06-05T09:24:48.198+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082752_1780644535295.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 4,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:25:15.486000Z",
+          "end_time": "2026-06-05T09:28:53.879+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091743_1780644558683.html",
+          "profile": "dynarex intdev",
+          "passed": 0,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:26:38.005000Z",
+          "end_time": "2026-06-05T09:29:16.211+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
+      "total": 18,
+      "passed": 16,
+      "failed": 2,
       "passed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082748_1780644191505.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:20:20.627000Z",
+          "end_time": "2026-06-05T09:23:11.107+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082754_1780644820190.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:29:00.046000Z",
+          "end_time": "2026-06-05T09:33:39.720+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082750_1780644311203.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:23:15.306000Z",
+          "end_time": "2026-06-05T09:25:10.649+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082744_1780643760609.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:11:12.250000Z",
+          "end_time": "2026-06-05T09:16:00.061+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082746_1780644016313.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:16:04.827000Z",
+          "end_time": "2026-06-05T09:20:16.065+02:00"
+        },
         {
           "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
           "netlify_url": "https://6a2276ce4ba4107b85bb19b1--qa-onrex.netlify.app/reports/20260605_082740_1780643295564.html",
@@ -8419,9 +8648,118 @@
           "skipped": 0,
           "start_time": "2026-06-05T07:06:00.230000Z",
           "end_time": "2026-06-05T09:08:02.958+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Standart roles",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091745_1780644659611.html",
+          "profile": "dynarex intdev",
+          "passed": 15,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:29:33.247000Z",
+          "end_time": "2026-06-05T09:30:59.238+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091739_1780644343637.html",
+          "profile": "dynarex intdev",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:25:01.645000Z",
+          "end_time": "2026-06-05T09:25:43.251+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Offices",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091733_1780644164199.html",
+          "profile": "dynarex intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:19:33.028000Z",
+          "end_time": "2026-06-05T09:22:43.963+02:00"
+        },
+        {
+          "full_name": "Test Suites/login-logout",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091731_1780643960469.html",
+          "profile": "dynarex intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:18:16.150000Z",
+          "end_time": "2026-06-05T09:19:20.086+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - activate DYNAREXorg module",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091741_1780644385812.html",
+          "profile": "member intdev",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:25:56.958000Z",
+          "end_time": "2026-06-05T09:26:25.253+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091735_1780644242510.html",
+          "profile": "dynarex intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:22:56.662000Z",
+          "end_time": "2026-06-05T09:24:02.188+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/member - deactivate DYNAREXorg module",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091737_1780644288676.html",
+          "profile": "member intdev",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:24:14.833000Z",
+          "end_time": "2026-06-05T09:24:48.198+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_082752_1780644535295.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 4,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:25:15.486000Z",
+          "end_time": "2026-06-05T09:28:53.879+02:00"
+        },
+        {
+          "full_name": "Test Suites/departments/settings - department page",
+          "netlify_url": "https://6a227bf9d11dcf971c9887f8--qa-onrex.netlify.app/reports/20260605_091743_1780644558683.html",
+          "profile": "dynarex intdev",
+          "passed": 0,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T07:26:38.005000Z",
+          "end_time": "2026-06-05T09:29:16.211+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
