@@ -9519,9 +9519,9 @@
   },
   "2026-06-05T10:00:00Z": {
     "ALL": {
-      "total": 3,
-      "passed": 3,
-      "failed": 0,
+      "total": 6,
+      "passed": 5,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "billing/DoD Regression/DYNAREX on Demand",
@@ -9534,6 +9534,30 @@
           "skipped": 0,
           "start_time": "2026-06-05T10:20:58.491000Z",
           "end_time": "2026-06-05T12:27:41.643+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082840_1780655796044.html",
+          "profile": "default DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T10:28:41.835000Z",
+          "end_time": "2026-06-05T12:36:35.737+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/member - get final DoD check",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082842_1780655871861.html",
+          "profile": "default member intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T10:36:40.562000Z",
+          "end_time": "2026-06-05T12:37:51.730+02:00"
         },
         {
           "full_name": "billing/DoD Regression/member - get initial billing counts",
@@ -9560,12 +9584,25 @@
           "end_time": "2026-06-05T12:20:53.656+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082844_1780660172275.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 40,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T10:37:55.760000Z",
+          "end_time": "2026-06-05T13:49:30.197+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 3,
-      "passed": 3,
-      "failed": 0,
+      "total": 6,
+      "passed": 5,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "billing/DoD Regression/DYNAREX on Demand",
@@ -9578,6 +9615,30 @@
           "skipped": 0,
           "start_time": "2026-06-05T10:20:58.491000Z",
           "end_time": "2026-06-05T12:27:41.643+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/DYNAREX on Demand - without old case",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082840_1780655796044.html",
+          "profile": "default DoD intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T10:28:41.835000Z",
+          "end_time": "2026-06-05T12:36:35.737+02:00"
+        },
+        {
+          "full_name": "billing/DoD Regression/member - get final DoD check",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082842_1780655871861.html",
+          "profile": "default member intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T10:36:40.562000Z",
+          "end_time": "2026-06-05T12:37:51.730+02:00"
         },
         {
           "full_name": "billing/DoD Regression/member - get initial billing counts",
@@ -9604,7 +9665,118 @@
           "end_time": "2026-06-05T12:20:53.656+02:00"
         }
       ],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082844_1780660172275.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 40,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T10:37:55.760000Z",
+          "end_time": "2026-06-05T13:49:30.197+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
       "failed_details": []
+    }
+  },
+  "2026-06-05T11:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082846_1780660823683.html",
+          "profile": "default member intdev",
+          "passed": 8,
+          "failed": 14,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T11:49:38.692000Z",
+          "end_time": "2026-06-05T14:00:22.734+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082846_1780660823683.html",
+          "profile": "default member intdev",
+          "passed": 8,
+          "failed": 14,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T11:49:38.692000Z",
+          "end_time": "2026-06-05T14:00:22.734+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-06-05T12:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082848_1780661645936.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T12:00:28.189000Z",
+          "end_time": "2026-06-05T14:14:05.475+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://6a22be0e473a245d7609aa30--qa-onrex.netlify.app/reports/20260605_082848_1780661645936.html",
+          "profile": "default member intdev",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-05T12:00:28.189000Z",
+          "end_time": "2026-06-05T14:14:05.475+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
