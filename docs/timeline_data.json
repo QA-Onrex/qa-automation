@@ -11928,8 +11928,8 @@
   },
   "2026-06-06T04:00:00Z": {
     "ALL": {
-      "total": 10,
-      "passed": 10,
+      "total": 18,
+      "passed": 18,
       "failed": 0,
       "passed_details": [
         {
@@ -12051,13 +12051,109 @@
           "skipped": 0,
           "start_time": "2026-06-06T04:27:50.238000Z",
           "end_time": "2026-06-06T06:28:20.861+02:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID Inbox Import",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_062626_1780720336435.html",
+          "profile": "default - intdev",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:31:24.798000Z",
+          "end_time": "2026-06-06T06:32:16.136+02:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID Workflow",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_062630_1780720486285.html",
+          "profile": "default - intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:33:29.682000Z",
+          "end_time": "2026-06-06T06:34:45.879+02:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID UI case",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_062628_1780720405707.html",
+          "profile": "default - intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:32:20.002000Z",
+          "end_time": "2026-06-06T06:33:25.488+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_063535_1780720858736.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:39:08.514000Z",
+          "end_time": "2026-06-06T06:40:58.498+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_063533_1780720744440.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:35:45.213000Z",
+          "end_time": "2026-06-06T06:39:03.215+02:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_064249_1780721546259.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:45:52.339000Z",
+          "end_time": "2026-06-06T06:52:25.587+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_064245_1780720997108.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:42:53.750000Z",
+          "end_time": "2026-06-06T06:43:16.477+02:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_064247_1780721148498.html",
+          "profile": "default_intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:43:21.116000Z",
+          "end_time": "2026-06-06T06:45:47.701+02:00"
         }
       ],
       "failed_details": []
     },
     "intdev": {
-      "total": 10,
-      "passed": 10,
+      "total": 18,
+      "passed": 18,
       "failed": 0,
       "passed_details": [
         {
@@ -12179,6 +12275,102 @@
           "skipped": 0,
           "start_time": "2026-06-06T04:27:50.238000Z",
           "end_time": "2026-06-06T06:28:20.861+02:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID Inbox Import",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_062626_1780720336435.html",
+          "profile": "default - intdev",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:31:24.798000Z",
+          "end_time": "2026-06-06T06:32:16.136+02:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID Workflow",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_062630_1780720486285.html",
+          "profile": "default - intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:33:29.682000Z",
+          "end_time": "2026-06-06T06:34:45.879+02:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID UI case",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_062628_1780720405707.html",
+          "profile": "default - intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:32:20.002000Z",
+          "end_time": "2026-06-06T06:33:25.488+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_063535_1780720858736.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:39:08.514000Z",
+          "end_time": "2026-06-06T06:40:58.498+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_063533_1780720744440.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:35:45.213000Z",
+          "end_time": "2026-06-06T06:39:03.215+02:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_064249_1780721546259.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:45:52.339000Z",
+          "end_time": "2026-06-06T06:52:25.587+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_064245_1780720997108.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:42:53.750000Z",
+          "end_time": "2026-06-06T06:43:16.477+02:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6a23cdb0752ce915d42bc639--qa-onrex.netlify.app/reports/20260606_064247_1780721148498.html",
+          "profile": "default_intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-06T04:43:21.116000Z",
+          "end_time": "2026-06-06T06:45:47.701+02:00"
         }
       ],
       "failed_details": []
