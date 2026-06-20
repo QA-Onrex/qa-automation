@@ -11756,10 +11756,47 @@
   },
   "2026-06-20T05:00:00Z": {
     "ALL": {
-      "total": 1,
-      "passed": 0,
+      "total": 4,
+      "passed": 3,
       "failed": 1,
-      "passed_details": [],
+      "passed_details": [
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a3662286a5a1f9625b345a5--qa-onrex.netlify.app/reports/20260620_070824_1781932676640.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-20T05:11:27.485000Z",
+          "end_time": "2026-06-20T07:17:55.864+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6a3662286a5a1f9625b345a5--qa-onrex.netlify.app/reports/20260620_070820_1781932131431.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-20T05:08:28.102000Z",
+          "end_time": "2026-06-20T07:08:50.943+02:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6a3662286a5a1f9625b345a5--qa-onrex.netlify.app/reports/20260620_070822_1781932283616.html",
+          "profile": "default_intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-20T05:08:55.680000Z",
+          "end_time": "2026-06-20T07:11:23.065+02:00"
+        }
+      ],
       "failed_details": [
         {
           "full_name": "Test Suites/GU Interface with distribution export",
@@ -11776,10 +11813,47 @@
       ]
     },
     "intdev": {
-      "total": 1,
-      "passed": 0,
+      "total": 4,
+      "passed": 3,
       "failed": 1,
-      "passed_details": [],
+      "passed_details": [
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a3662286a5a1f9625b345a5--qa-onrex.netlify.app/reports/20260620_070824_1781932676640.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-20T05:11:27.485000Z",
+          "end_time": "2026-06-20T07:17:55.864+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6a3662286a5a1f9625b345a5--qa-onrex.netlify.app/reports/20260620_070820_1781932131431.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-20T05:08:28.102000Z",
+          "end_time": "2026-06-20T07:08:50.943+02:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6a3662286a5a1f9625b345a5--qa-onrex.netlify.app/reports/20260620_070822_1781932283616.html",
+          "profile": "default_intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-20T05:08:55.680000Z",
+          "end_time": "2026-06-20T07:11:23.065+02:00"
+        }
+      ],
       "failed_details": [
         {
           "full_name": "Test Suites/GU Interface with distribution export",
