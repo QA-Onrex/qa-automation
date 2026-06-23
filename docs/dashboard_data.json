@@ -662,7 +662,24 @@
         },
         "2026.06.23": {
           "sessions": {
-            "Development": [],
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230605_1782251949935.html",
+                "html_filename": "20260623_230605_1782251949935.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Templates",
+                "profile": "dynarex intdev",
+                "test_cases": 11,
+                "passed": 11,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:45:34.277+02:00",
+                "end": "2026-06-23T23:59:09.341+02:00"
+              }
+            ],
             "Acceptance": [
               {
                 "netlify_url": "https://6a3a4f7b7f71350f440a7d5b--qa-onrex.netlify.app/reports/20260623_110247_1782206199875.html",
@@ -681,7 +698,7 @@
                 "end": "2026-06-23T11:16:39.252+02:00"
               }
             ],
-            "All": "Acceptance"
+            "All": "Development"
           }
         }
       },
@@ -1351,6 +1368,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230559_1782250870799.html",
+                "html_filename": "20260623_230559_1782250870799.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Users - User profile",
+                "profile": "dynarex intdev",
+                "test_cases": 5,
+                "passed": 5,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:38:06.701+02:00",
+                "end": "2026-06-23T23:41:10.486+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Settings/Permissions - Search": {
@@ -1985,6 +2026,30 @@
                 "end": "2026-06-22T21:32:08.791+02:00"
               }
             ],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230551_1782249605214.html",
+                "html_filename": "20260623_230551_1782249605214.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Search",
+                "profile": "dynarex intdev",
+                "test_cases": 3,
+                "passed": 3,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:18:46.840+02:00",
+                "end": "2026-06-23T23:20:04.906+02:00"
+              }
+            ],
+            "Acceptance": [],
             "All": "Development"
           }
         }
@@ -2663,6 +2728,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230533_1782248822611.html",
+                "html_filename": "20260623_230533_1782248822611.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/login-logout",
+                "profile": "dynarex intdev",
+                "test_cases": 7,
+                "passed": 7,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:06:09.262+02:00",
+                "end": "2026-06-23T23:07:02.189+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Settings/Users - Change Login Email": {
@@ -3331,6 +3420,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230601_1782251072387.html",
+                "html_filename": "20260623_230601_1782251072387.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Users - Change Login Email",
+                "profile": "dynarex intdev",
+                "test_cases": 10,
+                "passed": 10,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:41:14.882+02:00",
+                "end": "2026-06-23T23:44:32.093+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/departments/settings departmemnt page not available without DYNAREXorg module": {
@@ -3965,6 +4078,30 @@
                 "end": "2026-06-22T21:24:16.073+02:00"
               }
             ],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230541_1782249128246.html",
+                "html_filename": "20260623_230541_1782249128246.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/departments/settings departmemnt page not available without DYNAREXorg module",
+                "profile": "dynarex intdev",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:11:35.896+02:00",
+                "end": "2026-06-23T23:12:07.718+02:00"
+              }
+            ],
+            "Acceptance": [],
             "All": "Development"
           }
         }
@@ -4635,6 +4772,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230603_1782251129983.html",
+                "html_filename": "20260623_230603_1782251129983.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Users - Filters",
+                "profile": "dynarex intdev",
+                "test_cases": 8,
+                "passed": 8,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:44:36.479+02:00",
+                "end": "2026-06-23T23:45:29.743+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Settings/Permissions - Standart roles": {
@@ -5269,6 +5430,30 @@
                 "end": "2026-06-22T21:26:59.457+02:00"
               }
             ],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230547_1782249291731.html",
+                "html_filename": "20260623_230547_1782249291731.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Standart roles",
+                "profile": "dynarex intdev",
+                "test_cases": 15,
+                "passed": 15,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:13:36.205+02:00",
+                "end": "2026-06-23T23:14:51.427+02:00"
+              }
+            ],
+            "Acceptance": [],
             "All": "Development"
           }
         }
@@ -5955,6 +6140,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230553_1782250190120.html",
+                "html_filename": "20260623_230553_1782250190120.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions",
+                "profile": "dynarex intdev",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:20:09.216+02:00",
+                "end": "2026-06-23T23:29:49.430+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Settings/Permissions - Custom roles": {
@@ -6591,6 +6800,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230549_1782249522687.html",
+                "html_filename": "20260623_230549_1782249522687.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Custom roles",
+                "profile": "dynarex intdev",
+                "test_cases": 11,
+                "passed": 11,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:14:55.950+02:00",
+                "end": "2026-06-23T23:18:42.167+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Settings/Offices": {
@@ -7225,6 +7458,30 @@
                 "end": "2026-06-22T21:22:13.763+02:00"
               }
             ],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230535_1782249001371.html",
+                "html_filename": "20260623_230535_1782249001371.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Offices",
+                "profile": "dynarex intdev",
+                "test_cases": 5,
+                "passed": 5,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:07:06.611+02:00",
+                "end": "2026-06-23T23:10:01.065+02:00"
+              }
+            ],
+            "Acceptance": [],
             "All": "Development"
           }
         }
@@ -8327,6 +8584,46 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230545_1782249212110.html",
+                "html_filename": "20260623_230545_1782249212110.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/departments/settings - department page",
+                "profile": "dynarex intdev",
+                "test_cases": 3,
+                "passed": 3,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:12:39.668+02:00",
+                "end": "2026-06-23T23:13:31.809+02:00"
+              },
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230537_1782249061651.html",
+                "html_filename": "20260623_230537_1782249061651.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/departments/settings - department page",
+                "profile": "dynarex intdev",
+                "test_cases": 3,
+                "passed": 3,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:10:05.584+02:00",
+                "end": "2026-06-23T23:11:01.360+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/departments/member - activate DYNAREXorg module": {
@@ -8961,6 +9258,30 @@
                 "end": "2026-06-22T21:24:42.159+02:00"
               }
             ],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230543_1782249155413.html",
+                "html_filename": "20260623_230543_1782249155413.html",
+                "environment": "https://intdev01-member.onrex.de/member/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/departments/member - activate DYNAREXorg module",
+                "profile": "member intdev",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:12:12.521+02:00",
+                "end": "2026-06-23T23:12:34.991+02:00"
+              }
+            ],
+            "Acceptance": [],
             "All": "Development"
           }
         }
@@ -9647,6 +9968,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230555_1782250259300.html",
+                "html_filename": "20260623_230555_1782250259300.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Users - Cleanup",
+                "profile": "dynarex intdev",
+                "test_cases": 2,
+                "passed": 2,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:29:54.247+02:00",
+                "end": "2026-06-23T23:30:59.081+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Settings/Users - General": {
@@ -10315,6 +10660,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230557_1782250682880.html",
+                "html_filename": "20260623_230557_1782250682880.html",
+                "environment": "https://intdev01.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Users - General",
+                "profile": "dynarex intdev",
+                "test_cases": 8,
+                "passed": 8,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:31:03.221+02:00",
+                "end": "2026-06-23T23:38:02.165+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/departments/member - deactivate DYNAREXorg module": {
@@ -10949,6 +11318,30 @@
                 "end": "2026-06-22T21:23:41.872+02:00"
               }
             ],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230539_1782249092044.html",
+                "html_filename": "20260623_230539_1782249092044.html",
+                "environment": "https://intdev01-member.onrex.de/member/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/departments/member - deactivate DYNAREXorg module",
+                "profile": "member intdev",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:11:05.778+02:00",
+                "end": "2026-06-23T23:11:31.420+02:00"
+              }
+            ],
+            "Acceptance": [],
             "All": "Development"
           }
         }
@@ -23446,6 +23839,30 @@
                 "skipped": 0,
                 "start": "2026-06-22T22:59:25.764+02:00",
                 "end": "2026-06-22T23:01:39.506+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230015_1782248501879.html",
+                "html_filename": "20260623_230015_1782248501879.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/katalon_cleanup_jenkins_tmp",
+                "profile": "default DYNAREX intdev",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:00:19.534+02:00",
+                "end": "2026-06-23T23:01:41.394+02:00"
               }
             ],
             "Acceptance": [],
@@ -54147,6 +54564,30 @@
             ],
             "All": "Development"
           }
+        },
+        "2026.06.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_230244_1782248690806.html",
+                "html_filename": "20260623_230244_1782248690806.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/DEKRA HU",
+                "profile": "DAT HU intdev",
+                "test_cases": 5,
+                "passed": 5,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-23T23:02:49.329+02:00",
+                "end": "2026-06-23T23:04:49.966+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Automatic Downtime request check/Downtime Not Auto Requested - GTU DoD": {
@@ -58680,6 +59121,30 @@
             "Acceptance": [],
             "All": "Development"
           }
+        },
+        "2026.06.24": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_235956_1782252084455.html",
+                "html_filename": "20260623_235956_1782252084455.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "Claimnet",
+                "test_suite_id": "Test Suites/Test Suites/Reject order",
+                "profile": "default - intdev",
+                "test_cases": 5,
+                "passed": 5,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-24T00:00:55.912+02:00",
+                "end": "2026-06-24T00:01:23.976+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Return order": {
@@ -60644,6 +61109,30 @@
             "Acceptance": [],
             "All": "Development"
           }
+        },
+        "2026.06.24": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_235958_1782252119719.html",
+                "html_filename": "20260623_235958_1782252119719.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "Claimnet",
+                "test_suite_id": "Test Suites/Test Suites/Order not accepted and revoked",
+                "profile": "default - intdev",
+                "test_cases": 5,
+                "passed": 5,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-24T00:01:29.171+02:00",
+                "end": "2026-06-24T00:01:59.301+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Order accepted and revoked": {
@@ -61291,6 +61780,30 @@
                 "skipped": 0,
                 "start": "2026-06-23T00:02:27.770+02:00",
                 "end": "2026-06-23T00:03:25.269+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
+        },
+        "2026.06.24": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260624_000000_1782252180553.html",
+                "html_filename": "20260624_000000_1782252180553.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "Claimnet",
+                "test_suite_id": "Test Suites/Test Suites/Order accepted and revoked",
+                "profile": "default - intdev",
+                "test_cases": 11,
+                "passed": 11,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-24T00:02:03.454+02:00",
+                "end": "2026-06-24T00:02:59.974+02:00"
               }
             ],
             "Acceptance": [],
@@ -62592,6 +63105,30 @@
             "Acceptance": [],
             "All": "Development"
           }
+        },
+        "2026.06.24": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6a3b02d4ef98048fd38b7c4a--qa-onrex.netlify.app/reports/20260623_235954_1782252051716.html",
+                "html_filename": "20260623_235954_1782252051716.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "Claimnet",
+                "test_suite_id": "Test Suites/Test Suites/Accept order",
+                "profile": "default - intdev",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-24T00:00:14.394+02:00",
+                "end": "2026-06-24T00:00:51.354+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/Test Suites/Verify Recipient ID Workflow": {
@@ -63257,6 +63794,7 @@
     }
   },
   "dates": [
+    "2026.06.24",
     "2026.06.23",
     "2026.06.22",
     "2026.06.20",
@@ -63289,5 +63827,5 @@
     "2026.05.20",
     "2026.05.19"
   ],
-  "last_updated": "23/06/2026, 21:36:24 (GMT+1)"
+  "last_updated": "23/06/2026, 23:04:21 (GMT+1)"
 }
