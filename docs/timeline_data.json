@@ -8755,10 +8755,22 @@
   },
   "2026-06-23T09:00:00Z": {
     "ALL": {
-      "total": 1,
-      "passed": 1,
-      "failed": 0,
+      "total": 6,
+      "passed": 2,
+      "failed": 4,
       "passed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110613_1782206880065.html",
+          "profile": "default member intacc",
+          "passed": 40,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:06:35.986000Z",
+          "end_time": "2026-06-23T11:27:59.553+02:00"
+        },
         {
           "full_name": "Test Suites/Settings/Templates",
           "netlify_url": "https://6a3a4f7b7f71350f440a7d5b--qa-onrex.netlify.app/reports/20260623_110247_1782206199875.html",
@@ -8772,7 +8784,56 @@
           "end_time": "2026-06-23T11:16:39.252+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110616_1782207338795.html",
+          "profile": "default member intacc",
+          "passed": 21,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:28:13.155000Z",
+          "end_time": "2026-06-23T11:35:37.746+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110618_1782207610531.html",
+          "profile": "default member intacc",
+          "passed": 7,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:35:52.135000Z",
+          "end_time": "2026-06-23T11:40:09.954+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110620_1782208086541.html",
+          "profile": "default member intacc",
+          "passed": 15,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:40:24.160000Z",
+          "end_time": "2026-06-23T11:48:05.702+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110622_1782208745670.html",
+          "profile": "default member intacc",
+          "passed": 20,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:48:19.841000Z",
+          "end_time": "2026-06-23T11:59:04.777+02:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -8782,10 +8843,22 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 1,
-      "passed": 1,
-      "failed": 0,
+      "total": 6,
+      "passed": 2,
+      "failed": 4,
       "passed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - DYNAREX",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110613_1782206880065.html",
+          "profile": "default member intacc",
+          "passed": 40,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:06:35.986000Z",
+          "end_time": "2026-06-23T11:27:59.553+02:00"
+        },
         {
           "full_name": "Test Suites/Settings/Templates",
           "netlify_url": "https://6a3a4f7b7f71350f440a7d5b--qa-onrex.netlify.app/reports/20260623_110247_1782206199875.html",
@@ -8799,7 +8872,56 @@
           "end_time": "2026-06-23T11:16:39.252+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new DYNAREX client",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110616_1782207338795.html",
+          "profile": "default member intacc",
+          "passed": 21,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:28:13.155000Z",
+          "end_time": "2026-06-23T11:35:37.746+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110618_1782207610531.html",
+          "profile": "default member intacc",
+          "passed": 7,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:35:52.135000Z",
+          "end_time": "2026-06-23T11:40:09.954+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/Billing state assessment for new Sd3EP client",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110620_1782208086541.html",
+          "profile": "default member intacc",
+          "passed": 15,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:40:24.160000Z",
+          "end_time": "2026-06-23T11:48:05.702+02:00"
+        },
+        {
+          "full_name": "billing/State assessment/DoD - state assessment not available",
+          "netlify_url": "https://6a3a6576c6c1133abb6730eb--qa-onrex.netlify.app/reports/20260623_110622_1782208745670.html",
+          "profile": "default member intacc",
+          "passed": 20,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-06-23T09:48:19.841000Z",
+          "end_time": "2026-06-23T11:59:04.777+02:00"
+        }
+      ]
     }
   }
 }
