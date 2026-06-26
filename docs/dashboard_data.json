@@ -27721,6 +27721,30 @@
             ],
             "All": "Acceptance"
           }
+        },
+        "2026.06.26": {
+          "sessions": {
+            "Development": [],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6a3e4880ab598e3a00def6c4--qa-onrex.netlify.app/reports/20260626_081038_1782455502730.html",
+                "html_filename": "20260626_081038_1782455502730.html",
+                "environment": "https://intacc01-member.onrex.de/member/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/billing/State assessment/billing state assessment - DYNAREX",
+                "profile": "default member intacc",
+                "test_cases": 40,
+                "passed": 40,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-26T08:11:04.806+02:00",
+                "end": "2026-06-26T08:31:41.609+02:00"
+              }
+            ],
+            "All": "Acceptance"
+          }
         }
       },
       "Test Suites/billing/State assessment/billing state assessment - SD3EP": {
@@ -28549,8 +28573,25 @@
                 "end": "2026-06-26T04:36:25.209+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6a3e4880ab598e3a00def6c4--qa-onrex.netlify.app/reports/20260626_081046_1782456251897.html",
+                "html_filename": "20260626_081046_1782456251897.html",
+                "environment": "https://intacc01-member.onrex.de/member/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/billing/State assessment/billing state assessment - SD3EP",
+                "profile": "default member intacc",
+                "test_cases": 8,
+                "passed": 8,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-26T08:39:33.461+02:00",
+                "end": "2026-06-26T08:44:11.387+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -31449,8 +31490,25 @@
                 "end": "2026-06-26T04:22:42.162+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6a3e4880ab598e3a00def6c4--qa-onrex.netlify.app/reports/20260626_081043_1782455959429.html",
+                "html_filename": "20260626_081043_1782455959429.html",
+                "environment": "https://intacc01-member.onrex.de/member/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/billing/State assessment/Billing state assessment for new DYNAREX client",
+                "profile": "default member intacc",
+                "test_cases": 22,
+                "passed": 22,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-26T08:31:56.447+02:00",
+                "end": "2026-06-26T08:39:18.821+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -35833,8 +35891,25 @@
                 "end": "2026-06-26T04:53:27.171+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6a3e4880ab598e3a00def6c4--qa-onrex.netlify.app/reports/20260626_085503_1782457304150.html",
+                "html_filename": "20260626_085503_1782457304150.html",
+                "environment": "https://intacc01-member.onrex.de/member/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/billing/State assessment/Billing state assessment for new Sd3EP client",
+                "profile": "default member intacc",
+                "test_cases": 18,
+                "passed": 18,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-26T08:55:15.396+02:00",
+                "end": "2026-06-26T09:01:43.844+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -56794,6 +56869,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6a3e4880ab598e3a00def6c4--qa-onrex.netlify.app/reports/20260626_111456_1782461864699.html",
+                "html_filename": "20260626_111456_1782461864699.html",
+                "environment": "https://intdev01-smp360.onrex.de/auth/",
+                "project": "SMP",
+                "test_suite_id": "Test Suites/office management",
+                "profile": "default_intdev",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-06-26T11:15:00.905+03:00",
+                "end": "2026-06-26T11:17:43.905+03:00"
+              },
+              {
                 "netlify_url": "https://6a3e15eeb4a3bcc528b1b2b9--qa-onrex.netlify.app/reports/20260626_064505_1782449298596.html",
                 "html_filename": "20260626_064505_1782449298596.html",
                 "environment": "https://intdev01-smp360.onrex.de/auth/",
@@ -67893,5 +67984,5 @@
     "2026.05.22",
     "2026.05.21"
   ],
-  "last_updated": "26/06/2026, 07:02:29 (GMT+1)"
+  "last_updated": "26/06/2026, 10:38:13 (GMT+1)"
 }
