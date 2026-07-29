@@ -6798,10 +6798,22 @@
   },
   "2026-07-29T21:00:00Z": {
     "ALL": {
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
+      "total": 15,
+      "passed": 14,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230326_1785360815919.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:28:33.363000Z",
+          "end_time": "2026-07-29T23:33:35.229+02:00"
+        },
         {
           "full_name": "2_case admin page/2a_Case admin data",
           "netlify_url": "https://6a6a6c15cf7446b18a299681--qa-onrex.netlify.app/reports/20260729_230320_1785359350189.html",
@@ -6813,6 +6825,30 @@
           "skipped": 0,
           "start_time": "2026-07-29T21:07:44.654000Z",
           "end_time": "2026-07-29T23:09:09.924+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230330_1785361278190.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:39:27.819000Z",
+          "end_time": "2026-07-29T23:41:17.933+02:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230324_1785360509271.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:21:52.195000Z",
+          "end_time": "2026-07-29T23:28:28.947+02:00"
         },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
@@ -6839,6 +6875,18 @@
           "end_time": "2026-07-29T23:06:20.432+02:00"
         },
         {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230322_1785360107973.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:09:14.254000Z",
+          "end_time": "2026-07-29T23:21:47.227+02:00"
+        },
+        {
           "full_name": "katalon_cleanup_jenkins_tmp",
           "netlify_url": "https://6a6a6c15cf7446b18a299681--qa-onrex.netlify.app/reports/20260729_230017_1785358957789.html",
           "profile": "default DYNAREX intdev",
@@ -6849,15 +6897,112 @@
           "skipped": 0,
           "start_time": "2026-07-29T21:00:21.348000Z",
           "end_time": "2026-07-29T23:02:37.051+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230332_1785361438519.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:41:22.217000Z",
+          "end_time": "2026-07-29T23:43:58.017+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230340_1785362288121.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:56:14.230000Z",
+          "end_time": "2026-07-29T23:58:07.785+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230334_1785361731242.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:44:02.682000Z",
+          "end_time": "2026-07-29T23:48:50.576+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230336_1785361995677.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:48:55.832000Z",
+          "end_time": "2026-07-29T23:53:15.015+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230338_1785362170221.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:53:19.886000Z",
+          "end_time": "2026-07-29T23:56:09.630+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230342_1785362470937.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:58:11.975000Z",
+          "end_time": "2026-07-30T00:01:10.593+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230328_1785361163314.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 4,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:33:40.072000Z",
+          "end_time": "2026-07-29T23:39:21.741+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
+      "total": 15,
+      "passed": 14,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230326_1785360815919.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:28:33.363000Z",
+          "end_time": "2026-07-29T23:33:35.229+02:00"
+        },
         {
           "full_name": "2_case admin page/2a_Case admin data",
           "netlify_url": "https://6a6a6c15cf7446b18a299681--qa-onrex.netlify.app/reports/20260729_230320_1785359350189.html",
@@ -6869,6 +7014,30 @@
           "skipped": 0,
           "start_time": "2026-07-29T21:07:44.654000Z",
           "end_time": "2026-07-29T23:09:09.924+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230330_1785361278190.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:39:27.819000Z",
+          "end_time": "2026-07-29T23:41:17.933+02:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230324_1785360509271.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:21:52.195000Z",
+          "end_time": "2026-07-29T23:28:28.947+02:00"
         },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
@@ -6895,6 +7064,18 @@
           "end_time": "2026-07-29T23:06:20.432+02:00"
         },
         {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230322_1785360107973.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:09:14.254000Z",
+          "end_time": "2026-07-29T23:21:47.227+02:00"
+        },
+        {
           "full_name": "katalon_cleanup_jenkins_tmp",
           "netlify_url": "https://6a6a6c15cf7446b18a299681--qa-onrex.netlify.app/reports/20260729_230017_1785358957789.html",
           "profile": "default DYNAREX intdev",
@@ -6905,9 +7086,193 @@
           "skipped": 0,
           "start_time": "2026-07-29T21:00:21.348000Z",
           "end_time": "2026-07-29T23:02:37.051+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230332_1785361438519.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:41:22.217000Z",
+          "end_time": "2026-07-29T23:43:58.017+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230340_1785362288121.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:56:14.230000Z",
+          "end_time": "2026-07-29T23:58:07.785+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230334_1785361731242.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:44:02.682000Z",
+          "end_time": "2026-07-29T23:48:50.576+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230336_1785361995677.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:48:55.832000Z",
+          "end_time": "2026-07-29T23:53:15.015+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230338_1785362170221.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:53:19.886000Z",
+          "end_time": "2026-07-29T23:56:09.630+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230342_1785362470937.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:58:11.975000Z",
+          "end_time": "2026-07-30T00:01:10.593+02:00"
         }
       ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230328_1785361163314.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 4,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T21:33:40.072000Z",
+          "end_time": "2026-07-29T23:39:21.741+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
       "failed_details": []
+    }
+  },
+  "2026-07-29T22:00:00Z": {
+    "ALL": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230344_1785362741726.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T22:01:15.246000Z",
+          "end_time": "2026-07-30T00:05:41.151+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3g_vehicle tires tab",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230348_1785363158380.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T22:10:23.522000Z",
+          "end_time": "2026-07-30T00:12:37.828+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3f_damage area tab",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230346_1785363019337.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 14,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T22:05:45.972000Z",
+          "end_time": "2026-07-30T00:10:18.814+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230344_1785362741726.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T22:01:15.246000Z",
+          "end_time": "2026-07-30T00:05:41.151+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3g_vehicle tires tab",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230348_1785363158380.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T22:10:23.522000Z",
+          "end_time": "2026-07-30T00:12:37.828+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3f_damage area tab",
+          "netlify_url": "https://6a6a7b186deb5bc701d828d2--qa-onrex.netlify.app/reports/20260729_230346_1785363019337.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 14,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-29T22:05:45.972000Z",
+          "end_time": "2026-07-30T00:10:18.814+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
