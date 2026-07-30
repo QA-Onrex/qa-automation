@@ -7159,5 +7159,80 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-07-30T07:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://6a6b13cf4467f62128ad6481--qa-onrex.netlify.app/reports/20260730_090508_1785395196847.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-30T07:05:20.378000Z",
+          "end_time": "2026-07-30T09:06:36.299+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6a6b13cf4467f62128ad6481--qa-onrex.netlify.app/reports/20260730_091206_1785395748988.html",
+          "profile": "dynarex intdev",
+          "passed": 4,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-30T07:12:17.793000Z",
+          "end_time": "2026-07-30T09:15:47.833+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://6a6b13cf4467f62128ad6481--qa-onrex.netlify.app/reports/20260730_090508_1785395196847.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-30T07:05:20.378000Z",
+          "end_time": "2026-07-30T09:06:36.299+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6a6b13cf4467f62128ad6481--qa-onrex.netlify.app/reports/20260730_091206_1785395748988.html",
+          "profile": "dynarex intdev",
+          "passed": 4,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-07-30T07:12:17.793000Z",
+          "end_time": "2026-07-30T09:15:47.833+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
   }
 }
