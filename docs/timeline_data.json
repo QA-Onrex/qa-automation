@@ -12504,9 +12504,9 @@
   },
   "2026-08-07T22:00:00Z": {
     "ALL": {
-      "total": 6,
-      "passed": 6,
-      "failed": 0,
+      "total": 11,
+      "passed": 9,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "4_participants page/4a_participants",
@@ -12579,14 +12579,75 @@
           "skipped": 0,
           "start_time": "2026-08-07T22:18:07.815000Z",
           "end_time": "2026-08-08T00:20:46.369+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230355_1786143054845.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:42:20.587000Z",
+          "end_time": "2026-08-08T00:50:54.278+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230357_1786143586358.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:50:59.213000Z",
+          "end_time": "2026-08-08T00:59:45.608+02:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230359_1786143893700.html",
+          "profile": "SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:59:50.781000Z",
+          "end_time": "2026-08-08T01:04:53.279+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230353_1786142536237.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 13,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:36:01.464000Z",
+          "end_time": "2026-08-08T00:42:15.779+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5a_calculation page",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230351_1786142157454.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:29:52.042000Z",
+          "end_time": "2026-08-08T00:35:56.675+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 6,
-      "passed": 6,
-      "failed": 0,
+      "total": 11,
+      "passed": 9,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "4_participants page/4a_participants",
@@ -12659,9 +12720,70 @@
           "skipped": 0,
           "start_time": "2026-08-07T22:18:07.815000Z",
           "end_time": "2026-08-08T00:20:46.369+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230355_1786143054845.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:42:20.587000Z",
+          "end_time": "2026-08-08T00:50:54.278+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230357_1786143586358.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:50:59.213000Z",
+          "end_time": "2026-08-08T00:59:45.608+02:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230359_1786143893700.html",
+          "profile": "SD3ep intdev",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:59:50.781000Z",
+          "end_time": "2026-08-08T01:04:53.279+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230353_1786142536237.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 13,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:36:01.464000Z",
+          "end_time": "2026-08-08T00:42:15.779+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5a_calculation page",
+          "netlify_url": "https://6a7665780d8274671f4e0d66--qa-onrex.netlify.app/reports/20260807_230351_1786142157454.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-07T22:29:52.042000Z",
+          "end_time": "2026-08-08T00:35:56.675+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
