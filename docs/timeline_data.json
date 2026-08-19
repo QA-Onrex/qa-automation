@@ -5773,8 +5773,8 @@
   },
   "2026-08-19T04:00:00Z": {
     "ALL": {
-      "total": 12,
-      "passed": 12,
+      "total": 13,
+      "passed": 13,
       "failed": 0,
       "passed_details": [
         {
@@ -5884,6 +5884,18 @@
           "skipped": 0,
           "start_time": "2026-08-19T04:33:58.310000Z",
           "end_time": "2026-08-19T06:37:52.759+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053653_1787115652699.html",
+          "profile": "default",
+          "passed": 14,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T04:55:00.695000Z",
+          "end_time": "2026-08-19T07:00:52.232+02:00"
         },
         {
           "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
@@ -5932,8 +5944,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 12,
-      "passed": 12,
+      "total": 13,
+      "passed": 13,
       "failed": 0,
       "passed_details": [
         {
@@ -6045,6 +6057,18 @@
           "end_time": "2026-08-19T06:37:52.759+02:00"
         },
         {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053653_1787115652699.html",
+          "profile": "default",
+          "passed": 14,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T04:55:00.695000Z",
+          "end_time": "2026-08-19T07:00:52.232+02:00"
+        },
+        {
           "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
           "netlify_url": "https://6a8537f94681703381f04fe3--qa-onrex.netlify.app/reports/20260819_053639_1787113580340.html",
           "profile": "default",
@@ -6082,6 +6106,177 @@
         }
       ],
       "failed_details": []
+    }
+  },
+  "2026-08-19T05:00:00Z": {
+    "ALL": {
+      "total": 6,
+      "passed": 5,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053655_1787116134413.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:00:56.824000Z",
+          "end_time": "2026-08-19T07:08:53.547+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053657_1787116613132.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:08:58.455000Z",
+          "end_time": "2026-08-19T07:16:52.564+02:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053705_1787117637427.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:28:56.531000Z",
+          "end_time": "2026-08-19T07:33:57.177+02:00"
+        },
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053701_1787117140613.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:20:53.596000Z",
+          "end_time": "2026-08-19T07:25:40.054+02:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053659_1787116849512.html",
+          "profile": "SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:16:57.609000Z",
+          "end_time": "2026-08-19T07:20:48.985+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "6_valuation/6e_Manual Valuation",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053703_1787117332140.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:25:44.971000Z",
+          "end_time": "2026-08-19T07:28:51.189+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 6,
+      "passed": 5,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053655_1787116134413.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:00:56.824000Z",
+          "end_time": "2026-08-19T07:08:53.547+02:00"
+        },
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053657_1787116613132.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:08:58.455000Z",
+          "end_time": "2026-08-19T07:16:52.564+02:00"
+        },
+        {
+          "full_name": "7_market value page",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053705_1787117637427.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:28:56.531000Z",
+          "end_time": "2026-08-19T07:33:57.177+02:00"
+        },
+        {
+          "full_name": "6_valuation/6d_valuation HGV",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053701_1787117140613.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:20:53.596000Z",
+          "end_time": "2026-08-19T07:25:40.054+02:00"
+        },
+        {
+          "full_name": "6_valuation/6c_valuation ExpertPlusPartner",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053659_1787116849512.html",
+          "profile": "SD3ep intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:16:57.609000Z",
+          "end_time": "2026-08-19T07:20:48.985+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "6_valuation/6e_Manual Valuation",
+          "netlify_url": "https://6a854168f73090a66201c798--qa-onrex.netlify.app/reports/20260819_053703_1787117332140.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T05:25:44.971000Z",
+          "end_time": "2026-08-19T07:28:51.189+02:00"
+        }
+      ]
     }
   }
 }
