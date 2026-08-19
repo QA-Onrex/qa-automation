@@ -6717,8 +6717,8 @@
   },
   "2026-08-19T08:00:00Z": {
     "ALL": {
-      "total": 20,
-      "passed": 17,
+      "total": 21,
+      "passed": 18,
       "failed": 3,
       "passed_details": [
         {
@@ -6840,6 +6840,18 @@
           "skipped": 0,
           "start_time": "2026-08-19T08:55:08.214000Z",
           "end_time": "2026-08-19T10:55:37.271+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_104955_1787130171982.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T08:59:06.930000Z",
+          "end_time": "2026-08-19T11:02:51.573+02:00"
         },
         {
           "full_name": "Test Suites/Settings/Offices",
@@ -6973,8 +6985,8 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 20,
-      "passed": 17,
+      "total": 21,
+      "passed": 18,
       "failed": 3,
       "passed_details": [
         {
@@ -7096,6 +7108,18 @@
           "skipped": 0,
           "start_time": "2026-08-19T08:55:08.214000Z",
           "end_time": "2026-08-19T10:55:37.271+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Custom roles",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_104955_1787130171982.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T08:59:06.930000Z",
+          "end_time": "2026-08-19T11:02:51.573+02:00"
         },
         {
           "full_name": "Test Suites/Settings/Offices",
@@ -7220,6 +7244,247 @@
           "end_time": "2026-08-19T10:48:52.291+02:00"
         }
       ]
+    }
+  },
+  "2026-08-19T09:00:00Z": {
+    "ALL": {
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_111804_1787131515144.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:18:18.063000Z",
+          "end_time": "2026-08-19T11:25:14.267+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105009_1787131834332.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:29:39.927000Z",
+          "end_time": "2026-08-19T11:30:33.822+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105003_1787131324671.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:14:54.909000Z",
+          "end_time": "2026-08-19T11:22:04.075+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105007_1787131775729.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:26:26.163000Z",
+          "end_time": "2026-08-19T11:29:35.113+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105001_1787130890774.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:13:44.113000Z",
+          "end_time": "2026-08-19T11:14:50.237+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105011_1787132697213.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:30:38.162000Z",
+          "end_time": "2026-08-19T11:44:56.471+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_104957_1787130255255.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:02:55.792000Z",
+          "end_time": "2026-08-19T11:04:14.814+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_104959_1787130819981.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:04:19.383000Z",
+          "end_time": "2026-08-19T11:13:39.092+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105005_1787131582360.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:22:08.874000Z",
+          "end_time": "2026-08-19T11:26:21.991+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Audatex - Regression test",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_111804_1787131515144.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:18:18.063000Z",
+          "end_time": "2026-08-19T11:25:14.267+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Filters",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105009_1787131834332.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:29:39.927000Z",
+          "end_time": "2026-08-19T11:30:33.822+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105003_1787131324671.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:14:54.909000Z",
+          "end_time": "2026-08-19T11:22:04.075+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Change Login Email",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105007_1787131775729.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:26:26.163000Z",
+          "end_time": "2026-08-19T11:29:35.113+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - Cleanup",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105001_1787130890774.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:13:44.113000Z",
+          "end_time": "2026-08-19T11:14:50.237+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105011_1787132697213.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:30:38.162000Z",
+          "end_time": "2026-08-19T11:44:56.471+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Search",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_104957_1787130255255.html",
+          "profile": "default",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:02:55.792000Z",
+          "end_time": "2026-08-19T11:04:14.814+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_104959_1787130819981.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:04:19.383000Z",
+          "end_time": "2026-08-19T11:13:39.092+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6a857b36b1f4428805fc2c7d--qa-onrex.netlify.app/reports/20260819_105005_1787131582360.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-19T09:22:08.874000Z",
+          "end_time": "2026-08-19T11:26:21.991+02:00"
+        }
+      ],
+      "failed_details": []
     }
   }
 }
