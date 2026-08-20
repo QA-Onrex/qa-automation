@@ -8866,10 +8866,46 @@
   },
   "2026-08-20T21:00:00Z": {
     "ALL": {
-      "total": 1,
-      "passed": 1,
+      "total": 7,
+      "passed": 7,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230246_1787259951831.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:04:32.599000Z",
+          "end_time": "2026-08-20T23:05:51.342+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230250_1787260124765.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:07:17.461000Z",
+          "end_time": "2026-08-20T23:08:44.464+02:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230248_1787260032952.html",
+          "profile": "multi user intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:05:56.524000Z",
+          "end_time": "2026-08-20T23:07:12.351+02:00"
+        },
         {
           "full_name": "katalon_cleanup_jenkins_tmp",
           "netlify_url": "https://6a876bd9716a5a92155b3d67--qa-onrex.netlify.app/reports/20260820_230016_1787259726506.html",
@@ -8881,15 +8917,87 @@
           "skipped": 0,
           "start_time": "2026-08-20T21:00:20.599000Z",
           "end_time": "2026-08-20T23:02:05.694+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230256_1787261609234.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:28:19.643000Z",
+          "end_time": "2026-08-20T23:33:28.595+02:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230254_1787261295505.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:21:33.186000Z",
+          "end_time": "2026-08-20T23:28:14.864+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230252_1787260888975.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:08:48.748000Z",
+          "end_time": "2026-08-20T23:21:28.387+02:00"
         }
       ],
       "failed_details": []
     },
     "intdev": {
-      "total": 1,
-      "passed": 1,
+      "total": 7,
+      "passed": 7,
       "failed": 0,
       "passed_details": [
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230246_1787259951831.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:04:32.599000Z",
+          "end_time": "2026-08-20T23:05:51.342+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230250_1787260124765.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:07:17.461000Z",
+          "end_time": "2026-08-20T23:08:44.464+02:00"
+        },
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230248_1787260032952.html",
+          "profile": "multi user intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:05:56.524000Z",
+          "end_time": "2026-08-20T23:07:12.351+02:00"
+        },
         {
           "full_name": "katalon_cleanup_jenkins_tmp",
           "netlify_url": "https://6a876bd9716a5a92155b3d67--qa-onrex.netlify.app/reports/20260820_230016_1787259726506.html",
@@ -8901,6 +9009,42 @@
           "skipped": 0,
           "start_time": "2026-08-20T21:00:20.599000Z",
           "end_time": "2026-08-20T23:02:05.694+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230256_1787261609234.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:28:19.643000Z",
+          "end_time": "2026-08-20T23:33:28.595+02:00"
+        },
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230254_1787261295505.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:21:33.186000Z",
+          "end_time": "2026-08-20T23:28:14.864+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6a877422bce553a02c8d4f7f--qa-onrex.netlify.app/reports/20260820_230252_1787260888975.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-20T21:08:48.748000Z",
+          "end_time": "2026-08-20T23:21:28.387+02:00"
         }
       ],
       "failed_details": []
