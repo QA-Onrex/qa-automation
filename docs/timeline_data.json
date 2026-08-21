@@ -10578,8 +10578,8 @@
   },
   "2026-08-21T03:00:00Z": {
     "ALL": {
-      "total": 17,
-      "passed": 15,
+      "total": 20,
+      "passed": 18,
       "failed": 2,
       "passed_details": [
         {
@@ -10761,6 +10761,42 @@
           "skipped": 0,
           "start_time": "2026-08-21T03:43:13.293000Z",
           "end_time": "2026-08-21T05:44:33.139+02:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055330_1787284971079.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T03:56:37.581000Z",
+          "end_time": "2026-08-21T06:02:50.284+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055326_1787284439805.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T03:53:36.533000Z",
+          "end_time": "2026-08-21T05:53:59.207+02:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055328_1787284593778.html",
+          "profile": "default_intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T03:54:03.730000Z",
+          "end_time": "2026-08-21T05:56:33.222+02:00"
         }
       ],
       "failed_details": [
@@ -10791,8 +10827,8 @@
       ]
     },
     "intdev": {
-      "total": 17,
-      "passed": 15,
+      "total": 20,
+      "passed": 18,
       "failed": 2,
       "passed_details": [
         {
@@ -10974,6 +11010,42 @@
           "skipped": 0,
           "start_time": "2026-08-21T03:43:13.293000Z",
           "end_time": "2026-08-21T05:44:33.139+02:00"
+        },
+        {
+          "full_name": "case",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055330_1787284971079.html",
+          "profile": "default_intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T03:56:37.581000Z",
+          "end_time": "2026-08-21T06:02:50.284+02:00"
+        },
+        {
+          "full_name": "login-logout",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055326_1787284439805.html",
+          "profile": "default_intdev",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T03:53:36.533000Z",
+          "end_time": "2026-08-21T05:53:59.207+02:00"
+        },
+        {
+          "full_name": "office management",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055328_1787284593778.html",
+          "profile": "default_intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T03:54:03.730000Z",
+          "end_time": "2026-08-21T05:56:33.222+02:00"
         }
       ],
       "failed_details": [
@@ -11002,6 +11074,55 @@
           "end_time": "2026-08-21T05:50:48.227+02:00"
         }
       ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-08-21T04:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Email credentials",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055332_1787285075942.html",
+          "profile": "default_intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T04:02:55.259000Z",
+          "end_time": "2026-08-21T06:04:35.318+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Email credentials",
+          "netlify_url": "https://6a87d502c484870c89bf8176--qa-onrex.netlify.app/reports/20260821_055332_1787285075942.html",
+          "profile": "default_intdev",
+          "passed": 3,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T04:02:55.259000Z",
+          "end_time": "2026-08-21T06:04:35.318+02:00"
+        }
+      ],
+      "failed_details": []
     },
     "intacc": {
       "total": 0,
