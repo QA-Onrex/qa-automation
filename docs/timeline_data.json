@@ -11762,9 +11762,9 @@
   },
   "2026-08-21T23:00:00Z": {
     "ALL": {
-      "total": 3,
-      "passed": 2,
-      "failed": 1,
+      "total": 8,
+      "passed": 6,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "7_market value page",
@@ -11789,6 +11789,54 @@
           "skipped": 0,
           "start_time": "2026-08-21T23:00:23.690000Z",
           "end_time": "2026-08-22T01:05:28.434+02:00"
+        },
+        {
+          "full_name": "settings/invoice settings",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230358_1787356568033.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:47:49.270000Z",
+          "end_time": "2026-08-22T01:56:07.326+02:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230352_1787355834298.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:40:38.500000Z",
+          "end_time": "2026-08-22T01:43:53.966+02:00"
+        },
+        {
+          "full_name": "Accounting",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230356_1787356065084.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:46:17.831000Z",
+          "end_time": "2026-08-22T01:47:44.596+02:00"
+        },
+        {
+          "full_name": "master data/1_text block master data",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230354_1787355973622.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:43:58.287000Z",
+          "end_time": "2026-08-22T01:46:13.482+02:00"
         }
       ],
       "failed_details": [
@@ -11803,13 +11851,25 @@
           "skipped": 0,
           "start_time": "2026-08-21T23:05:33.348000Z",
           "end_time": "2026-08-22T01:08:46.716+02:00"
+        },
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230350_1787355633533.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:14:05.027000Z",
+          "end_time": "2026-08-22T01:40:31.788+02:00"
         }
       ]
     },
     "intdev": {
-      "total": 3,
-      "passed": 2,
-      "failed": 1,
+      "total": 8,
+      "passed": 6,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "7_market value page",
@@ -11834,6 +11894,54 @@
           "skipped": 0,
           "start_time": "2026-08-21T23:00:23.690000Z",
           "end_time": "2026-08-22T01:05:28.434+02:00"
+        },
+        {
+          "full_name": "settings/invoice settings",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230358_1787356568033.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:47:49.270000Z",
+          "end_time": "2026-08-22T01:56:07.326+02:00"
+        },
+        {
+          "full_name": "9_regional salvage request",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230352_1787355834298.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:40:38.500000Z",
+          "end_time": "2026-08-22T01:43:53.966+02:00"
+        },
+        {
+          "full_name": "Accounting",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230356_1787356065084.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 4,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:46:17.831000Z",
+          "end_time": "2026-08-22T01:47:44.596+02:00"
+        },
+        {
+          "full_name": "master data/1_text block master data",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230354_1787355973622.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:43:58.287000Z",
+          "end_time": "2026-08-22T01:46:13.482+02:00"
         }
       ],
       "failed_details": [
@@ -11848,6 +11956,18 @@
           "skipped": 0,
           "start_time": "2026-08-21T23:05:33.348000Z",
           "end_time": "2026-08-22T01:08:46.716+02:00"
+        },
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://6a88e5ce666a3e3dc878ccc8--qa-onrex.netlify.app/reports/20260821_230350_1787355633533.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-21T23:14:05.027000Z",
+          "end_time": "2026-08-22T01:40:31.788+02:00"
         }
       ]
     },
