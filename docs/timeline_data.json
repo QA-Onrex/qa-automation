@@ -6085,10 +6085,34 @@
   },
   "2026-08-24T21:00:00Z": {
     "ALL": {
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
+      "total": 8,
+      "passed": 7,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230218_1787606457603.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:08:13.803000Z",
+          "end_time": "2026-08-24T23:20:57.181+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230226_1787607885618.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:42:34.705000Z",
+          "end_time": "2026-08-24T23:44:45.488+02:00"
+        },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
           "netlify_url": "https://6a8cb3dc0e12a582a6a10798--qa-onrex.netlify.app/reports/20260824_230214_1787605596331.html",
@@ -6126,6 +6150,18 @@
           "end_time": "2026-08-24T23:08:09.446+02:00"
         },
         {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230220_1787606861293.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:21:01.649000Z",
+          "end_time": "2026-08-24T23:27:40.555+02:00"
+        },
+        {
           "full_name": "katalon_cleanup_jenkins_tmp",
           "netlify_url": "https://6a8cb3dc0e12a582a6a10798--qa-onrex.netlify.app/reports/20260824_230013_1787605300052.html",
           "profile": "default DYNAREX intdev",
@@ -6138,13 +6174,50 @@
           "end_time": "2026-08-24T23:01:39.629+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230224_1787607750297.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:35:05.328000Z",
+          "end_time": "2026-08-24T23:42:28.832+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
+      "total": 8,
+      "passed": 7,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230218_1787606457603.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:08:13.803000Z",
+          "end_time": "2026-08-24T23:20:57.181+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230226_1787607885618.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:42:34.705000Z",
+          "end_time": "2026-08-24T23:44:45.488+02:00"
+        },
         {
           "full_name": "1_Login_logout/1b_login_logout_multi_client",
           "netlify_url": "https://6a8cb3dc0e12a582a6a10798--qa-onrex.netlify.app/reports/20260824_230214_1787605596331.html",
@@ -6182,6 +6255,18 @@
           "end_time": "2026-08-24T23:08:09.446+02:00"
         },
         {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230220_1787606861293.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:21:01.649000Z",
+          "end_time": "2026-08-24T23:27:40.555+02:00"
+        },
+        {
           "full_name": "katalon_cleanup_jenkins_tmp",
           "netlify_url": "https://6a8cb3dc0e12a582a6a10798--qa-onrex.netlify.app/reports/20260824_230013_1787605300052.html",
           "profile": "default DYNAREX intdev",
@@ -6194,7 +6279,20 @@
           "end_time": "2026-08-24T23:01:39.629+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6a8cbbc8e1d636022003ed35--qa-onrex.netlify.app/reports/20260824_230224_1787607750297.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 6,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-24T21:35:05.328000Z",
+          "end_time": "2026-08-24T23:42:28.832+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
