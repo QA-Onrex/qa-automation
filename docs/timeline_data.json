@@ -10122,9 +10122,9 @@
   },
   "2026-08-28T06:00:00Z": {
     "ALL": {
-      "total": 11,
+      "total": 12,
       "passed": 10,
-      "failed": 1,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
@@ -10248,6 +10248,18 @@
         }
       ],
       "failed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_084833_1787901169301.html",
+          "profile": "default intdev",
+          "passed": 10,
+          "failed": 25,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T06:48:44.033000Z",
+          "end_time": "2026-08-28T09:12:48.787+02:00"
+        },
         {
           "full_name": "Test Suites/Order accepted and revoked",
           "netlify_url": "https://6a912b292d48f75a3d070e08--qa-onrex.netlify.app/reports/20260828_082240_1787898495076.html",
@@ -10263,9 +10275,9 @@
       ]
     },
     "intdev": {
-      "total": 11,
+      "total": 12,
       "passed": 10,
-      "failed": 1,
+      "failed": 2,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
@@ -10390,6 +10402,18 @@
       ],
       "failed_details": [
         {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_084833_1787901169301.html",
+          "profile": "default intdev",
+          "passed": 10,
+          "failed": 25,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T06:48:44.033000Z",
+          "end_time": "2026-08-28T09:12:48.787+02:00"
+        },
+        {
           "full_name": "Test Suites/Order accepted and revoked",
           "netlify_url": "https://6a912b292d48f75a3d070e08--qa-onrex.netlify.app/reports/20260828_082240_1787898495076.html",
           "profile": "default - intdev",
@@ -10400,6 +10424,255 @@
           "skipped": 0,
           "start_time": "2026-08-28T06:25:59.677000Z",
           "end_time": "2026-08-28T08:28:13.905+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-08-28T07:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Order accepted and revoked",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_101332_1787901312042.html",
+          "profile": "default - intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T07:13:36.354000Z",
+          "end_time": "2026-08-28T10:15:11.443+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_091444_1787901897289.html",
+          "profile": "default intdev",
+          "passed": 33,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T07:14:55.402000Z",
+          "end_time": "2026-08-28T09:24:56.472+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Order accepted and revoked",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_101332_1787901312042.html",
+          "profile": "default - intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T07:13:36.354000Z",
+          "end_time": "2026-08-28T10:15:11.443+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_091444_1787901897289.html",
+          "profile": "default intdev",
+          "passed": 33,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T07:14:55.402000Z",
+          "end_time": "2026-08-28T09:24:56.472+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-08-28T08:00:00Z": {
+    "ALL": {
+      "total": 3,
+      "passed": 1,
+      "failed": 2,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_112645_1787906203970.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T08:34:05.623000Z",
+          "end_time": "2026-08-28T11:36:43.525+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_105532_1787909316156.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 58,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T08:55:43.755000Z",
+          "end_time": "2026-08-28T11:28:35.265+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_112643_1787906035486.html",
+          "profile": "default - intdev",
+          "passed": 14,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T08:27:02.490000Z",
+          "end_time": "2026-08-28T11:33:54.412+03:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 3,
+      "passed": 1,
+      "failed": 2,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_112645_1787906203970.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T08:34:05.623000Z",
+          "end_time": "2026-08-28T11:36:43.525+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/workflow settings",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_105532_1787909316156.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 58,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T08:55:43.755000Z",
+          "end_time": "2026-08-28T11:28:35.265+02:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_112643_1787906035486.html",
+          "profile": "default - intdev",
+          "passed": 14,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T08:27:02.490000Z",
+          "end_time": "2026-08-28T11:33:54.412+03:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-08-28T09:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_120948_1787908784174.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T09:16:46.810000Z",
+          "end_time": "2026-08-28T12:19:43.800+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_120946_1787908595438.html",
+          "profile": "default - intdev",
+          "passed": 15,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T09:10:05.688000Z",
+          "end_time": "2026-08-28T12:16:34.872+03:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_120948_1787908784174.html",
+          "profile": "default - intdev",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T09:16:46.810000Z",
+          "end_time": "2026-08-28T12:19:43.800+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6a9171ac378835e5bf8754f0--qa-onrex.netlify.app/reports/20260828_120946_1787908595438.html",
+          "profile": "default - intdev",
+          "passed": 15,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-08-28T09:10:05.688000Z",
+          "end_time": "2026-08-28T12:16:34.872+03:00"
         }
       ]
     },
