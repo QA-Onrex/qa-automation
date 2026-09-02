@@ -35405,8 +35405,25 @@
                 "end": "2026-09-02T04:11:28.955+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6a9829f5ed02cdac9f5007bf--qa-onrex.netlify.app/reports/20260902_131207_1788347711762.html",
+                "html_filename": "20260902_131207_1788347711762.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Automatic Downtime request check/Downtime Not Auto Requested - DoD",
+                "profile": "default DoD intacc",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-02T13:12:20.589+02:00",
+                "end": "2026-09-02T13:15:11.321+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -67631,5 +67648,5 @@
     "2026.07.29",
     "2026.07.28"
   ],
-  "last_updated": "02/09/2026, 10:36:43 (GMT+1)"
+  "last_updated": "02/09/2026, 14:51:50 (GMT+1)"
 }
