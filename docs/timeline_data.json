@@ -10091,8 +10091,8 @@
   },
   "2026-09-03T22:00:00Z": {
     "ALL": {
-      "total": 7,
-      "passed": 7,
+      "total": 9,
+      "passed": 9,
       "failed": 0,
       "passed_details": [
         {
@@ -10178,13 +10178,37 @@
           "skipped": 0,
           "start_time": "2026-09-03T22:16:22.252000Z",
           "end_time": "2026-09-04T00:25:25.321+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a9a0fa13ff8ae3847e17515--qa-onrex.netlify.app/reports/20260903_230335_1788475052715.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 14,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-03T22:31:28.606000Z",
+          "end_time": "2026-09-04T00:37:32.092+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a9a0fa13ff8ae3847e17515--qa-onrex.netlify.app/reports/20260903_230337_1788475540298.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-03T22:37:37.107000Z",
+          "end_time": "2026-09-04T00:45:39.563+02:00"
         }
       ],
       "failed_details": []
     },
     "intdev": {
-      "total": 7,
-      "passed": 7,
+      "total": 9,
+      "passed": 9,
       "failed": 0,
       "passed_details": [
         {
@@ -10270,6 +10294,30 @@
           "skipped": 0,
           "start_time": "2026-09-03T22:16:22.252000Z",
           "end_time": "2026-09-04T00:25:25.321+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6a9a0fa13ff8ae3847e17515--qa-onrex.netlify.app/reports/20260903_230335_1788475052715.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 14,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-03T22:31:28.606000Z",
+          "end_time": "2026-09-04T00:37:32.092+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6a9a0fa13ff8ae3847e17515--qa-onrex.netlify.app/reports/20260903_230337_1788475540298.html",
+          "profile": "default DYNAREX intdev",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-03T22:37:37.107000Z",
+          "end_time": "2026-09-04T00:45:39.563+02:00"
         }
       ],
       "failed_details": []
