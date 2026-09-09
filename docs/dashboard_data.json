@@ -15969,6 +15969,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6aa1488a2b1d3e660cce894e--qa-onrex.netlify.app/reports/20260909_112710_1788947861295.html",
+                "html_filename": "20260909_112710_1788947861295.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/8_media page",
+                "profile": "default DYNAREX intdev",
+                "test_cases": 13,
+                "passed": 13,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-09T11:27:21.897+02:00",
+                "end": "2026-09-09T11:57:40.843+02:00"
+              },
+              {
                 "netlify_url": "https://6aa0b714756374c1a3b9ef53--qa-onrex.netlify.app/reports/20260908_230352_1788910841790.html",
                 "html_filename": "20260908_230352_1788910841790.html",
                 "environment": "https://intdev01.onrex.de/auth",
@@ -15985,7 +16001,24 @@
                 "end": "2026-09-09T01:40:40.056+02:00"
               }
             ],
-            "Acceptance": [],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6aa1488a2b1d3e660cce894e--qa-onrex.netlify.app/reports/20260909_110126_1788945860730.html",
+                "html_filename": "20260909_110126_1788945860730.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/8_media page",
+                "profile": "default",
+                "test_cases": 13,
+                "passed": 13,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-09T11:01:38.789+02:00",
+                "end": "2026-09-09T11:24:20.038+02:00"
+              }
+            ],
             "All": "Development"
           }
         }
@@ -31158,6 +31191,22 @@
         "2026.09.09": {
           "sessions": {
             "Development": [
+              {
+                "netlify_url": "https://6aa1488a2b1d3e660cce894e--qa-onrex.netlify.app/reports/20260909_132326_1788953382444.html",
+                "html_filename": "20260909_132326_1788953382444.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Audatex - Regression test",
+                "profile": "default intdev",
+                "test_cases": 27,
+                "passed": 27,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-09T13:23:38.339+02:00",
+                "end": "2026-09-09T13:29:42.036+02:00"
+              },
               {
                 "netlify_url": "https://6aa0feec64ea3325bbfdb3db--qa-onrex.netlify.app/reports/20260908_230440_1788922381916.html",
                 "html_filename": "20260908_230440_1788922381916.html",
@@ -60685,8 +60734,41 @@
                 "end": "2026-09-09T06:11:15.462+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6aa1488a2b1d3e660cce894e--qa-onrex.netlify.app/reports/20260909_091558_1788938312635.html",
+                "html_filename": "20260909_091558_1788938312635.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "GUInterface",
+                "test_suite_id": "Test Suites/Test Suites/GU Interface with distribution export",
+                "profile": "default",
+                "test_cases": 13,
+                "passed": 11,
+                "failed": 2,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-09T09:16:09.147+02:00",
+                "end": "2026-09-09T09:18:32.099+02:00"
+              },
+              {
+                "netlify_url": "https://6aa1488a2b1d3e660cce894e--qa-onrex.netlify.app/reports/20260909_085517_1788937069044.html",
+                "html_filename": "20260909_085517_1788937069044.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "GUInterface",
+                "test_suite_id": "Test Suites/Test Suites/GU Interface with distribution export",
+                "profile": "default",
+                "test_cases": 13,
+                "passed": 11,
+                "failed": 2,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-09T08:55:28.151+02:00",
+                "end": "2026-09-09T08:57:48.539+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -66551,5 +66633,5 @@
     "2026.08.05",
     "2026.08.04"
   ],
-  "last_updated": "09/09/2026, 07:39:23 (GMT+1)"
+  "last_updated": "09/09/2026, 12:52:44 (GMT+1)"
 }
