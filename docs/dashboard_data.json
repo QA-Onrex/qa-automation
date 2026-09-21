@@ -54849,6 +54849,46 @@
             "Acceptance": [],
             "All": "Development"
           }
+        },
+        "2026.09.21": {
+          "sessions": {
+            "Development": [],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ab15ce710ef027468709e48--qa-onrex.netlify.app/reports/20260921_163848_1789998127609.html",
+                "html_filename": "20260921_163848_1789998127609.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "GUInterface",
+                "test_suite_id": "Test Suites/Test Suites/GU Interface with distribution export",
+                "profile": "default",
+                "test_cases": 12,
+                "passed": 12,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-21T16:38:56.684+03:00",
+                "end": "2026-09-21T16:42:07.006+03:00"
+              },
+              {
+                "netlify_url": "https://6ab15ce710ef027468709e48--qa-onrex.netlify.app/reports/20260921_162350_1789997244409.html",
+                "html_filename": "20260921_162350_1789997244409.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "GUInterface",
+                "test_suite_id": "Test Suites/Test Suites/GU Interface with distribution export",
+                "profile": "default",
+                "test_cases": 12,
+                "passed": 12,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-21T16:23:58.975+03:00",
+                "end": "2026-09-21T16:27:23.838+03:00"
+              }
+            ],
+            "All": "Acceptance"
+          }
         }
       },
       "Test Suites/Test Suites/GU Interface Get case list by date range": {
@@ -66370,6 +66410,47 @@
             "Acceptance": [],
             "All": "Development"
           }
+        },
+        "2026.09.21": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6ab15ce710ef027468709e48--qa-onrex.netlify.app/reports/20260921_160719_1789999790314.html",
+                "html_filename": "20260921_160719_1789999790314.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Dekra HU",
+                "profile": "default intdev",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-21T16:07:30.932+02:00",
+                "end": "2026-09-21T16:09:49.669+02:00"
+              }
+            ],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ab15ce710ef027468709e48--qa-onrex.netlify.app/reports/20260921_161750_1790000420912.html",
+                "html_filename": "20260921_161750_1790000420912.html",
+                "environment": "intacc",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Dekra HU",
+                "profile": "default",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-21T16:18:01.481+02:00",
+                "end": "2026-09-21T16:20:20.608+02:00"
+              }
+            ],
+            "All": "Acceptance"
+          }
         }
       }
     }
@@ -66407,5 +66488,5 @@
     "2026.08.18",
     "2026.08.17"
   ],
-  "last_updated": "21/09/2026, 11:37:51 (GMT+1)"
+  "last_updated": "21/09/2026, 17:35:57 (GMT+1)"
 }
