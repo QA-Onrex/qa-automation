@@ -6910,5 +6910,80 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-09-23T09:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6ab39d79e77008218902b54f--qa-onrex.netlify.app/reports/20260923_121955_1790155597556.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-23T09:20:20.035000Z",
+          "end_time": "2026-09-23T12:26:37.019+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6ab39d79e77008218902b54f--qa-onrex.netlify.app/reports/20260923_121957_1790155802710.html",
+          "profile": "default - intdev",
+          "passed": 11,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-23T09:26:49.963000Z",
+          "end_time": "2026-09-23T12:30:02.172+03:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6ab39d79e77008218902b54f--qa-onrex.netlify.app/reports/20260923_121955_1790155597556.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-23T09:20:20.035000Z",
+          "end_time": "2026-09-23T12:26:37.019+03:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6ab39d79e77008218902b54f--qa-onrex.netlify.app/reports/20260923_121957_1790155802710.html",
+          "profile": "default - intdev",
+          "passed": 11,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-23T09:26:49.963000Z",
+          "end_time": "2026-09-23T12:30:02.172+03:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
   }
 }
