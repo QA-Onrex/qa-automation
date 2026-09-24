@@ -7420,9 +7420,9 @@
   },
   "2026-09-24T06:00:00Z": {
     "ALL": {
-      "total": 3,
+      "total": 4,
       "passed": 3,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3f_damage area tab",
@@ -7461,12 +7461,25 @@
           "end_time": "2026-09-24T08:40:36.894+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/invoice wf - allowed actions",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_084844_1790232960589.html",
+          "profile": "default intdev",
+          "passed": 5,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T06:48:56.208000Z",
+          "end_time": "2026-09-24T08:55:59.272+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 3,
+      "total": 4,
       "passed": 3,
-      "failed": 0,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3f_damage area tab",
@@ -7505,7 +7518,20 @@
           "end_time": "2026-09-24T08:40:36.894+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "settings/workflow/invoice wf - allowed actions",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_084844_1790232960589.html",
+          "profile": "default intdev",
+          "passed": 5,
+          "failed": 3,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T06:48:56.208000Z",
+          "end_time": "2026-09-24T08:55:59.272+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
@@ -7513,6 +7539,128 @@
       "failed": 0,
       "passed_details": [],
       "failed_details": []
+    }
+  },
+  "2026-09-24T07:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_092822_1790236573239.html",
+          "profile": "default intdev",
+          "passed": 4,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T07:28:33.706000Z",
+          "end_time": "2026-09-24T09:56:10.901+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "8_media page",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_092822_1790236573239.html",
+          "profile": "default intdev",
+          "passed": 4,
+          "failed": 9,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T07:28:33.706000Z",
+          "end_time": "2026-09-24T09:56:10.901+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
+  },
+  "2026-09-24T10:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_135350_1790248405255.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T10:53:57.466000Z",
+          "end_time": "2026-09-24T14:13:23.563+03:00"
+        },
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_135151_1790247777857.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T10:51:55.646000Z",
+          "end_time": "2026-09-24T14:02:57.228+03:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_135350_1790248405255.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T10:53:57.466000Z",
+          "end_time": "2026-09-24T14:13:23.563+03:00"
+        },
+        {
+          "full_name": "settings/Test invoice number structure settings",
+          "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_135151_1790247777857.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 8,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-24T10:51:55.646000Z",
+          "end_time": "2026-09-24T14:02:57.228+03:00"
+        }
+      ]
     }
   }
 }

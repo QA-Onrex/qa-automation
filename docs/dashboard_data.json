@@ -20485,6 +20485,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_092822_1790236573239.html",
+                "html_filename": "20260924_092822_1790236573239.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/8_media page",
+                "profile": "default intdev",
+                "test_cases": 13,
+                "passed": 4,
+                "failed": 9,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-24T09:28:33.706+02:00",
+                "end": "2026-09-24T09:56:10.901+02:00"
+              },
+              {
                 "netlify_url": "https://6ab47a39d0bc90baeb34d2e3--qa-onrex.netlify.app/reports/20260923_230415_1790206153461.html",
                 "html_filename": "20260923_230415_1790206153461.html",
                 "environment": "https://intdev01.onrex.de/auth",
@@ -22574,8 +22590,41 @@
                 "end": "2026-09-24T02:08:40.411+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_135350_1790248405255.html",
+                "html_filename": "20260924_135350_1790248405255.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/settings/Test invoice number structure settings",
+                "profile": "default",
+                "test_cases": 8,
+                "passed": 7,
+                "failed": 1,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-24T13:53:57.466+03:00",
+                "end": "2026-09-24T14:13:23.563+03:00"
+              },
+              {
+                "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_135151_1790247777857.html",
+                "html_filename": "20260924_135151_1790247777857.html",
+                "environment": "https://intacc01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/settings/Test invoice number structure settings",
+                "profile": "default",
+                "test_cases": 8,
+                "passed": 0,
+                "failed": 8,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-24T13:51:55.646+03:00",
+                "end": "2026-09-24T14:02:57.228+03:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -23979,6 +24028,22 @@
         "2026.09.24": {
           "sessions": {
             "Development": [
+              {
+                "netlify_url": "https://6ab507059e60111e48b77d14--qa-onrex.netlify.app/reports/20260924_084844_1790232960589.html",
+                "html_filename": "20260924_084844_1790232960589.html",
+                "environment": "https://intdev01.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/settings/workflow/invoice wf - allowed actions",
+                "profile": "default intdev",
+                "test_cases": 8,
+                "passed": 5,
+                "failed": 3,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-09-24T08:48:56.208+02:00",
+                "end": "2026-09-24T08:55:59.272+02:00"
+              },
               {
                 "netlify_url": "https://6ab47a39d0bc90baeb34d2e3--qa-onrex.netlify.app/reports/20260923_230431_1790210859716.html",
                 "html_filename": "20260923_230431_1790210859716.html",
@@ -68104,5 +68169,5 @@
     "2026.08.20",
     "2026.08.19"
   ],
-  "last_updated": "24/09/2026, 07:51:24 (GMT+1)"
+  "last_updated": "24/09/2026, 12:18:32 (GMT+1)"
 }
