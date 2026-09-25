@@ -10014,9 +10014,9 @@
   },
   "2026-09-25T06:00:00Z": {
     "ALL": {
-      "total": 3,
-      "passed": 2,
-      "failed": 1,
+      "total": 6,
+      "passed": 3,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3f_damage area tab",
@@ -10041,6 +10041,18 @@
           "skipped": 0,
           "start_time": "2026-09-25T06:27:32.453000Z",
           "end_time": "2026-09-25T09:29:21.650+03:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6ab61b2414bfe2051800187b--qa-onrex.netlify.app/reports/20260925_084556_1790319014388.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-25T06:46:07.915000Z",
+          "end_time": "2026-09-25T08:50:13.554+02:00"
         }
       ],
       "failed_details": [
@@ -10055,13 +10067,37 @@
           "skipped": 0,
           "start_time": "2026-09-25T06:18:58.774000Z",
           "end_time": "2026-09-25T08:23:24.651+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://6ab61b2414bfe2051800187b--qa-onrex.netlify.app/reports/20260925_092709_1790318457398.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-25T06:29:30.456000Z",
+          "end_time": "2026-09-25T09:40:52.828+03:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6ab61b2414bfe2051800187b--qa-onrex.netlify.app/reports/20260925_092711_1790318951190.html",
+          "profile": "dynarex intdev",
+          "passed": 4,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-25T06:41:15.467000Z",
+          "end_time": "2026-09-25T09:49:10.081+03:00"
         }
       ]
     },
     "intdev": {
-      "total": 3,
-      "passed": 2,
-      "failed": 1,
+      "total": 6,
+      "passed": 3,
+      "failed": 3,
       "passed_details": [
         {
           "full_name": "3_vehicle page/3f_damage area tab",
@@ -10086,6 +10122,18 @@
           "skipped": 0,
           "start_time": "2026-09-25T06:27:32.453000Z",
           "end_time": "2026-09-25T09:29:21.650+03:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6ab61b2414bfe2051800187b--qa-onrex.netlify.app/reports/20260925_084556_1790319014388.html",
+          "profile": "default - intdev",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-25T06:46:07.915000Z",
+          "end_time": "2026-09-25T08:50:13.554+02:00"
         }
       ],
       "failed_details": [
@@ -10100,6 +10148,30 @@
           "skipped": 0,
           "start_time": "2026-09-25T06:18:58.774000Z",
           "end_time": "2026-09-25T08:23:24.651+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - General",
+          "netlify_url": "https://6ab61b2414bfe2051800187b--qa-onrex.netlify.app/reports/20260925_092709_1790318457398.html",
+          "profile": "dynarex intdev",
+          "passed": 2,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-25T06:29:30.456000Z",
+          "end_time": "2026-09-25T09:40:52.828+03:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users - User profile",
+          "netlify_url": "https://6ab61b2414bfe2051800187b--qa-onrex.netlify.app/reports/20260925_092711_1790318951190.html",
+          "profile": "dynarex intdev",
+          "passed": 4,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-09-25T06:41:15.467000Z",
+          "end_time": "2026-09-25T09:49:10.081+03:00"
         }
       ]
     },
