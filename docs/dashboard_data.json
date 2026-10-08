@@ -34864,6 +34864,100 @@
             "All": "Development"
           }
         }
+      },
+      "Test Suites/Z_Online/Z_Online_Custom_Page": {
+        "2026.10.08": {
+          "sessions": {
+            "Development": [],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_103650_1791448702827.html",
+                "html_filename": "20261008_103650_1791448702827.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_Custom_Page",
+                "profile": "default",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T10:37:02.464+02:00",
+                "end": "2026-10-08T10:38:22.442+02:00"
+              },
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_103602_1791448583402.html",
+                "html_filename": "20261008_103602_1791448583402.html",
+                "environment": "intacc",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_Custom_Page",
+                "profile": "default",
+                "test_cases": 1,
+                "passed": 0,
+                "failed": 0,
+                "error": 1,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T10:36:13.784+02:00",
+                "end": "2026-10-08T10:36:22.688+02:00"
+              }
+            ],
+            "All": "Acceptance"
+          }
+        }
+      },
+      "Test Suites/Z_Online/Z_Online_Member Login": {
+        "2026.10.08": {
+          "sessions": {
+            "Development": [],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_103916_1791448832467.html",
+                "html_filename": "20261008_103916_1791448832467.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_Member Login",
+                "profile": "default",
+                "test_cases": 1,
+                "passed": 0,
+                "failed": 1,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T10:39:27.045+02:00",
+                "end": "2026-10-08T10:40:30.796+02:00"
+              }
+            ],
+            "All": "Acceptance"
+          }
+        }
+      },
+      "Test Suites/Z_Online/Z_Online_ParticipantPage": {
+        "2026.10.08": {
+          "sessions": {
+            "Development": [],
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_112111_1791451525666.html",
+                "html_filename": "20261008_112111_1791451525666.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_ParticipantPage",
+                "profile": "default",
+                "test_cases": 3,
+                "passed": 3,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T11:21:22.252+02:00",
+                "end": "2026-10-08T11:25:25.243+02:00"
+              }
+            ],
+            "All": "Acceptance"
+          }
+        }
       }
     },
     "Claimnet": {
@@ -46369,6 +46463,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094849_1791446334230.html",
+                "html_filename": "20261008_094849_1791446334230.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Login-Logout",
+                "profile": "default intdev",
+                "test_cases": 8,
+                "passed": 8,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:57:16.084+02:00",
+                "end": "2026-10-08T09:58:53.978+02:00"
+              },
+              {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045058_1791428356347.html",
                 "html_filename": "20261008_045058_1791428356347.html",
                 "environment": "intdev",
@@ -47019,6 +47129,22 @@
         "2026.10.08": {
           "sessions": {
             "Development": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094842_1791446014055.html",
+                "html_filename": "20261008_094842_1791446014055.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Dashboard",
+                "profile": "default intdev",
+                "test_cases": 2,
+                "passed": 2,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:52:53.332+02:00",
+                "end": "2026-10-08T09:53:33.650+02:00"
+              },
               {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045052_1791428095341.html",
                 "html_filename": "20261008_045052_1791428095341.html",
@@ -47777,6 +47903,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094845_1791446148692.html",
+                "html_filename": "20261008_094845_1791446148692.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Dekra HU",
+                "profile": "default intdev",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:53:45.181+02:00",
+                "end": "2026-10-08T09:55:48.471+02:00"
+              },
+              {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045054_1791428210977.html",
                 "html_filename": "20261008_045054_1791428210977.html",
                 "environment": "intdev",
@@ -48427,6 +48569,22 @@
         "2026.10.08": {
           "sessions": {
             "Development": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094851_1791446404536.html",
+                "html_filename": "20261008_094851_1791446404536.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Participant Page",
+                "profile": "default intdev",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:59:05.472+02:00",
+                "end": "2026-10-08T10:00:04.214+02:00"
+              },
               {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045100_1791428413911.html",
                 "html_filename": "20261008_045100_1791428413911.html",
@@ -49079,6 +49237,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094840_1791445962549.html",
+                "html_filename": "20261008_094840_1791445962549.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Custom Signing",
+                "profile": "default intdev",
+                "test_cases": 2,
+                "passed": 2,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:50:44.762+02:00",
+                "end": "2026-10-08T09:52:42.024+02:00"
+              },
+              {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045050_1791428059833.html",
                 "html_filename": "20261008_045050_1791428059833.html",
                 "environment": "intdev",
@@ -49730,6 +49904,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094847_1791446224625.html",
+                "html_filename": "20261008_094847_1791446224625.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Hidden fields",
+                "profile": "default intdev",
+                "test_cases": 3,
+                "passed": 3,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:55:59.704+02:00",
+                "end": "2026-10-08T09:57:04.093+02:00"
+              },
+              {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045056_1791428271420.html",
                 "html_filename": "20261008_045056_1791428271420.html",
                 "environment": "intdev",
@@ -50380,6 +50570,22 @@
         "2026.10.08": {
           "sessions": {
             "Development": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094853_1791446591356.html",
+                "html_filename": "20261008_094853_1791446591356.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Vehicle Page",
+                "profile": "default intdev",
+                "test_cases": 2,
+                "passed": 2,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T10:00:15.769+02:00",
+                "end": "2026-10-08T10:03:11.186+02:00"
+              },
               {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045102_1791428504347.html",
                 "html_filename": "20261008_045102_1791428504347.html",
@@ -51047,6 +51253,22 @@
         "2026.10.08": {
           "sessions": {
             "Development": [
+              {
+                "netlify_url": "https://6ac7754125b9e30d7b80822f--qa-onrex.netlify.app/reports/20261008_094838_1791445833884.html",
+                "html_filename": "20261008_094838_1791445833884.html",
+                "environment": "intdev",
+                "project": "AppAutomation",
+                "test_suite_id": "Test Suites/Case information Page",
+                "profile": "default intdev",
+                "test_cases": 3,
+                "passed": 3,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-08T09:49:04.969+02:00",
+                "end": "2026-10-08T09:50:33.515+02:00"
+              },
               {
                 "netlify_url": "https://6ac70c8d6a4fb5744f2f6588--qa-onrex.netlify.app/reports/20261008_045048_1791427944355.html",
                 "html_filename": "20261008_045048_1791427944355.html",
@@ -66100,5 +66322,5 @@
     "2026.09.03",
     "2026.09.02"
   ],
-  "last_updated": "08/10/2026, 08:47:43 (GMT+1)"
+  "last_updated": "08/10/2026, 11:49:41 (GMT+1)"
 }
