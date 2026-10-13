@@ -6559,5 +6559,686 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-10-13T09:00:00Z": {
+    "ALL": {
+      "total": 9,
+      "passed": 6,
+      "failed": 3,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112733_1791883910514.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:30:37.831000Z",
+          "end_time": "2026-10-13T11:31:49.912+02:00"
+        },
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112731_1791883833308.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:29:17.699000Z",
+          "end_time": "2026-10-13T11:30:32.539+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112737_1791884752880.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:33:22.265000Z",
+          "end_time": "2026-10-13T11:45:52.268+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112741_1791885258854.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:49:18.164000Z",
+          "end_time": "2026-10-13T11:54:18.618+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112735_1791883998169.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:31:54.909000Z",
+          "end_time": "2026-10-13T11:33:17.686+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112743_1791885777650.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:54:23.206000Z",
+          "end_time": "2026-10-13T12:02:56.872+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112739_1791884953162.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:45:57.061000Z",
+          "end_time": "2026-10-13T11:49:11.279+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_114111_1791885418540.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:41:23.248000Z",
+          "end_time": "2026-10-13T11:56:57.350+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_110152_1791883117966.html",
+          "profile": "dynarex intdev",
+          "passed": 10,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:02:04.771000Z",
+          "end_time": "2026-10-13T11:18:36.837+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_114111_1791885418540.html",
+          "profile": "dynarex intdev",
+          "passed": 11,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:41:23.248000Z",
+          "end_time": "2026-10-13T11:56:57.350+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_110152_1791883117966.html",
+          "profile": "dynarex intdev",
+          "passed": 10,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:02:04.771000Z",
+          "end_time": "2026-10-13T11:18:36.837+02:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 7,
+      "passed": 6,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "1_Login_logout/1b_login_logout_multi_client",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112733_1791883910514.html",
+          "profile": "multi user intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:30:37.831000Z",
+          "end_time": "2026-10-13T11:31:49.912+02:00"
+        },
+        {
+          "full_name": "1_Login_logout/1a_Login-Logout",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112731_1791883833308.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:29:17.699000Z",
+          "end_time": "2026-10-13T11:30:32.539+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2b_ClaimType_PrintFlagLogic",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112737_1791884752880.html",
+          "profile": "default",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:33:22.265000Z",
+          "end_time": "2026-10-13T11:45:52.268+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_vehicle identification VIN",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112741_1791885258854.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:49:18.164000Z",
+          "end_time": "2026-10-13T11:54:18.618+02:00"
+        },
+        {
+          "full_name": "2_case admin page/2a_Case admin data",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112735_1791883998169.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:31:54.909000Z",
+          "end_time": "2026-10-13T11:33:17.686+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112743_1791885777650.html",
+          "profile": "default",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:54:23.206000Z",
+          "end_time": "2026-10-13T12:02:56.872+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Scan vehicle documents",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112739_1791884953162.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 5,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T09:45:57.061000Z",
+          "end_time": "2026-10-13T11:49:11.279+02:00"
+        }
+      ]
+    }
+  },
+  "2026-10-13T10:00:00Z": {
+    "ALL": {
+      "total": 15,
+      "passed": 14,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "5_calculation page/5a_calculation page",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112807_1791888507623.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:42:50.269000Z",
+          "end_time": "2026-10-13T12:48:27.075+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112759_1791887286219.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:23:48.389000Z",
+          "end_time": "2026-10-13T12:28:05.797+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112811_1791889373291.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:54:25.757000Z",
+          "end_time": "2026-10-13T13:02:52.651+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112745_1791885891490.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:03:01.803000Z",
+          "end_time": "2026-10-13T12:04:50.899+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112749_1791886307604.html",
+          "profile": "default",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:07:12.277000Z",
+          "end_time": "2026-10-13T12:11:47.071+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112751_1791886555171.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:11:51.830000Z",
+          "end_time": "2026-10-13T12:15:54.654+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112747_1791886028136.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:04:55.970000Z",
+          "end_time": "2026-10-13T12:07:07.690+02:00"
+        },
+        {
+          "full_name": "4_participants page/4a_participants",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112805_1791888166093.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:34:00.447000Z",
+          "end_time": "2026-10-13T12:42:45.508+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112753_1791886726802.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:15:59.438000Z",
+          "end_time": "2026-10-13T12:18:46.364+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3g_vehicle tires tab",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112803_1791887636086.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:31:44.258000Z",
+          "end_time": "2026-10-13T12:33:55.687+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112757_1791887023979.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:20:49.602000Z",
+          "end_time": "2026-10-13T12:23:43.509+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112755_1791886845399.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:18:51.127000Z",
+          "end_time": "2026-10-13T12:20:44.924+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112809_1791888861424.html",
+          "profile": "default",
+          "passed": 14,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:48:31.898000Z",
+          "end_time": "2026-10-13T12:54:20.979+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_125252_1791889649532.html",
+          "profile": "dynarex intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:53:04.323000Z",
+          "end_time": "2026-10-13T13:07:29.057+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3f_damage area tab",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112801_1791887500245.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:28:10.459000Z",
+          "end_time": "2026-10-13T12:31:39.872+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "Test Suites/Settings/Templates",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_125252_1791889649532.html",
+          "profile": "dynarex intdev",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:53:04.323000Z",
+          "end_time": "2026-10-13T13:07:29.057+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 14,
+      "passed": 13,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "5_calculation page/5a_calculation page",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112807_1791888507623.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:42:50.269000Z",
+          "end_time": "2026-10-13T12:48:27.075+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3e_vehicle states tab",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112759_1791887286219.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:23:48.389000Z",
+          "end_time": "2026-10-13T12:28:05.797+02:00"
+        },
+        {
+          "full_name": "6_valuation/6a_valuation",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112811_1791889373291.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:54:25.757000Z",
+          "end_time": "2026-10-13T13:02:52.651+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3b_vehicle identification PKW Opel Zafira",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112745_1791885891490.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:03:01.803000Z",
+          "end_time": "2026-10-13T12:04:50.899+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-1_vehicle identification PKW Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112749_1791886307604.html",
+          "profile": "default",
+          "passed": 23,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:07:12.277000Z",
+          "end_time": "2026-10-13T12:11:47.071+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-2_vehicle data - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112751_1791886555171.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:11:51.830000Z",
+          "end_time": "2026-10-13T12:15:54.654+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3c_vehicle identification LKW",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112747_1791886028136.html",
+          "profile": "default",
+          "passed": 7,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:04:55.970000Z",
+          "end_time": "2026-10-13T12:07:07.690+02:00"
+        },
+        {
+          "full_name": "4_participants page/4a_participants",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112805_1791888166093.html",
+          "profile": "default",
+          "passed": 27,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:34:00.447000Z",
+          "end_time": "2026-10-13T12:42:45.508+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-3_serial equipment - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112753_1791886726802.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:15:59.438000Z",
+          "end_time": "2026-10-13T12:18:46.364+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3g_vehicle tires tab",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112803_1791887636086.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:31:44.258000Z",
+          "end_time": "2026-10-13T12:33:55.687+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-5_additional equipment - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112757_1791887023979.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:20:49.602000Z",
+          "end_time": "2026-10-13T12:23:43.509+02:00"
+        },
+        {
+          "full_name": "3_vehicle page/3d_Skoda/3d-4_optional equipment - Skoda",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112755_1791886845399.html",
+          "profile": "default",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:18:51.127000Z",
+          "end_time": "2026-10-13T12:20:44.924+02:00"
+        },
+        {
+          "full_name": "5_calculation page/5b_calculation page with BS information",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112809_1791888861424.html",
+          "profile": "default",
+          "passed": 14,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:48:31.898000Z",
+          "end_time": "2026-10-13T12:54:20.979+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3f_damage area tab",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112801_1791887500245.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T10:28:10.459000Z",
+          "end_time": "2026-10-13T12:31:39.872+02:00"
+        }
+      ]
+    }
+  },
+  "2026-10-13T11:00:00Z": {
+    "ALL": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112813_1791889845078.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T11:02:57.623000Z",
+          "end_time": "2026-10-13T13:10:44.676+02:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "6_valuation/6b_valuation Expert",
+          "netlify_url": "https://6ace11df437da6bd307ec859--qa-onrex.netlify.app/reports/20261013_112813_1791889845078.html",
+          "profile": "default",
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-13T11:02:57.623000Z",
+          "end_time": "2026-10-13T13:10:44.676+02:00"
+        }
+      ],
+      "failed_details": []
+    }
   }
 }
