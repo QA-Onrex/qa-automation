@@ -32917,6 +32917,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_175425_1792681339765.html",
+                "html_filename": "20261022_175425_1792681339765.html",
+                "environment": "https://intdev-member.onrex.de/member/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/billing/State assessment/billing state assessment - SD3EP",
+                "profile": "default member intdev",
+                "test_cases": 8,
+                "passed": 8,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-22T17:54:35.115+03:00",
+                "end": "2026-10-22T18:02:18.533+03:00"
+              },
+              {
                 "netlify_url": "https://6ada185bfb8acf5c0a32d71e--qa-onrex.netlify.app/reports/20261022_145856_1792674669391.html",
                 "html_filename": "20261022_145856_1792674669391.html",
                 "environment": "https://intdev-member.onrex.de/member/auth",
@@ -34979,8 +34995,25 @@
                 "end": "2026-10-22T04:02:01.144+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163041_1792682419660.html",
+                "html_filename": "20261022_163041_1792682419660.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_Custom_Page",
+                "profile": "default",
+                "test_cases": 1,
+                "passed": 0,
+                "failed": 1,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-22T17:04:27.056+02:00",
+                "end": "2026-10-22T17:08:30.804+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -35077,8 +35110,25 @@
                 "end": "2026-10-22T03:55:03.692+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163039_1792682404045.html",
+                "html_filename": "20261022_163039_1792682404045.html",
+                "environment": "https://intacc-member.onrex.de/member/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_Member Login",
+                "profile": "default member intacc",
+                "test_cases": 1,
+                "passed": 1,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-22T16:31:33.918+02:00",
+                "end": "2026-10-22T16:33:56.219+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -35175,8 +35225,25 @@
                 "end": "2026-10-22T04:06:22.538+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163042_1792682424107.html",
+                "html_filename": "20261022_163042_1792682424107.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_ParticipantPage",
+                "profile": "default",
+                "test_cases": 3,
+                "passed": 1,
+                "failed": 2,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-22T17:09:06.555+02:00",
+                "end": "2026-10-22T17:20:02.972+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       },
@@ -35249,8 +35316,25 @@
                 "end": "2026-10-22T03:59:53.585+02:00"
               }
             ],
-            "Acceptance": [],
-            "All": "Development"
+            "Acceptance": [
+              {
+                "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163040_1792682412583.html",
+                "html_filename": "20261022_163040_1792682412583.html",
+                "environment": "https://intacc.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/Z_Online/Z_Online_Adminpage",
+                "profile": "default",
+                "test_cases": 8,
+                "passed": 1,
+                "failed": 7,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-22T16:34:30.005+02:00",
+                "end": "2026-10-22T17:03:47.171+02:00"
+              }
+            ],
+            "All": "Acceptance"
           }
         }
       }
@@ -66340,5 +66424,5 @@
     "2026.09.17",
     "2026.09.16"
   ],
-  "last_updated": "22/10/2026, 15:06:23 (GMT+1)"
+  "last_updated": "22/10/2026, 16:36:10 (GMT+1)"
 }

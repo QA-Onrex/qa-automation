@@ -8443,5 +8443,178 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-10-22T14:00:00Z": {
+    "ALL": {
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_175425_1792681339765.html",
+          "profile": "default member intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T14:54:35.115000Z",
+          "end_time": "2026-10-22T18:02:18.533+03:00"
+        },
+        {
+          "full_name": "Z_Online/Z_Online_Member Login",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163039_1792682404045.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T14:31:33.918000Z",
+          "end_time": "2026-10-22T16:33:56.219+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Adminpage",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163040_1792682412583.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T14:34:30.005000Z",
+          "end_time": "2026-10-22T17:03:47.171+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "passed_details": [
+        {
+          "full_name": "billing/State assessment/billing state assessment - SD3EP",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_175425_1792681339765.html",
+          "profile": "default member intdev",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T14:54:35.115000Z",
+          "end_time": "2026-10-22T18:02:18.533+03:00"
+        }
+      ],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Member Login",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163039_1792682404045.html",
+          "profile": "default member intacc",
+          "passed": 1,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T14:31:33.918000Z",
+          "end_time": "2026-10-22T16:33:56.219+02:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Adminpage",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163040_1792682412583.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 7,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T14:34:30.005000Z",
+          "end_time": "2026-10-22T17:03:47.171+02:00"
+        }
+      ]
+    }
+  },
+  "2026-10-22T15:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Custom_Page",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163041_1792682419660.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T15:04:27.056000Z",
+          "end_time": "2026-10-22T17:08:30.804+02:00"
+        },
+        {
+          "full_name": "Z_Online/Z_Online_ParticipantPage",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163042_1792682424107.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T15:09:06.555000Z",
+          "end_time": "2026-10-22T17:20:02.972+02:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    },
+    "intacc": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "passed_details": [],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Custom_Page",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163041_1792682419660.html",
+          "profile": "default",
+          "passed": 0,
+          "failed": 1,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T15:04:27.056000Z",
+          "end_time": "2026-10-22T17:08:30.804+02:00"
+        },
+        {
+          "full_name": "Z_Online/Z_Online_ParticipantPage",
+          "netlify_url": "https://6ada2d68fe28126a4ba32392--qa-onrex.netlify.app/reports/20261022_163042_1792682424107.html",
+          "profile": "default",
+          "passed": 1,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-22T15:09:06.555000Z",
+          "end_time": "2026-10-22T17:20:02.972+02:00"
+        }
+      ]
+    }
   }
 }
