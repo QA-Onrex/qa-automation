@@ -3006,6 +3006,30 @@
             "Acceptance": [],
             "All": "Development"
           }
+        },
+        "2026.10.23": {
+          "sessions": {
+            "Development": [
+              {
+                "netlify_url": "https://6adbb911901d749edc64aede--qa-onrex.netlify.app/reports/20261023_175048_1792771583164.html",
+                "html_filename": "20261023_175048_1792771583164.html",
+                "environment": "https://intdev.onrex.de/auth",
+                "project": "DYNAREX",
+                "test_suite_id": "Test Suites/3_vehicle page/3a_1_DDT - special VIN identifications",
+                "profile": "default intdev",
+                "test_cases": 9,
+                "passed": 3,
+                "failed": 6,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-23T17:51:33.129+02:00",
+                "end": "2026-10-23T18:06:12.508+02:00"
+              }
+            ],
+            "Acceptance": [],
+            "All": "Development"
+          }
         }
       },
       "Test Suites/katalon_cleanup_jenkins_tmp": {
@@ -43086,6 +43110,22 @@
           "sessions": {
             "Development": [
               {
+                "netlify_url": "https://6adbb911901d749edc64aede--qa-onrex.netlify.app/reports/20261023_185654_1792771960693.html",
+                "html_filename": "20261023_185654_1792771960693.html",
+                "environment": "https://intdev.onrex.de/auth/",
+                "project": "DYNAREX V2",
+                "test_suite_id": "Test Suites/Test Suites/Settings/Permissions - Verify roles permissions",
+                "profile": "dynarex intdev",
+                "test_cases": 6,
+                "passed": 6,
+                "failed": 0,
+                "error": 0,
+                "incomplete": 0,
+                "skipped": 0,
+                "start": "2026-10-23T18:57:03.078+03:00",
+                "end": "2026-10-23T19:12:39.852+03:00"
+              },
+              {
                 "netlify_url": "https://6adaf787f231bea1f1326360--qa-onrex.netlify.app/reports/20261023_033601_1792722369814.html",
                 "html_filename": "20261023_033601_1792722369814.html",
                 "environment": "https://intdev.onrex.de/auth/",
@@ -64278,5 +64318,5 @@
     "2026.09.19",
     "2026.09.18"
   ],
-  "last_updated": "23/10/2026, 16:56:04 (GMT+1)"
+  "last_updated": "23/10/2026, 20:44:19 (GMT+1)"
 }

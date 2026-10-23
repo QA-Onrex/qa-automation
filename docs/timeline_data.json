@@ -11356,9 +11356,9 @@
   },
   "2026-10-23T15:00:00Z": {
     "ALL": {
-      "total": 10,
-      "passed": 10,
-      "failed": 0,
+      "total": 12,
+      "passed": 11,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "Test Suites/Settings/Users - Cleanup",
@@ -11395,6 +11395,18 @@
           "skipped": 0,
           "start_time": "2026-10-23T15:13:22.465000Z",
           "end_time": "2026-10-23T17:15:10.455+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://6adbb911901d749edc64aede--qa-onrex.netlify.app/reports/20261023_185654_1792771960693.html",
+          "profile": "dynarex intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-23T15:57:03.078000Z",
+          "end_time": "2026-10-23T19:12:39.852+03:00"
         },
         {
           "full_name": "Test Suites/Settings/Users - General",
@@ -11481,12 +11493,25 @@
           "end_time": "2026-10-23T17:12:52.640+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6adbb911901d749edc64aede--qa-onrex.netlify.app/reports/20261023_175048_1792771583164.html",
+          "profile": "default intdev",
+          "passed": 3,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-23T15:51:33.129000Z",
+          "end_time": "2026-10-23T18:06:12.508+02:00"
+        }
+      ]
     },
     "intdev": {
-      "total": 10,
-      "passed": 10,
-      "failed": 0,
+      "total": 12,
+      "passed": 11,
+      "failed": 1,
       "passed_details": [
         {
           "full_name": "Test Suites/Settings/Users - Cleanup",
@@ -11523,6 +11548,18 @@
           "skipped": 0,
           "start_time": "2026-10-23T15:13:22.465000Z",
           "end_time": "2026-10-23T17:15:10.455+02:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Permissions - Verify roles permissions",
+          "netlify_url": "https://6adbb911901d749edc64aede--qa-onrex.netlify.app/reports/20261023_185654_1792771960693.html",
+          "profile": "dynarex intdev",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-23T15:57:03.078000Z",
+          "end_time": "2026-10-23T19:12:39.852+03:00"
         },
         {
           "full_name": "Test Suites/Settings/Users - General",
@@ -11609,7 +11646,20 @@
           "end_time": "2026-10-23T17:12:52.640+02:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "3_vehicle page/3a_1_DDT - special VIN identifications",
+          "netlify_url": "https://6adbb911901d749edc64aede--qa-onrex.netlify.app/reports/20261023_175048_1792771583164.html",
+          "profile": "default intdev",
+          "passed": 3,
+          "failed": 6,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-23T15:51:33.129000Z",
+          "end_time": "2026-10-23T18:06:12.508+02:00"
+        }
+      ]
     },
     "intacc": {
       "total": 0,
