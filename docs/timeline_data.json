@@ -7670,5 +7670,80 @@
       "passed_details": [],
       "failed_details": []
     }
+  },
+  "2026-10-26T07:00:00Z": {
+    "ALL": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://6adf0e8c1b6a8c89fb1c5453--qa-onrex.netlify.app/reports/20261026_082022_1792999618827.html",
+          "profile": "default intdev",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-26T07:20:39.031000Z",
+          "end_time": "2026-10-26T08:26:57.529+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Adminpage",
+          "netlify_url": "https://6adf0e8c1b6a8c89fb1c5453--qa-onrex.netlify.app/reports/20261026_085931_1793002385240.html",
+          "profile": "default intdev",
+          "passed": 4,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-26T07:59:43.529000Z",
+          "end_time": "2026-10-26T09:13:02.859+01:00"
+        }
+      ]
+    },
+    "intdev": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "passed_details": [
+        {
+          "full_name": "Multiple calculation providers",
+          "netlify_url": "https://6adf0e8c1b6a8c89fb1c5453--qa-onrex.netlify.app/reports/20261026_082022_1792999618827.html",
+          "profile": "default intdev",
+          "passed": 35,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-26T07:20:39.031000Z",
+          "end_time": "2026-10-26T08:26:57.529+01:00"
+        }
+      ],
+      "failed_details": [
+        {
+          "full_name": "Z_Online/Z_Online_Adminpage",
+          "netlify_url": "https://6adf0e8c1b6a8c89fb1c5453--qa-onrex.netlify.app/reports/20261026_085931_1793002385240.html",
+          "profile": "default intdev",
+          "passed": 4,
+          "failed": 4,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-10-26T07:59:43.529000Z",
+          "end_time": "2026-10-26T09:13:02.859+01:00"
+        }
+      ]
+    },
+    "intacc": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passed_details": [],
+      "failed_details": []
+    }
   }
 }
