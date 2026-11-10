@@ -5882,10 +5882,58 @@
   },
   "2026-11-10T15:00:00Z": {
     "ALL": {
-      "total": 5,
-      "passed": 5,
-      "failed": 0,
+      "total": 20,
+      "passed": 19,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_161238_1794324013107.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:16:23.050000Z",
+          "end_time": "2026-11-10T16:18:14.331+01:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_161238_1794324011621.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:12:45.483000Z",
+          "end_time": "2026-11-10T16:16:19.301+01:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID Inbox Import",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323520926.html",
+          "profile": "default - intacc",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:05:45.200000Z",
+          "end_time": "2026-11-10T16:06:40.628+01:00"
+        },
+        {
+          "full_name": "Test Suites/Accept order",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323513761.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:00:45.156000Z",
+          "end_time": "2026-11-10T16:01:25.079+01:00"
+        },
         {
           "full_name": "Test Suites/Order accepted and revoked",
           "netlify_url": "https://6af3381645a860d0bb92c903--qa-onrex.netlify.app/reports/20261110_160035_1794323517716.html",
@@ -5923,6 +5971,30 @@
           "end_time": "2026-11-10T16:07:48.121+01:00"
         },
         {
+          "full_name": "Test Suites/Order forwarded to another user",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323518806.html",
+          "profile": "default - intacc",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:03:39.558000Z",
+          "end_time": "2026-11-10T16:04:40.293+01:00"
+        },
+        {
+          "full_name": "Test Suites/Reject order",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323515353.html",
+          "profile": "default - intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:01:28.973000Z",
+          "end_time": "2026-11-10T16:01:57.533+01:00"
+        },
+        {
           "full_name": "Test Suites/Return order",
           "netlify_url": "https://6af3381645a860d0bb92c903--qa-onrex.netlify.app/reports/20261110_160035_1794323519864.html",
           "profile": "default - intacc",
@@ -5945,9 +6017,118 @@
           "skipped": 0,
           "start_time": "2026-11-10T15:02:01.385000Z",
           "end_time": "2026-11-10T16:02:32.164+01:00"
+        },
+        {
+          "full_name": "Test Suites/Inbox order without line break",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323525349.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:09:55.568000Z",
+          "end_time": "2026-11-10T16:10:38.511+01:00"
+        },
+        {
+          "full_name": "Test Suites/Inbox order with line break",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323524259.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:09:04.937000Z",
+          "end_time": "2026-11-10T16:09:51.662+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Filters",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325072383.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:35:43.116000Z",
+          "end_time": "2026-11-10T16:36:38.089+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - General",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325069216.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:22:00.089000Z",
+          "end_time": "2026-11-10T16:29:15.870+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Cleanup",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325073327.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:36:41.919000Z",
+          "end_time": "2026-11-10T16:37:47.147+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Cleanup",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325067832.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:20:53.407000Z",
+          "end_time": "2026-11-10T16:21:56.096+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - User profile",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325070358.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:29:19.890000Z",
+          "end_time": "2026-11-10T16:32:25.134+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Change Login Email",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325071433.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:32:29.013000Z",
+          "end_time": "2026-11-10T16:35:39.212+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Verify participant details from inbox order",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323527043.html",
+          "profile": "default - intacc (deutsch)",
+          "passed": 7,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:10:42.438000Z",
+          "end_time": "2026-11-10T16:11:52.735+01:00"
+        }
+      ]
     },
     "intdev": {
       "total": 0,
@@ -5957,10 +6138,58 @@
       "failed_details": []
     },
     "intacc": {
-      "total": 5,
-      "passed": 5,
-      "failed": 0,
+      "total": 20,
+      "passed": 19,
+      "failed": 1,
       "passed_details": [
+        {
+          "full_name": "Test Suites/GU Interface with distribution export",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_161238_1794324013107.html",
+          "profile": "default",
+          "passed": 13,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:16:23.050000Z",
+          "end_time": "2026-11-10T16:18:14.331+01:00"
+        },
+        {
+          "full_name": "Test Suites/GU Interface without distribution export",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_161238_1794324011621.html",
+          "profile": "default",
+          "passed": 17,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:12:45.483000Z",
+          "end_time": "2026-11-10T16:16:19.301+01:00"
+        },
+        {
+          "full_name": "Test Suites/Verify Recipient ID Inbox Import",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323520926.html",
+          "profile": "default - intacc",
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:05:45.200000Z",
+          "end_time": "2026-11-10T16:06:40.628+01:00"
+        },
+        {
+          "full_name": "Test Suites/Accept order",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323513761.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:00:45.156000Z",
+          "end_time": "2026-11-10T16:01:25.079+01:00"
+        },
         {
           "full_name": "Test Suites/Order accepted and revoked",
           "netlify_url": "https://6af3381645a860d0bb92c903--qa-onrex.netlify.app/reports/20261110_160035_1794323517716.html",
@@ -5998,6 +6227,30 @@
           "end_time": "2026-11-10T16:07:48.121+01:00"
         },
         {
+          "full_name": "Test Suites/Order forwarded to another user",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323518806.html",
+          "profile": "default - intacc",
+          "passed": 12,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:03:39.558000Z",
+          "end_time": "2026-11-10T16:04:40.293+01:00"
+        },
+        {
+          "full_name": "Test Suites/Reject order",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323515353.html",
+          "profile": "default - intacc",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:01:28.973000Z",
+          "end_time": "2026-11-10T16:01:57.533+01:00"
+        },
+        {
           "full_name": "Test Suites/Return order",
           "netlify_url": "https://6af3381645a860d0bb92c903--qa-onrex.netlify.app/reports/20261110_160035_1794323519864.html",
           "profile": "default - intacc",
@@ -6020,9 +6273,118 @@
           "skipped": 0,
           "start_time": "2026-11-10T15:02:01.385000Z",
           "end_time": "2026-11-10T16:02:32.164+01:00"
+        },
+        {
+          "full_name": "Test Suites/Inbox order without line break",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323525349.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:09:55.568000Z",
+          "end_time": "2026-11-10T16:10:38.511+01:00"
+        },
+        {
+          "full_name": "Test Suites/Inbox order with line break",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323524259.html",
+          "profile": "default - intacc",
+          "passed": 6,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:09:04.937000Z",
+          "end_time": "2026-11-10T16:09:51.662+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Filters",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325072383.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:35:43.116000Z",
+          "end_time": "2026-11-10T16:36:38.089+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - General",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325069216.html",
+          "profile": "default",
+          "passed": 8,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:22:00.089000Z",
+          "end_time": "2026-11-10T16:29:15.870+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Cleanup",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325073327.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:36:41.919000Z",
+          "end_time": "2026-11-10T16:37:47.147+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Cleanup",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325067832.html",
+          "profile": "default",
+          "passed": 2,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:20:53.407000Z",
+          "end_time": "2026-11-10T16:21:56.096+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - User profile",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325070358.html",
+          "profile": "default",
+          "passed": 5,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:29:19.890000Z",
+          "end_time": "2026-11-10T16:32:25.134+01:00"
+        },
+        {
+          "full_name": "Test Suites/Settings/Users/Users - Change Login Email",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_162045_1794325071433.html",
+          "profile": "default",
+          "passed": 10,
+          "failed": 0,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:32:29.013000Z",
+          "end_time": "2026-11-10T16:35:39.212+01:00"
         }
       ],
-      "failed_details": []
+      "failed_details": [
+        {
+          "full_name": "Test Suites/Verify participant details from inbox order",
+          "netlify_url": "https://6af33b61245b99f1770c94c4--qa-onrex.netlify.app/reports/20261110_160035_1794323527043.html",
+          "profile": "default - intacc (deutsch)",
+          "passed": 7,
+          "failed": 2,
+          "error": 0,
+          "incomplete": 0,
+          "skipped": 0,
+          "start_time": "2026-11-10T15:10:42.438000Z",
+          "end_time": "2026-11-10T16:11:52.735+01:00"
+        }
+      ]
     }
   }
 }
